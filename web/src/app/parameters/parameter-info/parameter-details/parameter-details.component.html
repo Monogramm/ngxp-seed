@@ -1,0 +1,35 @@
+<div *ngIf="parameter">
+    <label>
+        Id:
+        <span>{{ parameter.id }}</span>
+    </label>
+
+    <label>
+        Display name:
+        <input placeholder="Display name" name="name" required autocapitalize="off" autocorrect="off" [(ngModel)]="parameter.name">
+    </label>
+
+    <label>
+        Created At:
+        <span>{{ parameter.createdAt }}</span>
+    </label>
+    <label>
+        Created By:
+        <span>{{ parameter.createdBy }}</span>
+    </label>
+
+    <label>
+        Modified At:
+        <span>{{ parameter.modifiedAt }}</span>
+    </label>
+    <label>
+        Modified By:
+        <span>{{ parameter.modifiedBy }}</span>
+    </label>
+
+    <label>
+        Owner:
+        <span>{{ parameter.owner }}</span>
+    </label>
+
+</div>

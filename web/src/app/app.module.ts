@@ -14,6 +14,7 @@ import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { TypesModule } from './types/types.module';
+import { ParametersModule } from './parameters/parameters.module';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { TypesModule } from './types/types.module';
         LoginModule,
         UsersModule,
         RolesModule,
-        TypesModule
+        TypesModule,
+        ParametersModule
     ],
     providers: [AppService, AuthGuard, AdminGuard, SupportGuard],
     bootstrap: [AppComponent]

@@ -1,0 +1,15 @@
+<ul>
+    <li *ngFor="let parameter of _store.items | async | parameterStatus:showSelection">
+        <i [class]="imageSource(parameter)" (click)="toggleSelection(parameter)" style="font-size: 1.5em"></i>
+
+        <span [class.done]="parameter.selected && !parameter.deleted">{{ parameter.name }}</span>
+        <span [class.done]="parameter.selected && !parameter.deleted">{{ parameter.value }}</span>
+        <span [class.done]="parameter.selected && !parameter.deleted">{{ parameter.description }}</span>
+
+        <button *ngIf="!parameter.deleted && !parameter.deleting" class="btn-secondary" (click)="delete(parameter)">
+            <i class="icon-cross"></i>
+        </button>
+        <i *ngIf="!parameter.deleted && parameter.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+
+    </li>
+</ul>
