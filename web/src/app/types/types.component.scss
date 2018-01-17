@@ -1,0 +1,16 @@
+@import '../../scss/variables';
+
+form {
+  display: flex;
+}
+input {
+  flex: 5;
+  margin-right: 0.5em;
+}
+
+.link-container {
+  overflow: hidden;
+}
+.link-container button {
+  float: right;
+}

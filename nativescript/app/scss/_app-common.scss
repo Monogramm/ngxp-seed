@@ -1,0 +1,50 @@
+/*
+In many cases you may want to use the NativeScript core theme instead
+of writing your own CSS rules. For a full list of class names in the theme
+refer to http://docs.nativescript.org/ui/theme.
+*/
+// Core CSS
+@import "~nativescript-theme-core/scss/index";
+
+Page {
+  font-size: 15;
+}
+
+.list-page {
+  background-image: url("res://bg_inner");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+ActionBar {
+  background-color: $c-primary;
+  color: $c-primary-contrast;
+}
+
+TextField {
+  padding: 10;
+  font-size: 13;
+}
+.line-through {
+  text-decoration: line-through;
+}
+
+.visible {
+  animation-name: show;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes show {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.btn-danger {
+  background-color: $c-danger;
+  color: $c-accent-contrast;
+}
+
+.btn-danger:highlighted {
+  background-color: $c-danger-dark;
+}

@@ -1,0 +1,20 @@
+<div class="list-page">
+  <h1>Complete registration</h1>
+
+  <div class="send-token-verification-label">
+    <a (click)="sendToken()">Resend verification email</a>
+  </div>
+
+  <hr>
+
+  <div>
+    <verify-account #accountManager [token]="token"></verify-account>
+  </div>
+
+  <hr>
+
+  <form #accountForm="ngForm" (submit)="submit()">
+    <button class="left btn-primary" [disabled]="!accountForm.form.valid">Complete</button>
+    <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+  </form>
+</div>

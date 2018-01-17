@@ -1,0 +1,73 @@
+@import '../../scss/variables';
+
+.home {
+  max-width: 480px;
+  margin: 1em auto;
+  padding: 2em;
+  background: #ffffff;
+  border-radius: 4px;
+  opacity: 0.9;
+
+  .title {
+    margin-bottom: 10px;
+  }
+
+  .message {
+    margin-top: 10px;
+  }
+}
+
+.modules {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	
+	/* Inline-block fallback */
+  letter-spacing: -0.31em;
+  text-rendering: optimizespeed;
+}
+.modules > * {
+	flex: 0 0 auto;
+	width: 40%; 
+  margin: 1em 5%;
+	display: block;  /* IE fix */
+	
+	/* Inline-block fallback */
+  display: inline-block;
+  vertical-align: top;
+  letter-spacing: normal;
+	text-rendering: auto;
+  text-decoration: none;
+}
+
+.module {
+  transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out, color 0.2s ease-in-out;
+  position: relative;
+  background-color: transparent;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1em;
+  background-color: $c-secondary;
+  border: solid 1px $c-secondary-border;
+  color: $c-primary-contrast;
+}
+.module:active, .module:focus, .module:hover {
+  background-color: rgba($c-background, 0.6);
+  color: $c-dark-accent;
+  border-radius: 100%;
+}
+
+.module i {
+  display: block;
+  max-width: 100%;
+  margin: 40px auto 15px auto;
+  font-size: 500%;
+  box-shadow: 0 0 0 0 rgba($c-background, 0);
+}
+
+@media screen and (max-width: 480px) {
+  .module:before {
+    left: -2em;
+    width: calc(100% + 4em);
+  }
+}

@@ -1,0 +1,17 @@
+<div class="list-page">
+    <h1>Profile management</h1>
+
+    <hr>
+
+    <div>
+        <i *ngIf="!!!user" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
+        <user-details *ngIf="user" [user]="user"></user-details>
+    </div>
+
+    <hr>
+
+    <form (submit)="submit(user)">
+        <button class="left btn-primary">Save</button>
+        <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+</div>

@@ -1,0 +1,29 @@
+<GridLayout #container rows="auto, auto, *">
+
+    <!-- Row 1: The title -->
+    <StackLayout row="0" orientation="horizontal">
+        <Label class="title" text="Welcome"></Label>
+    </StackLayout>
+
+    <!-- Row 2: The list of available modules -->
+    <StackLayout row="1" [class.visible]="cvm.isReady">
+
+        <WrapLayout orientation="horizontal" [class.visible]="cvm.isReady">
+            <Button *ngFor="let module of cvm.availablePages" class="module" [nsRouterLink]="module.route">
+                <FormattedString>
+                    <Span [text]="module.fontIcon + '\n'" class="icon icomoon"></Span>
+                    <Span [text]="module.text" class="label"></Span>
+                </FormattedString>
+            </Button>
+        </WrapLayout>
+
+    </StackLayout>
+
+    <ActivityIndicator row="1" [busy]="!cvm.isReady"></ActivityIndicator>
+
+    <!-- Row 3: The main home functions -->
+    <StackLayout row="2">
+        <Button text="Log off" class="btn btn-danger" (tap)="logoff()"></Button>
+    </StackLayout>
+
+</GridLayout>

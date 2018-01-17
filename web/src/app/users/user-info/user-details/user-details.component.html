@@ -1,0 +1,56 @@
+<div *ngIf="user">
+    <label>
+        Id:
+        <span>{{ user.id }}</span>
+    </label>
+
+    <label>
+        Username:
+        <input placeholder="Username" name="username" required autocapitalize="off" autocorrect="off" [disabled]="user.id != null"
+            [(ngModel)]="user.username">
+    </label>
+    <label>
+        Email:
+        <input placeholder="Email Address" name="email" type="email" required autocapitalize="off" autocorrect="off" [disabled]="user.id != null"
+            [(ngModel)]="user.email">
+    </label>
+
+    <label *ngIf="user.id != null">
+        Is verified:
+        <span>{{ user.verified }}</span>
+    </label>
+
+    <label *ngIf="user.id != null">
+        Is active:
+        <span>{{ user.active }}</span>
+    </label>
+
+    <label>
+        Role:
+        <span>{{ user.role }}</span>
+    </label>
+
+    <label *ngIf="user.id != null">
+        Created At:
+        <span>{{ user.createdAt }}</span>
+    </label>
+    <label *ngIf="user.id != null">
+        Created By:
+        <span>{{ user.createdBy }}</span>
+    </label>
+
+    <label *ngIf="user.id != null">
+        Modified At:
+        <span>{{ user.modifiedAt }}</span>
+    </label>
+    <label *ngIf="user.id != null">
+        Modified By:
+        <span>{{ user.modifiedBy }}</span>
+    </label>
+
+    <label *ngIf="user.id != null">
+        Owner:
+        <span>{{ user.owner }}</span>
+    </label>
+
+</div>

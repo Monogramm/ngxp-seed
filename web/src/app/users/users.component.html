@@ -1,0 +1,9 @@
+<div class="list-page">
+  <h1>Users management</h1>
+
+  <hr>
+
+  <user-list [class.hidden]="store.count === 0" (loaded)="hideLoadingIndicator()"></user-list>
+</div>
+
+<activity-indicator [isLoading]="isLoading"></activity-indicator>

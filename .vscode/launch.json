@@ -1,0 +1,48 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceRoot}/web"
+        },
+        {
+            "name": "Launch on iOS",
+            "type": "nativescript",
+            "request": "launch",
+            "platform": "ios",
+            "appRoot": "${workspaceRoot}/nativescript",
+            "sourceMaps": true,
+            "watch": true
+        },
+        {
+            "name": "Attach on iOS",
+            "type": "nativescript",
+            "request": "attach",
+            "platform": "ios",
+            "appRoot": "${workspaceRoot}/nativescript",
+            "sourceMaps": true,
+            "watch": false
+        },
+        {
+            "name": "Launch on Android",
+            "type": "nativescript",
+            "request": "launch",
+            "platform": "android",
+            "appRoot": "${workspaceRoot}/nativescript",
+            "sourceMaps": true,
+            "watch": true
+        },
+        {
+            "name": "Attach on Android",
+            "type": "nativescript",
+            "request": "attach",
+            "platform": "android",
+            "appRoot": "${workspaceRoot}/nativescript",
+            "sourceMaps": true,
+            "watch": false
+        }
+    ]
+}

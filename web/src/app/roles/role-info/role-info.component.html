@@ -1,0 +1,17 @@
+<div class="list-page">
+    <h1>Role management</h1>
+
+    <hr>
+
+    <div>
+        <i *ngIf="!!!role" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
+        <role-details *ngIf="role" [role]="role"></role-details>
+    </div>
+
+    <hr>
+
+    <form (submit)="submit(role)">
+        <button class="left btn-primary">Save</button>
+        <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+</div>

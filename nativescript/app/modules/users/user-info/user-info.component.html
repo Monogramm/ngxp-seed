@@ -1,0 +1,29 @@
+<GridLayout rows="auto, auto, *">
+
+    <!-- Row 1: The custom action bar -->
+    <GridLayout row="0" columns="44, *, auto" class="action-bar-custom">
+        <Label col="1" text="User"></Label>
+
+        <!-- Wrap the image in a StackLayout to give it a bigger tap target -->
+        <StackLayout col="2" (tap)="showMenu()">
+            <Label class="icomoon" text="&#xf141;"></Label>
+            <!-- FIXME use fonticons classes instead of codes -->
+            <!-- 
+            <Label class="icomoon" [text]="'icon-ellipsis-h' | fonticon"></Label>
+            -->
+        </StackLayout>
+    </GridLayout>
+
+    <!-- Row 2: The user info -->
+    <mg-user-details *ngIf="!isLoading" row="1" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [user]="user"></mg-user-details>
+
+    <ActivityIndicator [busy]="isLoading" row="1"></ActivityIndicator>
+
+    <!-- Row 3: The form actions -->
+    <DockLayout row="2" class="form-actions" stretchLastChild="false">
+        <Button dock="left" text="Cancel" [isEnabled]="!isLoading" class="left submit-button" (tap)="cancel()"></Button>
+
+        <Button dock="right" text="Save" [isEnabled]="!isLoading" class="right submit-button" (tap)="submit(user)"></Button>
+    </DockLayout>
+
+</GridLayout>

@@ -1,0 +1,18 @@
+<div class="home">
+    <h1 class="title text-primary">Welcome</h1>
+
+    <hr>
+
+    <div [class]="cvm.isReady ? 'modules' : 'modules hidden'" class="modules">
+        <a class="module" *ngFor="let module of cvm.availablePages" [routerLink]="module.route" routerLinkActive="active">
+            <i [class]="'icon ' + module.iconClass"></i>
+            {{module.text}}
+        </a>
+    </div>
+
+    <activity-indicator [isLoading]="!cvm.isReady"></activity-indicator>
+
+    <hr>
+
+    <button class="btn btn-danger" (click)="logoff()">Log off</button>
+</div>

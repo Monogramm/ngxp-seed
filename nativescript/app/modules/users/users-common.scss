@@ -1,0 +1,62 @@
+@import "~/scss/variables";
+
+.action-bar-custom {
+  color: $c-white;
+  margin-top: 26;
+  margin-bottom: 16;
+}
+.action-bar-custom Label {
+  font-size: 21;
+  font-weight: bold;
+}
+.action-bar-custom StackLayout {
+  height: 40;
+  padding-left: 15;
+  padding-right: 15;
+  vertical-align: center;
+  horizontal-align: center;
+}
+
+.items-bar {
+  background-color: $c-primary;
+  color: $c-secondary-text;
+  padding-left: 16;
+  padding-right: 16;
+  height: 50;
+}
+.items-bar.alt {
+  background-color: $c-accent;
+  color: $c-primary-text;
+}
+.items-bar-image-container {
+  height: 50;
+  vertical-align: center;
+  margin-left: -15;
+  padding-left: 15;
+  padding-right: 13;
+}
+.items-bar Label.icon {
+  height: 20;
+  font-size: 16;
+  color: $c-white;
+}
+TextField {
+  color: $c-white;
+  placeholder-color: $c-grey-500;
+  background-color: transparent;
+  font-size: 15;
+  border-width: 0;
+  padding: 0;
+  margin-left: 1;
+}
+
+.container {
+  background-color: $c-background;
+  margin-top: 80;
+  opacity: 0.8;
+}
+
+ActivityIndicator {
+  horizontal-align: center;
+  vertical-align: center;
+}

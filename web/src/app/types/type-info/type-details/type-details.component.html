@@ -1,0 +1,35 @@
+<div *ngIf="type">
+    <label>
+        Id:
+        <span>{{ type.id }}</span>
+    </label>
+
+    <label>
+        Display name:
+        <input placeholder="Display name" name="name" required autocapitalize="off" autocorrect="off" [(ngModel)]="type.name">
+    </label>
+
+    <label>
+        Created At:
+        <span>{{ type.createdAt }}</span>
+    </label>
+    <label>
+        Created By:
+        <span>{{ type.createdBy }}</span>
+    </label>
+
+    <label>
+        Modified At:
+        <span>{{ type.modifiedAt }}</span>
+    </label>
+    <label>
+        Modified By:
+        <span>{{ type.modifiedBy }}</span>
+    </label>
+
+    <label>
+        Owner:
+        <span>{{ type.owner }}</span>
+    </label>
+
+</div>

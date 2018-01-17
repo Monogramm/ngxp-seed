@@ -1,0 +1,10 @@
+version: "2"
+services:
+  ngxp-seed:
+    build: .
+    image: ngxpseed
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./nginx/keys/:/etc/nginx/keys

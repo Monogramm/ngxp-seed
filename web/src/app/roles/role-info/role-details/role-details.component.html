@@ -1,0 +1,35 @@
+<div *ngIf="role">
+    <label>
+        Id:
+        <span>{{ role.id }}</span>
+    </label>
+
+    <label>
+        Display name:
+        <input placeholder="Display name" name="name" required autocapitalize="off" autocorrect="off" [(ngModel)]="role.name">
+    </label>
+
+    <label>
+        Created At:
+        <span>{{ role.createdAt }}</span>
+    </label>
+    <label>
+        Created By:
+        <span>{{ role.createdBy }}</span>
+    </label>
+
+    <label>
+        Modified At:
+        <span>{{ role.modifiedAt }}</span>
+    </label>
+    <label>
+        Modified By:
+        <span>{{ role.modifiedBy }}</span>
+    </label>
+
+    <label>
+        Owner:
+        <span>{{ role.owner }}</span>
+    </label>
+
+</div>

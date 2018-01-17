@@ -1,0 +1,32 @@
+// Theme variables cusomizations
+@import "~/scss/variables";
+
+// App styles common to Android and iOS platforms.
+@import "~/scss/app-common";
+
+// Style adjustments for Android
+@import "~nativescript-theme-core/scss/platforms/index.android";
+
+// Font icons
+@import "~/scss/font.icons";
+
+// Android specific app styles
+.action-bar-icon {
+  width: 60;
+}
+
+ActionBar {
+  margin-top: 0;
+}
+
+// Globally applying button color to let it apply to dialog buttons.
+Button {
+  background-color: $c-secondary;
+  color: $c-accent-contrast;
+  margin-left: 10;
+  margin-right: 10;
+}
+
+Button:active, Button:highlighted {
+  background-color: $c-primary;
+}

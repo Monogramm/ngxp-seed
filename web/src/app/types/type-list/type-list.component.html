@@ -1,0 +1,13 @@
+<ul>
+    <li *ngFor="let type of _store.items | async | typeStatus:showSelection">
+        <i [class]="imageSource(type)" (click)="toggleSelection(type)" style="font-size: 1.5em"></i>
+
+        <span [class.done]="type.selected && !type.deleted">{{ type.name }}</span>
+
+        <button *ngIf="!type.deleted && !type.deleting" class="btn-secondary" (click)="delete(type)">
+            <i class="icon-cross"></i>
+        </button>
+        <i *ngIf="!type.deleted && type.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+
+    </li>
+</ul>

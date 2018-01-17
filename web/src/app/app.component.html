@@ -1,0 +1,16 @@
+<div class="top-bar">
+  <div class="title">
+    <h1><a [routerLink]="['/']">{{ title }}</a></h1>
+  </div>
+  
+  <div class="logoff" [hidden]="!_loginService.isLoggedIn()">
+    <button class="btn btn-danger" (click)="logoff()">
+      <i class="icon-enter"></i>
+      Log off
+    </button>
+  </div>
+</div>
+
+<div class="content-container">
+  <router-outlet></router-outlet>
+</div>

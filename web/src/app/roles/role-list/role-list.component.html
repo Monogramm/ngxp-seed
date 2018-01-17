@@ -1,0 +1,13 @@
+<ul>
+    <li *ngFor="let role of _store.items | async | roleStatus:showSelection">
+        <i [class]="imageSource(role)" (click)="toggleSelection(role)" style="font-size: 1.5em"></i>
+
+        <span [class.done]="role.selected && !role.deleted">{{ role.name }}</span>
+
+        <button *ngIf="!role.deleted && !role.deleting" class="btn-secondary" (click)="delete(role)">
+            <i class="icon-cross"></i>
+        </button>
+        <i *ngIf="!role.deleted && role.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+
+    </li>
+</ul>

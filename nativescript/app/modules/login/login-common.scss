@@ -1,0 +1,94 @@
+@import "~/scss/variables";
+
+/* Hide a bunch of things to setup the initial animations */
+.form-controls, .sign-up-stack {
+  opacity: 0;
+}
+
+.background {
+  background-image: url("res://bg_login");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* TODO: Assigning explicit heights and applying this margin shouldn’t be necessary. */
+.initial-container {
+  margin-top: 170;
+}
+.initial-logo {
+  horizontal-align: center;
+  margin-bottom: 10;
+}
+.initial-label {
+  color: $c-white;
+  horizontal-align: center;
+  margin-bottom: 80;
+}
+.initial-button {
+  background-color: $c-background;
+  color: $c-primary;
+  height: 45;
+  width: 275;
+  vertical-align: center;
+}
+.initial-button-label {
+  horizontal-align: center;
+  font-weight: bold;
+}
+
+.main-container {
+  visibility: collapse;
+  opacity: 0;
+  margin-left: 30;
+  margin-right: 30;
+  background-color: $c-background;
+}
+.main-label {
+  horizontal-align: center;
+  color: $c-primary-text;
+}
+
+Image {
+  margin-top: 5;
+  margin-bottom: 20;
+}
+Button, TextField {
+  margin-left: 16;
+  margin-right: 16;
+  margin-bottom: 10;
+}
+TextField {
+  color: $c-primary-text;
+  placeholder-color: $c-secondary-text;
+}
+TextField.light {
+  color: $c-secondary-text;
+  placeholder-color: $c-secondary-text;
+}
+.submit-button {
+  background-color: $c-primary;
+  color: $c-white;
+  margin-top: 20;
+}
+
+.forgot-password-label {
+  font-size: 13;
+  margin-left: 20;
+  margin-bottom: 45;
+  color: $c-primary-text;
+}
+.sign-up-stack {
+  background-color: $c-background-dark;
+}
+.sign-up-stack Label {
+  color: $c-white;
+  horizontal-align: center;
+  font-size: 15;
+}
+
+.logo-container {
+  visibility: collapse;
+  horizontal-align: center;
+  opacity: 0;
+}

@@ -1,0 +1,28 @@
+@import "../scss/_variables";
+
+.top-bar {
+  background-color: $c-primary;
+  color: $c-primary-contrast;
+  border: solid 1px $c-primary-border;
+  height: 70px;
+  padding: 17px;
+
+  .title {
+    text-align: center;
+  }
+  .title * {
+    color: $c-primary-contrast;
+  }
+  
+  .logoff {
+    text-align: right;
+    margin-top: -3.8em;
+  }
+  .logoff * {
+    color: $c-primary-contrast;
+  }
+}
+
+.content-container {
+  text-align: center;
+}

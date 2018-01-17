@@ -1,0 +1,14 @@
+// Core variables
+@import "~nativescript-theme-core/scss/light";
+
+// Cross platform shared variables. Basically contains brand colors.
+@import "~/x-shared/scss/variables";
+
+// Nativescript theme color overrides.
+$primary: $c-primary;
+$secondary: $c-secondary;
+$accent: $c-accent;
+
+// Nativescript core theme variable overrides.
+$btn-color: $c-accent;
+$item-active-color:$c-accent;
