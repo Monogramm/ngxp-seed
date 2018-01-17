@@ -160,3 +160,4 @@ Once you add above configuration, the web project will try to find the @angular 
 
 ## Awesome Contributors
 [madmath03](https://github.com/madmath03)
+[ebacem](https://github.com/ebacem)
