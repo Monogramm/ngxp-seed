@@ -61,6 +61,7 @@ For convenince below are the commands which you can execute from root directory.
 | Command                | Description                                                                                                                          |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | npm run ngxp-install   | Installs dependencies of web and nativescript applications. Creates symlink of x-shared folder in both web and nativescript project. |
+| npm run tslint         | Calls TSLint globally.                                                                                                               |
 
 ### Web Application
 | Command                | Description                                                                                   |

@@ -37,6 +37,7 @@
     "clean.ios": "cd nativescript && tns platform clean ios",
     "restart.android": "cd nativescript && tns run android --clean",
     "restart.ios": "cd nativescript && tns run ios --clean",
+    "tslint": "tslint -p tsconfig.json",
     "test": "cd web && ng test",
     "test-cc": "npm test -- -cc",
     "test.android": "cd nativescript && tns test android --watch",
