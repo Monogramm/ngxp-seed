@@ -159,5 +159,5 @@ Once you add above configuration, the web project will try to find the @angular 
 5. `tools/install.js` from [angular-advanced-seed](https://github.com/NathanWalker/angular-seed-advanced)
 
 ## Awesome Contributors
-[madmath03](https://github.com/madmath03)
-[ebacem](https://github.com/ebacem)
+* [madmath03](https://github.com/madmath03)
+* [ebacem](https://github.com/ebacem)
