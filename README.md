@@ -79,6 +79,8 @@ For convenince below are the commands which you can execute from root directory.
 ### Nativescript Application
 | Command                  | Description                                                                       |
 |--------------------------|-----------------------------------------------------------------------------------|
+| npm run build.ios        | Builds application on iOS emulator/device                                         |
+| npm run build.android    | Builds application on Android emulator/device                                     |
 | npm run start.ios        | Runs application on iOS emulator/device                                           |
 | npm run start.android    | Runs application on Android emulator/device                                       |
 | npm run debug.ios        | Debugs application on iOS emulator/device                                         |
