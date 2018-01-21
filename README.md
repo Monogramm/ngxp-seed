@@ -1,9 +1,10 @@
-# MyApp NGXP Starter
-A "simple" starter project to create native mobile and web apps with single shared code base using angular and nativescript.
+# NGXP Starter [![Build Status](https://secure.travis-ci.org/Monogramm/ngxp-seed.png)](https://travis-ci.org/Monogramm/ngxp-seed)
+
+A "simple" starter project to create native mobile and web apps with single shared code base using angular and nativescript. It is designed to plug to the [spring-rest-api-starter](https://github.com/Monogramm/spring-rest-api-starter) backend.
 
 The frontend is based on the [nativescript-angular-web-starter](https://github.com/shripalsoni04/nativescript-angular-web-starter) project.
 
-Check this [Open Souce Cross Platform Quotes Application](https://github.com/shripalsoni04/ngxp-quotes-app) for reference, which is made with the exact same architecture as this starter project.  
+Check this [Open Souce Cross Platform Quotes Application](https://github.com/shripalsoni04/ngxp-quotes-app) for reference, which is made with the exact same architecture as this starter project.
 
 ## Prerequisites
 0. Globally installed [Git](https://git-scm.com/), [Node.js](https://nodejs.org), [npm](https://www.npmjs.com/)
