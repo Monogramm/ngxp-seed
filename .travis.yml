@@ -41,6 +41,6 @@ install:
 #     - android-wait-for-emulator
 
 script:
-    - npm run tslint
+    # - npm run tslint
     - npm run build.android
     # - npm run test.android --emulator --justlaunch
