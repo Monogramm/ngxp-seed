@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
         this._route.params
             .switchMap((params: Params) => this.userService.get(params['id']))
             .subscribe((data: any) => {
-                this.user = this.userService.newModeladd(data);
+                this.user = this.userService.add(data);
             },
             (error) => {
                 if (Logger.isEnabled) {
