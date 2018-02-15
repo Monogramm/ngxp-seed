@@ -1,6 +1,6 @@
 # NGXP Starter [![Build Status](https://secure.travis-ci.org/Monogramm/ngxp-seed.png)](https://travis-ci.org/Monogramm/ngxp-seed)
 
-A "simple" starter project to create native mobile and web apps with single shared code base using angular and nativescript. It is designed to plug to the [spring-rest-api-starter](https://github.com/Monogramm/spring-rest-api-starter) backend. Make sure to edit the local adress of your backend in `x-shared/app/core/backend.service.ts`.
+A "simple" starter project to create native mobile and web apps with single shared code base using angular and nativescript. It is designed to plug to the [spring-rest-api-starter](https://github.com/Monogramm/spring-rest-api-starter) backend.
 
 The frontend is based on the [nativescript-angular-web-starter](https://github.com/shripalsoni04/nativescript-angular-web-starter) project.
 
@@ -16,6 +16,7 @@ Check this [Open Souce Cross Platform Quotes Application](https://github.com/shr
 1. `git clone https://github.com/Monogramm/ngxp-seed.git`
 2. `cd ngxp-seed`
 3. `npm run ngxp-install`
+4.  Make sure to edit the local adress of your backend in [backend.service.ts](x-shared/app/core/backend.service.ts).
 
 ## Run Web application
 `npm start` - This will start the application at http://localhost:4200. 
