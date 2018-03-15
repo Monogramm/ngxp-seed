@@ -1,6 +1,8 @@
 import { Component, ChangeDetectionStrategy, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Page } from 'ui/page';
+
 import { AppResources } from '../../../x-shared/app/shared/app-resources';
 import { LoginService } from '../../../x-shared/app/login';
 
