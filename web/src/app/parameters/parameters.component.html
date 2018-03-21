@@ -2,11 +2,11 @@
   
   <form id="addParameterForm" (submit)="add()">
     <label for="parameterName">Name</label>
-    <input  name="parameterName"        id="parameterName"        placeholder="Name"        role="text" required [(ngModel)]="parameterName">
+    <input  name="parameterName"        id="parameterName"        role="text" required [(ngModel)]="parameterName">
     <label for="parameterDescription">Description</label>
-    <input  name="parameterDescription" id="parameterDescription" placeholder="Description" role="text" [(ngModel)]="parameterDescription">
+    <input  name="parameterDescription" id="parameterDescription" role="text" [(ngModel)]="parameterDescription">
     <label for="parameterType">Type</label>
-    <select name="parameterType"        id="parameterType"        placeholder="Type"        role="text" required [(ngModel)]="parameterType" (change)="updateType()">
+    <select name="parameterType"        id="parameterType"        role="text" required [(ngModel)]="parameterType" (change)="updateType()">
       <option disabled selected hidden>Type</option>
         <option>URL</option>
         <option>PATH</option>
@@ -21,9 +21,9 @@
         <!--<option>ANY</option>-->
     </select>
     <label for="parameterValue">Value</label>
-    <input name="parameterValue"    id="parameterValue"     placeholder="Value"   type="{{parameterTypeHTML}}" pattern="{{parameterTypeHTMLpattern}}" required [(ngModel)]="parameterValue" id="parameterValue">  
+    <input name="parameterValue"    id="parameterValue"     type="{{parameterTypeHTML}}" pattern="{{parameterTypeHTMLpattern}}" required [(ngModel)]="parameterValue" id="parameterValue">  
     <button type="reset" (click)="hideAddParameterForm()">Cancel</button>   
-    <button id="addNewParameter">Add</button>   
+    <button type="submit" (click)="hideAddParameterForm()" id="addNewParameter">Add</button>   
 
     <hr>     
   </form>
