@@ -90,19 +90,23 @@ function createRootSymLink() {
     var li1 = process.argv[1].lastIndexOf('\\'), li2 = process.argv[1].lastIndexOf('/');
     if (li2 > li1) { li1 = li2; }
     var AppPath = process.argv[1].substring(0,li1);
-    var p1 = resolve(AppPath + "/" + nativescriptAppPath);
-    var p2 = resolve(AppPath + "/" + webAppPath);
     if (debugging) {
-        console.log("Path: ", p1, p2);
+      console.log("AppPath: ", AppPath);
     }
-    fs.symlinkSync(p2, p1, 'junction');
 
-    p1 = resolve(AppPath + "/" + nativescriptAssetsPath);
-    p2 = resolve(AppPath + "/" + webAssetsPath);
+    var p1 = resolve(AppPath + "/" + sharedAppPath);
+    var p2 = resolve(AppPath + "/" + nativescriptSharedPath);
     if (debugging) {
         console.log("Path: ", p1, p2);
     }
-    fs.symlinkSync(p2,p1,'junction');
+    fs.symlinkSync(p1, p2, 'junction');
+
+    p1 = resolve(AppPath + "/" + sharedAppPath);
+    p2 = resolve(AppPath + "/" + webSharedPath);
+    if (debugging) {
+        console.log("Path: ", p1, p2);
+    }
+    fs.symlinkSync(p1,p2,'junction');
 }
 
 /**
