@@ -21,9 +21,10 @@
         <!--<option>ANY</option>-->
     </select>
     <label for="parameterValue">Value</label>
-    <input name="parameterValue"    id="parameterValue"     type="{{parameterTypeHTML}}" pattern="{{parameterTypeHTMLpattern}}" required [(ngModel)]="parameterValue" id="parameterValue">  
+    <input name="parameterValue"    id="parameterValue"   placeholder="{{parameterValuePlaceHolder}}"  type="{{parameterTypeHTML}}" 
+        pattern="{{parameterTypeHTMLpattern}}" required [(ngModel)]="parameterValue" id="parameterValue" >  
     <button type="reset" (click)="hideAddParameterForm()">Cancel</button>   
-    <button type="submit" (click)="hideAddParameterForm()" id="addNewParameter">Add</button>   
+    <button type="submit" id="addNewParameter">Add</button>   
 
     <hr>     
   </form>

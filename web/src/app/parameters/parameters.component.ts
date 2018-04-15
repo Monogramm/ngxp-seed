@@ -13,25 +13,30 @@ import { ParameterListComponent } from './parameter-list';
     templateUrl: './parameters.component.html',
     styleUrls: ['./parameters.component.scss']
 })
-export class ParametersComponent implements OnInit {
-    parameterTypeDefaultValue: string = 'STRING'; // sorry for that, I didn't find a better way
-    parameterName: string = '';
-    parameterDescription: string = '';
-    parameterType: string = this.parameterTypeDefaultValue;
-    parameterValue: string = '';
-    parameterTypeHTML: string = 'text';
-    parameterTypeHTMLpattern: string = ' ';
-
+export class ParametersComponent implements OnInit {    
     parameterTypeURLRegex = '.*';
     parameterTypePATHRegex = '.*';
     parameterTypeCOLORRegex = '^\\#[0-9A-F]{6,8}$';
     parameterTypeTIMERegex = '^[0-2]?[0-9]\\:[0-5]?[0-9]$';
-    parameterTypeDATERegex = '^[0-3]?[0-9]\/12\/[0-9]{4}$';
-    parameterTypeDATE_TIMERegex = '^[0-3]?[0-9]\/12\/[0-9]{4} [0-2]?[0-9]\\:[0-5]?[0-9]$';
+    parameterTypeDATERegex = '^[0-9]{4}\-[0-1]?[0-9]\-[0-1]?[0-9]$';
+    parameterTypeDATE_TIMERegex = '^[0-9]{4}\-[0-1]?[0-9]\-[0-1]?[0-9] [0-2]?[0-9]\\:[0-5]?[0-9]$';
     parameterTypeDOUBLERegex = '^\\d+(\\.\\d||,\\d)?\\d*$';
     parameterTypeINTEGERRegex = '^\\d+$';
     parameterTypeBOOLEANRegex = '^[0-1]?$';
     parameterTypeSTRINGRegex = '.*';
+
+    parameterTypeDefaultValue: string = 'STRING'; // sorry for that, I didn't find a better way
+    parameterName: string = '';
+    parameterDescription: string = '';
+    parameterType: string = this.parameterTypeDefaultValue;
+    parameterValue: object = null;
+    parameterValuePlaceHolder: string = ' ';
+    parameterTypeHTML: string = 'text';
+    parameterTypeHTMLpattern: string = this.parameterTypeSTRINGRegex;
+
+    isDateInputSupported: boolean = false;
+    isDateTimeInputSupported: boolean = false;
+    isTimeInputSupported: boolean = false;
 
     isLoading = false;
     isConfirmingDeletion = false;
@@ -40,20 +45,20 @@ export class ParametersComponent implements OnInit {
 
     ngOnInit() {
         this.isLoading = true;
-
-        // TODO : if browser supports type=date, take it into account
-        // Find date time format according to the user's local
-        var testDate = new Date( 2000 , 11 , 13 ); // Parameters: Year, Month, Day
-                                                   // Nota : Month start at 0 
-        var testDateString = testDate.toLocaleDateString();
-        var testDateRegex = testDateString.replace(/\.|:|-|\/|\\/g, function (x) {
-            return '\\'.concat(x);
-        });
-        testDateRegex = testDateRegex.replace('2000', '[0-9]{4}');    // Year
-        testDateRegex = testDateRegex.replace('10', '[0-1]?[0-9]');   // Month
-        testDateRegex = testDateRegex.replace('13', '[0-3]?[0-9]');   // Day 
-        this.parameterTypeDATERegex = '^'.concat(testDateRegex).concat('$');
-        this.parameterTypeDATE_TIMERegex = '^'.concat(testDateRegex).concat(' [0-2]?[0-9]\\:[0-5]?[0-9]$');
+        // test html5 input types
+        var test = document.createElement('input');
+        test.type = 'date';
+        if(test.type === 'date') {
+            this.isDateInputSupported = true;
+        }
+        test.type = 'datetime-local';
+        if(test.type === 'datetime-local') {
+            this.isDateTimeInputSupported = true;
+        }
+        test.type = 'time';
+        if(test.type === 'time') {
+            this.isTimeInputSupported = true;
+        }
     }
 
     hideLoadingIndicator() {
@@ -70,73 +75,155 @@ export class ParametersComponent implements OnInit {
         document.getElementById('addParameterButton').removeAttribute('disabled');
     }
 
+    pad(number) {
+        if (number < 10) {
+          return '0' + number;
+        }
+        return number;
+    }
 
     updateType() {
         if(this.parameterType=='URL') {
             this.parameterTypeHTML = 'url';
             this.parameterTypeHTMLpattern = this.parameterTypeURLRegex;
+            this.parameterValue = new String();
+            this.parameterValuePlaceHolder = 'http://www.mysite.com/';
         }
         else if(this.parameterType=='PATH') {
             this.parameterTypeHTML = 'text';
             this.parameterTypeHTMLpattern = this.parameterTypePATHRegex;
+            this.parameterValue = new String();
+            this.parameterValuePlaceHolder = ' ';
+            this.parameterValuePlaceHolder = '/path/to/my/files';
         }
         else if(this.parameterType=='COLOR') {
             this.parameterTypeHTML = 'color';
             this.parameterTypeHTMLpattern = this.parameterTypeCOLORRegex;
+            this.parameterValue = new String();
+            this.parameterValuePlaceHolder = '#000000';
         }
-        else if(this.parameterType=='DATE_TIME') {
+        else if(this.parameterType=='DATE_TIME') {            
+            Date.prototype.toISOString = function() {
+                return this.getUTCFullYear() +
+                  '-' + this.pad(this.getUTCMonth() + 1) +
+                  '-' + this.pad(this.getUTCDate()) +
+                  ' ' + this.pad(this.getUTCHours()) +
+                  ':' + this.pad(this.getUTCMinutes()) ;
+                };
             this.parameterTypeHTML = 'datetime-local';
-            this.parameterTypeHTMLpattern = this.parameterTypeDATE_TIMERegex;
+            if(this.isDateTimeInputSupported) {  
+                this.parameterValue = new Date();
+            }
+            else {
+                this.parameterTypeHTMLpattern = this.parameterTypeDATE_TIMERegex;
+                this.parameterValuePlaceHolder = 'YYYY-MM-DD hh:mm';                
+            }
         }
-        else if(this.parameterType=='TIME') {
-            this.parameterTypeHTML = 'time';
-            this.parameterTypeHTMLpattern = this.parameterTypeTIMERegex;
+        else if(this.parameterType=='TIME') {           
+            Date.prototype.toISOString = function() {
+                return this.pad(this.getUTCHours()) +
+                  ':' + this.pad(this.getUTCMinutes()) ;
+              };
+            this.parameterTypeHTML = 'TIME';
+            if(this.isTimeInputSupported) {  
+                this.parameterValue = new Date();
+            }
+            else {
+                this.parameterTypeHTMLpattern = this.parameterTypeTIMERegex;
+                this.parameterValuePlaceHolder = 'hh:mm';
+            }
         }
         else if(this.parameterType=='DATE') {
-            this.parameterTypeHTML = 'date';
-            this.parameterTypeHTMLpattern = this.parameterTypeDATERegex;
+            Date.prototype.toISOString = function() {
+                return this.getUTCFullYear() +
+                  '-' + this.pad(this.getUTCMonth() + 1) +
+                  '-' + this.pad(this.getUTCDate()) ;
+              };
+            this.parameterTypeHTML = 'DATE';
+            if(this.isDateInputSupported) {  
+                this.parameterValue = new Date();
+            }
+            else {
+                this.parameterTypeHTMLpattern = this.parameterTypeDATERegex;
+                this.parameterValuePlaceHolder = 'YYYY-MM-DD';
+            }  
         }
         else if(this.parameterType=='DOUBLE') {
             this.parameterTypeHTML = 'text';
             this.parameterTypeHTMLpattern = this.parameterTypeDOUBLERegex;
+            this.parameterValue = new Number();
+            this.parameterValuePlaceHolder = ' ';
         }
         else if(this.parameterType=='INTEGER') {
             this.parameterTypeHTML = 'number';
             this.parameterTypeHTMLpattern = this.parameterTypeINTEGERRegex;
+            this.parameterValue = new Number();
+            this.parameterValuePlaceHolder = ' ';
         }
         else if(this.parameterType=='BOOLEAN') {
             this.parameterTypeHTML = 'checkbox';
             this.parameterTypeHTMLpattern = this.parameterTypeBOOLEANRegex;
+            this.parameterValue = new Boolean();
+            this.parameterValuePlaceHolder = ' ';
         }
         else if(this.parameterType=='STRING') {
             this.parameterTypeHTML = 'text';
             this.parameterTypeHTMLpattern = this.parameterTypeSTRINGRegex;
+            this.parameterValue = new String();
+            this.parameterValuePlaceHolder = ' ';
         }
         else {
             this.parameterTypeHTML = 'text';
             this.parameterTypeHTMLpattern = this.parameterTypeSTRINGRegex;
+            this.parameterValue = new String();
+            this.parameterValuePlaceHolder = ' ';
         }
     }
 
+    checkInputValue(event) {
+        if(this.parameterType=='INTEGER') {
+            var keyCode = event.keyCode;
+            console.log("new event:"+event+"-Keycode:"+event.keyCode);
+            if (keyCode != 8 &&
+                keyCode!= 46 &&
+                (keyCode < 96 || keyCode > 105)&&
+                (keyCode < 37 || keyCode > 40)) {
+                    console.log("false");
+                return false;
+            }
+            return true;
+        }
+
+        return true;
+    } 
+
     add() {
         if (this.parameterName.trim() === '' 
-        || this.parameterType.trim() === '' 
-        || this.parameterValue.trim() === '' ) {
+        || String(this.parameterValue).trim() === '' 
+        || String(this.parameterValue).trim().length == 0 ) {
             alert('Enter a parameter item');
             return;
         }
-
-        this._store.add(this.parameterName, this.parameterDescription, this.parameterType, this.parameterValue).then(() => {
-            this.parameterName = '';
-            this.parameterType = this.parameterTypeDefaultValue;
-            this.parameterDescription = '';
-            this.parameterValue = '';
-        }, (error) => {
-            if (Logger.isEnabled) {
-                Logger.dir(error);
-            }
-            alert('An error occurred while adding a parameter to your list.');
-        });
+        // checking if data format match selected type
+        var reg = new RegExp(this.parameterTypeHTMLpattern, 'i');
+        if(!reg.test(String(this.parameterValue).trim())) {
+            alert('Value doesn\'t match selected type');
+            return;
+        }
+        else {
+            this._store.add(this.parameterName, this.parameterDescription, this.parameterType, String(this.parameterValue)).then(() => {
+                this.parameterName = '';
+                this.parameterType = this.parameterTypeDefaultValue;
+                this.parameterDescription = '';
+                this.parameterValue = null;
+                this.hideAddParameterForm();
+            }, (error) => {
+                if (Logger.isEnabled) {
+                    Logger.dir(error);
+                }
+                alert('An error occurred while adding a parameter to your list.');
+            });
+        }
     }
 
     cancelMassDelete() {
