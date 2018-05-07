@@ -19,7 +19,7 @@ Check this [Open Souce Cross Platform Quotes Application](https://github.com/shr
 4.  Make sure to edit the local adress of your backend in [backend.service.ts](x-shared/app/core/backend.service.ts).
 
 ## Run Web application
-`npm start` - This will start the application at http://localhost:4200. 
+`npm run start` - This will start the application at http://localhost:4200. 
 
 ## Run iOS Application
 - First start the simulator or connect the iOS device.
