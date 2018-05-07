@@ -19,7 +19,7 @@ export enum BackendFetchMode {
 }
 
 export abstract class BackendService {
-    protected static readonly apiUrl = 'http://192.168.1.24:8080/spring-rest-api-starter/api/';
+    protected static readonly apiUrl = 'http://localhost:8080/spring-rest-api-starter/api/';
 
     protected static readonly tokenKey = 'access_token';
     protected static readonly userIdKey = 'principal_user_id';

@@ -1,0 +1,48 @@
+<div class="list-page">
+  
+  <form id="addParameterForm" (submit)="add()">
+    <label for="parameterName">Name</label>
+    <input  name="parameterName"        id="parameterName"        role="text" required [(ngModel)]="parameterName">
+    <label for="parameterDescription">Description</label>
+    <input  name="parameterDescription" id="parameterDescription" role="text" [(ngModel)]="parameterDescription">
+    <label for="parameterType">Type</label>
+    <select name="parameterType"        id="parameterType"        role="text" required [(ngModel)]="parameterType" (change)="updateType()">
+      <option disabled selected hidden>Type</option>
+        <option>URL</option>
+        <option>PATH</option>
+        <option>COLOR</option>
+        <option>DATE_TIME</option>
+        <option>TIME</option>
+        <option>DATE</option>
+        <option>DOUBLE</option>
+        <option>INTEGER</option>
+        <option>BOOLEAN</option>
+        <option>STRING</option>
+        <!--<option>ANY</option>-->
+    </select>
+    <label for="parameterValue">Value</label>
+    <input name="parameterValue"    id="parameterValue"   placeholder="{{parameterValuePlaceHolder}}"  type="{{parameterTypeHTML}}" 
+        pattern="{{parameterTypeHTMLpattern}}" required [(ngModel)]="parameterValue" id="parameterValue" >  
+    <button type="reset" (click)="hideAddParameterForm()">Cancel</button>   
+    <button type="submit" id="addNewParameter">Add</button>   
+
+    <hr>     
+  </form>
+
+
+  <div class="link-container">
+      <button id="addParameterButton" (click)="showAddParameterForm()">Add a Parameter</button>
+      <button (click)="toggleMassDelete()" class="left btn-primary" [class.hidden]="!isConfirmingDeletion" style="float: left;">
+      Confirm
+    </button>
+
+    <button (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="isConfirmingDeletion ? 'btn-secondary' : 'btn-primary'"
+      style="float: right;">
+      {{ isConfirmingDeletion ? 'Cancel' : 'Delete all selected' }}
+    </button>
+  </div>
+
+  <parameter-list [showSelection]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></parameter-list>
+</div>
+
+<activity-indicator [isLoading]="isLoading"></activity-indicator>

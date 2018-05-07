@@ -1,0 +1,17 @@
+<div class="list-page">
+    <h1>Parameter management</h1>
+
+    <hr>
+
+    <div>
+        <i *ngIf="!!!parameter" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
+        <parameter-details *ngIf="parameter" [parameter]="parameter"></parameter-details>
+    </div>
+
+    <hr>
+
+    <form (submit)="submit(parameter)">
+        <button class="left btn-primary">Save</button>
+        <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+</div>
