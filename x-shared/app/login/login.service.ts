@@ -62,8 +62,6 @@ export class LoginService {
             Logger.log('logging in user = ' + user.email);
         }
 
-        let basicAuth;
-
         return this.backendService.push(
             this.basePathOAuth, body,
             [
