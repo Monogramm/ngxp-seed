@@ -35,7 +35,7 @@ export class HomeService {
                 new HomeModule('Roles', ['/roles'], 'icon-user-tie', String.fromCharCode(0xe976)),
                 new HomeModule('Types', ['/types'], 'icon-filter', String.fromCharCode(0xea5b)),
                 new HomeModule('Users', ['/users'], 'icon-users', String.fromCharCode(0xe972)),
-                new HomeModule('Parameters', ['/parameters'], 'icon-wrench', String.fromCharCode(0x2699))
+                new HomeModule('Parameters', ['/parameters'], 'icon-wrench', String.fromCharCode(0xe991))
             );
         }
 
