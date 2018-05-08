@@ -1,38 +1,32 @@
 <div class="list-page">
-  
-  <form id="addParameterForm" (submit)="add()">
-    <label for="parameterName">Name</label>
-    <input  name="parameterName"        id="parameterName"        role="text" required [(ngModel)]="parameterName">
-    <label for="parameterDescription">Description</label>
-    <input  name="parameterDescription" id="parameterDescription" role="text" [(ngModel)]="parameterDescription">
-    <label for="parameterType">Type</label>
-    <select name="parameterType"        id="parameterType"        role="text" required [(ngModel)]="parameterType" (change)="updateType()">
-      <option disabled selected hidden>Type</option>
-        <option>URL</option>
-        <option>PATH</option>
-        <option>COLOR</option>
-        <option>DATE_TIME</option>
-        <option>TIME</option>
-        <option>DATE</option>
-        <option>DOUBLE</option>
-        <option>INTEGER</option>
-        <option>BOOLEAN</option>
-        <option>STRING</option>
-        <!--<option>ANY</option>-->
-    </select>
-    <label for="parameterValue">Value</label>
-    <input name="parameterValue"    id="parameterValue"   placeholder="{{parameterValuePlaceHolder}}"  type="{{parameterTypeHTML}}" 
-        pattern="{{parameterTypeHTMLpattern}}" required [(ngModel)]="parameterValue" id="parameterValue" >  
-    <button type="reset" (click)="hideAddParameterForm()">Cancel</button>   
-    <button type="submit" id="addNewParameter">Add</button>   
-
-    <hr>     
-  </form>
-
+  <h1>Parameters</h1>
 
   <div class="link-container">
-      <button id="addParameterButton" (click)="showAddParameterForm()">Add a Parameter</button>
-      <button (click)="toggleMassDelete()" class="left btn-primary" [class.hidden]="!isConfirmingDeletion" style="float: left;">
+    <button (click)="isConfirmingAddition ? cancelAddition() : toggleAddition()" [type]="isConfirmingAddition ? 'reset' : 'submit'"
+      [class]="isConfirmingAddition ? 'btn-secondary' : 'btn-primary'" style="float: right;">
+      {{ isConfirmingAddition ? 'Cancel' : 'Add a Parameter' }}
+    </button>
+  </div>
+
+  <br>
+
+  <form (submit)="add()" [class.hidden]="!isConfirmingAddition">
+
+    <parameter-details #parameterDetails [parameter]="newParameter"></parameter-details>
+
+    <div class="form-controls">
+      <button type="submit" class="left btn-primary" style="float: left;">
+        Confirm
+      </button>
+
+      <button (click)="cancelAddition()" type="reset" class="btn-secondary" style="float: right;">Cancel</button>
+    </div>
+  </form>
+
+  <hr>
+
+  <div class="link-container">
+    <button (click)="toggleMassDelete()" class="left btn-primary" [class.hidden]="!isConfirmingDeletion" style="float: left;">
       Confirm
     </button>
 
