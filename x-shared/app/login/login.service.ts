@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 
 
 import { BackendService } from '../core';
-import { Logger, Pagination } from '../shared';
+import { Logger, Base64, Pagination } from '../shared';
 import { User } from '../users/user.model';
 
 @Injectable()
@@ -62,12 +62,14 @@ export class LoginService {
             Logger.log('logging in user = ' + user.email);
         }
 
+        let basicAuth;
+
         return this.backendService.push(
             this.basePathOAuth, body,
             [
                 {
                     header: 'Authorization',
-                    value: 'Basic ' + btoa(this.backendService.clientId + ':' + this.backendService.clientSecret)
+                    value: 'Basic ' + Base64.btoa(this.backendService.clientId + ':' + this.backendService.clientSecret)
                 }
             ]
         )
