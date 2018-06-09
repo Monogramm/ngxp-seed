@@ -9,7 +9,7 @@ Check this [Open Souce Cross Platform Quotes Application](https://github.com/shr
 ## Prerequisites
 0. Globally installed [Git](https://git-scm.com/), [Node.js](https://nodejs.org), [npm](https://www.npmjs.com/)
 1. Globally installed Angular CLI - `npm install -g @angular/cli`
-2. Globally installed NativeScript  - `npm install -g nativescript`
+2. Globally installed NativeScript  - `npm install -g nativescript --unsafe-perm`
 3. (optional). Mac OS to build iOS app and Android emulator or device for building Android app.
 
 ## Installation
