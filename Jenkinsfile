@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Init') {
       steps {
-        sh 'ng --version'
+        sh 'node --version'
         sh 'tns info'
         sh 'java -version'
         sh 'android --version'
