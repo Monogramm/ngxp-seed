@@ -1,13 +1,12 @@
 pipeline {
-  agent none
+  agent {
+    docker {
+      image 'monogramm/docker-ngxp'
+    }
+
+  }
   stages {
     stage('Init') {
-      agent {
-        docker {
-          image 'monogramm/docker-ngxp'
-        }
-
-      }
       steps {
         sh 'ng --version'
         sh 'tns info'
@@ -18,23 +17,11 @@ pipeline {
     stage('Build') {
       parallel {
         stage('Build Web') {
-          agent {
-            docker {
-              image 'monogramm/docker-ngxp'
-            }
-
-          }
           steps {
             sh 'npm run build'
           }
         }
         stage('Build Mobile') {
-          agent {
-            docker {
-              image 'monogramm/docker-ngxp'
-            }
-
-          }
           steps {
             sh 'npm run build.android'
             archiveArtifacts '*.apk'
