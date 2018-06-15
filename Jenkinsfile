@@ -15,6 +15,11 @@ pipeline {
         sh '#android --version'
       }
     }
+    stage('Install') {
+      steps {
+        sh 'npm run ngxp-install'
+      }
+    }
     stage('Build') {
       parallel {
         stage('Build Web') {
