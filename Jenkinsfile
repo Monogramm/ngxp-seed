@@ -18,7 +18,8 @@ pipeline {
     }
     stage('Install') {
       steps {
-        sh 'npm run ngxp-install'
+        sh '''sdkmanager "tools" "platform-tools" "platforms;android-26" "build-tools;26.0.3" "extras;android;m2repository" "extras;google;m2repository"
+npm run ngxp-install'''
       }
     }
     stage('Build') {
