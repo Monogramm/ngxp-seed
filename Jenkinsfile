@@ -10,10 +10,8 @@ pipeline {
     stage('Init') {
       steps {
         sh 'node --version'
-        sh '#ng --version'
         sh 'tns info'
         sh 'java -version'
-        sh '#android --version'
       }
     }
     stage('Install') {
