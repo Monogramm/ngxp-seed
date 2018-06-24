@@ -2,7 +2,6 @@ pipeline {
   agent {
     docker {
       image 'monogramm/docker-ngxp'
-      args '-u root:root'
     }
 
   }
