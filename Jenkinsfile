@@ -30,7 +30,7 @@ npm run ngxp-install'''
         stage('Build Mobile') {
           steps {
             sh 'npm run build.android'
-            archiveArtifacts '*.apk'
+            archiveArtifacts '**/*.apk'
           }
         }
       }
