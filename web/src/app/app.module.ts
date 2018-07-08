@@ -14,6 +14,8 @@ import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { TypesModule } from './types/types.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -29,7 +31,8 @@ import { TypesModule } from './types/types.module';
         LoginModule,
         UsersModule,
         RolesModule,
-        TypesModule
+        TypesModule,
+        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [AppService, AuthGuard, AdminGuard, SupportGuard],
     bootstrap: [AppComponent]
