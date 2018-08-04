@@ -13,6 +13,7 @@ import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
+import { TypesModule } from './types/types.module';
 import { ParametersModule } from './parameters/parameters.module';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
