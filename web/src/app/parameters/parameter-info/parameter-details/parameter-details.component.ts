@@ -17,8 +17,8 @@ export class ParameterDetailsComponent implements OnInit {
     private static readonly TIME_REGEX = '^[0-2]?[0-9]\\:[0-5]?[0-9]$';
     private static readonly DATE_REGEX = '^[0-9]{4}\-[0-1]?[0-9]\-[0-1]?[0-9]$';
     private static readonly DATE_TIME_REGEX = '^[0-9]{4}\-[0-1]?[0-9]\-[0-1]?[0-9] [0-2]?[0-9]\\:[0-5]?[0-9]$';
-    private static readonly DOUBLE_REGEX = '^\\d+(\\.\\d||,\\d)?\\d*$';
-    private static readonly INTEGER_REGEX = '^\\d+$';
+    private static readonly DOUBLE_REGEX = '^(-)?\\d+(\\.\\d||,\\d)?\\d*$';
+    private static readonly INTEGER_REGEX = '^(-)?\\d+$';
     private static readonly BOOLEAN_REGEX = '^[0-1]?$';
     private static readonly STRING_REGEX = '.*';
     private static readonly ANY_REGEX = '.*';
