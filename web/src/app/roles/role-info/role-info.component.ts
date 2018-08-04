@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { Logger } from '../../../x-shared/app/shared';
 import { Role, RoleService } from '../../../x-shared/app/roles';
 
@@ -21,8 +24,8 @@ export class RoleInfoComponent implements OnInit {
         private _location: Location) { }
 
     ngOnInit() {
-        this._route.params
-            .switchMap((params: Params) => this.store.get(params['id']))
+        this._route.params.pipe(
+            switchMap((params: Params) => this.store.get(params['id'])))
             .subscribe((data: any) => {
                 this.role = this.store.newModel(data);
             },

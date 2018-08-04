@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { Logger } from '../../../x-shared/app/shared';
 import { LoginService } from '../../../x-shared/app/login';
 import { User, UserService } from '../../../x-shared/app/users';
@@ -27,8 +30,8 @@ export class RegisterComponent implements OnInit {
         private _location: Location) { }
 
     ngOnInit() {
-        this._route.params
-            .switchMap((params: Params) => this.userService.get(params['id']))
+        this._route.params.pipe(
+            switchMap((params: Params) => this.userService.get(params['id'])))
             .subscribe((data: any) => {
                 this.user = this.userService.newModel(data);
             },

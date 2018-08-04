@@ -67,9 +67,9 @@ export class User extends UserDTO {
             verified || false,
             active || false,
             role || null,
-            createdAt ? new Date(createdAt) : null,
+            createdAt ? createdAt : null,
             createdBy || null,
-            modifiedAt ? new Date(modifiedAt) : null,
+            modifiedAt ? modifiedAt : null,
             modifiedBy || null,
             owner || null
         );

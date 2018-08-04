@@ -26,9 +26,9 @@ export class Role extends RoleDTO {
         super(
             id,
             name,
-            createdAt ? new Date(createdAt) : null,
+            createdAt ? createdAt : null,
             createdBy,
-            modifiedAt ? new Date(modifiedAt) : null,
+            modifiedAt ? modifiedAt : null,
             modifiedBy,
             owner
         );
