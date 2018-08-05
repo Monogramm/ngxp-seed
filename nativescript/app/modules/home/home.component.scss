@@ -37,10 +37,15 @@ Button, Label, StackLayout {
   font-size: 18;
   border-radius: 20;
   margin: 5 1%;
-  padding: 80 10 10 10;
+  padding: 10 10 10 10;
   width: 30%;
 }
 
 .module:active {
   color: $c-background;
+}
+
+.icon {
+  font-size: 64;
+  padding: 5;
 }

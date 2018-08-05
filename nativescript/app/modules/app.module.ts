@@ -15,6 +15,7 @@ import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { TypesModule } from './types/types.module';
+import { ParametersModule } from './parameters/parameters.module';
 import { AppRoutingModule } from './app-routing.module';
 
 // Turn debug on for development
@@ -41,7 +42,8 @@ TNSFontIconService.debug = isDevMode();
         LoginModule,
         UsersModule,
         RolesModule,
-        TypesModule
+        TypesModule,
+        ParametersModule
     ],
     bootstrap: [AppComponent]
 })

@@ -14,6 +14,8 @@ import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { TypesModule } from './types/types.module';
+import { ParametersModule } from './parameters/parameters.module';
+
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -32,6 +34,8 @@ import { environment } from '../environments/environment';
         UsersModule,
         RolesModule,
         TypesModule,
+        ParametersModule,
+        // PWA service worker
         ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [AppService, AuthGuard, AdminGuard, SupportGuard],

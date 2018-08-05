@@ -1,0 +1,42 @@
+<div class="list-page">
+  <h1>Parameters</h1>
+
+  <div class="link-container">
+    <button (click)="isConfirmingAddition ? cancelAddition() : toggleAddition()" [type]="isConfirmingAddition ? 'reset' : 'submit'"
+      [class]="isConfirmingAddition ? 'btn-secondary' : 'btn-primary'" style="float: right;">
+      {{ isConfirmingAddition ? 'Cancel' : 'Add a Parameter' }}
+    </button>
+  </div>
+
+  <br>
+
+  <form (submit)="add()" [class.hidden]="!isConfirmingAddition">
+
+    <parameter-details #parameterDetails [parameter]="newParameter"></parameter-details>
+
+    <div class="form-controls">
+      <button type="submit" class="left btn-primary" style="float: left;">
+        Confirm
+      </button>
+
+      <button (click)="cancelAddition()" type="reset" class="btn-secondary" style="float: right;">Cancel</button>
+    </div>
+  </form>
+
+  <hr>
+
+  <div class="link-container">
+    <button (click)="toggleMassDelete()" class="left btn-primary" [class.hidden]="!isConfirmingDeletion" style="float: left;">
+      Confirm
+    </button>
+
+    <button (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="isConfirmingDeletion ? 'btn-secondary' : 'btn-primary'"
+      style="float: right;">
+      {{ isConfirmingDeletion ? 'Cancel' : 'Delete all selected' }}
+    </button>
+  </div>
+
+  <parameter-list [showSelection]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></parameter-list>
+</div>
+
+<activity-indicator [isLoading]="isLoading"></activity-indicator>

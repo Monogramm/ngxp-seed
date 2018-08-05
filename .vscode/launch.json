@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+        
         {
             "type": "chrome",
             "request": "launch",
@@ -25,6 +26,13 @@
             "appRoot": "${workspaceRoot}/nativescript",
             "sourceMaps": true,
             "watch": false
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome for NativeScript",
+            "url": "chrome-devtools://devtools/bundled/inspector.html?experiments=true&ws=localhost:40000",
+            "webRoot": "${workspaceRoot}/nativescript"
         },
         {
             "name": "Launch on Android",

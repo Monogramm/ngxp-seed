@@ -1,0 +1,54 @@
+<div *ngIf="parameter">
+    <label *ngIf="parameter.id">
+        Id:
+        <span>{{ parameter.id }}</span>
+    </label>
+
+    <label for="parameterName">Name</label>
+    <input name="parameterName" role="text" required [(ngModel)]="parameter.name">
+
+    <label for="parameterDescription">Description</label>
+    <input name="parameterDescription" role="text" [(ngModel)]="parameter.description">
+
+    <label for="parameterType">Type</label>
+    <select name="parameterType" role="text" [(ngModel)]="parameter.type" (change)="updateType()">
+        <option disabled selected hidden>Type</option>
+        <option *ngFor="let type of parameterTypes">{{type}}</option>
+    </select>
+
+    <label for="parameterValue">Value</label>
+    <input #parameterValue *ngIf="parameter.type !== 'BOOLEAN' && parameter.type !== 'ANY'" name="parameterValue" placeholder="{{parameterValuePlaceHolder}}"
+        type="{{parameterTypeHtml}}" pattern="{{parameterTypeHtmlPattern}}" [(ngModel)]="parameter.value">
+
+    <input #parameterValue *ngIf="parameter.type === 'BOOLEAN'" name="parameterValue" type="checkbox" [checked]="parameter.value"
+        (change)="parameter.value = !parameter.value">
+
+    <textarea #parameterValue *ngIf="parameter.type === 'ANY'" name="parameterValue" placeholder="{{parameterValuePlaceHolder}}"
+        [(ngModel)]="parameter.value">
+    </textarea>
+
+
+    <label *ngIf="parameter.id">
+        Created At:
+        <span>{{ parameter.createdAt }}</span>
+    </label>
+    <label *ngIf="parameter.id">
+        Created By:
+        <span>{{ parameter.createdBy }}</span>
+    </label>
+
+    <label *ngIf="parameter.id">
+        Modified At:
+        <span>{{ parameter.modifiedAt }}</span>
+    </label>
+    <label *ngIf="parameter.id">
+        Modified By:
+        <span>{{ parameter.modifiedBy }}</span>
+    </label>
+
+    <label *ngIf="parameter.id">
+        Owner:
+        <span>{{ parameter.owner }}</span>
+    </label>
+
+</div>
