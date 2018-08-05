@@ -8,7 +8,7 @@ li {
 li img {
   height: 30px;
 }
-li span {
+li span, li a {
   flex-grow: 1;
   display: inline-block;
   padding: 0 1em;
