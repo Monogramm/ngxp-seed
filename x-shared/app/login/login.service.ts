@@ -94,8 +94,12 @@ export class LoginService {
                     user.id = data.principal_id;
 
                     this.backendService.token = data.access_token;
-                    this.backendService.userId = data.principal_id;
+                    var expirationTime: number = Date.now() + data.expires_in;
+                    this.backendService.tokenExpiration = new Date(expirationTime);
+                    
+                    this.backendService.refreshToken = data.refresh_token;
 
+                    this.backendService.userId = data.principal_id;
                     this.backendService.userRoles = data.roles;
                 }
             });
@@ -103,14 +107,14 @@ export class LoginService {
 
     logoff() {
         if (Logger.isEnabled) {
-            Logger.log('logging off');
+            Logger.log('Logging off');
         }
 
-        this.backendService.token = '';
-        this.backendService.userId = '';
-        this.backendService.userRoles = [];
+        // Logout from the backend (to prevent future usage of old tokens)
+        this.backendService.remove(this.basePathOAuth, null);
 
-        this.backendService.clearStore();
+        // Clear backend services info
+        this.backendService.clear();
     }
 
     sendResetPasswordToken(email: string) {

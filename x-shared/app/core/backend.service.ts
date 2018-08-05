@@ -19,9 +19,11 @@ export enum BackendFetchMode {
 }
 
 export abstract class BackendService {
-    protected static readonly apiUrl = 'http://192.168.1.12:8080/spring-rest-api-starter/api/';
+    protected static readonly apiUrl = 'http://localhost:8080/spring-rest-api-starter/api/';
 
     protected static readonly tokenKey = 'access_token';
+    protected static readonly tokenExpirationKey = 'token_expiration';
+    protected static readonly refreshTokenKey = 'refresh_token';
     protected static readonly userIdKey = 'principal_user_id';
 
     fetchBehavior: BackendFetchMode = BackendFetchMode.RemoteOnly;
@@ -47,6 +49,12 @@ export abstract class BackendService {
     abstract get token(): string;
     abstract set token(theToken: string);
 
+    abstract get tokenExpiration(): Date;
+    abstract set tokenExpiration(theTokenExpiration: Date);
+
+    abstract get refreshToken(): string;
+    abstract set refreshToken(theRefreshToken: string);
+
     abstract get userId(): string;
     abstract set userId(theId: string);
 
@@ -57,12 +65,25 @@ export abstract class BackendService {
         return this.userRoles && this.userRoles.indexOf('ROLE_' + role) > -1;
     }
 
+    clear() {
+        if (Logger.isEnabled) {
+            Logger.log('Clear backend services resources.');
+        }
+
+        this.token = '';
+        this.tokenExpiration = new Date(Date.now());
+        this.refreshToken = '';
+        this.userId = '';
+        this.userRoles = [];
+
+        this.clearStore();
+    }
 
     abstract get clientId(): string;
     abstract get clientSecret(): string;
 
 
-    abstract load(basePath: string, pagination?: Pagination);
+    abstract load(basePath: string | URL, pagination?: Pagination);
 
     getById(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
         return this.getByIds(basePath, [id], headers);

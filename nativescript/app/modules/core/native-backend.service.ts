@@ -68,6 +68,30 @@ export class NativeBackendService extends BackendService {
         super.pushToStore(BackendService.tokenKey, theToken);
     }
 
+    get tokenExpiration(): Date {
+        return <Date>super.getFromStore(BackendService.tokenExpirationKey);
+    }
+
+    set tokenExpiration(theTokenExpiration: Date) {
+        if (Logger.isEnabled) {
+            Logger.log('setting new persistent token expiration = ' + theTokenExpiration);
+        }
+
+        super.pushToStore(BackendService.tokenExpirationKey, theTokenExpiration);
+    }
+
+    get refreshToken(): string {
+        return <string>super.getFromStore(BackendService.refreshTokenKey);
+    }
+
+    set refreshToken(theRefreshToken: string) {
+        if (Logger.isEnabled) {
+            Logger.log('setting new persistent refresh token = ' + theRefreshToken);
+        }
+
+        super.pushToStore(BackendService.refreshTokenKey, theRefreshToken);
+    }
+
     get userId(): string {
         return <string>super.getFromStore(BackendService.userIdKey);
     }

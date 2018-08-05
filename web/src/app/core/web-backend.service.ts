@@ -8,8 +8,8 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
 
-import { Logger, DateUtils, Pagination } from '../../x-shared/app/shared';
-import { BackendFetchMode, BackendService, CachedValue, StorageService } from '../../x-shared/app/core';
+import { Logger, DateUtils, Pagination } from 'x-shared/app/shared';
+import { BackendFetchMode, BackendService, CachedValue, StorageService } from 'x-shared/app/core';
 import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable()
@@ -70,6 +70,30 @@ export class WebBackendService extends BackendService {
         super.pushToStore(BackendService.tokenKey, theToken);
     }
 
+    get tokenExpiration(): Date {
+        return <Date>super.getFromStore(BackendService.tokenExpirationKey);
+    }
+
+    set tokenExpiration(theTokenExpiration: Date) {
+        if (Logger.isEnabled) {
+            Logger.log('setting new persistent token expiration = ' + theTokenExpiration);
+        }
+
+        super.pushToStore(BackendService.tokenExpirationKey, theTokenExpiration);
+    }
+
+    get refreshToken(): string {
+        return <string>super.getFromStore(BackendService.refreshTokenKey);
+    }
+
+    set refreshToken(theRefreshToken: string) {
+        if (Logger.isEnabled) {
+            Logger.log('setting new persistent refresh token = ' + theRefreshToken);
+        }
+
+        super.pushToStore(BackendService.refreshTokenKey, theRefreshToken);
+    }
+
     get userId(): string {
         return <string>this.getFromStore(BackendService.userIdKey);
     }
@@ -105,16 +129,21 @@ export class WebBackendService extends BackendService {
     }
 
 
-    load(basePath: string, pagination?: Pagination, headers?: { header: string, value: any }[]) {
-        var relativePath: string = basePath;
-
-        // Try the storage if allowed
+    load(basePath: string | URL, pagination?: Pagination, headers?: { header: string, value: any }[]) {
         var response: Promise<Response> = null;
-        if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
-            var storeValue: any = this.getFromCachedStore(relativePath);
+        var relativePath: string;
+        if (basePath instanceof URL) {
+            relativePath = basePath.toString();
+        } else {
+            relativePath = basePath;
 
-            if (!(storeValue == null)) {
-                response = Promise.resolve(storeValue.value);
+            // Try the storage if allowed
+            if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
+                var storeValue: any = this.getFromCachedStore(relativePath);
+
+                if (!(storeValue == null)) {
+                    response = Promise.resolve(storeValue.value);
+                }
             }
         }
 
@@ -123,7 +152,12 @@ export class WebBackendService extends BackendService {
             let httpHeaders: Headers = this.getHeaders(headers);
             httpHeaders.append('X-Monogramm-Sort', JSON.stringify({ ModifiedAt: -1 }));
 
-            let url = this.config.apiURL + relativePath;
+            let url: string;
+            if (basePath instanceof URL) {
+                url = relativePath;
+            } else {
+                url = this.config.apiURL + relativePath;
+            }
 
             if (pagination) {
                 let startAt, endAt;
@@ -258,7 +292,10 @@ export class WebBackendService extends BackendService {
     remove(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
         let httpHeaders = this.getHeaders(headers);
 
-        let url = this.config.apiURL + basePath + '/' + id;
+        let url = this.config.apiURL + basePath;
+        if (id) {
+            url += '/' + id;
+        }
 
         var response: Promise<Response> = this._http.delete(
             url, { headers: httpHeaders }
@@ -318,6 +355,28 @@ export class WebBackendService extends BackendService {
         } else {
             Logger.dir(error);
         }
+
+        switch (error.status) {
+            case 400:
+                alert("Une erreur interne c'est produite durant l'envoi de votre demande.");
+                break;
+            case 401:
+                alert("Vous n'êtes pas autorisé à accéder à cette ressource.");
+                break;
+            case 403:
+                alert("L'accès à cette ressource vous est interdit.");
+                break;
+            case 404:
+                alert("Cette ressource ne semble pas ou plus exister.");
+                break;
+            case 409:
+                alert("Votre demande est en conflit.");
+                break;
+            case 500:
+                alert("Une erreur interne c'est produite durant le traitement de votre demande.");
+                break;
+        }
+
         return Promise.reject(error);
     }
 

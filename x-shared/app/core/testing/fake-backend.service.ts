@@ -17,6 +17,12 @@ export class FakeBackendService extends BackendService {
     get token(): string { return 'dummy_token'; }
     set token(theToken: string) { }
 
+    get tokenExpiration(): Date { return new Date(Date.now() + (1000 * 3600 * 24)); }
+    set tokenExpiration(theTokenExpiration: Date) { }
+
+    get refreshToken(): string { return 'dummy_refresh_token'; }
+    set refreshToken(theRefreshToken: string) { }
+
     get userId(): string { return 'dummy_user_id'; }
     set userId(theId: string) { }
 
