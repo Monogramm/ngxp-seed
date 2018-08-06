@@ -110,8 +110,9 @@ export class LoginService {
             Logger.log('Logging off');
         }
 
+        // FIXME We get a 401 on token revocation
         // Logout from the backend (to prevent future usage of old tokens)
-        this.backendService.remove(this.basePathOAuth, null);
+        //this.backendService.remove(this.basePathOAuth, null);
 
         // Clear backend services info
         this.backendService.clear();
