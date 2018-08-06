@@ -358,22 +358,22 @@ export class WebBackendService extends BackendService {
 
         switch (error.status) {
             case 400:
-                alert("Une erreur interne c'est produite durant l'envoi de votre demande.");
+                alert("An internal error occurred while sending your request.");
                 break;
             case 401:
-                alert("Vous n'êtes pas autorisé à accéder à cette ressource.");
+                alert("You are not authorized to access this resource.");
                 break;
             case 403:
-                alert("L'accès à cette ressource vous est interdit.");
+                alert("Access to this resource is forbidden.");
                 break;
             case 404:
-                alert("Cette ressource ne semble pas ou plus exister.");
+                alert("This resource does not seem to exist anymore.");
                 break;
             case 409:
-                alert("Votre demande est en conflit.");
+                alert("Your request is not valid Check that you have filled in all the fields.");
                 break;
             case 500:
-                alert("Une erreur interne c'est produite durant le traitement de votre demande.");
+                alert("An internal error occurred while processing your request.");
                 break;
         }
 
