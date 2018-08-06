@@ -44,7 +44,9 @@ export class TypeInfoComponent implements OnInit {
 
             this.store.delete(type)
                 .then(
-                () => { },
+                () => {
+                    this._location.back();
+                },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
@@ -59,7 +61,9 @@ export class TypeInfoComponent implements OnInit {
         if (type.id === null) {
             this.store.add(type.name)
                 .then(
-                () => { this._location.back() },
+                () => {
+                    this._location.back();
+                },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
@@ -70,7 +74,9 @@ export class TypeInfoComponent implements OnInit {
         } else {
             this.store.update(type)
                 .then(
-                () => { this._location.back() },
+                () => {
+                    this._location.back();
+                },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
