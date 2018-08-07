@@ -1,5 +1,5 @@
 <div *ngIf="type">
-    <label>
+    <label *ngIf="type.id">
         Id:
         <span>{{ type.id }}</span>
     </label>
@@ -9,25 +9,25 @@
         <input placeholder="Display name" name="name" required autocapitalize="off" autocorrect="off" [(ngModel)]="type.name">
     </label>
 
-    <label>
+    <label *ngIf="type.id">
         Created At:
         <span>{{ type.createdAt }}</span>
     </label>
-    <label>
+    <label *ngIf="type.id">
         Created By:
         <span>{{ type.createdBy }}</span>
     </label>
 
-    <label>
+    <label *ngIf="type.id">
         Modified At:
         <span>{{ type.modifiedAt }}</span>
     </label>
-    <label>
+    <label *ngIf="type.id">
         Modified By:
         <span>{{ type.modifiedBy }}</span>
     </label>
 
-    <label>
+    <label *ngIf="type.id">
         Owner:
         <span>{{ type.owner }}</span>
     </label>

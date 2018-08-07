@@ -1,5 +1,5 @@
 <div *ngIf="user">
-    <label>
+    <label *ngIf="user.id">
         Id:
         <span>{{ user.id }}</span>
     </label>
@@ -15,12 +15,12 @@
             [(ngModel)]="user.email">
     </label>
 
-    <label *ngIf="user.id != null">
+    <label *ngIf="user.id">
         Is verified:
         <span>{{ user.verified }}</span>
     </label>
 
-    <label *ngIf="user.id != null">
+    <label *ngIf="user.id">
         Is active:
         <span>{{ user.active }}</span>
     </label>
@@ -30,25 +30,25 @@
         <span>{{ user.role }}</span>
     </label>
 
-    <label *ngIf="user.id != null">
+    <label *ngIf="user.id">
         Created At:
         <span>{{ user.createdAt }}</span>
     </label>
-    <label *ngIf="user.id != null">
+    <label *ngIf="user.id">
         Created By:
         <span>{{ user.createdBy }}</span>
     </label>
 
-    <label *ngIf="user.id != null">
+    <label *ngIf="user.id">
         Modified At:
         <span>{{ user.modifiedAt }}</span>
     </label>
-    <label *ngIf="user.id != null">
+    <label *ngIf="user.id">
         Modified By:
         <span>{{ user.modifiedBy }}</span>
     </label>
 
-    <label *ngIf="user.id != null">
+    <label *ngIf="user.id">
         Owner:
         <span>{{ user.owner }}</span>
     </label>
