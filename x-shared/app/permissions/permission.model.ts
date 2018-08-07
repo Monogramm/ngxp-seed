@@ -1,8 +1,7 @@
-export class RoleDTO {
+export class PermissionDTO {
     constructor(
         public id: string,
         public name: string,
-        public permissions: Array<string>,
         public createdAt: Date = null,
         public createdBy: string = null,
         public modifiedAt: Date = null,
@@ -11,11 +10,10 @@ export class RoleDTO {
     ) { }
 }
 
-export class Role extends RoleDTO {
+export class Permission extends PermissionDTO {
     constructor(
         public id: string,
         public name: string,
-        public permissions: Array<string>,
         public selected: boolean = false,
         public deleted: boolean = false,
         public deleting: boolean = false,
@@ -28,10 +26,9 @@ export class Role extends RoleDTO {
         super(
             id,
             name,
-            permissions,
-            createdAt ? createdAt : null,
+            createdAt,
             createdBy,
-            modifiedAt ? modifiedAt : null,
+            modifiedAt,
             modifiedBy,
             owner
         );

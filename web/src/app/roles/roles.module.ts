@@ -3,7 +3,8 @@ import { HttpModule } from '@angular/http';
 import { SharedModule } from '../shared/shared.module';
 import { RolesRoutingModule } from './roles-routing.module';
 
-import { RoleService } from '../../x-shared/app/roles';
+import { RoleService } from 'x-shared/app/roles';
+import { PermissionService } from 'x-shared/app/permissions';
 
 import { RolesComponent } from './roles.component';
 import { RoleListComponent, RoleStatusPipe } from './role-list';

@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, ResponseOptions } from '@angular/http';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/switchMap';
 
 import { WorkerService, BackendService } from '../core';
 import { Logger, Pagination } from '../shared';
-import { Role, RoleDTO } from './role.model';
+import { Permission, PermissionDTO } from './permission.model';
 
 @Injectable()
-export class RoleService {
-    private basePath: string = 'Roles';
+export class PermissionService {
+    private basePath: string = 'Permissions';
 
-    items: BehaviorSubject<Array<Role>> = new BehaviorSubject([]);
+    items: BehaviorSubject<Array<Permission>> = new BehaviorSubject([]);
 
-    private _allItems: Array<Role> = [];
+    private _allItems: Array<Permission> = [];
 
     constructor(private backendService: BackendService, private worker: WorkerService) {
     }
 
     load(pagination?: Pagination) {
         if (Logger.isEnabled) {
-            Logger.log('loading roles...');
+            Logger.log('loading permissions...');
         }
         this._allItems.length = 0;
 
@@ -35,10 +35,10 @@ export class RoleService {
                     Logger.dir(response);
                 }
 
-                var data: Array<any>;
+                var data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
-                } else if (response instanceof Object) {
+                } else if (response instanceof Array) {
                     data = response;
                 } else {
                     throw Error('The loaded result does not match any expected format.');
@@ -56,7 +56,7 @@ export class RoleService {
 
     get(id: string) {
         if (Logger.isEnabled) {
-            Logger.log('retrieving a role = ' + id);
+            Logger.log('retrieving a permission = ' + id);
         }
 
         return this.backendService
@@ -84,25 +84,23 @@ export class RoleService {
         return this._allItems.length;
     }
 
-    add(roleToAdd: string | Role | RoleDTO) {
+    add(permissionToAdd: string | Permission | PermissionDTO) {
         let now = new Date();
-        let role;
-        if (typeof roleToAdd === 'string') {
-            role = new RoleDTO(
+        let permission;
+        if (typeof permissionToAdd === 'string') {
+            permission = new PermissionDTO(
                 null,
-                roleToAdd,
-                null,
+                permissionToAdd,
                 now,
                 this.backendService.userId,
                 now,
                 this.backendService.userId,
                 this.backendService.userId
             );
-        } else if (roleToAdd instanceof Role) {
-            role = new RoleDTO(
+        } else if (permissionToAdd instanceof Permission) {
+            permission = new PermissionDTO(
                 null,
-                roleToAdd.name,
-                roleToAdd.permissions,
+                permissionToAdd.name,
                 now,
                 this.backendService.userId,
                 now,
@@ -110,12 +108,12 @@ export class RoleService {
                 this.backendService.userId
             );
         } else {
-            role = roleToAdd;
+            permission = permissionToAdd;
         }
-        let body = JSON.stringify(role);
+        let body = JSON.stringify(permission);
 
         if (Logger.isEnabled) {
-            Logger.log('adding a role = ' + body);
+            Logger.log('adding a permission = ' + body);
         }
 
         return this.backendService.push(
@@ -142,13 +140,13 @@ export class RoleService {
             });
     }
 
-    update(role: Role) {
+    update(permission: Permission) {
         if (Logger.isEnabled) {
-            Logger.log('updating a role = ' + role);
+            Logger.log('updating a permission = ' + permission);
         }
 
         return this.backendService.set(
-            this.basePath, role.id, role
+            this.basePath, permission.id, permission
         )
             .then(res => res.json())
             .then(data => {
@@ -158,24 +156,24 @@ export class RoleService {
 
     updateSelection(selected: boolean) {
         let indeces: string[] = [];
-        this._allItems.forEach((type) => {
-            type.selected = selected;
+        this._allItems.forEach((permission) => {
+            permission.selected = selected;
         });
         this.publishUpdates();
     }
 
-    delete(role: Role) {
+    delete(permission: Permission) {
         if (Logger.isEnabled) {
-            Logger.log('deleting a role = ' + role.name);
+            Logger.log('deleting a permission = ' + permission.name);
         }
 
         return this.backendService
             .remove(
-            this.basePath, role.id
+            this.basePath, permission.id
             )
             .then(res => res.json())
             .then(data => {
-                let index = this._allItems.indexOf(role);
+                let index = this._allItems.indexOf(permission);
                 this._allItems.splice(index, 1);
                 this.publishUpdates();
             });
@@ -183,9 +181,9 @@ export class RoleService {
 
     deleteSelection() {
         let indeces: string[] = [];
-        this._allItems.forEach((role) => {
-            if (role.selected) {
-                indeces.push(role.id);
+        this._allItems.forEach((permission) => {
+            if (permission.selected) {
+                indeces.push(permission.id);
             }
         });
         if (indeces.length === 0) {
@@ -197,30 +195,29 @@ export class RoleService {
         )
             .then(res => res.json())
             .then(data => {
-                this._allItems.forEach((role) => {
-                    if (role.selected) {
-                        let index = this._allItems.indexOf(role);
+                this._allItems.forEach((permission) => {
+                    if (permission.selected) {
+                        let index = this._allItems.indexOf(permission);
                         this._allItems.splice(index, 1);
-                        role.selected = false;
+                        permission.selected = false;
                     }
                 });
                 this.publishUpdates();
             });
     }
 
-    public newModel(data?: any): Role {
-        return new Role(
+    public newModel(data?: any): Permission {
+        return new Permission(
             data.id || null,
             data.name,
-            data.permissions,
             data.selected || false,
             data.deleted || false,
             data.deleting || false,
             data.createdAt ? new Date(data.createdAt) : null,
-            data.createdBy || this.backendService.userId,
+            data.createdBy || null,
             data.modifiedAt ? new Date(data.modifiedAt) : null,
             data.modifiedBy || null,
-            data.owner || this.backendService.userId
+            data.owner || null
         );
     }
 

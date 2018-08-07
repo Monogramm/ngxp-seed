@@ -3,6 +3,8 @@ import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { NativeScriptCommonModule } from 'nativescript-angular/common';
 
 import { RoleService } from '../../x-shared/app/roles';
+import { PermissionService } from '../../x-shared/app/permissions';
+
 import { rolesRouting } from './roles.routing';
 import { RolesComponent } from './roles.component';
 import { RoleListComponent } from './role-list/role-list.component';
