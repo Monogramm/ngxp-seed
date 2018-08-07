@@ -105,7 +105,7 @@ export class PermissionService {
                 this.backendService.userId,
                 now,
                 this.backendService.userId,
-                this.backendService.userId
+                permissionToAdd.owner || this.backendService.userId
             );
         } else {
             permission = permissionToAdd;

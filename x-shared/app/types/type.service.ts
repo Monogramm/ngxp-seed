@@ -105,7 +105,7 @@ export class TypeService {
                 this.backendService.userId,
                 now,
                 this.backendService.userId,
-                this.backendService.userId
+                typeToAdd.owner || this.backendService.userId
             );
         } else {
             type = typeToAdd;

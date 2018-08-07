@@ -107,7 +107,7 @@ export class RoleService {
                 this.backendService.userId,
                 now,
                 this.backendService.userId,
-                this.backendService.userId
+                roleToAdd.owner || this.backendService.userId
             );
         } else {
             role = roleToAdd;

@@ -111,7 +111,7 @@ export class ParameterService {
                 this.backendService.userId,
                 now,
                 this.backendService.userId,
-                this.backendService.userId
+                parameterToAdd.owner || this.backendService.userId
             );
         } else {
             parameter = parameterToAdd;
