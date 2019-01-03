@@ -9,8 +9,8 @@ jdk: oraclejdk8
 android:
   components:
     - platform-tools
-    - build-tools-23.0.1
-    - android-23
+    - build-tools-26.0.3
+    - android-26
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-19
 
@@ -33,7 +33,7 @@ install:
     - npm install -g nativescript.tgz --ignore-scripts
     - tns usage-reporting disable
     - tns error-reporting disable
-    - npm run ngxp-install
+    - npm run install
 
 # before_script:
 #     - echo no | android create avd --force -n test -t android-19 -b armeabi-v7a
@@ -42,5 +42,6 @@ install:
 
 script:
     # - npm run tslint
+    - npm run build
     - npm run build.android
     # - npm run test.android --emulator --justlaunch

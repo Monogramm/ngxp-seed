@@ -1,0 +1,29 @@
+<GridLayout rows="*, auto">
+
+  <ActionBar title="Complete registration"></ActionBar>
+
+  <ScrollView orientation="vertical">
+    <StackLayout row="0">
+      <StackLayout class="send-token-reset-password-label link-container" (tap)="sendToken()">
+        <Label text="Resend verification email"></Label>
+      </StackLayout>
+
+      <StackLayout class="hr-light"></StackLayout>
+
+      <StackLayout>
+        <Label text="Token"></Label>
+        <TextField autocorrect="false" hint="Token" [(ngModel)]="token" autocorrect="false" returnKeyType="next"></TextField>
+      </StackLayout>
+    </StackLayout>
+  </ScrollView>
+
+  <DockLayout row="1" class="form-actions" stretchLastChild="false">
+    <StackLayout class="left btn btn-secondary" (tap)="cancel()">
+      <Label text="Cancel"></Label>
+    </StackLayout>
+
+    <StackLayout class="right btn btn-primary" (tap)="submit()">
+      <Label text="Complete"></Label>
+    </StackLayout>
+  </DockLayout>
+</GridLayout>

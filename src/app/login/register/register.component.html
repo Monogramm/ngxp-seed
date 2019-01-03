@@ -1,0 +1,23 @@
+<div class="list-page">
+  <h1>Complete registration</h1>
+
+  <div class="send-token-verification-label">
+    <a (click)="sendToken()">Resend verification email</a>
+  </div>
+
+  <hr>
+
+  <div>
+    <label>
+        Token
+        <input placeholder="Token" name="token" type="text" required [(ngModel)]="token">
+    </label>
+  </div>
+
+  <hr>
+
+  <form (submit)="submit()">
+    <button class="left btn-primary" [disabled]="valid">Complete</button>
+    <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+  </form>
+</div>

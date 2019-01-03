@@ -17,7 +17,7 @@ pipeline {
     stage('Install') {
       steps {
         sh '''sdkmanager "tools" "platform-tools" "platforms;android-26" "build-tools;26.0.3" "extras;android;m2repository" "extras;google;m2repository"
-npm run ngxp-install'''
+npm run install'''
       }
     }
     stage('Build') {
@@ -25,6 +25,7 @@ npm run ngxp-install'''
         stage('Build Web') {
           steps {
             sh 'npm run build'
+            sh 'npm run build.android'
           }
         }
         stage('Build Mobile') {

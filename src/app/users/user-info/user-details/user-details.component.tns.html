@@ -1,0 +1,23 @@
+<StackLayout *ngIf="user" col="0" class="container" orientation="vertical">
+    <Label [text]="'Id: '+user.id"></Label>
+
+    <Label [text]="'Username: '+(user.id != null ? user.username : '')"></Label>
+    <TextField *ngIf="user.id === null" [(ngModel)]="user.username" [hint]="isAndroid ? 'USERNAME' : 'Username'"></TextField>
+
+    <Label [text]="'Email: '+(user.id != null ? user.email : '')"></Label>
+    <TextField *ngIf="user.id === null" [(ngModel)]="user.email" [hint]="isAndroid ? 'EMAIL ADDRESS' : 'Email Address'"></TextField>
+
+    <Label *ngIf="user.id != null" [text]="'Is verified: '+user.verified"></Label>
+
+    <Label *ngIf="user.id != null" [text]="'Is active: '+user.active"></Label>
+
+    <Label [text]="'Role: '+user.role"></Label>
+
+    <Label *ngIf="user.id != null" [text]="'Created At: '+user.createdAt"></Label>
+    <Label *ngIf="user.id != null" [text]="'Created By: '+user.createdBy"></Label>
+    <Label *ngIf="user.id != null" [text]="'Modified At: '+user.modifiedAt"></Label>
+    <Label *ngIf="user.id != null" [text]="'Modified By: '+user.modifiedBy"></Label>
+
+    <Label *ngIf="user.id != null" [text]="'Owner: '+user.owner"></Label>
+
+</StackLayout>

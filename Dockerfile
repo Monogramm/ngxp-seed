@@ -5,4 +5,4 @@ FROM nginx
 COPY ./nginx/conf.d /etc/nginx/conf.d
 
 # Copy built app to wwwroot
-COPY web/dist /usr/share/nginx/html
+COPY dist/app /usr/share/nginx/html

@@ -1,0 +1,43 @@
+<div *ngIf="role">
+    <label *ngIf="role.id">
+        Id:
+        <span>{{ role.id }}</span>
+    </label>
+
+    <label>
+        Display name:
+        <input placeholder="Display name" name="name" required autocapitalize="off" autocorrect="off" [(ngModel)]="role.name">
+    </label>
+
+    <label>
+        Permissions:
+        <i *ngIf="ready.count == 0" class="icon-rotate icon-spinner10" style="font-size: 1.5em"></i>
+        <select [(ngModel)]="role.permissions" [disabled]="ready.count == 0" multiple>
+            <option *ngFor="let p of items | async" [ngValue]="p.id">{{ p.name }}</option>
+        </select>
+    </label>
+
+    <label *ngIf="role.id">
+        Created At:
+        <span>{{ role.createdAt }}</span>
+    </label>
+    <label *ngIf="role.id">
+        Created By:
+        <span>{{ role.createdBy }}</span>
+    </label>
+
+    <label *ngIf="role.id">
+        Modified At:
+        <span>{{ role.modifiedAt }}</span>
+    </label>
+    <label *ngIf="role.id">
+        Modified By:
+        <span>{{ role.modifiedBy }}</span>
+    </label>
+
+    <label *ngIf="role.id">
+        Owner:
+        <span>{{ role.owner }}</span>
+    </label>
+
+</div>

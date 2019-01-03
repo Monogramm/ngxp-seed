@@ -1,20 +1,22 @@
 {
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome",
+            "name": "Launch Chrome against localhost",
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceRoot}/web"
+            "webRoot": "${workspaceFolder}"
         },
         {
             "name": "Launch on iOS",
             "type": "nativescript",
             "request": "launch",
             "platform": "ios",
-            "appRoot": "${workspaceRoot}/nativescript",
+            "appRoot": "${workspaceRoot}",
             "sourceMaps": true,
             "watch": true
         },
@@ -23,7 +25,7 @@
             "type": "nativescript",
             "request": "attach",
             "platform": "ios",
-            "appRoot": "${workspaceRoot}/nativescript",
+            "appRoot": "${workspaceRoot}",
             "sourceMaps": true,
             "watch": false
         },
@@ -32,14 +34,14 @@
             "request": "launch",
             "name": "Launch Chrome for NativeScript",
             "url": "chrome-devtools://devtools/bundled/inspector.html?experiments=true&ws=localhost:40000",
-            "webRoot": "${workspaceRoot}/nativescript"
+            "webRoot": "${workspaceRoot}"
         },
         {
             "name": "Launch on Android",
             "type": "nativescript",
             "request": "launch",
             "platform": "android",
-            "appRoot": "${workspaceRoot}/nativescript",
+            "appRoot": "${workspaceRoot}",
             "sourceMaps": true,
             "watch": true
         },
@@ -48,7 +50,7 @@
             "type": "nativescript",
             "request": "attach",
             "platform": "android",
-            "appRoot": "${workspaceRoot}/nativescript",
+            "appRoot": "${workspaceRoot}",
             "sourceMaps": true,
             "watch": false
         }
