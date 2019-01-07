@@ -5,13 +5,13 @@
     </label>
 
     <label for="parameterName">Name</label>
-    <input name="parameterName" role="text" required [(ngModel)]="parameter.name">
+    <input name="parameterName" type="text" required [(ngModel)]="parameter.name">
 
     <label for="parameterDescription">Description</label>
-    <input name="parameterDescription" role="text" [(ngModel)]="parameter.description">
+    <input name="parameterDescription" type="text" [(ngModel)]="parameter.description">
 
     <label for="parameterType">Type</label>
-    <select name="parameterType" role="text" [(ngModel)]="parameter.type" (change)="updateType()">
+    <select name="parameterType" type="text" [(ngModel)]="parameter.type" (change)="updateType()">
         <option disabled selected hidden>Type</option>
         <option *ngFor="let type of parameterTypes">{{type}}</option>
     </select>
