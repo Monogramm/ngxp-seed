@@ -14,7 +14,18 @@ The frontend is based on the [nativescript-angular-web-starter](https://github.c
 1. `git clone https://github.com/Monogramm/ngxp-seed.git`
 2. `cd ngxp-seed`
 3. `npm install`
-4.  Make sure to edit the local adress of your backend in [environments/](environments/).
+
+After installing the application, make sure to edit the local address of your backend in [environments/](environments/).
+Also, you can edit all occurrences of `com.monogramm.ngxp.seed` and `ngxp-seed` to the name of your app:
+* Shared project configuration
+  * [package.json](package.json)
+* Web configuration
+  * [angular.json](angular.json)
+  * [src/manifest.json](src/manifest.json)
+  * [src/index.html](src/index.html)
+* Android configuration
+  * [App_Resources\Android\settings.json](App_Resources\Android\settings.json)
+  * [App_Resources\Android\strings.xml](App_Resources\Android\strings.xml)
 
 ## Run Web application
 `npm run start` - This will start the application at http://localhost:4200. 
