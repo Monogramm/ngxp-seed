@@ -12,10 +12,10 @@ export class AuthService {
     private static readonly tokenKey = 'access_token';
     private static readonly tokenExpirationKey = 'token_expiration';
     private static readonly refreshTokenKey = 'refresh_token';
-    private static readonly userIdKey = 'principal_user_id';
-    private static readonly userRolesKey = 'user.roles';
 
-    private _user: User;
+    private static readonly userKey = 'principal_user';
+    private static readonly userRolesKey = 'principal_user_roles';
+
     private user$: BehaviorSubject<User>;
 
     constructor(private storage: StorageService) {
@@ -41,7 +41,8 @@ export class AuthService {
 
     // Authentication mechanisms
     public get user(): User {
-        return this._user;
+        var userStr = this.getFromStore(AuthService.userKey);
+        return userStr ? <User> JSON.parse(userStr) : null;
     }
     public get currentUser(): Observable<User> {
         return this.user$;
@@ -49,7 +50,7 @@ export class AuthService {
     public authentifyUser(data: any): User {
         const user: User = this.parseLogin(data);
         this.user$.next(user);
-        this._user = user;
+        this.pushToStore(AuthService.userKey, user);
         return user;
     }
     private parseLogin(data: any): User | null {
@@ -70,7 +71,6 @@ export class AuthService {
 
         this.refreshToken = data.refresh_token;
 
-        this.userId = data.principal_id;
         this.userRoles = data.roles;
 
         return user;
@@ -83,15 +83,16 @@ export class AuthService {
         this.storage.removeItem(AuthService.tokenKey);
         this.storage.removeItem(AuthService.tokenExpirationKey);
         this.storage.removeItem(AuthService.refreshTokenKey);
-        this.storage.removeItem(AuthService.userIdKey);
+        this.storage.removeItem(AuthService.userKey);
         this.storage.removeItem(AuthService.userRolesKey);
     }
 
     public isLoggedIn(): boolean {
         var token: string = this.token;
         var tokenExpiration: number = this.tokenExpiration;
+        var remainingTime = !!tokenExpiration ? tokenExpiration - Date.now() : -1;
 
-        return !!token && !!tokenExpiration && tokenExpiration - Date.now() > 0;
+        return !!token && remainingTime > 0;
     }
 
     public get token(): string {
@@ -128,14 +129,8 @@ export class AuthService {
     }
 
     public get userId(): string {
-        return <string>this.getFromStore(AuthService.userIdKey);
-    }
-    public set userId(theId: string) {
-        if (Logger.isEnabled) {
-            Logger.log('setting new persistent user id = ' + theId);
-        }
-
-        this.storage.setItem(AuthService.userIdKey, theId);
+        var tmpUser = this.user;
+        return tmpUser ? tmpUser.id : null;
     }
 
     public get userRoles(): string[] {

@@ -1,9 +1,15 @@
-<div class="top-bar">
-  <div class="title">
-    <h1><a [routerLink]="['/']">{{ title }}</a></h1>
+<div class="top-bar" [hidden]="!_loginService.isLoggedIn()">
+  <div class="menu">
+    <button class="btn btn-info" [routerLink]="['/']" [title]="'Go to ' + appName + ' home'">
+      <i class="icon-home"></i>
+    </button>
   </div>
-  
-  <div class="logoff" [hidden]="!_loginService.isLoggedIn()">
+
+  <div class="title">
+    <h1><img src="./assets/logo.svg" [alt]="appName" /></h1>
+  </div>
+
+  <div class="logoff">
     <button class="btn btn-danger" (click)="logoff()">
       <i class="icon-enter"></i>
       Log off

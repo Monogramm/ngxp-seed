@@ -22,7 +22,7 @@ html {
 body {
   height: 100%;
   margin: 0;
-  background-color: $c-grey-800;
+  background-color: $c-body-background;
   background-image: url("assets/bg.svg");
   background-repeat: repeat;
   background-size: auto;
@@ -158,7 +158,7 @@ button, .btn, [class^="btn-"], [class*=" btn-"] {
 
 .btn-secondary {
   color: $c-accent;
-  background-color: $c-background;
+  background-color: $c-main-background;
   border: solid 2px $c-accent;
   font-weight: normal;
 }
@@ -178,8 +178,6 @@ button, .btn, [class^="btn-"], [class*=" btn-"] {
 .btn-danger {
   background-color: $c-danger;
   color: $c-accent-contrast;
-  border: 0;
-  box-shadow: none;
 }
 .btn-danger:active, .btn-danger:focus, .btn-danger:hover {
   background-color: $c-danger-dark;
@@ -254,12 +252,12 @@ input:disabled, button:disabled {
   max-width: 80%;
   margin: 1em auto;
   padding: 2em;
-  background: $c-background;
+  background: $c-main-background;
   border-radius: 4px;
   opacity: 0.95;
 }
 .list-page.dark {
-  background-color: $c-background-dark;
+  background-color: $c-main-background-dark;
 }
 .list-page.dark h1, .list-page.dark label {
   color: $c-white;

@@ -4,7 +4,7 @@
   max-width: 80%;
   margin: 1em auto;
   padding: 2em;
-  background: $c-background;
+  background: $c-main-background;
   border-radius: 4px;
   opacity: 0.9;
 
@@ -53,7 +53,7 @@
   color: $c-primary-contrast;
 }
 .module:active, .module:focus, .module:hover {
-  background-color: rgba($c-background, 0.6);
+  background-color: rgba($c-main-background, 0.6);
   color: $c-primary;
   border-radius: 100%;
 }
@@ -63,7 +63,7 @@
   max-width: 100%;
   margin: 40px auto 15px auto;
   font-size: 500%;
-  box-shadow: 0 0 0 0 rgba($c-background, 0);
+  box-shadow: 0 0 0 0 rgba($c-main-background, 0);
 }
 
 @media screen and (max-width: 480px) {

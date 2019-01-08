@@ -22,8 +22,8 @@ button {
   display: block;
   margin: 0 auto;
   border-radius: 100%;
-  background-color: $c-background;
-  box-shadow: 0 0 0 1.5em $c-background;
+  background-color: $c-main-background;
+  box-shadow: 0 0 0 1.5em $c-main-background;
 }
 
 .logo:before {
@@ -49,8 +49,8 @@ button {
 
 
 .dark .logo img {
-  background-color: $c-background-dark;
-  box-shadow: 0 0 0 1.5em $c-background-dark;
+  background-color: $c-main-background-dark;
+  box-shadow: 0 0 0 1.5em $c-main-background-dark;
 }
 
 @media screen and (max-width: 480px) {

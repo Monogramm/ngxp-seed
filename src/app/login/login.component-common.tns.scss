@@ -26,7 +26,7 @@
   margin-bottom: 80;
 }
 .initial-button {
-  background-color: $c-background;
+  background-color: $c-main-background;
   color: $c-primary;
   height: 45;
   width: 275;
@@ -42,7 +42,7 @@
   opacity: 0;
   margin-left: 30;
   margin-right: 30;
-  background-color: $c-background;
+  background-color: $c-main-background;
 }
 .main-label {
   horizontal-align: center;
@@ -79,7 +79,7 @@ TextField.light {
   color: $c-primary-text;
 }
 .sign-up-stack {
-  background-color: $c-background-dark;
+  background-color: $c-main-background-dark;
 }
 .sign-up-stack Label {
   color: $c-white;
