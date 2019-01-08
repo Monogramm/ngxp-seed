@@ -33,7 +33,7 @@ Also, you can edit all occurrences of `com.monogramm.ngxp.seed` and `ngxp-seed` 
 ## Run iOS Application
 - First start the simulator or connect the iOS device.
 - Execute `npm run start.ios` 
-- **Note** - If you are using XCode8 then you need to set the DEVELPMENT_TEAM. There are two ways to set it.
+- **Note** - If you are using XCode8 then you need to set the DEVELOPMENT_TEAM. There are two ways to set it.
   1. Using XCode
       - After executing `npm run start.ios` command, open project wordspace file platforms/ios/nativescript.xcworkspace in XCode
       - Click on nativescript project in XCode and set Team from General Tab.
