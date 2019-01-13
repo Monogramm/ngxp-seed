@@ -17,7 +17,7 @@ export class LoginComponent {
     isLoggingIn = true;
     isAuthenticating = false;
 
-    private appName: string;
+    public appName: string;
 
     constructor(
         private appService: AppService,
