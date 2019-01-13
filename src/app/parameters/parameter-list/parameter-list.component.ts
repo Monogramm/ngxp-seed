@@ -14,11 +14,11 @@ export class ParameterListComponent {
     @Input() showSelection: boolean;
     @Output() loaded = new EventEmitter();
 
-    constructor(private _store: ParameterService,
+    constructor(public store: ParameterService,
         private _router: Router) { }
 
     ngOnInit() {
-        this._store.load()
+        this.store.load()
             .then(
             () => this.loaded.emit('loaded'),
             (error) => {
@@ -47,7 +47,7 @@ export class ParameterListComponent {
         if (confirm('Confirm deletion of parameter "' + parameter.name + '" ?')) {
             parameter.deleting = true;
 
-            this._store.delete(parameter)
+            this.store.delete(parameter)
                 .then(
                 () => { parameter.deleting = false; parameter.deleted = true; },
                 (error) => {
