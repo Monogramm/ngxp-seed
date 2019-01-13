@@ -12,6 +12,8 @@ import { LoginService } from './data/login';
 })
 export class AppComponent {
 
+    public readonly appName: string = AppService.APP_NAME;
+
     title: string = '';
 
     constructor(
@@ -27,6 +29,10 @@ export class AppComponent {
             this.title = title;
             this._titleService.setTitle(title);
         });
+    }
+    
+    isLoggedIn(): boolean {
+        return this._loginService.isLoggedIn();
     }
 
     logoff() {

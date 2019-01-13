@@ -1,4 +1,4 @@
-<div class="top-bar" [hidden]="!_loginService.isLoggedIn()">
+<div class="top-bar" [hidden]="!isLoggedIn()">
   <div class="menu">
     <button class="btn btn-info" [routerLink]="['/']" [title]="'Go to ' + appName + ' home'">
       <i class="icon-home"></i>
