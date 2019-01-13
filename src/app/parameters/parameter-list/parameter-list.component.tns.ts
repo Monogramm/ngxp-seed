@@ -23,7 +23,7 @@ export class ParameterListComponent {
 
     listLoaded = false;
 
-    constructor(private store: ParameterService) {
+    constructor(public store: ParameterService) {
     }
 
     load(): void {

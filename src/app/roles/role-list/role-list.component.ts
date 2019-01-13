@@ -14,11 +14,11 @@ export class RoleListComponent {
     @Input() showSelection: boolean;
     @Output() loaded = new EventEmitter();
 
-    constructor(private _store: RoleService,
+    constructor(public store: RoleService,
         private _router: Router) { }
 
     ngOnInit() {
-        this._store.load()
+        this.store.load()
             .then(
             () => this.loaded.emit('loaded'),
             (error) => {
@@ -47,7 +47,7 @@ export class RoleListComponent {
         if (confirm('Confirm deletion of role "' + role.name + '" ?')) {
             role.deleting = true;
 
-            this._store.delete(role)
+            this.store.delete(role)
                 .then(
                 () => { role.deleting = false; role.deleted = true; },
                 (error) => {

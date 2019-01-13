@@ -1,5 +1,5 @@
 <ul>
-    <li *ngFor="let type of _store.items | async | typeStatus:showSelection">
+    <li *ngFor="let type of store.items | async | typeStatus:showSelection">
         <i [class]="imageSource(type)" (click)="toggleSelection(type)" style="font-size: 1.5em"></i>
 
         <a [class.done]="type.selected && !type.deleted" [routerLink]="['/type', type.id]">{{ type.name }}</a>

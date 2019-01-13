@@ -1,5 +1,5 @@
 <ul>
-    <li *ngFor="let role of _store.items | async | roleStatus:showSelection">
+    <li *ngFor="let role of store.items | async | roleStatus:showSelection">
         <i [class]="imageSource(role)" (click)="toggleSelection(role)" style="font-size: 1.5em"></i>
 
         <a [class.done]="role.selected && !role.deleted" [routerLink]="['/role', role.id]">{{ role.name }}</a>

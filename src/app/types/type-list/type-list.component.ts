@@ -14,11 +14,11 @@ export class TypeListComponent {
     @Input() showSelection: boolean;
     @Output() loaded = new EventEmitter();
 
-    constructor(private _store: TypeService,
+    constructor(public store: TypeService,
         private _router: Router) { }
 
     ngOnInit() {
-        this._store.load()
+        this.store.load()
             .then(() => this.loaded.emit('loaded'));
     }
 
@@ -38,7 +38,7 @@ export class TypeListComponent {
         if (confirm('Confirm deletion of type "' + type.name + '" ?')) {
             type.deleting = true;
 
-            this._store.delete(type)
+            this.store.delete(type)
                 .then(
                 () => { type.deleting = false; type.deleted = true; },
                 (error) => {
