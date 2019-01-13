@@ -17,17 +17,12 @@ export class LoginComponent {
     isLoggingIn = true;
     isAuthenticating = false;
 
-    public appName: string;
+    public readonly appName: string = AppService.APP_NAME;
 
     constructor(
-        private appService: AppService,
         private loginService: LoginService,
         private router: Router) {
         this.user = new User();
-
-        this.appService.title.subscribe((title) => {
-            this.appName = title;
-        });
     }
 
     submit() {
