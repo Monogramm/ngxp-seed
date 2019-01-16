@@ -1,6 +1,6 @@
 <div class="top-bar" [hidden]="!isLoggedIn()">
   <div class="menu">
-    <button class="btn btn-info" [routerLink]="['/']" [title]="'Go to ' + appName + ' home'">
+    <button class="btn btn-info" [routerLink]="['/']" [title]="'app.top_bar.title' | translate:i18nHomeParam">
       <i class="icon-home"></i>
     </button>
   </div>
