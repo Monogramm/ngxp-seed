@@ -1,16 +1,17 @@
 <div *ngIf="role">
     <label *ngIf="role.id">
-        Id:
+        {{ 'entity.id' | translate }}
         <span>{{ role.id }}</span>
     </label>
 
     <label>
-        Display name:
-        <input placeholder="Display name" name="name" required autocapitalize="off" autocorrect="off" [(ngModel)]="role.name">
+        {{ 'entity.role.name' | translate }}
+        <input [placeholder]="'entity.role.name' | translate" name="name" required autocapitalize="off" autocorrect="off"
+            [(ngModel)]="role.name">
     </label>
 
     <label>
-        Permissions:
+        {{ 'entity.role.permissions' | translate }}
         <i *ngIf="ready.count == 0" class="icon-rotate icon-spinner10" style="font-size: 1.5em"></i>
         <select [(ngModel)]="role.permissions" [disabled]="ready.count == 0" multiple>
             <option *ngFor="let p of items | async" [ngValue]="p.id">{{ p.name }}</option>
@@ -18,25 +19,25 @@
     </label>
 
     <label *ngIf="role.id">
-        Created At:
-        <span>{{ role.createdAt }}</span>
+        {{ 'entity.created_at' | translate }}
+        <span>{{ role.createdAt | date:'short' }}</span>
     </label>
     <label *ngIf="role.id">
-        Created By:
+        {{ 'entity.created_by' | translate }}
         <span>{{ role.createdBy }}</span>
     </label>
 
     <label *ngIf="role.id">
-        Modified At:
-        <span>{{ role.modifiedAt }}</span>
+        {{ 'entity.modified_at' | translate }}
+        <span>{{ role.modifiedAt | date:'short' }}</span>
     </label>
     <label *ngIf="role.id">
-        Modified By:
+        {{ 'entity.modified_by' | translate }}
         <span>{{ role.modifiedBy }}</span>
     </label>
 
     <label *ngIf="role.id">
-        Owner:
+        {{ 'entity.owner' | translate }}
         <span>{{ role.owner }}</span>
     </label>
 

@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
+
+import { TranslateService } from '@ngx-translate/core';
 
 import { AppService } from '../app.service';
 import { Logger } from '../shared';
@@ -21,13 +24,15 @@ export class LoginComponent {
 
     constructor(
         private loginService: LoginService,
+        private _translate: TranslateService,
         private router: Router) {
         this.user = new User();
     }
 
     submit() {
         if (!this.user.isValidEmail()) {
-            alert('Enter a valid email address');
+            var msg: string = this._translate.instant('login.message.warning.valid_email');
+            alert(msg);
             return;
         }
 
@@ -58,7 +63,8 @@ export class LoginComponent {
                         Logger.dir(error);
                     }
                     this.isAuthenticating = false;
-                    alert('Unfortunately we were not able to log you into the system');
+                    var msg: string = this._translate.instant('login.message.error.login');
+                    alert(msg);
                 }
             );
     }
@@ -71,7 +77,8 @@ export class LoginComponent {
         this.loginService.register(this.user)
             .then(
                 () => {
-                    alert('Your account was successfully created. An email has been sent to activate your account.');
+                    var msg: string = this._translate.instant('login.message.success.signup');
+                    alert(msg);
                     this.isAuthenticating = false;
                     this.toggleDisplay();
                 },
@@ -81,17 +88,8 @@ export class LoginComponent {
                         Logger.dir(error);
                     }
                     this.isAuthenticating = false;
-                    // TODO: Verify this works
-                    if (error && error._body) {
-                        var body = error._body;
-                        if (body.match(/same user/)) {
-                            alert('This email address is already in use.');
-                        } else {
-                            alert('An error occurred while creating your account: ' + body);
-                        }
-                    } else {
-                        alert('Unfortunately we were unable to create your account.');
-                    }
+                    var msg: string = this._translate.instant('login.message.error.signup');
+                    alert(msg);
                 }
             );
     }

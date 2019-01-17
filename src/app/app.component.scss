@@ -14,15 +14,12 @@
     .menu {
         position: absolute;
         left: 17px;
-        top: 10px;
+        top: 7px;
+        text-align: left;
     }
 
     .title {
         text-align: center;
-    }
-
-    .title * {
-        color: $c-primary-contrast;
     }
 
     .title img {
@@ -30,15 +27,24 @@
         border-radius: 5px;
     }
 
-    .logoff {
+    .logout {
         position: absolute;
         right: 17px;
-        top: 10px;
+        top: 7px;
         text-align: right;
     }
 
-    .logoff * {
+    .menu *, .title *, .logout * {
         color: $c-primary-contrast;
+        font-size: xx-large;
+    }
+    .menu .link, .title .link, .logout .link {
+        cursor: pointer;
+    }
+    .menu .link:hover, .menu .link:focus, .menu .link:active,
+    .title .link:hover, .title .link:focus, .title .link:active, 
+    .logout .link:hover, .logout .link:focus, .logout .link:active {
+        color: $c-accent;
     }
 }
 

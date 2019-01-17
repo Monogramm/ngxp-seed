@@ -1,5 +1,5 @@
 <div class="list-page">
-    <h1>Role</h1>
+    <h1>{{ 'roles.info' | translate }}</h1>
 
     <hr>
 
@@ -11,7 +11,7 @@
     <hr>
 
     <form (submit)="submit(role)">
-        <button class="left btn-primary">Save</button>
-        <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+        <button class="left btn-primary">{{ 'app.common.save' | translate }}</button>
+        <button type="button" class="right btn-secondary" (click)="cancel()">{{ 'app.common.cancel' | translate }}</button>
     </form>
 </div>

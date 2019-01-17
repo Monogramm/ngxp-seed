@@ -1,21 +1,21 @@
 <div class="list-page">
-  <h1>Type management</h1>
+  <h1>{{ 'types.management' | translate }}</h1>
 
   <form (submit)="add()">
     <input placeholder="Type name" name="type" type="text" required [(ngModel)]="type">
-    <button>Add</button>
+    <button>{{ 'app.common.add' | translate }}</button>
   </form>
 
   <hr>
 
   <div class="link-container">
     <button (click)="toggleMassDelete()" class="left btn-primary" [class.hidden]="!isConfirmingDeletion" style="float: left;">
-      Confirm
+      {{ 'app.common.confirm' | translate }}
     </button>
 
     <button (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="isConfirmingDeletion ? 'btn-secondary' : 'btn-primary'"
       style="float: right;">
-      {{ isConfirmingDeletion ? 'Cancel' : 'Delete all selected' }}
+      {{ (isConfirmingDeletion ? 'app.common.cancel' : 'app.common.delete') | translate }}
     </button>
   </div>
 

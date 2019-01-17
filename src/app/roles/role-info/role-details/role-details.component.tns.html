@@ -1,6 +1,6 @@
 <div *ngIf="role">
     <label *ngIf="role.id">
-        Id:
+        {{ 'entity.id' | translate }}
         <span>{{ role.id }}</span>
     </label>
 
@@ -18,25 +18,25 @@
     </label>
 
     <label *ngIf="role.id">
-        Created At:
-        <span>{{ role.createdAt }}</span>
+        {{ 'entity.created_at' | translate }}
+        <span>{{ role.createdAt | date:'short' }}</span>
     </label>
     <label *ngIf="role.id">
-        Created By:
+        {{ 'entity.created_by' | translate }}
         <span>{{ role.createdBy }}</span>
     </label>
 
     <label *ngIf="role.id">
-        Modified At:
-        <span>{{ role.modifiedAt }}</span>
+        {{ 'entity.modified_at' | translate }}
+        <span>{{ role.modifiedAt | date:'short' }}</span>
     </label>
     <label *ngIf="role.id">
-        Modified By:
+        {{ 'entity.modified_by' | translate }}
         <span>{{ role.modifiedBy }}</span>
     </label>
 
     <label *ngIf="role.id">
-        Owner:
+        {{ 'entity.owner' | translate }}
         <span>{{ role.owner }}</span>
     </label>
 

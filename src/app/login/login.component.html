@@ -9,33 +9,34 @@
   <form (ngSubmit)="submit()" #registerForm="ngForm">
     <div>
       <label>
-        Email:
-        <input placeholder="Email Address" name="email" type="email" required autocapitalize="off" autocorrect="off" [(ngModel)]="user.email"
-          [disabled]="isAuthenticating">
+        {{ 'login.email' | translate }}
+        <input [placeholder]="'login.email_placeholder' | translate" name="email" type="email" required autocapitalize="off"
+          autocorrect="off" [(ngModel)]="user.email" [disabled]="isAuthenticating">
       </label>
     </div>
 
     <div>
       <label>
-        Password:
-        <input placeholder="Password" name="password" type="password" required [(ngModel)]="user.password" [disabled]="isAuthenticating">
+        {{ 'login.password' | translate }}
+        <input [placeholder]="'login.password_placeholder' | translate" name="password" type="password" required
+          [(ngModel)]="user.password" [disabled]="isAuthenticating">
       </label>
     </div>
 
     <div class="forgot-password-label" *ngIf="isLoggingIn">
       <a (click)="forgotPassword()">
-        Forgot password?
+        {{ 'login.forgot_password' | translate }}
       </a>
     </div>
 
     <div class="center">
       <button class="big btn-primary" [disabled]="!registerForm.form.valid || isAuthenticating">
         <i *ngIf="isAuthenticating" class="icon-rotate icon-spinner10" style="font-size: 1em"></i>
-        <span *ngIf="isAuthenticating">Loading</span>
-        <span *ngIf="!isAuthenticating">{{ isLoggingIn ? 'Login' : 'Register' }}</span>
+        <span *ngIf="isAuthenticating">{{ 'login.loading' | translate }}</span>
+        <span *ngIf="!isAuthenticating">{{ (isLoggingIn ? 'login.login' : 'login.register') | translate }}</span>
       </button>
       <button type="button" class="btn-plain" (click)="toggleDisplay()" [disabled]="!registerForm.form.valid && isAuthenticating">
-        <span>{{ isLoggingIn ? 'Sign Up' : 'Back to Login' }}</span>
+        <span>{{ (isLoggingIn ? 'login.signup' : 'login.back_to_login') | translate }}</span>
       </button>
     </div>
   </form>

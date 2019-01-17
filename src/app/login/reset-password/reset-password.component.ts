@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { LoginService, User } from '../../data';
 
@@ -20,6 +22,7 @@ export class ResetPasswordComponent {
     password: string;
 
     constructor(public store: LoginService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
@@ -28,13 +31,17 @@ export class ResetPasswordComponent {
         if (this.email) {
             this.store.sendResetPasswordToken(this.email)
                 .then(
-                () => { alert('Password reset token sent to your email address. Check your mail box and spams.') },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        var msg: string = this._translate.instant('users.message.success.token_sent');
+                        alert(msg);
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('users.message.error.send_token');
+                        alert(msg);
                     }
-                    alert('An error occurred while sending reset password token.');
-                }
                 );
         }
     }
@@ -42,13 +49,16 @@ export class ResetPasswordComponent {
     submit() {
         this.store.resetPassword(this.email, this.token, this.password)
             .then(
-            () => { },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                () => {
+                    this._router.navigate(['']);
+                },
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    var msg: string = this._translate.instant('users.message.error.reset_password');
+                    alert(msg);
                 }
-                alert('An error occurred while resetting password.');
-            }
             );
     }
 

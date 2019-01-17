@@ -1,3 +1,160 @@
 {
-    "app.top_bar.title": "Accueil {{value}}"
+    "app": {
+        "top_bar": {
+            "home.title": "Accueil",
+            "logout.title": "Déconnexion"
+        },
+        "message": {
+            "logout": "Voulez-vous vraiment vous déconnecter ?",
+            "confirm": {
+                "create": "Confirmer la création ?",
+                "update": "Confirmer la mise à jour ?",
+                "delete": "Confirmer la suppression ?"
+            },
+            "warning": {
+                "missing_field": "Entrez toutes les informations nécessaires",
+                "invalid_format": "La valeur fournie ne correspond pas au format de type sélectionné"
+            },
+            "error": {
+                "loading": "Une erreur s'est produite lors de la création de la ressource",
+                "creation": "Une erreur s'est produite lors de la création de la ressource",
+                "update": "Une erreur s'est produite lors de la mise à jour de la ressource.",
+                "deletion": "Une erreur s'est produite lors de la suppression de la sélection"
+            }
+        },
+        "common": {
+            "add": "Ajouter",
+            "delete": "Supprimer selection",
+            "confirm": "Confirmer",
+            "save": "Sauvegarder",
+            "cancel": "Annuler"
+        }
+    },
+    "entity": {
+        "id": "Identifiant: ",
+        "created_at": "Créé à : ",
+        "created_by": "Créé par : ",
+        "modified_at": "Modifié à : ",
+        "modified_by": "Modifié par : ",
+        "owner": "Propriétaire : ",
+        "user": {
+            "username": "Nom d'utilisateur : ",
+            "username_placeholder": "Nom d'utilisateur",
+            "email": "Adresse email : ",
+            "email_placeholder": "Adresse email",
+            "verified": "Compte vérifié : ",
+            "active": "Compte actif : ",
+            "role": "Role : "
+        },
+        "role": {
+            "name": "Nom : ",
+            "permissions": "Permissions : "
+        },
+        "type": {
+            "name": "Nom : "
+        },
+        "parameter": {
+            "name": "Nom : ",
+            "description": "Description : ",
+            "type": "Type : ",
+            "value": "Valeur : "
+        }
+    },
+    "login": {
+        "email": "Adresse email : ",
+        "email_placeholder": "Adresse email",
+        "password": "Mot de passe : ",
+        "password_placeholder": "Mot de passe",
+        "forgot_password": "Mot de passe oublié ?",
+        "loading": "Chargement",
+        "login": "Connexion",
+        "register": "Inscription",
+        "signup": "S'inscrire",
+        "back_to_login": "Retour",
+        "message": {
+            "success": {
+                "signup": "Votre compte a été créé avec succès. Un email a été envoyé pour activer votre compte.",
+                "token_sent": "Un code de vérification a été envoyé à votre adresse email. Vérifiez vos messages et spams."
+            },
+            "warning": {
+                "valid_email": "Entrez une adresse email valide"
+            },
+            "error": {
+                "login": "Malheureusement, nous n'avons pas pu vous connecter au système.",
+                "load_profile": "Une erreur s'est produite lors du chargement des informations du profil utilisateur.",
+                "send_token": "Une erreur s'est produite lors de l'envoi du code de vérification.",
+                "verification": "Impossible de vérifier l'adresse email du compte. Vérifiez les informations saisies ou renvoyez le code.",
+                "signup": "Malheureusement, nous n'avons pas pu créer votre compte."
+            }
+        }
+    },
+    "register": {
+        "title": "Enregistrement complet",
+        "resend_token": "Renvoyer l'e-mail de vérification",
+        "token": "Code",
+        "token_placeholder": "Code",
+        "complete": "Valider",
+        "message": {
+            "success": {
+                "token_sent": "Jeton de vérification envoyé à votre adresse email. Vérifiez vos messages et spams."
+            },
+            "warning": {
+                "empty_token": "Le code ne peut être vide !"
+            },
+            "error": {
+                "load_profile": "Une erreur s'est produite lors du chargement des informations du profil utilisateur.",
+                "send_token": "Une erreur s'est produite lors de l'envoi du code de vérification.",
+                "verification": "Impossible de vérifier l'adresse e-mail du compte. Vérifiez les informations saisies ou renvoyez le code de vérification."
+            }
+        }
+    },
+    "users": {
+        "management": "Gestion des utilisateurs",
+        "profile": "Profil utilisateur",
+        "password_management": "Changement du mot de passe",
+        "email": "Adresse email : ",
+        "email_placeholder": "Adresse email",
+        "token": "Code : ",
+        "token_placeholder": "Code",
+        "old_password": "Ancien mot de passe : ",
+        "old_password_placeholder": "Mot de passe actuel",
+        "new_password": "Nouveau mot de passe : ",
+        "new_password_placeholder": "Nouveau mot de passe",
+        "confirm_password": "Confirmez mot de passe : ",
+        "confirm_password_placeholder": "Mot de passe",
+        "reset_password_management": "Réinitialiser mot de passe",
+        "resend_reset_token": "Renvoyer l'e-mail de réinitialisation du mot de passe",
+        "reset_password": "Réinitialiser",
+        "message": {
+            "success": {
+                "token_sent": "Un code de réinitialisation de mot de passe a été envoyé à votre adresse email. Vérifiez vos messages et spams."
+            },
+            "error": {
+                "send_token": "Une erreur s'est produite lors de l'envoi du code de réinitialisation du mot de passe.",
+                "reset_password": "Une erreur s'est produite lors de la réinitialisation du mot de passe."
+            }
+        }
+    },
+    "roles": {
+        "management": "Gestion des rôles",
+        "info": "Role"
+    },
+    "types": {
+        "management": "Gestion des types de données",
+        "info": "Type"
+    },
+    "parameters": {
+        "management": "Gestion des paramètres",
+        "info": "Paramètre"
+    },
+    "home": {
+        "welcome": "Bienvenue",
+        "logout": "Déconnexion",
+        "profile": "Profil",
+        "password": "Mot de passe",
+        "roles": "Roles",
+        "types": "Types",
+        "users": "Utilisateurs",
+        "parameters": "Paramètres"
+    }
 }

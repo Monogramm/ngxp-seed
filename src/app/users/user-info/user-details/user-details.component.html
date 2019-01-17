@@ -1,55 +1,55 @@
 <div *ngIf="user">
     <label *ngIf="user.id">
-        Id:
+        {{ 'entity.id' | translate }}
         <span>{{ user.id }}</span>
     </label>
 
     <label>
-        Username:
-        <input placeholder="Username" name="username" required autocapitalize="off" autocorrect="off" [disabled]="user.id != null"
-            [(ngModel)]="user.username">
+        {{ 'entity.user.username' | translate }}
+        <input [placeholder]="'entity.user.username_placeholder' | translate" name="username" required autocapitalize="off"
+            autocorrect="off" [disabled]="user.id != null" [(ngModel)]="user.username">
     </label>
     <label>
-        Email:
-        <input placeholder="Email Address" name="email" type="email" required autocapitalize="off" autocorrect="off" [disabled]="user.id != null"
-            [(ngModel)]="user.email">
+        {{ 'entity.user.email' | translate }}
+        <input [placeholder]="'entity.user.email_placeholder' | translate" name="email" type="email" required
+            autocapitalize="off" autocorrect="off" [disabled]="user.id != null" [(ngModel)]="user.email">
     </label>
 
     <label *ngIf="user.id">
-        Is verified:
+        {{ 'entity.user.verified' | translate }}
         <span>{{ user.verified }}</span>
     </label>
 
     <label *ngIf="user.id">
-        Is active:
+        {{ 'entity.user.active' | translate }}
         <span>{{ user.active }}</span>
     </label>
 
     <label>
-        Role:
+        {{ 'entity.user.role' | translate }}
         <span>{{ user.role }}</span>
     </label>
 
     <label *ngIf="user.id">
-        Created At:
-        <span>{{ user.createdAt }}</span>
+        {{ 'entity.created_at' | translate }}
+        <span>{{ user.createdAt | date:'short' }}</span>
     </label>
     <label *ngIf="user.id">
-        Created By:
+        {{ 'entity.created_by' | translate }}
         <span>{{ user.createdBy }}</span>
     </label>
 
     <label *ngIf="user.id">
-        Modified At:
-        <span>{{ user.modifiedAt }}</span>
+        {{ 'entity.modified_at' | translate }}
+        <span>{{ user.modifiedAt | date:'short' }}</span>
     </label>
     <label *ngIf="user.id">
-        Modified By:
+        {{ 'entity.modified_by' | translate }}
         <span>{{ user.modifiedBy }}</span>
     </label>
 
     <label *ngIf="user.id">
-        Owner:
+        {{ 'entity.owner' | translate }}
         <span>{{ user.owner }}</span>
     </label>
 

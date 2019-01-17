@@ -13,6 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
+import { LocaleService } from './locale.service';
 import { AppRoutingModule } from './app-routing.module';
 
 import { SharedModule, GuestGuard, AuthGuard, VerifyGuard, RoleGuard } from './shared';
@@ -65,7 +66,8 @@ registerLocaleData(localeFr, 'fr');
     ],
     providers: [
         { provide: LOCALE_ID, useValue: AppComponent.LOCALE },
-        AppService, GuestGuard, AuthGuard, VerifyGuard, RoleGuard
+        AppService, LocaleService,
+        GuestGuard, AuthGuard, VerifyGuard, RoleGuard
     ],
     bootstrap: [AppComponent]
 })

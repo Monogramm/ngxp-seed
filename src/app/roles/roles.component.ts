@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Role, RoleService } from '../data/roles';
 
 import { Logger } from '../shared';
@@ -17,7 +19,9 @@ export class RolesComponent implements OnInit {
     isLoading = false;
     isConfirmingDeletion = false;
 
-    constructor(private _store: RoleService) { }
+    constructor(
+        private _translate: TranslateService,
+        private _store: RoleService) { }
 
     ngOnInit() {
         this.isLoading = true;
@@ -29,7 +33,8 @@ export class RolesComponent implements OnInit {
 
     add() {
         if (this.role.trim() === '') {
-            alert('Enter a role item');
+            var msg: string = this._translate.instant('app.message.warning.missing_field');
+            alert(msg);
             return;
         }
 
@@ -39,7 +44,8 @@ export class RolesComponent implements OnInit {
             if (Logger.isEnabled) {
                 Logger.dir(error);
             }
-            alert('An error occurred while adding a role to your list.');
+            var msg: string = this._translate.instant('app.message.error.creation');
+            alert(msg);
         });
     }
 
@@ -59,7 +65,8 @@ export class RolesComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        alert('An error occurred while deleting roles.');
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
                     }
                 );
             } else {

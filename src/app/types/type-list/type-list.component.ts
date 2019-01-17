@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { Type, TypeService } from '../../data';
 
@@ -15,6 +17,7 @@ export class TypeListComponent {
     @Output() loaded = new EventEmitter();
 
     constructor(public store: TypeService,
+        private _translate: TranslateService,
         private _router: Router) { }
 
     ngOnInit() {
@@ -35,18 +38,20 @@ export class TypeListComponent {
     }
 
     delete(type: Type) {
-        if (confirm('Confirm deletion of type "' + type.name + '" ?')) {
+        var msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
             type.deleting = true;
 
             this.store.delete(type)
                 .then(
-                () => { type.deleting = false; type.deleted = true; },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { type.deleting = false; type.deleted = true; },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
                     }
-                    alert('An error occurred while deleting an item from your list.');
-                }
                 );
         }
     }

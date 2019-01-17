@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { Role, RoleService } from '../../data';
 
@@ -15,19 +17,20 @@ export class RoleListComponent {
     @Output() loaded = new EventEmitter();
 
     constructor(public store: RoleService,
+        private _translate: TranslateService,
         private _router: Router) { }
 
     ngOnInit() {
         this.store.load()
             .then(
-            () => this.loaded.emit('loaded'),
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                () => this.loaded.emit('loaded'),
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    alert('An error occurred while loading items.');
+                    this.loaded.emit('loaded');
                 }
-                alert('An error occurred while loading items.');
-                this.loaded.emit('loaded');
-            }
             );
     }
 
@@ -44,18 +47,20 @@ export class RoleListComponent {
     }
 
     delete(role: Role) {
-        if (confirm('Confirm deletion of role "' + role.name + '" ?')) {
+        var msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
             role.deleting = true;
 
             this.store.delete(role)
                 .then(
-                () => { role.deleting = false; role.deleted = true; },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { role.deleting = false; role.deleted = true; },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
                     }
-                    alert('An error occurred while deleting an item.');
-                }
                 );
         }
     }

@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { User, UserService } from '../../data';
 
@@ -19,6 +21,7 @@ export class UserInfoComponent implements OnInit {
     user: User;
 
     constructor(public store: UserService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
@@ -29,55 +32,62 @@ export class UserInfoComponent implements OnInit {
             .subscribe((data: any) => {
                 this.user = this.store.newModel(data);
             },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
-                }
-                alert('An error occurred while loading the profile information.');
-                this._location.back();
-            }
-        );
-    }
-
-    delete(user: User) {
-        if (confirm('Confirm deletion of user "' + user.username + '" ?')) {
-            user.deleting = true;
-
-            this.store.delete(user)
-                .then(
-                () => { },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    alert('An error occurred while deleting a user.');
+                    var msg: string = this._translate.instant('app.message.error.loading');
+                    alert(msg);
+                    this._location.back();
                 }
+            );
+    }
+
+    delete(user: User) {
+        var msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
+            user.deleting = true;
+
+            this.store.delete(user)
+                .then(
+                    () => { },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
+                    }
                 );
         }
     }
 
     submit(user: User) {
-        if (user.id === null && confirm('Confirm creation of user "' + user.username + '" ?')) {
+        var msgCreate: string = this._translate.instant('app.message.confirm.create');
+        var msgUpdate: string = this._translate.instant('app.message.confirm.update');
+        if (user.id === null && confirm(msgCreate)) {
             this.store.add(user)
                 .then(
-                () => { },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.creation');
+                        alert(msg);
                     }
-                    alert('An error occurred while adding an user.');
-                }
                 );
-        } else if (confirm('Confirm update of user "' + user.username + '" ?')) {
+        } else if (confirm(msgUpdate)) {
             this.store.update(user)
                 .then(
-                () => { },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.update');
+                        alert(msg);
                     }
-                    alert('An error occurred while updating a user.');
-                }
                 );
         }
     }

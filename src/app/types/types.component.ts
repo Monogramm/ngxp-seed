@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Type, TypeService } from '../data/types';
 
 import { Logger } from '../shared';
@@ -17,7 +19,9 @@ export class TypesComponent implements OnInit {
     isLoading = false;
     isConfirmingDeletion = false;
 
-    constructor(private _store: TypeService) { }
+    constructor(
+        private _translate: TranslateService,
+        private _store: TypeService) { }
 
     ngOnInit() {
         this.isLoading = true;
@@ -29,7 +33,8 @@ export class TypesComponent implements OnInit {
 
     add() {
         if (this.type.trim() === '') {
-            alert('Enter a type item');
+            var msg: string = this._translate.instant('app.message.warning.missing_field');
+            alert(msg);
             return;
         }
 
@@ -40,7 +45,8 @@ export class TypesComponent implements OnInit {
                 if (Logger.isEnabled) {
                     Logger.dir(error);
                 }
-                alert('An error occurred while adding a type to your list.');
+                var msg: string = this._translate.instant('app.message.error.creation');
+                alert(msg);
             });
     }
 
@@ -52,7 +58,7 @@ export class TypesComponent implements OnInit {
     toggleMassDelete() {
         if (this.isConfirmingDeletion) {
             let result = this._store.deleteSelection();
-            
+
             if (result) {
                 result.then(
                     () => { this.isConfirmingDeletion = false },
@@ -60,7 +66,8 @@ export class TypesComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        alert('An error occurred while deleting types.');
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
                     }
                 );
             } else {

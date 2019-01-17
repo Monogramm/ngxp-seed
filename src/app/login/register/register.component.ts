@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { LoginService, User, UserService } from '../../data';
 
@@ -20,6 +22,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(public store: LoginService,
         public userService: UserService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
@@ -30,13 +33,14 @@ export class RegisterComponent implements OnInit {
             .subscribe((data: any) => {
                 this.user = this.userService.newModel(data);
             },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    var msg: string = this._translate.instant('register.message.error.load_profile');
+                    alert(msg);
+                    this._location.back();
                 }
-                alert('An error occurred while loading the profile information.');
-                this._location.back();
-            }
             );
     }
 
@@ -44,33 +48,39 @@ export class RegisterComponent implements OnInit {
         if (this.user.email) {
             this.store.sendVerificationToken(this.user.email)
                 .then(
-                () => { alert('Account verification token sent to your email address. Check your mail box and spams.') },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        var msg: string = this._translate.instant('register.message.success.token_sent');
+                        alert(msg);
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('register.message.error.send_token');
+                        alert(msg);
                     }
-                    alert('An error occurred while sending account verification token.');
-                }
-            );
+                );
         }
     }
 
     submit() {
         if (!!!this.token) {
-            alert('The token cannot be empty!');
+            var msg: string = this._translate.instant('register.message.warning.empty_token');
+            alert(msg);
             return;
         }
         this.store.verify(this.user.id, this.token)
             .then(
-            () => {
-                this._router.navigate(['']);
-            },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                () => {
+                    this._router.navigate(['']);
+                },
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    var msg: string = this._translate.instant('register.message.error.verification');
+                    alert(msg);
                 }
-                alert('Could not verify the account. Check entered information or resend token.');
-            }
             );
     }
 

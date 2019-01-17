@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { Parameter, ParameterService } from '../../data';
 
@@ -19,6 +21,7 @@ export class ParameterInfoComponent implements OnInit {
     parameter: Parameter;
 
     constructor(public store: ParameterService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
@@ -29,28 +32,31 @@ export class ParameterInfoComponent implements OnInit {
             .subscribe((data: any) => {
                 this.parameter = this.store.newModel(data);
             },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
-                }
-                alert('An error occurred while loading a parameter.');
-                this._location.back();
-            });
-    }
-
-    delete(parameter: Parameter) {
-        if (confirm('Confirm deletion of parameter "' + parameter.name + '" ?')) {
-            parameter.deleting = true;
-
-            this.store.delete(parameter)
-                .then(
-                () => { },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    alert('An error occurred while deleting a parameter.');
-                }
+                    var msg: string = this._translate.instant('app.message.error.loading');
+                    alert(msg);
+                    this._location.back();
+                });
+    }
+
+    delete(parameter: Parameter) {
+        var msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
+            parameter.deleting = true;
+
+            this.store.delete(parameter)
+                .then(
+                    () => { },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
+                    }
                 );
         }
     }
@@ -59,24 +65,26 @@ export class ParameterInfoComponent implements OnInit {
         if (parameter.id === null) {
             this.store.add(parameter.name)
                 .then(
-                () => { this._location.back(); },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { this._location.back(); },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.creation');
+                        alert(msg);
                     }
-                    alert('An error occurred while adding an parameter.');
-                }
                 );
         } else {
             this.store.update(parameter)
                 .then(
-                () => { this._location.back(); },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { this._location.back(); },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.update');
+                        alert(msg);
                     }
-                    alert('An error occurred while updating a parameter.');
-                }
                 );
         }
     }

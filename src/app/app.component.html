@@ -1,19 +1,18 @@
 <div class="top-bar" [hidden]="!isLoggedIn()">
   <div class="menu">
-    <button class="btn btn-info" [routerLink]="['/']" [title]="'app.top_bar.title' | translate:i18nHomeParam">
-      <i class="icon-home"></i>
-    </button>
+    <span class="link" [routerLink]="['/']" [title]="'app.top_bar.home.title' | translate">
+      <i class="link icon-home"></i>
+    </span>
   </div>
 
   <div class="title">
     <h1><img src="./assets/logo.svg" [alt]="appName" /></h1>
   </div>
 
-  <div class="logoff">
-    <button class="btn btn-danger" (click)="logoff()">
-      <i class="icon-enter"></i>
-      Log off
-    </button>
+  <div class="logout">
+    <span class="link" (click)="logout()" [title]="'app.top_bar.logout.title' | translate">
+      <i class="link icon-enter"></i>
+    </span>
   </div>
 </div>
 

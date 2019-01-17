@@ -261,22 +261,22 @@ export class BackendService extends AbstractBackendService {
 
         switch (error.status) {
             case 400:
-                alert("An internal error occurred while sending your request.");
+                Logger.log("An internal error occurred while sending your request.");
                 break;
             case 401:
-                alert("You are not authorized to access this resource.");
+                Logger.log("You are not authorized to access this resource.");
                 break;
             case 403:
-                alert("Access to this resource is forbidden.");
+                Logger.log("Access to this resource is forbidden.");
                 break;
             case 404:
-                alert("This resource does not seem to exist anymore.");
+                Logger.log("This resource does not seem to exist anymore.");
                 break;
             case 409:
-                alert("Your request is not valid Check that you have filled in all the fields.");
+                Logger.log("Your request is not valid. Check that you have filled in all the fields.");
                 break;
             case 500:
-                alert("An internal error occurred while processing your request.");
+                Logger.log("An internal error occurred while processing your request.");
                 break;
         }
 

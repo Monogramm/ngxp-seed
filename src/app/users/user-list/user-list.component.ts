@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { User, UserService } from '../../data';
 
@@ -15,6 +17,7 @@ export class UserListComponent implements OnInit {
     @Output() loaded = new EventEmitter();
 
     constructor(public store: UserService,
+        private _translate: TranslateService,
         private _router: Router) { }
 
     ngOnInit() {
@@ -23,18 +26,20 @@ export class UserListComponent implements OnInit {
     }
 
     delete(user: User) {
-        if (confirm('Confirm deletion of user "' + user.username + '" ?')) {
+        var msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
             user.deleting = true;
 
             this.store.delete(user)
                 .then(
-                () => { },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
                     }
-                    alert('An error occurred while deleting a user.');
-                }
                 );
         }
     }

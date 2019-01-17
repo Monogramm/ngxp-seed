@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Parameter, ParameterService } from '../data/parameters';
 
-import { Logger } from '../shared';
+import { Logger, InputUtils } from '../shared';
 
 import { ParameterListComponent } from './parameter-list';
 import { ParameterDetailsComponent } from './parameter-info';
@@ -28,7 +30,9 @@ export class ParametersComponent implements OnInit {
     isLoading = false;
     isConfirmingDeletion = false;
 
-    constructor(private _store: ParameterService) { }
+    constructor(
+        private _translate: TranslateService,
+        private _store: ParameterService) { }
 
     ngOnInit() {
         this.isLoading = true;
@@ -66,19 +70,21 @@ export class ParametersComponent implements OnInit {
     add() {
         let name = this.newParameter.name;
         if (name === null || name.trim() === '') {
-            alert('Enter a parameter item');
+            var msg: string = this._translate.instant('app.message.warning.missing_field');
+            alert(msg);
             return;
         }
         name = name.trim();
 
         let value = this.newParameter.value;
         if (value !== null) {
-            value = this.convertValue(this.newParameter.type, this.newParameter.value);
+            value = InputUtils.convertValue(this.newParameter.type, this.newParameter.value);
         }
 
         // check if data format match selected type
         if (!this.parameterDetails.isValueValid(value)) {
-            alert('Value "' + value + '" doesn\'t match selected type format.');
+            var msg: string = this._translate.instant('app.message.warning.invalid_format');
+            alert(msg);
             return;
         } else {
             this.newParameter.name = name;
@@ -91,66 +97,10 @@ export class ParametersComponent implements OnInit {
                 if (Logger.isEnabled) {
                     Logger.dir(error);
                 }
-                alert('An error occurred while adding a parameter to your list.');
+                var msg: string = this._translate.instant('app.message.error.creation');
+                alert(msg);
             });
         }
-    }
-
-    private convertValue(type: string, value: any): any {
-        let finalValue: any = null;
-
-        switch (type) {
-            case 'DATE_TIME':
-                if (value instanceof Date) {
-                    finalValue = value.getUTCFullYear() +
-                        '-' + ParametersComponent.pad(value.getUTCMonth() + 1) +
-                        '-' + ParametersComponent.pad(value.getUTCDate()) +
-                        ' ' + ParametersComponent.pad(value.getUTCHours()) +
-                        ':' + ParametersComponent.pad(value.getUTCMinutes());
-                } else {
-                    finalValue = String(value).trim();
-                }
-                break;
-
-            case 'TIME':
-                if (value instanceof Date) {
-                    finalValue = ParametersComponent.pad(value.getUTCHours()) +
-                        ':' + ParametersComponent.pad(value.getUTCMinutes());
-                } else {
-                    finalValue = String(value).trim();
-                }
-                break;
-
-            case 'DATE':
-                if (value instanceof Date) {
-                    finalValue = ParametersComponent.pad(value.getUTCMonth()) +
-                        ':' + ParametersComponent.pad(value.getUTCDate());
-                } else {
-                    finalValue = String(value).trim();
-                }
-                break;
-
-            case 'BOOLEAN':
-                if (typeof value === 'boolean') {
-                    finalValue = value ? 1 : 0;
-                } else {
-                    finalValue = String(value).trim();
-                }
-                break;
-
-            default:
-                finalValue = String(value).trim();
-
-        }
-
-        return finalValue;
-    }
-
-    private static pad(number) {
-        if (number < 10) {
-            return '0' + number;
-        }
-        return number;
     }
 
     cancelMassDelete() {
@@ -169,7 +119,8 @@ export class ParametersComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        alert('An error occurred while deleting parameters.');
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
                     }
                 );
             } else {

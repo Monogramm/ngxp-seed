@@ -1,3 +1,160 @@
 {
-    "app.top_bar.title": "Go to {{value}} home"
+    "app": {
+        "top_bar": {
+            "home.title": "Go to home",
+            "logout.title": "Logout"
+        },
+        "message": {
+            "logout": "Do you really want to log off?",
+            "confirm": {
+                "create": "Confirm creation?",
+                "update": "Confirm update?",
+                "delete": "Confirm deletion?"
+            },
+            "warning": {
+                "missing_field": "Enter all needed information",
+                "invalid_format": "Value provided doesn't match selected type format"
+            },
+            "error": {
+                "loading": "An error occurred while loading the resource",
+                "creation": "An error occurred while creating the resource",
+                "update": "An error occurred while updating the resource",
+                "deletion": "An error occurred while deleting the selection"
+            }
+        },
+        "common": {
+            "add": "Add",
+            "delete": "Delete selection",
+            "confirm": "Confirm",
+            "save": "Save",
+            "cancel": "Cancel"
+        }
+    },
+    "entity": {
+        "id": "Id: ",
+        "created_at": "Created at: ",
+        "created_by": "Created by: ",
+        "modified_at": "Modified at: ",
+        "modified_by": "Modified by: ",
+        "owner": "Owner: ",
+        "user": {
+            "username": "Username: ",
+            "username_placeholder": "Username",
+            "email": "Email: ",
+            "email_placeholder": "Email",
+            "verified": "Is verified: ",
+            "active": "Is active: ",
+            "role": "Role: "
+        },
+        "role": {
+            "name": "Name: ",
+            "permissions": "Permissions: "
+        },
+        "type": {
+            "name": "Name: "
+        },
+        "parameter": {
+            "name": "Name: ",
+            "description": "Description: ",
+            "type": "Type: ",
+            "value": "Value: "
+        }
+    },
+    "login": {
+        "email": "Email: ",
+        "email_placeholder": "Email",
+        "password": "Password: ",
+        "password_placeholder": "Password",
+        "forgot_password": "Forgot password?",
+        "loading": "Loading",
+        "login": "Login",
+        "register": "Register",
+        "signup": "Sign Up",
+        "back_to_login": "Back to Login",
+        "message": {
+            "success": {
+                "signup": "Your account was successfully created. An email has been sent to activate your account.",
+                "token_sent": "Verification token sent to your email address. Check your mail box and spams."
+            },
+            "warning": {
+                "valid_email": "Enter a valid email address"
+            },
+            "error": {
+                "login": "Unfortunately we were not able to log you into the system.",
+                "load_profile": "An error occurred while loading the profile information.",
+                "send_token": "An error occurred while sending verification token.",
+                "verification": "Could not verify the account email address. Check entered information or resend token.",
+                "signup": "Unfortunately we were unable to create your account."
+            }
+        }
+    },
+    "register": {
+        "title": "Complete registration",
+        "resend_token": "Resend verification email",
+        "token": "Token",
+        "token_placeholder": "Token",
+        "complete": "Complete",
+        "message": {
+            "success": {
+                "token_sent": "Verification token sent to your email address. Check your mail box and spams."
+            },
+            "warning": {
+                "empty_token": "The token cannot be empty!"
+            },
+            "error": {
+                "load_profile": "An error occurred while loading the profile information.",
+                "send_token": "An error occurred while sending verification token.",
+                "verification": "Could not verify the account email address. Check entered information or resend token."
+            }
+        }
+    },
+    "users": {
+        "management": "Users management",
+        "profile": "User profile",
+        "password_management": "Password management: ",
+        "email": "Email: ",
+        "email_placeholder": "Email",
+        "token": "Token: ",
+        "token_placeholder": "Token",
+        "old_password": "Current password: ",
+        "old_password_placeholder": "Current password",
+        "new_password": "New password: ",
+        "new_password_placeholder": "New password",
+        "confirm_password": "Confirm password: ",
+        "confirm_password_placeholder": "Confirm password",
+        "reset_password_management": "Reset password",
+        "resend_reset_token": "Resend password reset token email",
+        "reset_password": "Reset",
+        "message": {
+            "success": {
+                "token_sent": "Password reset token sent to your email address. Check your mail box and spams."
+            },
+            "error": {
+                "send_token": "An error occurred while sending reset password token.",
+                "reset_password": "An error occurred while resetting password."
+            }
+        }
+    },
+    "roles": {
+        "management": "Roles management",
+        "info": "Role"
+    },
+    "types": {
+        "management": "Types management",
+        "info": "Type"
+    },
+    "parameters": {
+        "management": "Parameters management",
+        "info": "Parameter"
+    },
+    "home": {
+        "welcome": "Welcome",
+        "logout": "Log out",
+        "profile": "Profile",
+        "password": "Password",
+        "roles": "Roles",
+        "types": "Types",
+        "users": "Users",
+        "parameters": "Parameters"
+    }
 }

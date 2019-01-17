@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { Role, RoleService } from '../../data';
 
@@ -19,6 +21,7 @@ export class RoleInfoComponent implements OnInit {
     role: Role;
 
     constructor(public store: RoleService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
@@ -29,28 +32,31 @@ export class RoleInfoComponent implements OnInit {
             .subscribe((data: any) => {
                 this.role = this.store.newModel(data);
             },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
-                }
-                alert('An error occurred while loading a role.');
-                this._location.back();
-            });
-    }
-
-    delete(role: Role) {
-        if (confirm('Confirm deletion of role "' + role.name + '" ?')) {
-            role.deleting = true;
-
-            this.store.delete(role)
-                .then(
-                () => { },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    alert('An error occurred while deleting a role.');
-                }
+                    var msg: string = this._translate.instant('app.message.error.loading');
+                    alert(msg);
+                    this._location.back();
+                });
+    }
+
+    delete(role: Role) {
+        var msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
+            role.deleting = true;
+
+            this.store.delete(role)
+                .then(
+                    () => { },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
+                    }
                 );
         }
     }
@@ -59,24 +65,26 @@ export class RoleInfoComponent implements OnInit {
         if (role.id === null) {
             this.store.add(role.name)
                 .then(
-                () => { this._location.back(); },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { this._location.back(); },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.creation');
+                        alert(msg);
                     }
-                    alert('An error occurred while adding an role.');
-                }
                 );
         } else {
             this.store.update(role)
                 .then(
-                () => { this._location.back(); },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => { this._location.back(); },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.update');
+                        alert(msg);
                     }
-                    alert('An error occurred while updating a role.');
-                }
                 );
         }
     }

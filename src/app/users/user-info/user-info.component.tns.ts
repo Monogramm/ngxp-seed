@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -35,6 +37,7 @@ export class UserInfoComponent implements OnInit {
     isLoading = false;
 
     constructor(public store: UserService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _loginService: LoginService,
@@ -78,8 +81,11 @@ export class UserInfoComponent implements OnInit {
             this.showActivityIndicator();
             this.store.delete(user)
                 .then(
-                () => this.hideActivityIndicator(),
-                () => { alert('An error occurred while deleting a user.'); this.hideActivityIndicator(); }
+                    () => this.hideActivityIndicator(),
+                    () => {
+                        alert('An error occurred while deleting a user.');
+                        this.hideActivityIndicator();
+                    }
                 );
         }
     }
@@ -89,14 +95,20 @@ export class UserInfoComponent implements OnInit {
         if (user.id === null) {
             this.store.add(user)
                 .then(
-                () => this.hideActivityIndicator(),
-                () => { alert('An error occurred while adding an user.'); this.hideActivityIndicator(); }
+                    () => this.hideActivityIndicator(),
+                    () => {
+                        alert('An error occurred while adding an user.');
+                        this.hideActivityIndicator();
+                    }
                 );
         } else {
             this.store.update(user)
                 .then(
-                () => this.hideActivityIndicator(),
-                () => { alert('An error occurred while updating a user.'); this.hideActivityIndicator(); }
+                    () => this.hideActivityIndicator(),
+                    () => {
+                        alert('An error occurred while updating a user.');
+                        this.hideActivityIndicator();
+                    }
                 );
         }
     }

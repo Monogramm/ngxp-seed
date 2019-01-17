@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Logger } from '../../shared/';
 import { Type, TypeService } from '../../data';
 
@@ -19,6 +21,7 @@ export class TypeInfoComponent implements OnInit {
     type: Type;
 
     constructor(public store: TypeService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
@@ -29,30 +32,33 @@ export class TypeInfoComponent implements OnInit {
             .subscribe((data: any) => {
                 this.type = this.store.newModel(data);
             },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
-                }
-                alert('An error occurred while loading a type.');
-                this._location.back();
-            });
-    }
-
-    delete(type: Type) {
-        if (confirm('Confirm deletion of type "' + type.name + '" ?')) {
-            type.deleting = true;
-
-            this.store.delete(type)
-                .then(
-                () => {
-                    this._location.back();
-                },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    alert('An error occurred while deleting a type.');
-                }
+                    var msg: string = this._translate.instant('app.message.error.loading');
+                    alert(msg);
+                    this._location.back();
+                });
+    }
+
+    delete(type: Type) {
+        var msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
+            type.deleting = true;
+
+            this.store.delete(type)
+                .then(
+                    () => {
+                        this._location.back();
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.deletion');
+                        alert(msg);
+                    }
                 );
         }
     }
@@ -61,28 +67,30 @@ export class TypeInfoComponent implements OnInit {
         if (type.id === null) {
             this.store.add(type.name)
                 .then(
-                () => {
-                    this._location.back();
-                },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        this._location.back();
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.creation');
+                        alert(msg);
                     }
-                    alert('An error occurred while adding an type.');
-                }
                 );
         } else {
             this.store.update(type)
                 .then(
-                () => {
-                    this._location.back();
-                },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        this._location.back();
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.update');
+                        alert(msg);
                     }
-                    alert('An error occurred while updating a type.');
-                }
                 );
         }
     }
