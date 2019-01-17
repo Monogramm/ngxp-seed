@@ -52,6 +52,8 @@
     "@angular/router": "^6.0.3",
     "@angular/service-worker": "^6.0.3",
     "@nativescript/schematics": "^0.4.0",
+    "@ngx-translate/core": "^10.0.2",
+    "@ngx-translate/http-loader": "^4.0.0",
     "core-js": "^2.5.4",
     "email-validator": "^2.0.4",
     "nativescript-angular": "~6.1.0",

@@ -15,14 +15,18 @@
             autocapitalize="off" autocorrect="off" [disabled]="user.id != null" [(ngModel)]="user.email">
     </label>
 
-    <label *ngIf="user.id">
+    <label *ngIf="user.id && user.verified">
         {{ 'entity.user.verified' | translate }}
-        <span>{{ user.verified }}</span>
     </label>
+    <div *ngIf="user.id && !user.verified">
+        <span></span>
+        <button class="btn btn" (click)="sendToken()">{{ 'register.resend_token' |
+            translate }}</button>
+    </div>
 
     <label *ngIf="user.id">
         {{ 'entity.user.active' | translate }}
-        <span>{{ user.active }}</span>
+        <input name="active" type="checkbox" required [disabled]="user.id != null" [(ngModel)]="user.active">
     </label>
 
     <label>

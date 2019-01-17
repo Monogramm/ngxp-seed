@@ -23,6 +23,7 @@
             }
         },
         "common": {
+            "operations": "Operations",
             "add": "Add",
             "delete": "Delete selection",
             "confirm": "Confirm",
@@ -42,8 +43,8 @@
             "username_placeholder": "Username",
             "email": "Email: ",
             "email_placeholder": "Email",
-            "verified": "Is verified: ",
-            "active": "Is active: ",
+            "verified": "Verified account",
+            "active": "Is account active: ",
             "role": "Role: "
         },
         "role": {
@@ -116,15 +117,22 @@
         "email_placeholder": "Email",
         "token": "Token: ",
         "token_placeholder": "Token",
-        "old_password": "Current password: ",
-        "old_password_placeholder": "Current password",
-        "new_password": "New password: ",
-        "new_password_placeholder": "New password",
-        "confirm_password": "Confirm password: ",
-        "confirm_password_placeholder": "Confirm password",
-        "reset_password_management": "Reset password",
-        "resend_reset_token": "Resend password reset token email",
-        "reset_password": "Reset",
+        "operations": {
+            "change_password": "Change password",
+            "verify": "Verify address email"
+        },
+        "details": "Details",
+        "password": {
+            "old_password": "Current password: ",
+            "old_password_placeholder": "Current password",
+            "new_password": "New password: ",
+            "new_password_placeholder": "New password",
+            "confirm_password": "Confirm password: ",
+            "confirm_password_placeholder": "Confirm password",
+            "reset_password_management": "Reset password",
+            "resend_reset_token": "Resend password reset token email",
+            "reset_password": "Reset"
+        },
         "message": {
             "success": {
                 "token_sent": "Password reset token sent to your email address. Check your mail box and spams."

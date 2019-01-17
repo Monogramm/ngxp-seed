@@ -4,6 +4,18 @@
     <hr>
 
     <div>
+        <h3>{{ 'app.common.operations' | translate }}</h3>
+        <ul *ngIf="user">
+            <li><a [routerLink]="['/user', user.id, 'password']">{{ 'users.operations.change_password' | translate }}</a></li>
+            <li *ngIf="user && !user.verified"><a [routerLink]="['/register', user.id]">{{ 'users.operations.verify' |
+                    translate }}</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div>
+        <h3>{{ 'users.details' | translate }}</h3>
         <i *ngIf="!!!user" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
         <user-details *ngIf="user" [user]="user"></user-details>
     </div>
