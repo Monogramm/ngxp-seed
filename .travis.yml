@@ -43,5 +43,5 @@ install:
 script:
     # - npm run tslint
     - npm run build
-    - npm run build.android
+    #- npm run build.android
     # - npm run test.android --emulator --justlaunch
