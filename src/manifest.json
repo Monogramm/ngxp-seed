@@ -1,6 +1,6 @@
 {
   "name": "ngxp-seed",
-  "short_name": "NGXP Seed PWA",
+  "short_name": "NGXP Seed",
   "theme_color": "#2e008b",
   "background_color": "#fafafa",
   "display": "standalone",
