@@ -82,6 +82,7 @@ For convenince below are the commands which you can execute from root directory.
 | npm start              | Starts web application at http://localhost:4200                                           |
 | npm run build          | Builds the web application and copy the built project in dist folder.                     |
 | npm run build.prod     | Performs AOT, prepares production build and then copy the built project in dist folder.   |
+| npm run build.prod.tgz | Prepares production build and archive dist folder as a tar gz.                            |
 | npm test               | Runs web application unit test cases. It will not generate code coverage report.          |
 | npm run test-cc        | Runs web application unit test cases and generates code coverage report.                  |
 

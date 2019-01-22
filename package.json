@@ -31,6 +31,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build.prod": "ng build --aot --prod",
+    "build.prod.tgz": "npm run build.prod && tar czf dist/app.tar.gz dist/app",
     "test": "ng test",
     "test-cc": "ng test --cc",
     "lint": "ng lint",
