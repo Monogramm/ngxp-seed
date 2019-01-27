@@ -14,7 +14,7 @@ export class TypeService {
 
     private _allItems: Array<Type> = [];
 
-    constructor(private backendService: BackendService, 
+    constructor(private backendService: BackendService,
         private worker: WorkerService) {
     }
 
@@ -25,29 +25,38 @@ export class TypeService {
         this._allItems.length = 0;
 
         return this.backendService.load(this.basePath, pagination)
-            .then(response => {
-                if (Logger.isEnabled) {
-                    Logger.log('response = ');
-                    Logger.dir(response);
+            .then(
+                (response) => {
+                    if (Logger.isEnabled) {
+                        Logger.log('response = ');
+                        Logger.dir(response);
+                    }
+
+                    var data;
+                    if (response instanceof Response || typeof response.json !== 'undefined') {
+                        data = response.json();
+                    } else if (response instanceof Array) {
+                        data = response;
+                    } else {
+                        throw Error('The loaded result does not match any expected format.');
+                    }
+
+                    data.forEach((rawEntry) => {
+                        let newEntry = this.newModel(rawEntry);
+
+                        this._allItems.push(newEntry);
+                    });
+
+                    this.publishUpdates();
+                },
+                (error: Promise<Response>) => {
+                    if (Logger.isEnabled) {
+                        Logger.log('Types not loaded');
+                    }
+                    this.publishUpdates();
+                    return Promise.reject(error);
                 }
-
-                var data;
-                if (response instanceof Response || typeof response.json !== 'undefined') {
-                    data = response.json();
-                } else if (response instanceof Array) {
-                    data = response;
-                } else {
-                    throw Error('The loaded result does not match any expected format.');
-                }
-
-                data.forEach((rawEntry) => {
-                    let newEntry = this.newModel(rawEntry);
-
-                    this._allItems.push(newEntry);
-                });
-
-                this.publishUpdates();
-            });
+            );
     }
 
     get(id: string) {
@@ -165,7 +174,7 @@ export class TypeService {
 
         return this.backendService
             .remove(
-            this.basePath, type.id
+                this.basePath, type.id
             )
             .then(res => res.json())
             .then(data => {

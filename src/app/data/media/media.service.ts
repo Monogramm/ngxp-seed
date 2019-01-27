@@ -28,29 +28,38 @@ export class MediaService {
         this._allItems.length = 0;
 
         return this.backendService.load(this.basePath, pagination)
-            .then(response => {
-                if (Logger.isEnabled) {
-                    Logger.log('response = ');
-                    Logger.dir(response);
+            .then(
+                (response) => {
+                    if (Logger.isEnabled) {
+                        Logger.log('response = ');
+                        Logger.dir(response);
+                    }
+
+                    var data: Array<any>;
+                    if (response instanceof Response || typeof response.json !== 'undefined') {
+                        data = response.json();
+                    } else if (response instanceof Array) {
+                        data = response;
+                    } else {
+                        throw Error('The loaded result does not match any expected format.');
+                    }
+
+                    data.forEach((rawEntry) => {
+                        let newEntry = this.newModel(rawEntry);
+
+                        this._allItems.push(newEntry);
+                    });
+
+                    this.publishUpdates();
+                },
+                (error: Promise<Response>) => {
+                    if (Logger.isEnabled) {
+                        Logger.log('Roles not loaded');
+                    }
+                    this.publishUpdates();
+                    return Promise.reject(error);
                 }
-
-                var data: Array<any>;
-                if (response instanceof Response || typeof response.json !== 'undefined') {
-                    data = response.json();
-                } else if (response instanceof Array) {
-                    data = response;
-                } else {
-                    throw Error('The loaded result does not match any expected format.');
-                }
-
-                data.forEach((rawEntry) => {
-                    let newEntry = this.newModel(rawEntry);
-
-                    this._allItems.push(newEntry);
-                });
-
-                this.publishUpdates();
-            });
+            );
     }
 
     get(id: string) {
