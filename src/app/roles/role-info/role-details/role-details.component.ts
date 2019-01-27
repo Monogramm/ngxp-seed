@@ -20,7 +20,10 @@ export class RoleDetailsComponent {
     private items: BehaviorSubject<Array<Permission>> = new BehaviorSubject([]);
     permissions: Array<Permission>;
 
-    constructor(public store: RoleService, public permissionService: PermissionService, private worker: WorkerService) {
+    constructor(
+        public store: RoleService, 
+        public permissionService: PermissionService, 
+        private worker: WorkerService) {
     }
 
     ngOnInit() {
