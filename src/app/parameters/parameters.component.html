@@ -2,41 +2,17 @@
   <h1>{{ 'parameters.management' | translate }}</h1>
 
   <div class="link-container">
-    <button (click)="isConfirmingAddition ? cancelAddition() : toggleAddition()" [type]="isConfirmingAddition ? 'reset' : 'submit'"
-      [class]="isConfirmingAddition ? 'btn-secondary' : 'btn-primary'" style="float: right;">
-      {{ (isConfirmingAddition ? 'app.common.cancel' : 'app.common.add') | translate }}
-    </button>
-  </div>
-
-  <br>
-
-  <form (submit)="add()" [class.hidden]="!isConfirmingAddition">
-
-    <parameter-details #parameterDetails [parameter]="newParameter"></parameter-details>
-
-    <div class="form-controls">
-      <button type="submit" class="left btn-primary" style="float: left;">
-        {{ 'app.common.confirm' | translate }}
-      </button>
-
-      <button (click)="cancelAddition()" type="reset" class="btn-secondary" style="float: right;">
-        {{ 'app.common.cancel' | translate }}
-      </button>
-    </div>
-  </form>
-
-  <hr>
-
-  <div class="link-container">
-    <button (click)="toggleMassDelete()" class="left btn-primary" [class.hidden]="!isConfirmingDeletion" style="float: left;">
-      {{ 'app.common.confirm' | translate }}
-    </button>
-
-    <button (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="isConfirmingDeletion ? 'btn-secondary' : 'btn-primary'"
-      style="float: right;">
+    <button (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="'left ' + (isConfirmingDeletion ? 'btn-secondary' : 'btn-primary')">
       {{ (isConfirmingDeletion ? 'app.common.cancel' : 'app.common.delete') | translate }}
     </button>
+
+    <button [routerLink]="['/parameter']" class="right btn-primary" [class.hidden]="isConfirmingDeletion">
+      {{ 'app.common.add' | translate }}</button>
+    <button (click)="toggleMassDelete()" class="right btn-primary" [class.hidden]="!isConfirmingDeletion">
+      {{ 'app.common.confirm' | translate }}</button>
   </div>
+
+  <hr>
 
   <parameter-list [showSelection]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></parameter-list>
 </div>

@@ -28,9 +28,20 @@ export class ParameterInfoComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.pipe(
-            switchMap((params: Params) => this.store.get(params['id'])))
+            switchMap((params: Params) => {
+                var entityId = params['id'];
+                if (entityId) {
+                    return this.store.get(params['id']);
+                } else {
+                    return Promise.resolve();
+                }
+            }))
             .subscribe((data: any) => {
-                this.parameter = this.store.newModel(data);
+                if (data) {
+                    this.parameter = this.store.newModel(data);
+                } else {
+                    this.parameter = new Parameter();
+                }
             },
                 (error) => {
                     if (Logger.isEnabled) {

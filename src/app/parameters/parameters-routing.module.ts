@@ -27,6 +27,15 @@ import { ParameterInfoComponent } from './parameter-info';
                 data: {
                     expectedRoles: ['Admin', 'Support']
                 }
+            },
+            {
+                path: 'parameter',
+                component: ParameterInfoComponent,
+                canActivate: [AuthGuard, VerifyGuard],
+                canLoad: [RoleGuard],
+                data: {
+                    expectedRoles: ['Admin', 'Support']
+                }
             }
         ])
     ],

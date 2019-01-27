@@ -2,26 +2,19 @@
 
 form {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-flow: wrap;
 }
 input, select {
   flex: 5;
   margin-right: 0.5em;
 }
 
-parameter-details {
-  width: 100%;
-  margin-bottom: 1em;
-}
-.form-controls {
-  width: 100%;
-}
-
 .link-container {
   overflow: hidden;
 }
-.link-container button {
+
+button.left {
+  float: left;
+}
+button.right {
   float: right;
 }

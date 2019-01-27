@@ -15,11 +15,11 @@ export class ParameterDTO {
 
 export class Parameter extends ParameterDTO {
     constructor(
-        public id: string,
-        public name: string,
-        public description: string,
-        public type: string,
-        public value: any,
+        public id: string = null,
+        public name: string = null,
+        public description: string = null,
+        public type: string = null,
+        public value: any = null,
         public selected: boolean = false,
         public deleted: boolean = false,
         public deleting: boolean = false,

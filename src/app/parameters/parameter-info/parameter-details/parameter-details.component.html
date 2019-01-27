@@ -11,7 +11,7 @@
 
     <label for="parameterDescription">
         {{ 'entity.parameter.description' | translate }}
-        <input name="parameterDescription" type="text" [(ngModel)]="parameter.description">
+        <textarea name="parameterDescription" type="text" [(ngModel)]="parameter.description"></textarea>
     </label>
 
     <label for="parameterType">
