@@ -28,9 +28,20 @@ export class UserInfoComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.pipe(
-            switchMap((params: Params) => this.store.get(params['id'])))
+            switchMap((params: Params) => {
+                var entityId = params['id'];
+                if (entityId) {
+                    return this.store.get(params['id']);
+                } else {
+                    return Promise.resolve();
+                }
+            }))
             .subscribe((data: any) => {
-                this.user = this.store.newModel(data);
+                if (data) {
+                    this.user = this.store.newModel(data);
+                } else {
+                    this.user = new User();
+                }
             },
                 (error) => {
                     if (Logger.isEnabled) {
@@ -63,32 +74,36 @@ export class UserInfoComponent implements OnInit {
     }
 
     submit(user: User) {
-        var msgCreate: string = this._translate.instant('app.message.confirm.create');
-        var msgUpdate: string = this._translate.instant('app.message.confirm.update');
-        if (user.id === null && confirm(msgCreate)) {
-            this.store.add(user)
-                .then(
-                    () => { },
-                    (error) => {
-                        if (Logger.isEnabled) {
-                            Logger.dir(error);
+        if (user.id === null) {
+            var msgCreate: string = this._translate.instant('app.message.confirm.create');
+            if (confirm(msgCreate)) {
+                this.store.add(user)
+                    .then(
+                        () => { },
+                        (error) => {
+                            if (Logger.isEnabled) {
+                                Logger.dir(error);
+                            }
+                            var msg: string = this._translate.instant('app.message.error.creation');
+                            alert(msg);
                         }
-                        var msg: string = this._translate.instant('app.message.error.creation');
-                        alert(msg);
-                    }
-                );
-        } else if (confirm(msgUpdate)) {
-            this.store.update(user)
-                .then(
-                    () => { },
-                    (error) => {
-                        if (Logger.isEnabled) {
-                            Logger.dir(error);
+                    );
+            }
+        } else {
+            var msgUpdate: string = this._translate.instant('app.message.confirm.update');
+            if (confirm(msgUpdate)) {
+                this.store.update(user)
+                    .then(
+                        () => { },
+                        (error) => {
+                            if (Logger.isEnabled) {
+                                Logger.dir(error);
+                            }
+                            var msg: string = this._translate.instant('app.message.error.update');
+                            alert(msg);
                         }
-                        var msg: string = this._translate.instant('app.message.error.update');
-                        alert(msg);
-                    }
-                );
+                    );
+            }
         }
     }
 

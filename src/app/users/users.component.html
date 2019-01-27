@@ -1,6 +1,11 @@
 <div class="list-page">
   <h1>{{ 'users.management' | translate }}</h1>
 
+  <div class="link-container">
+    <button [routerLink]="['/user']" class="right btn-primary" [class.hidden]="isConfirmingDeletion">
+      {{ 'app.common.add' | translate }}</button>
+  </div>
+
   <hr>
 
   <user-list [class.hidden]="store.count === 0" (loaded)="hideLoadingIndicator()"></user-list>

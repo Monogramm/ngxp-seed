@@ -3,9 +3,9 @@
 
     <hr>
 
-    <div>
+    <div *ngIf="user && user.id">
         <h3>{{ 'app.common.operations' | translate }}</h3>
-        <ul *ngIf="user">
+        <ul>
             <li><a [routerLink]="['/user', user.id, 'password']">{{ 'users.operations.change_password' | translate }}</a></li>
             <li *ngIf="user && !user.verified"><a [routerLink]="['/register', user.id]">{{ 'users.operations.verify' |
                     translate }}</a></li>

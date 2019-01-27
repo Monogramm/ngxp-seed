@@ -11,6 +11,10 @@ input {
 .link-container {
   overflow: hidden;
 }
-.link-container button {
+
+button.left {
+  float: left;
+}
+button.right {
   float: right;
 }

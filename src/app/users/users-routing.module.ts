@@ -26,6 +26,15 @@ import { UserPasswordComponent } from './user-password';
                 canActivate: [AuthGuard]
             },
             {
+                path: 'user',
+                component: UserInfoComponent,
+                canActivate: [AuthGuard, VerifyGuard],
+                canLoad: [RoleGuard],
+                data: {
+                    expectedRoles: ['Admin', 'Support']
+                }
+            },
+            {
                 path: 'user/:id/password',
                 component: UserPasswordComponent,
                 canActivate: [AuthGuard]
