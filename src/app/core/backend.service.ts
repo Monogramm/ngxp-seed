@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, ResponseOptions } from '@angular/http';
+import { Http, Headers, Response, ResponseOptions, RequestOptionsArgs } from '@angular/http';
 
 import { Logger } from '../shared/logger';
 import { Pagination } from '../shared/models';
@@ -74,18 +74,21 @@ export class BackendService extends AbstractBackendService {
             response = this._http.get(url, { headers: httpHeaders }).toPromise();
 
             if (this.fetchBehavior != BackendFetchMode.RemoteOnly) {
-                response.then((value: Response) => {
-                    this.pushToCachedStore(relativePath, value.json());
-                });
+                response.then(
+                    (value: Response) => {
+                        this.pushToCachedStore(relativePath, value.json());
+                    },
+                    (error: any) => {
+                        this.logError(error);
+                    }
+                );
             }
         }
-
-        response.catch(this.logError);
 
         return response;
     }
 
-    getById(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
+    getById(basePath: string, id: string, headers?: { header: string, value: any }[], args?: RequestOptionsArgs): Promise<any> {
         var relativePath: string = basePath + '/' + id;
 
         // Try the storage if allowed
@@ -104,7 +107,15 @@ export class BackendService extends AbstractBackendService {
 
             let url = this.config.apiURL + relativePath;
 
-            response = this._http.get(url, { headers: httpHeaders }).toPromise();
+            var httpArgs: RequestOptionsArgs;
+            if (args) {
+                httpArgs = args;
+            } else {
+                httpArgs = {};
+            }
+            httpArgs.headers = httpHeaders;
+
+            response = this._http.get(url, httpArgs).toPromise();
 
             if (this.fetchBehavior != BackendFetchMode.RemoteOnly) {
                 response.then((value: Response) => {
@@ -233,7 +244,11 @@ export class BackendService extends AbstractBackendService {
 
         if (headers) {
             for (var entry of headers) {
-                httpHeaders.append(entry.header, entry.value);
+                if (entry.value) {
+                    httpHeaders.set(entry.header, entry.value);
+                } else {
+                    httpHeaders.delete(entry.header);
+                }
             }
         }
 

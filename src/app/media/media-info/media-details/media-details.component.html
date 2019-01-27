@@ -1,0 +1,61 @@
+<div *ngIf="media">
+    <label *ngIf="media.id">
+        {{ 'entity.id' | translate }}
+        <span>{{ media.id }}</span>
+    </label>
+
+    <label>
+        {{ 'entity.media.name' | translate }}
+        <input [placeholder]="'entity.media.name_placeholder' | translate" name="name" required autocapitalize="off"
+            autocorrect="off" [disabled]="!media.id" [(ngModel)]="media.name">
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.media.description' | translate }}
+        <textarea [placeholder]="'entity.media.description_placeholder' | translate" name="description" [(ngModel)]="media.description"></textarea>
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.media.start_date' | translate }}
+        <input name="startDate" type="date" [ngModel]="media.startDate | date:'yyyy-MM-dd'" (ngModelChange)="media.startDate = $event">
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.media.end_date' | translate }}
+        <input name="endDate" type="date" [ngModel]="media.endDate | date:'yyyy-MM-dd'" (ngModelChange)="media.endDate = $event">
+    </label>
+
+    <label *ngIf="!media.id">
+        {{ 'entity.media.resource' | translate }}
+        <input name="resource" type="file" (change)="handleFileInput($event.target.files)">
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.media.path' | translate }}
+        <span>{{ media.path }}</span>
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.created_at' | translate }}
+        <span>{{ media.createdAt | date:'short' }}</span>
+    </label>
+    <label *ngIf="media.id">
+        {{ 'entity.created_by' | translate }}
+        <span>{{ media.createdBy }}</span>
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.modified_at' | translate }}
+        <span>{{ media.modifiedAt | date:'short' }}</span>
+    </label>
+    <label *ngIf="media.id">
+        {{ 'entity.modified_by' | translate }}
+        <span>{{ media.modifiedBy }}</span>
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.owner' | translate }}
+        <span>{{ media.owner }}</span>
+    </label>
+
+</div>

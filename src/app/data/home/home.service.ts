@@ -38,7 +38,8 @@ export class HomeService {
                     new HomeModule('home.roles', ['/roles'], 'icon-user-tie', String.fromCharCode(0xe976)),
                     new HomeModule('home.types', ['/types'], 'icon-filter', String.fromCharCode(0xea5b)),
                     new HomeModule('home.users', ['/users'], 'icon-users', String.fromCharCode(0xe972)),
-                    new HomeModule('home.parameters', ['/parameters'], 'icon-wrench', String.fromCharCode(0xe991))
+                    new HomeModule('home.parameters', ['/parameters'], 'icon-wrench', String.fromCharCode(0xe991)),
+                    new HomeModule('home.media', ['/mediums'], 'icon-images', String.fromCharCode(0xe90e)),
                 );
             }
         }

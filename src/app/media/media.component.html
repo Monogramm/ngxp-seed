@@ -1,0 +1,20 @@
+<div class="list-page">
+  <h1>{{ 'media.management' | translate }}</h1>
+
+  <div class="link-container">
+    <button (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="'left ' + (isConfirmingDeletion ? 'btn-secondary' : 'btn-primary')">
+      {{ (isConfirmingDeletion ? 'app.common.cancel' : 'app.common.delete') | translate }}
+    </button>
+
+    <button [routerLink]="['/media']" class="right btn-primary" [class.hidden]="isConfirmingDeletion">
+      {{ 'app.common.add' | translate }}</button>
+    <button (click)="toggleMassDelete()" class="right btn-primary" [class.hidden]="!isConfirmingDeletion">
+      {{ 'app.common.confirm' | translate }}</button>
+  </div>
+
+  <hr>
+
+  <media-list [showSelection]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></media-list>
+</div>
+
+<activity-indicator [isLoading]="isLoading"></activity-indicator>

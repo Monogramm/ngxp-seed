@@ -1,0 +1,43 @@
+<div *ngIf="media">
+    <label *ngIf="media.id">
+        {{ 'entity.id' | translate }}
+        <span>{{ media.id }}</span>
+    </label>
+
+    <label>
+        Display name:
+        <input placeholder="Display name" name="name" required autocapitalize="off" autocorrect="off" [(ngModel)]="media.name">
+    </label>
+
+    <label>
+        Permissions:
+        <i *ngIf="ready.count == 0" class="icon-rotate icon-spinner10" style="font-size: 1.5em"></i>
+        <select [(ngModel)]="media.permissions" [disabled]="ready.count == 0" multiple>
+            <option *ngFor="let p of items | async" [ngValue]="p.id">{{ p.name }}</option>
+        </select>
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.created_at' | translate }}
+        <span>{{ media.createdAt | date:'short' }}</span>
+    </label>
+    <label *ngIf="media.id">
+        {{ 'entity.created_by' | translate }}
+        <span>{{ media.createdBy }}</span>
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.modified_at' | translate }}
+        <span>{{ media.modifiedAt | date:'short' }}</span>
+    </label>
+    <label *ngIf="media.id">
+        {{ 'entity.modified_by' | translate }}
+        <span>{{ media.modifiedBy }}</span>
+    </label>
+
+    <label *ngIf="media.id">
+        {{ 'entity.owner' | translate }}
+        <span>{{ media.owner }}</span>
+    </label>
+
+</div>

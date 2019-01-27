@@ -1,0 +1,17 @@
+<div class="list-page">
+    <h1>Media</h1>
+
+    <hr>
+
+    <div>
+        <i *ngIf="!!!media" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
+        <media-details *ngIf="media" [media]="media"></media-details>
+    </div>
+
+    <hr>
+
+    <form (submit)="submit(media)">
+        <button class="left btn-primary">Save</button>
+        <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+</div>

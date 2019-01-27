@@ -24,6 +24,7 @@ import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { TypesModule } from './types/types.module';
 import { ParametersModule } from './parameters/parameters.module';
+import { MediaModule } from './media/media.module';
 
 import { environment } from '../environments/environment';
 
@@ -59,6 +60,7 @@ registerLocaleData(localeFr, 'fr');
         RolesModule,
         TypesModule,
         ParametersModule,
+        MediaModule,
         // PWA service worker
         ServiceWorkerModule.register(
             '/ngsw-worker.js', { enabled: environment.production }

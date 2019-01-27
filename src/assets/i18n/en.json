@@ -72,7 +72,7 @@
             "description_placeholder": "Description",
             "start_date": "Start date: ",
             "end_date": "End date: ",
-            "file": "File: ",
+            "resource": "File: ",
             "path": "Path: "
         }
     },
@@ -172,7 +172,12 @@
     },
     "media": {
         "management": "Media management",
-        "info": "Media"
+        "info": "Media",
+        "operations": {
+            "download": "Download media",
+            "direct_link": "Direct link"
+        },
+        "details": "Details"
     },
     "home": {
         "welcome": "Welcome",
