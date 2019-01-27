@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -19,6 +21,7 @@ export class UserPasswordComponent implements OnInit {
     user: User;
 
     constructor(public store: UserService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
@@ -32,15 +35,19 @@ export class UserPasswordComponent implements OnInit {
     }
 
     submit(user: User) {
-        if (confirm('Confirm password update of user "' + user.username + '" ?')) {
+        var msg: string = this._translate.instant('app.message.confirm.password');
+        if (confirm(msg)) {
             this.store.update(user)
                 .then(
-                () => { },
+                () => {
+                    this._router.navigate(['/']);
+                },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    alert('An error occurred while updating a user.');
+                    var msg: string = this._translate.instant('app.message.error.update');
+                    alert(msg);
                 }
                 );
         }
