@@ -106,6 +106,24 @@ input, select, textarea {
   padding: 0.3em 0.5em;
 }
 
+/*
+input[required]::after, select[required]::after, textarea[required]::after {
+  content: " *";
+  color: $c-danger;
+  font-size: 2em;
+}
+*/
+input:invalid, select:invalid, textarea:invalid {
+  border: 1px solid rgba($c-danger, 0.616);
+}
+input:focus:invalid, select:focus:invalid, textarea:focus:invalid {
+  box-shadow: 0px 0px 3px 2px rgba($c-danger, 0.616);
+}
+input[required]:focus:valid, select[required]:focus:valid, textarea[required]:focus:valid {
+  border: 1px solid rgba($c-success, 0.616);
+  box-shadow: 0px 0px 3px 2px rgba($c-success, 0.616);
+}
+
 /* List */
 ul {
   list-style: none;
@@ -176,12 +194,36 @@ button, .btn, [class^="btn-"], [class*=" btn-"] {
   background-color: $c-grey-200;
 }
 
+.btn-success {
+  background-color: $c-success;
+  color: $c-accent-contrast;
+}
+.btn-success:active, .btn-success:focus, .btn-success:hover {
+  background-color: darken($c-success, 20%);
+}
+
+.btn-info {
+  background-color: $c-info;
+  color: $c-accent-contrast;
+}
+.btn-info:active, .btn-info:focus, .btn-info:hover {
+  background-color: darken($c-info, 20%);
+}
+
+.btn-warning {
+  background-color: $c-warning;
+  color: $c-accent-contrast;
+}
+.btn-warning:active, .btn-warning:focus, .btn-warning:hover {
+  background-color: darken($c-warning, 20%);
+}
+
 .btn-danger {
   background-color: $c-danger;
   color: $c-accent-contrast;
 }
 .btn-danger:active, .btn-danger:focus, .btn-danger:hover {
-  background-color: $c-danger-dark;
+  background-color: darken($c-danger, 20%);
 }
 
 input:disabled, button:disabled {

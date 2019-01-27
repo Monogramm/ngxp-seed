@@ -39,12 +39,3 @@ TextField {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
-.btn-danger {
-  background-color: $c-danger;
-  color: $c-accent-contrast;
-}
-
-.btn-danger:highlighted {
-  background-color: $c-danger-dark;
-}
