@@ -2,7 +2,7 @@
   <h1>{{ 'roles.management' | translate }}</h1>
 
   <form (submit)="add()">
-    <input placeholder="Role name" name="role" type="text" required [(ngModel)]="role">
+    <input [placeholder]=" 'entity.role.name_placeholder' | translate " name="role" type="text" required [(ngModel)]="role">
     <button>{{ 'app.common.add' | translate }}</button>
   </form>
 

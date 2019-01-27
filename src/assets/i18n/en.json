@@ -9,7 +9,8 @@
             "confirm": {
                 "create": "Confirm creation?",
                 "update": "Confirm update?",
-                "delete": "Confirm deletion?"
+                "delete": "Confirm deletion?",
+                "password": "Confirm password update?"
             },
             "warning": {
                 "missing_field": "Enter all needed information",
@@ -49,16 +50,30 @@
         },
         "role": {
             "name": "Name: ",
+            "name_placeholder": "Name",
             "permissions": "Permissions: "
         },
         "type": {
-            "name": "Name: "
+            "name": "Name: ",
+            "name_placeholder": "Name"
         },
         "parameter": {
             "name": "Name: ",
+            "name_placeholder": "Name",
             "description": "Description: ",
+            "description_placeholder": "Description",
             "type": "Type: ",
             "value": "Value: "
+        },
+        "media": {
+            "name": "Name: ",
+            "name_placeholder": "Name",
+            "description": "Description: ",
+            "description_placeholder": "Description",
+            "start_date": "Start date: ",
+            "end_date": "End date: ",
+            "file": "File: ",
+            "path": "Path: "
         }
     },
     "login": {
@@ -155,6 +170,10 @@
         "management": "Parameters management",
         "info": "Parameter"
     },
+    "media": {
+        "management": "Media management",
+        "info": "Media"
+    },
     "home": {
         "welcome": "Welcome",
         "logout": "Log out",
@@ -163,6 +182,7 @@
         "roles": "Roles",
         "types": "Types",
         "users": "Users",
-        "parameters": "Parameters"
+        "parameters": "Parameters",
+        "media": "Media"
     }
 }

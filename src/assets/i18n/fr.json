@@ -9,7 +9,8 @@
             "confirm": {
                 "create": "Confirmer la création ?",
                 "update": "Confirmer la mise à jour ?",
-                "delete": "Confirmer la suppression ?"
+                "delete": "Confirmer la suppression ?",
+                "password": "Confirmer la mise à jour du mot de passe ?"
             },
             "warning": {
                 "missing_field": "Entrez toutes les informations nécessaires",
@@ -49,16 +50,30 @@
         },
         "role": {
             "name": "Nom : ",
+            "name_placeholder": "Nom",
             "permissions": "Permissions : "
         },
         "type": {
-            "name": "Nom : "
+            "name": "Nom : ",
+            "name_placeholder": "Nom"
         },
         "parameter": {
             "name": "Nom : ",
+            "name_placeholder": "Nom",
             "description": "Description : ",
+            "description_placeholder": "Description",
             "type": "Type : ",
             "value": "Valeur : "
+        },
+        "media": {
+            "name": "Nom : ",
+            "name_placeholder": "Nom",
+            "description": "Description : ",
+            "description_placeholder": "Description",
+            "start_date": "Date de début : ",
+            "end_date": "Date de fin : ",
+            "file": "Fichier : ",
+            "path": "Chemin : "
         }
     },
     "login": {
@@ -155,6 +170,10 @@
         "management": "Gestion des paramètres",
         "info": "Paramètre"
     },
+    "media": {
+        "management": "Gestion des média",
+        "info": "Média"
+    },
     "home": {
         "welcome": "Bienvenue",
         "logout": "Déconnexion",
@@ -163,6 +182,7 @@
         "roles": "Roles",
         "types": "Types",
         "users": "Utilisateurs",
-        "parameters": "Paramètres"
+        "parameters": "Paramètres",
+        "media": "Média"
     }
 }

@@ -28,7 +28,8 @@ export class RoleListComponent {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    alert('An error occurred while loading items.');
+                    var msg: string = this._translate.instant('app.message.error.loading');
+                    alert(msg);
                     this.loaded.emit('loaded');
                 }
             );

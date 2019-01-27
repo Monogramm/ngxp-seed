@@ -2,7 +2,7 @@
   <h1>{{ 'types.management' | translate }}</h1>
 
   <form (submit)="add()">
-    <input placeholder="Type name" name="type" type="text" required [(ngModel)]="type">
+    <input [placeholder]=" 'entity.type.name_placeholder' | translate " name="type" type="text" required [(ngModel)]="type">
     <button>{{ 'app.common.add' | translate }}</button>
   </form>
 
