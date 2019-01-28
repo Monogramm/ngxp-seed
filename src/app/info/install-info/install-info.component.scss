@@ -1,0 +1,14 @@
+@import "../../../scss/variables";
+
+.info-details {
+    text-align: left;
+
+    ul {
+        list-style: disc;
+        margin-left: 2em;
+
+        li {
+            padding-top: 5px;
+        }
+    }
+}

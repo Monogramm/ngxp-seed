@@ -1,0 +1,32 @@
+<div class="main-page">
+    <h1 class="title text-primary">{{ 'info.install.title' | translate }}</h1>
+
+    <hr>
+
+    <div class="info-details">
+        <p>{{ 'info.install.description' | translate }}</p>
+
+        <h3 id="iOS">{{ 'info.install.ios.title' | translate }}</h3>
+        <p>{{ 'info.install.ios.description' | translate }}</p>
+        <ul>
+            <li>{{ 'info.install.ios.steps.share' | translate }}</li>
+            <li>{{ 'info.install.ios.steps.home_screen' | translate }}</li>
+            <li>{{ 'info.install.ios.steps.add' | translate }}</li>
+            <li>{{ 'info.install.ios.steps.name' | translate }}</li>
+            <li>{{ 'info.install.ios.steps.launch' | translate }}</li>
+        </ul>
+
+        <h3 id="Android">{{ 'info.install.android.title' | translate }}</h3>
+        <p>{{ 'info.install.android.description' | translate }}</p>
+
+        <h3 id="Desktop">{{ 'info.install.chrome.title' | translate }}</h3>
+        <p>{{ 'info.install.chrome.description' | translate }}</p>
+
+    </div>
+
+    <hr>
+
+    <div>
+        <button type="button" class="center btn-secondary" (click)="back()">{{ 'app.common.back' | translate }}</button>
+    </div>
+</div>

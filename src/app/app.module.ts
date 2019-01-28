@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule, GuestGuard, AuthGuard, VerifyGuard, RoleGuard } from './shared';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
+import { InfoModule } from './info/info.module';
 import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
@@ -55,6 +56,7 @@ registerLocaleData(localeFr, 'fr');
         CoreModule,
         SharedModule,
         HomeModule,
+        InfoModule,
         LoginModule,
         UsersModule,
         RolesModule,

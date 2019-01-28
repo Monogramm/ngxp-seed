@@ -29,7 +29,8 @@
             "delete": "Supprimer selection",
             "confirm": "Confirmer",
             "save": "Sauvegarder",
-            "cancel": "Annuler"
+            "cancel": "Annuler",
+            "back": "Retour"
         }
     },
     "entity": {
@@ -188,6 +189,41 @@
         "types": "Types",
         "users": "Utilisateurs",
         "parameters": "Paramètres",
-        "media": "Média"
+        "media": "Média",
+        "info": "Info"
+    },
+    "info": {
+        "title": "Informations",
+        "links": "Liens utiles",
+        "description": "Les liens suivants peuvent vous aider à en apprendre plus sur l'application et sur la façon d'exploiter tout son potentiel.",
+        "about": {
+            "link": "En savoir plus sur cette application",
+            "title": "À propos de",
+            "description": "Cette application est un exemple d'application créée à l'aide de kits Monogramm. Pour en savoir plus, visitez nos dépôts GitHub: https://github.com/Monogramm"
+        },
+        "install": {
+            "link": "Découvrez comment installer cette application sur votre appareil",
+            "title": "Comment installer",
+            "description": "Cette site est en fait une Application Web Progressive (PWA) pouvant être installée directement sur votre appareil. Découvrez comment installer cette application sur votre appareil :",
+            "ios": {
+                "title": "Installer sur iOS",
+                "description": "Pour installer une PWA sur votre écran d'accueil, procédez comme suit :",
+                "steps": {
+                    "share": "appuyez sur le bouton 'Partager' dans 'Safari'",
+                    "home_screen": "appuyez sur l'icône 'Ajouter à l'écran d'accueil'",
+                    "add": "appuyez sur 'Ajouter' dans le coin supérieur droit",
+                    "name": "confirmez le nom du PWA, puis appuyez sur 'Ajouter' dans le coin supérieur droit",
+                    "launch": "vous pouvez maintenant lancer l'application à partir de votre écran d'accueil"
+                }
+            },
+            "android": {
+                "title": "Installer sur Android",
+                "description": "À l'aide de Chrome pour Android, vous serez automatiquement invité à installer l'application sur votre système. Cliquez sur 'Installer' pour installer l'application sur votre appareil."
+            },
+            "chrome": {
+                "title": "Installer sur Chrome (bureau)",
+                "description": "Si vous utilisez Chrome pour bureau, vous pouvez cliquer sur le menu (les 3 points situés dans le coin supérieur droit), puis sur 'Installer ...' pour ajouter l'application aux applications Chrome."
+            }
+        }
     }
 }

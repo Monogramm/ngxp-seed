@@ -44,6 +44,10 @@ export class HomeService {
             }
         }
 
+        this.availableModules.push(
+            new HomeModule('home.info', ['/info'], 'icon-info', String.fromCharCode(0xea0c)),
+        );
+
         return this.availableModules;
     }
 }

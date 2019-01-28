@@ -29,7 +29,8 @@
             "delete": "Delete selection",
             "confirm": "Confirm",
             "save": "Save",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "back": "Back"
         }
     },
     "entity": {
@@ -188,6 +189,41 @@
         "types": "Types",
         "users": "Users",
         "parameters": "Parameters",
-        "media": "Media"
+        "media": "Media",
+        "info": "Info"
+    },
+    "info": {
+        "title": "Information",
+        "links": "Useful links",
+        "description": "The following links may help you to learn about the application and how harness its full potential.",
+        "about": {
+            "link": "Learn more about this application",
+            "title": "About",
+            "description": "This application is a sample application built using Monogramm starters. Learn more by visiting our GitHub repositories: https://github.com/Monogramm"
+        },
+        "install": {
+            "link": "Learn how to install this application on your device",
+            "title": "How to install",
+            "description": "This application is actually a Progressive Web App (PWA) that can be directly installed to your device. Learn more about how to install this application on your device:",
+            "ios": {
+                "title": "Install on iOS",
+                "description": "To install a PWA on your Home Screen, follow these steps:",
+                "steps": {
+                    "share": "Tap the 'Share' button in 'Safari'",
+                    "home_screen": "Tap the icon labeled 'Add to Home Screen'",
+                    "add": "Tap 'Add' in the upper-right corner",
+                    "name": "Confirm the name of the PWA then tap 'Add' in the upper-right corner",
+                    "launch": "You can now launch the application from your Home Screen"
+                }
+            },
+            "android": {
+                "title": "Install on Android",
+                "description": "Using Chrome for Android, you will automatically be prompted to install the app on your system. Click 'Install' to install the application on your device."
+            },
+            "chrome": {
+                "title": "Install on Chrome (desktop)",
+                "description": "When using Chrome for Desktop, you can click on the menu (the 3 dots in the upper-right corner), then 'Install ...' to add the application to Chrome Applications."
+            }
+        }
     }
 }
