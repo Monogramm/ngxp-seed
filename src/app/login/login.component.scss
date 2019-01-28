@@ -54,12 +54,6 @@ button {
 }
 
 @media screen and (max-width: 480px) {
-  .login-page, .list-page {
-    max-width: 95%;
-    padding-left: 1em;
-    padding-right: 1em;
-  }
-
   .logo:before {
     left: 0;
     width: 100%;
