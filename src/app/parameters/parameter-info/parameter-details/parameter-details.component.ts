@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {  ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { Parameter, ParameterType, ParameterService } from '../../../data';
 
@@ -24,8 +23,6 @@ export class ParameterDetailsComponent implements OnInit {
     private static readonly ANY_REGEX = '.*';
 
     @Input() parameter: Parameter;
-
-    @ViewChild('parameterValue') parameterValue: ElementRef;
 
     parameterTypes: Array<String> = [];
 
