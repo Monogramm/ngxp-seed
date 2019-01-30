@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { Logger } from '../../shared/';
+import { Logger, Pagination } from '../../shared';
 import { Type, TypeService } from '../../data';
 
 @Component({
@@ -16,13 +16,33 @@ export class TypeListComponent {
     @Input() showSelection: boolean;
     @Output() loaded = new EventEmitter();
 
+    pagination: Pagination = new Pagination();
+
     constructor(public store: TypeService,
         private _translate: TranslateService,
         private _router: Router) { }
 
     ngOnInit() {
-        this.store.load()
-            .then(() => this.loaded.emit('loaded'));
+        this.load(1);
+    }
+
+    load(page: number): void {
+        this.pagination.page = page;
+
+        this.store.load(this.pagination)
+            .then(
+                () => {
+                    this.loaded.emit('loaded');
+                },
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    var msg: string = this._translate.instant('app.message.error.loading');
+                    alert(msg);
+                    this.loaded.emit('loaded');
+                }
+            );
     }
 
     imageSource(type: Type) {

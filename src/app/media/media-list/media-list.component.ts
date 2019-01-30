@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { Logger } from '../../shared';
+import { Logger, Pagination } from '../../shared';
 import { Media, MediaService } from '../../data';
 
 @Component({
@@ -16,14 +16,24 @@ export class MediaListComponent {
     @Input() showSelection: boolean;
     @Output() loaded = new EventEmitter();
 
+    pagination: Pagination = new Pagination();
+
     constructor(public store: MediaService,
         private _translate: TranslateService,
         private _router: Router) { }
 
     ngOnInit() {
-        this.store.load()
+        this.load(1);
+    }
+
+    load(page: number): void {
+        this.pagination.page = page;
+
+        this.store.load(this.pagination)
             .then(
-                () => this.loaded.emit('loaded'),
+                () => {
+                    this.loaded.emit('loaded');
+                },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);

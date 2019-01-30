@@ -2,8 +2,10 @@
     <li *ngFor="let parameter of store.items | async | parameterStatus:showSelection">
         <i [class]="imageSource(parameter)" (click)="toggleSelection(parameter)" style="font-size: 1.5em"></i>
 
-        <a [routerLink]="['/parameter', parameter.id]" [class.done]="parameter.selected && !parameter.deleted">{{ parameter.name }}</a>
-        <span [class.done]="parameter.selected && !parameter.deleted" [title]="parameter.description">{{ parameter.value }}</span>
+        <a [routerLink]="['/parameter', parameter.id]" [class.done]="parameter.selected && !parameter.deleted">{{
+            parameter.name }}</a>
+        <span [class.done]="parameter.selected && !parameter.deleted" [title]="parameter.description">{{
+            parameter.value }}</span>
 
         <button *ngIf="!parameter.deleted && !parameter.deleting" class="btn-secondary" (click)="delete(parameter)">
             <i class="icon-cross"></i>
@@ -12,3 +14,5 @@
 
     </li>
 </ul>
+<pagination-controls [pagination]="pagination" (page-change)="load($event)" [first-label]="'app.pagination.first' | translate"
+    [prev-label]="'app.pagination.prev' | translate" [next-label]="'app.pagination.next' | translate" [last-label]="'app.pagination.last' | translate"></pagination-controls>

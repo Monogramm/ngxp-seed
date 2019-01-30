@@ -31,6 +31,13 @@
             "save": "Save",
             "cancel": "Cancel",
             "back": "Back"
+        },
+        "pagination": {
+            "first": "First",
+            "prev": "Previous",
+            "cur": "Current",
+            "next": "Next",
+            "last": "Last"
         }
     },
     "entity": {

@@ -53,7 +53,6 @@ export class BackendService extends AbstractBackendService {
         // Try the backend
         if (response === null) {
             let httpHeaders: Headers = this.getHeaders(headers);
-            httpHeaders.append('X-Custom-Sort', JSON.stringify({ ModifiedAt: -1 }));
 
             let url: string;
             if (basePath instanceof URL) {
@@ -62,16 +61,63 @@ export class BackendService extends AbstractBackendService {
                 url = this.config.apiURL + relativePath;
             }
 
-            if (pagination) {
-                let startAt: number, endAt: number;
-                startAt = (pagination.page - 1) * pagination.size;
-                endAt = pagination.page * pagination.size - 1;
+            if (pagination && pagination.page) {
+                let page: number, size: number;
+                page = pagination.page - 1;
 
-                httpHeaders.append('X-Custom-Start-At', JSON.stringify({ startAt }));
-                httpHeaders.append('X-Custom-End-At', JSON.stringify({ endAt }));
+                httpHeaders.append('X-Custom-Page', JSON.stringify({ page }));
+                url += '?page=' + page;
+
+                if (pagination.size) {
+                    size = pagination.size;
+                    httpHeaders.append('X-Custom-Size', JSON.stringify({ size }));
+                    url += '&size=' + size;
+                }
+
+            }
+
+            if (pagination && pagination.sort) {
+                // TODO Add sorting mechanisms
+                //httpHeaders.append('X-Custom-Sort', JSON.stringify({ ModifiedAt: -1 }));
+
             }
 
             response = this._http.get(url, { headers: httpHeaders }).toPromise();
+
+            response.then((value: Response) => {
+                if (pagination) {
+                    pagination.reset();
+
+                    var links: string = value.headers.get('link');
+                    if (links) {
+                        var firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
+                        if (firstPageProp && firstPageProp.length >= 2) {
+                            pagination.first = +firstPageProp[1] + 1;
+                        }
+
+                        var prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
+                        if (prevPageProp && prevPageProp.length >= 2) {
+                            pagination.prev = +prevPageProp[1] + 1;
+                        }
+
+                        var nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
+                        if (nextPageProp && nextPageProp.length >= 2) {
+                            pagination.next = +nextPageProp[1] + 1;
+                        }
+
+                        var lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
+
+                        if (lastPageProp && lastPageProp.length >= 2) {
+                            pagination.last = +lastPageProp[1];
+                        }
+                    }
+                    if (Logger.isEnabled) {
+                        Logger.dir(pagination);
+                    }
+                }
+
+                return Promise.resolve(value);
+            });
 
             if (this.fetchBehavior != BackendFetchMode.RemoteOnly) {
                 response.then(
