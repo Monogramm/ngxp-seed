@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'activity-indicator',
-    template: `
+  selector: 'activity-indicator',
+  template: `
     <div [class.hidden]="!isLoading">
       <i class="icon-rotate icon-spinner10"></i>
       <span>{{ message }}</span>
     </div>
   `,
-    styles: [`
+  styles: [`
     div {
       position: fixed;
       bottom: 0;
@@ -28,6 +28,6 @@ import { Component, Input } from '@angular/core';
   `]
 })
 export class ActivityIndicator {
-    @Input('isLoading') isLoading = false;
-    @Input('message') message = 'Loading'
+  @Input('isLoading') isLoading = false;
+  @Input('message') message = 'Loading';
 }
