@@ -61,7 +61,9 @@ export class UserInfoComponent implements OnInit {
 
             this.store.delete(user)
                 .then(
-                    () => { },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
@@ -79,7 +81,9 @@ export class UserInfoComponent implements OnInit {
             if (confirm(msgCreate)) {
                 this.store.add(user)
                     .then(
-                        () => { },
+                        () => {
+                            this._location.back();
+                        },
                         (error) => {
                             if (Logger.isEnabled) {
                                 Logger.dir(error);
@@ -94,7 +98,9 @@ export class UserInfoComponent implements OnInit {
             if (confirm(msgUpdate)) {
                 this.store.update(user)
                     .then(
-                        () => { },
+                        () => {
+                            this._location.back();
+                        },
                         (error) => {
                             if (Logger.isEnabled) {
                                 Logger.dir(error);

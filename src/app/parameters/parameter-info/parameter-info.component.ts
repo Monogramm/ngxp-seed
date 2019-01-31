@@ -60,7 +60,9 @@ export class ParameterInfoComponent implements OnInit {
 
             this.store.delete(parameter)
                 .then(
-                    () => { },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
@@ -76,7 +78,9 @@ export class ParameterInfoComponent implements OnInit {
         if (parameter.id === null) {
             this.store.add(parameter.name)
                 .then(
-                    () => { this._location.back(); },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
@@ -88,7 +92,9 @@ export class ParameterInfoComponent implements OnInit {
         } else {
             this.store.update(parameter)
                 .then(
-                    () => { this._location.back(); },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);

@@ -49,7 +49,9 @@ export class RoleInfoComponent implements OnInit {
 
             this.store.delete(role)
                 .then(
-                    () => { },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
@@ -77,7 +79,9 @@ export class RoleInfoComponent implements OnInit {
         } else {
             this.store.update(role)
                 .then(
-                    () => { this._location.back(); },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);

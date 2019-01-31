@@ -60,7 +60,9 @@ export class MediaInfoComponent implements OnInit {
 
             this.store.delete(media)
                 .then(
-                    () => { },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
@@ -76,7 +78,9 @@ export class MediaInfoComponent implements OnInit {
         if (media.id === null) {
             this.store.add(media)
                 .then(
-                    () => { this._location.back(); },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
@@ -88,7 +92,9 @@ export class MediaInfoComponent implements OnInit {
         } else {
             this.store.update(media)
                 .then(
-                    () => { this._location.back(); },
+                    () => {
+                        this._location.back();
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
