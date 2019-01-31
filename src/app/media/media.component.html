@@ -14,7 +14,7 @@
 
   <hr>
 
-  <media-list [showSelection]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></media-list>
+  <media-list [filter-selected-only]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></media-list>
 </div>
 
 <activity-indicator [isLoading]="isLoading"></activity-indicator>

@@ -1,16 +1,16 @@
-<ul>
+<ul class="entity-list">
     <li *ngFor="let parameter of store.items | async | parameterStatus:showSelection">
-        <i [class]="imageSource(parameter)" (click)="toggleSelection(parameter)" style="font-size: 1.5em"></i>
+        <i [class]="'icon ' + imageSource(parameter)" (click)="toggleSelection(parameter)"></i>
 
         <a [routerLink]="['/parameter', parameter.id]" [class.done]="parameter.selected && !parameter.deleted">{{
             parameter.name }}</a>
         <span [class.done]="parameter.selected && !parameter.deleted" [title]="parameter.description">{{
             parameter.value }}</span>
 
-        <button *ngIf="!parameter.deleted && !parameter.deleting" class="btn-secondary" (click)="delete(parameter)">
+        <button *ngIf="allowDelete" [class.hidden]="parameter.deleted || parameter.deleting" class="btn-secondary" (click)="delete(parameter)">
             <i class="icon-cross"></i>
         </button>
-        <i *ngIf="!parameter.deleted && parameter.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+        <i *ngIf="allowDelete" [class.hidden]="parameter.deleted || !parameter.deleting" class="icon icon-rotate icon-spinner10"></i>
 
     </li>
 </ul>

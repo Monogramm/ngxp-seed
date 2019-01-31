@@ -13,8 +13,10 @@ import { User, UserService } from '../../data';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements OnInit {
-    @Input() selectedUser: User;
-    @Output() loaded = new EventEmitter();
+    @Input('allow-edit') allowEdit: boolean = true;
+    @Input('allow-delete') allowDelete: boolean = true;
+    @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() loaded: EventEmitter<number> = new EventEmitter<number>();
 
     pagination: Pagination = new Pagination();
 
@@ -29,10 +31,12 @@ export class UserListComponent implements OnInit {
     load(page: number): void {
         this.pagination.page = page;
 
+        this.loading.emit(true);
         this.store.load(this.pagination)
             .then(
                 () => {
-                    this.loaded.emit('loaded');
+                    this.loading.emit(false);
+                    this.loaded.emit(this.store.count);
                 },
                 (error) => {
                     if (Logger.isEnabled) {
@@ -40,12 +44,16 @@ export class UserListComponent implements OnInit {
                     }
                     var msg: string = this._translate.instant('app.message.error.loading');
                     alert(msg);
-                    this.loaded.emit('loaded');
+                    this.loading.emit(false);
+                    this.loaded.emit(0);
                 }
             );
     }
 
     delete(user: User) {
+        if (!this.allowDelete) {
+            return;
+        }
         var msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             user.deleting = true;
@@ -65,6 +73,9 @@ export class UserListComponent implements OnInit {
     }
 
     edit(user: User) {
+        if (!this.allowEdit) {
+            return;
+        }
         this._router.navigate(['/user', user.id]);
     }
 }

@@ -1,13 +1,13 @@
-<ul>
+<ul class="entity-list">
     <li *ngFor="let type of store.items | async | typeStatus:showSelection">
-        <i [class]="imageSource(type)" (click)="toggleSelection(type)" style="font-size: 1.5em"></i>
+        <i [class]="'icon ' + imageSource(type)" (click)="toggleSelection(type)"></i>
 
-        <a [class.done]="type.selected && !type.deleted" [routerLink]="['/type', type.id]">{{ type.name }}</a>
+        <a [class.selected]="type.selected && !type.deleted" [routerLink]="['/type', type.id]">{{ type.name }}</a>
 
-        <button *ngIf="!type.deleted && !type.deleting" class="btn-secondary" (click)="delete(type)">
+        <button *ngIf="allowDelete" [class.hidden]="type.deleted || type.deleting" class="btn-secondary" (click)="delete(type)">
             <i class="icon-cross"></i>
         </button>
-        <i *ngIf="!type.deleted && type.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+        <i *ngIf="allowDelete" [class.hidden]="type.deleted || !type.deleting" class="icon icon-rotate icon-spinner10"></i>
 
     </li>
 </ul>

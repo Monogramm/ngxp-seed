@@ -19,7 +19,7 @@
     </button>
   </div>
 
-  <role-list [showSelection]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></role-list>
+  <role-list [filter-selected-only]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></role-list>
 </div>
 
 <activity-indicator [isLoading]="isLoading"></activity-indicator>

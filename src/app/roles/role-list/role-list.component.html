@@ -1,13 +1,13 @@
-<ul>
+<ul class="entity-list">
     <li *ngFor="let role of store.items | async | roleStatus:showSelection">
-        <i [class]="imageSource(role)" (click)="toggleSelection(role)" style="font-size: 1.5em"></i>
+        <i [class]="'icon ' + imageSource(role)" (click)="toggleSelection(role)"></i>
 
-        <a [class.done]="role.selected && !role.deleted" [routerLink]="['/role', role.id]">{{ role.name }}</a>
+        <a [class.selected]="role.selected && !role.deleted" [routerLink]="['/role', role.id]">{{ role.name }}</a>
 
-        <button *ngIf="!role.deleted && !role.deleting" class="btn-secondary" (click)="delete(role)">
+        <button *ngIf="allowDelete" [class.hidden]="role.deleted || role.deleting" class="btn-secondary" (click)="delete(role)">
             <i class="icon-cross"></i>
         </button>
-        <i *ngIf="!role.deleted && role.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+        <i *ngIf="allowDelete" [class.hidden]="role.deleted || !role.deleting" class="icon icon-rotate icon-spinner10"></i>
 
     </li>
 </ul>

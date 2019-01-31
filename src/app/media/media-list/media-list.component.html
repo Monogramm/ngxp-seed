@@ -1,13 +1,14 @@
-<ul>
+<ul class="entity-list">
     <li *ngFor="let media of store.items | async | mediaStatus:showSelection">
-        <i [class]="imageSource(media)" (click)="toggleSelection(media)" style="font-size: 1.5em"></i>
+        <i [class]="'icon ' + imageSource(media)" (click)="toggleSelection(media)"></i>
 
-        <a [class.done]="media.selected && !media.deleted" [routerLink]="['/media', media.id]">{{ media.name }}</a>
+        <a [class.selected]="media.selected && !media.deleted" [routerLink]="['/media', media.id]">{{ media.name }}</a>
 
-        <button *ngIf="!media.deleted && !media.deleting" class="btn-secondary" (click)="delete(media)">
+        <button *ngIf="allowDelete" [class.hidden]="media.deleted || media.deleting" class="btn-secondary" (click)="delete(media)">
             <i class="icon-cross"></i>
         </button>
-        <i *ngIf="!media.deleted && media.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+        <i *ngIf="allowDelete" [class.hidden]="media.deleted || !media.deleting" class="icon-rotate icon-spinner10"
+            style="font-size: 2em"></i>
 
     </li>
 </ul>

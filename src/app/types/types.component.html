@@ -19,7 +19,7 @@
     </button>
   </div>
 
-  <type-list [showSelection]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></type-list>
+  <type-list [filter-selected-only]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></type-list>
 </div>
 
 <activity-indicator [isLoading]="isLoading"></activity-indicator>

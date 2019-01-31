@@ -13,8 +13,11 @@ import { Media, MediaService } from '../../data';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MediaListComponent {
-    @Input() showSelection: boolean;
-    @Output() loaded = new EventEmitter();
+    @Input('filter-selected-only') showSelection: boolean = false;
+    @Input('allow-edit') allowEdit: boolean = true;
+    @Input('allow-delete') allowDelete: boolean = true;
+    @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() loaded: EventEmitter<number> = new EventEmitter<number>();
 
     pagination: Pagination = new Pagination();
 
@@ -29,10 +32,12 @@ export class MediaListComponent {
     load(page: number): void {
         this.pagination.page = page;
 
+        this.loading.emit(true);
         this.store.load(this.pagination)
             .then(
                 () => {
-                    this.loaded.emit('loaded');
+                    this.loading.emit(false);
+                    this.loaded.emit(this.store.count);
                 },
                 (error) => {
                     if (Logger.isEnabled) {
@@ -40,7 +45,8 @@ export class MediaListComponent {
                     }
                     var msg: string = this._translate.instant('app.message.error.loading');
                     alert(msg);
-                    this.loaded.emit('loaded');
+                    this.loading.emit(false);
+                    this.loaded.emit(0);
                 }
             );
     }
@@ -58,6 +64,9 @@ export class MediaListComponent {
     }
 
     delete(media: Media) {
+        if (!this.allowDelete) {
+            return;
+        }
         var msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             media.deleting = true;
@@ -77,6 +86,9 @@ export class MediaListComponent {
     }
 
     edit(media: Media) {
+        if (!this.allowEdit) {
+            return;
+        }
         this._router.navigate(['/media', media.id]);
     }
 }

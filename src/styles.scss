@@ -237,13 +237,17 @@ button:active, button:focus, button:hover,
   background-color: lighten($c-danger, 15%);
 }
 
-input:disabled, button:disabled {
+input:disabled, select:disabled, textarea:disabled, button:disabled {
   -moz-pointer-events: none;
   -webkit-pointer-events: none;
   -ms-pointer-events: none;
   pointer-events: none;
   opacity: 0.5;
   transition: opacity 1s;
+
+  background-color: $c-grey-500;
+  color: $c-grey-700;
+  border-color: $c-grey-700;
 }
 
 

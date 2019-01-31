@@ -1,12 +1,13 @@
-<ul>
+<ul class="entity-list">
     <li *ngFor="let user of store.items | async">
-        <i [class]="user.verified ? 'icon-user-check' : 'icon-user'" style="font-size: 1.5em"></i>
-        <a [class.not-verified]="!user.verified" [routerLink]="['/user', user.id]">{{ user.username }}</a>
+        <i [class]="user.verified ? 'icon-user-check' : 'icon-user'"></i>
+        <a [class.not-verified]="!user.verified" [routerLink]="allowEdit ? ['/user', user.id] : ['.']">{{ user.username
+            }}</a>
 
-        <button *ngIf="!user.deleted && !user.deleting" class="btn-secondary" (click)="delete(user)">
+        <button *ngIf="allowDelete" [class.hidden]="user.deleted || user.deleting" class="btn-secondary" (click)="delete(user)">
             <i class="icon-cross"></i>
         </button>
-        <i *ngIf="!user.deleted && user.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+        <i *ngIf="allowDelete" [class.hidden]="user.deleted || !user.deleting" class="icon icon-rotate icon-spinner10"></i>
 
     </li>
 </ul>
