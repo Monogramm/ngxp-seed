@@ -1,9 +1,4 @@
 <div *ngIf="user">
-    <label *ngIf="user.id">
-        {{ 'entity.id' | translate }}
-        <span>{{ user.id }}</span>
-    </label>
-
     <label>
         {{ 'entity.user.username' | translate }}
         <input [placeholder]="'entity.user.username_placeholder' | translate" name="username" required autocapitalize="off"
@@ -37,27 +32,34 @@
         </select>
     </label>
 
-    <label *ngIf="user.id">
-        {{ 'entity.created_at' | translate }}
-        <span>{{ user.createdAt | date:'short' }}</span>
-    </label>
-    <label *ngIf="user.id">
-        {{ 'entity.created_by' | translate }}
-        <span>{{ user.createdBy }}</span>
-    </label>
+    <div *ngIf="user.id" class="technical-details">
+        <label>
+            {{ 'entity.id' | translate }}
+            <span>{{ user.id }}</span>
+        </label>
 
-    <label *ngIf="user.id">
-        {{ 'entity.modified_at' | translate }}
-        <span>{{ user.modifiedAt | date:'short' }}</span>
-    </label>
-    <label *ngIf="user.id">
-        {{ 'entity.modified_by' | translate }}
-        <span>{{ user.modifiedBy }}</span>
-    </label>
+        <label>
+            {{ 'entity.created_at' | translate }}
+            <span>{{ user.createdAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.created_by' | translate }}
+            <span>{{ user.createdBy }}</span>
+        </label>
 
-    <label *ngIf="user.id">
-        {{ 'entity.owner' | translate }}
-        <span>{{ user.owner }}</span>
-    </label>
+        <label>
+            {{ 'entity.modified_at' | translate }}
+            <span>{{ user.modifiedAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.modified_by' | translate }}
+            <span>{{ user.modifiedBy }}</span>
+        </label>
+
+        <label>
+            {{ 'entity.owner' | translate }}
+            <span>{{ user.owner }}</span>
+        </label>
+    </div>
 
 </div>

@@ -1,9 +1,4 @@
 <div *ngIf="role">
-    <label *ngIf="role.id">
-        {{ 'entity.id' | translate }}
-        <span>{{ role.id }}</span>
-    </label>
-
     <label>
         {{ 'entity.role.name' | translate }}
         <input [placeholder]="'entity.role.name' | translate" name="name" required autocapitalize="off" autocorrect="off"
@@ -18,27 +13,34 @@
         </select>
     </label>
 
-    <label *ngIf="role.id">
-        {{ 'entity.created_at' | translate }}
-        <span>{{ role.createdAt | date:'short' }}</span>
-    </label>
-    <label *ngIf="role.id">
-        {{ 'entity.created_by' | translate }}
-        <span>{{ role.createdBy }}</span>
-    </label>
+    <div *ngIf="role.id" class="technical-details">
+        <label>
+            {{ 'entity.id' | translate }}
+            <span>{{ role.id }}</span>
+        </label>
 
-    <label *ngIf="role.id">
-        {{ 'entity.modified_at' | translate }}
-        <span>{{ role.modifiedAt | date:'short' }}</span>
-    </label>
-    <label *ngIf="role.id">
-        {{ 'entity.modified_by' | translate }}
-        <span>{{ role.modifiedBy }}</span>
-    </label>
+        <label>
+            {{ 'entity.created_at' | translate }}
+            <span>{{ role.createdAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.created_by' | translate }}
+            <span>{{ role.createdBy }}</span>
+        </label>
 
-    <label *ngIf="role.id">
-        {{ 'entity.owner' | translate }}
-        <span>{{ role.owner }}</span>
-    </label>
+        <label>
+            {{ 'entity.modified_at' | translate }}
+            <span>{{ role.modifiedAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.modified_by' | translate }}
+            <span>{{ role.modifiedBy }}</span>
+        </label>
+
+        <label>
+            {{ 'entity.owner' | translate }}
+            <span>{{ role.owner }}</span>
+        </label>
+    </div>
 
 </div>
