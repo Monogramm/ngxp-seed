@@ -44,4 +44,11 @@
   li button i.icon {
     font-size: 20px;
   }
+
+  .not-verified {
+    font-style: italic;
+  }
+  .not-active {
+    text-decoration: line-through;
+  }
 }

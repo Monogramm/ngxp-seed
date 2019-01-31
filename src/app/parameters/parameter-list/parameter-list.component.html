@@ -2,13 +2,14 @@
     <li *ngFor="let parameter of store.items | async | parameterStatus:showSelection">
         <i [class]="'icon ' + imageSource(parameter)" (click)="toggleSelection(parameter)"></i>
 
-        <a [routerLink]="['/parameter', parameter.id]" [class.done]="parameter.selected && !parameter.deleted">{{
+        <a [routerLink]="allowEdit ? ['/parameter', parameter.id] : ['.']" [class.selected]="parameter.selected && !parameter.deleted">{{
             parameter.name }}</a>
-        <span [class.done]="parameter.selected && !parameter.deleted" [title]="parameter.description">{{
+        <span [class.selected]="parameter.selected && !parameter.deleted" [title]="parameter.description">{{
             parameter.value }}</span>
 
-        <button *ngIf="allowDelete" [class.hidden]="parameter.deleted || parameter.deleting" class="btn-secondary" (click)="delete(parameter)">
-            <i class="icon-cross"></i>
+        <button *ngIf="allowDelete" [class.hidden]="parameter.deleted || parameter.deleting" class="btn-secondary"
+            (click)="delete(parameter)">
+            <i class="icon icon-cross"></i>
         </button>
         <i *ngIf="allowDelete" [class.hidden]="parameter.deleted || !parameter.deleting" class="icon icon-rotate icon-spinner10"></i>
 
