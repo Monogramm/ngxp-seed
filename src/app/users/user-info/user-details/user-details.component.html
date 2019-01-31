@@ -26,7 +26,7 @@
 
     <label *ngIf="!items.hasError">
         {{ 'entity.user.role' | translate }}
-        <i *ngIf="ready.count == 0" class="icon-rotate icon-spinner10"></i>
+        <i *ngIf="ready.count == 0" class="icon-rotate"></i>
         <select [(ngModel)]="user.role" [disabled]="ready.count == 0 || items.hasError">
             <option *ngFor="let r of items | async" [ngValue]="r.id">{{ r.name }}</option>
         </select>

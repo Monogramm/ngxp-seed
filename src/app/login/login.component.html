@@ -31,7 +31,7 @@
 
     <div class="center">
       <button class="big btn-primary" [disabled]="!registerForm.form.valid || isAuthenticating">
-        <i *ngIf="isAuthenticating" class="icon-rotate icon-spinner10" style="font-size: 1em"></i>
+        <i *ngIf="isAuthenticating" class="icon-rotate" style="font-size: 1em"></i>
         <span *ngIf="isAuthenticating">{{ 'login.loading' | translate }}</span>
         <span *ngIf="!isAuthenticating">{{ (isLoggingIn ? 'login.login' : 'login.register') | translate }}</span>
       </button>

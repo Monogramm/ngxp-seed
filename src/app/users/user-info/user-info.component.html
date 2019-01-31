@@ -16,7 +16,7 @@
 
     <div>
         <h3>{{ 'users.details' | translate }}</h3>
-        <i *ngIf="!!!user" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
+        <i *ngIf="!!!user" class="icon-rotate" style="font-size: 5em"></i>
         <user-details *ngIf="user" [user]="user"></user-details>
     </div>
 

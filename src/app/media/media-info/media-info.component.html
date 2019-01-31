@@ -17,7 +17,7 @@
 
     <div>
         <h3>{{ 'media.details' | translate }}</h3>
-        <i *ngIf="!!!media" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
+        <i *ngIf="!!!media" class="icon-rotate" style="font-size: 5em"></i>
         <media-details *ngIf="media" [media]="media"></media-details>
     </div>
 

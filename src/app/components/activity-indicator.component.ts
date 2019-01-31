@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'activity-indicator',
   template: `
     <div [class.hidden]="!isLoading">
-      <i class="icon-rotate icon-spinner10"></i>
+      <i class="icon-rotate"></i>
       <span>{{ message }}</span>
     </div>
   `,

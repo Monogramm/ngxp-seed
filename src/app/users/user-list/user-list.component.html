@@ -8,7 +8,7 @@
         <button *ngIf="allowDelete" [class.hidden]="user.deleted || user.deleting" class="btn-secondary" (click)="delete(user)">
             <i class="icon icon-cross"></i>
         </button>
-        <i *ngIf="allowDelete" [class.hidden]="user.deleted || !user.deleting" class="icon icon-rotate icon-spinner10"></i>
+        <i *ngIf="allowDelete" [class.hidden]="user.deleted || !user.deleting" class="icon icon-rotate"></i>
 
     </li>
 </ul>
