@@ -211,6 +211,8 @@
         "title": "Informations",
         "links": "Liens utiles",
         "description": "Les liens suivants peuvent vous aider à en apprendre plus sur l'application et sur la façon d'exploiter tout son potentiel.",
+        "legal_links": "Informations légales",
+        "legal_description": "Les liens suivants peuvent vous aider à en apprendre plus sur l'application et sur la façon d'exploiter tout son potentiel.",
         "about": {
             "link": "En savoir plus sur cette application",
             "title": "À propos de",
@@ -239,6 +241,16 @@
                 "title": "Installer sur Chrome (bureau)",
                 "description": "Si vous utilisez Chrome pour bureau, vous pouvez cliquer sur le menu (les 3 points situés dans le coin supérieur droit), puis sur 'Installer ...' pour ajouter l'application aux applications Chrome."
             }
+        },
+        "legal": {
+            "link": "Découvrez les mentions légales de cette application",
+            "title": "Mentions légales",
+            "description": "À définir"
+        },
+        "usage": {
+            "link": "Découvrez les conditions générales d'utilisation de cette application",
+            "title": "Conditions générales d'utilisation",
+            "description": "À définir"
         }
     }
 }

@@ -7,6 +7,8 @@ import { InfoRoutingModule } from './info-routing.module';
 import { InfoComponent } from './info.component';
 import { AboutInfoComponent } from './about-info';
 import { InstallInfoComponent } from './install-info';
+import { LegalInfoComponent } from './legal-info';
+import { UsageInfoComponent } from './usage-info';
 
 @NgModule({
     imports: [
@@ -17,13 +19,17 @@ import { InstallInfoComponent } from './install-info';
     declarations: [
         InfoComponent,
         AboutInfoComponent,
-        InstallInfoComponent
+        InstallInfoComponent,
+        LegalInfoComponent,
+        UsageInfoComponent
     ],
     providers: [],
     exports: [
         InfoComponent,
         AboutInfoComponent,
-        InstallInfoComponent
+        InstallInfoComponent,
+        LegalInfoComponent,
+        UsageInfoComponent
     ]
 })
 export class InfoModule { }

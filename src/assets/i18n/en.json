@@ -210,7 +210,9 @@
     "info": {
         "title": "Information",
         "links": "Useful links",
-        "description": "The following links may help you to learn about the application and how harness its full potential.",
+        "description": "The following links may help you to learn about the application and how harness its full potential.",        
+        "legal_links": "Legal links",
+        "legal_description": "The following links present legal information about this application.",
         "about": {
             "link": "Learn more about this application",
             "title": "About",
@@ -239,6 +241,16 @@
                 "title": "Install on Chrome (desktop)",
                 "description": "When using Chrome for Desktop, you can click on the menu (the 3 dots in the upper-right corner), then 'Install ...' to add the application to Chrome Applications."
             }
+        },
+        "legal": {
+            "link": "Learn more about the application legal information",
+            "title": "Legal notice",
+            "description": "To define"
+        },
+        "usage": {
+            "link": "Learn the Terms of Use of this application",
+            "title": "Terms of Use",
+            "description": "To define"
         }
     }
 }
