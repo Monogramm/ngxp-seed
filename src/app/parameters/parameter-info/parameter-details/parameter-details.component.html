@@ -1,7 +1,7 @@
 <div *ngIf="parameter">
     <label for="parameterName">
         {{ 'entity.parameter.name' | translate }}
-        <input name="parameterName" type="text" required [(ngModel)]="parameter.name">
+        <input name="parameterName" type="text" required autofocus [(ngModel)]="parameter.name">
     </label>
 
     <label for="parameterDescription">

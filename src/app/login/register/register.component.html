@@ -10,7 +10,8 @@
   <div>
     <label>
       {{ 'register.token' | translate }}
-      <input [placeholder]="'register.token_placeholder' | translate" name="token" type="text" required [(ngModel)]="token">
+      <input [placeholder]="'register.token_placeholder' | translate" name="token" type="text" required autofocus
+        [(ngModel)]="token">
     </label>
   </div>
 

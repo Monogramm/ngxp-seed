@@ -19,7 +19,7 @@
       <label>
         {{ 'login.email' | translate }}
         <input [placeholder]="'login.email_placeholder' | translate" name="email" type="email" required autocapitalize="off"
-          autocorrect="off" [(ngModel)]="user.email" [disabled]="isAuthenticating">
+          autocorrect="off" autofocus [(ngModel)]="user.email" [disabled]="isAuthenticating">
       </label>
     </div>
 

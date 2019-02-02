@@ -1,8 +1,8 @@
 <div *ngIf="role">
     <label>
         {{ 'entity.role.name' | translate }}
-        <input [placeholder]="'entity.role.name' | translate" name="name" required autocapitalize="off" autocorrect="off"
-            [(ngModel)]="role.name">
+        <input [placeholder]="'entity.role.name' | translate" name="name" required autofocus autocapitalize="off"
+            autocorrect="off" [(ngModel)]="role.name">
     </label>
 
     <label>
