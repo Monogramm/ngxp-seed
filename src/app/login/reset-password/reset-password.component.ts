@@ -16,10 +16,9 @@ import { ChangePasswordComponent } from './change-password';
 })
 export class ResetPasswordComponent {
     email: string;
-
     token: string;
-
     password: string;
+    busy: boolean = false;
 
     constructor(public store: LoginService,
         private _translate: TranslateService,
@@ -29,13 +28,16 @@ export class ResetPasswordComponent {
 
     sendToken() {
         if (this.email) {
+            this.busy = true;
             this.store.sendResetPasswordToken(this.email)
                 .then(
                     () => {
+                        this.busy = false;
                         var msg: string = this._translate.instant('users.message.success.token_sent');
                         alert(msg);
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -47,12 +49,15 @@ export class ResetPasswordComponent {
     }
 
     submit() {
+        this.busy = true;
         this.store.resetPassword(this.email, this.token, this.password)
             .then(
                 () => {
+                    this.busy = false;
                     this._router.navigate(['']);
                 },
                 (error) => {
+                    this.busy = false;
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
@@ -62,7 +67,8 @@ export class ResetPasswordComponent {
             );
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

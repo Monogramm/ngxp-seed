@@ -11,9 +11,7 @@ import { User } from '../../../data';
 })
 export class ChangePasswordComponent {
     @Input() email: string;
-
     @Input() token: string;
-
     @Input() password: string;
 
     newPasswordConfirmation: string;

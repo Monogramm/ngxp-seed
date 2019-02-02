@@ -17,8 +17,8 @@ import { LoginService, User, UserService } from '../../data';
 })
 export class RegisterComponent implements OnInit {
     user: User;
-
     token: string;
+    busy: boolean = false;
 
     constructor(public store: LoginService,
         public userService: UserService,
@@ -29,11 +29,16 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.pipe(
-            switchMap((params: Params) => this.userService.get(params['id'])))
+            switchMap((params: Params) => {
+                this.busy = true;
+                return this.userService.get(params['id']);
+            }))
             .subscribe((data: any) => {
+                this.busy = false;
                 this.user = this.userService.newModel(data);
             },
                 (error) => {
+                    this.busy = false;
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
@@ -46,13 +51,16 @@ export class RegisterComponent implements OnInit {
 
     sendToken() {
         if (this.user.email) {
+            this.busy = true;
             this.store.sendVerificationToken(this.user.email)
                 .then(
                     () => {
+                        this.busy = false;
                         var msg: string = this._translate.instant('register.message.success.token_sent');
                         alert(msg);
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -69,12 +77,15 @@ export class RegisterComponent implements OnInit {
             alert(msg);
             return;
         }
+        this.busy = true;
         this.store.verify(this.user.id, this.token)
             .then(
                 () => {
+                    this.busy = false;
                     this._router.navigate(['']);
                 },
                 (error) => {
+                    this.busy = false;
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
@@ -84,7 +95,8 @@ export class RegisterComponent implements OnInit {
             );
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

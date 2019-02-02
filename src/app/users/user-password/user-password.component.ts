@@ -19,6 +19,7 @@ import { ChangePasswordComponent } from './change-password';
 })
 export class UserPasswordComponent implements OnInit {
     user: User;
+    busy: boolean = false;
 
     constructor(public store: UserService,
         private _translate: TranslateService,
@@ -28,8 +29,12 @@ export class UserPasswordComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.pipe(
-            switchMap((params: Params) => this.store.get(params['id'])))
+            switchMap((params: Params) => {
+                this.busy = true;
+                return this.store.get(params['id']);
+            }))
             .subscribe((data: any) => {
+                this.busy = false;
                 this.user = this.store.newModel(data);
             });
     }
@@ -37,23 +42,27 @@ export class UserPasswordComponent implements OnInit {
     submit(user: User) {
         var msg: string = this._translate.instant('app.message.confirm.password');
         if (confirm(msg)) {
+            this.busy = true;
             this.store.update(user)
                 .then(
-                () => {
-                    this._router.navigate(['/']);
-                },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        this.busy = false;
+                        this._router.navigate(['/']);
+                    },
+                    (error) => {
+                        this.busy = false;
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        var msg: string = this._translate.instant('app.message.error.update');
+                        alert(msg);
                     }
-                    var msg: string = this._translate.instant('app.message.error.update');
-                    alert(msg);
-                }
                 );
         }
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 
