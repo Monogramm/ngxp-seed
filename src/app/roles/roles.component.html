@@ -8,7 +8,7 @@
 
   <hr>
 
-  <div class="link-container">
+  <div *ngIf="allowSelection" class="link-container">
     <button (click)="toggleMassDelete()" class="left btn-primary" [class.hidden]="!isConfirmingDeletion" style="float: left;">
       {{ 'app.common.confirm' | translate }}
     </button>
@@ -19,7 +19,7 @@
     </button>
   </div>
 
-  <role-list [filter-selected-only]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></role-list>
+  <role-list [filter-selected-only]="isConfirmingDeletion" [allow-selection]="allowSelection" (loaded)="hideLoadingIndicator()"></role-list>
 </div>
 
 <activity-indicator [isLoading]="isLoading"></activity-indicator>

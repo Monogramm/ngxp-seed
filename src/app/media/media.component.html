@@ -2,7 +2,7 @@
   <h1>{{ 'media.management' | translate }}</h1>
 
   <div class="link-container">
-    <button (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="'left ' + (isConfirmingDeletion ? 'btn-secondary' : 'btn-primary')">
+    <button *ngIf="allowSelection" (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="'left ' + (isConfirmingDeletion ? 'btn-secondary' : 'btn-primary')">
       {{ (isConfirmingDeletion ? 'app.common.cancel' : 'app.common.delete') | translate }}
     </button>
 
@@ -14,7 +14,7 @@
 
   <hr>
 
-  <media-list [filter-selected-only]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></media-list>
+  <media-list [filter-selected-only]="isConfirmingDeletion" [allow-selection]="allowSelection" (loaded)="hideLoadingIndicator()"></media-list>
 </div>
 
 <activity-indicator [isLoading]="isLoading"></activity-indicator>

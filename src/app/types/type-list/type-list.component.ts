@@ -14,6 +14,7 @@ import { Type, TypeService } from '../../data';
 })
 export class TypeListComponent {
     @Input('filter-selected-only') showSelection: boolean = false;
+    @Input('allow-selection') allowSelection: boolean = false;
     @Input('allow-edit') allowEdit: boolean = true;
     @Input('allow-delete') allowDelete: boolean = true;
     @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();

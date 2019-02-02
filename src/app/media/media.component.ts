@@ -16,6 +16,8 @@ import { MediaListComponent } from './media-list';
 export class MediaComponent implements OnInit {
     media: string = '';
 
+    allowSelection: boolean = false;
+
     isLoading = false;
     isConfirmingDeletion = false;
 

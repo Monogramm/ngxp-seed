@@ -1,6 +1,6 @@
 <ul class="entity-list">
     <li *ngFor="let type of store.items | async | typeStatus:showSelection">
-        <i [class]="'icon ' + imageSource(type)" (click)="toggleSelection(type)"></i>
+        <i *ngIf="allowSelection" [class]="'icon ' + imageSource(type)" (click)="toggleSelection(type)"></i>
 
         <a [routerLink]="edit(type)" [class.selected]="type.selected && !type.deleted">{{ type.name }}</a>
 

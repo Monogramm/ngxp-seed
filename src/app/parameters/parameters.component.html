@@ -14,7 +14,7 @@
 
   <hr>
 
-  <parameter-list [filter-selected-only]="isConfirmingDeletion" (loaded)="hideLoadingIndicator()"></parameter-list>
+  <parameter-list [filter-selected-only]="isConfirmingDeletion" [allow-selection]="allowSelection" (loaded)="hideLoadingIndicator()"></parameter-list>
 </div>
 
 <activity-indicator [isLoading]="isLoading"></activity-indicator>

@@ -16,6 +16,8 @@ import { RoleListComponent } from './role-list';
 export class RolesComponent implements OnInit {
     role: string = '';
 
+    allowSelection: boolean = false;
+
     isLoading = false;
     isConfirmingDeletion = false;
 

@@ -1,6 +1,6 @@
 <ul class="entity-list">
     <li *ngFor="let parameter of store.items | async | parameterStatus:showSelection">
-        <i [class]="'icon ' + imageSource(parameter)" (click)="toggleSelection(parameter)"></i>
+        <i *ngIf="allowSelection" [class]="'icon ' + imageSource(parameter)" (click)="toggleSelection(parameter)"></i>
 
         <a [routerLink]="edit(parameter)" [class.selected]="parameter.selected && !parameter.deleted">{{
             parameter.name}}<span>={{

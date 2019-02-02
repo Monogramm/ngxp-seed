@@ -16,6 +16,8 @@ import { TypeListComponent } from './type-list';
 export class TypesComponent implements OnInit {
     type: string = '';
 
+    allowSelection: boolean = false;
+
     isLoading = false;
     isConfirmingDeletion = false;
 
