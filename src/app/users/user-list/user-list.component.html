@@ -1,8 +1,9 @@
 <ul class="entity-list">
     <li *ngFor="let user of store.items | async">
         <i [class]="user.verified ? 'success icon icon-user-check' : 'icon icon-user'"></i>
-        <a [routerLink]="allowEdit ? ['/user', user.id] : ['.']" [class.not-verified]="!user.verified"
-            [class.not-active]="!user.active">{{ user.username
+
+        <a [routerLink]="edit(user)" [class.not-verified]="!user.verified" [class.not-active]="!user.active">{{
+            user.username
             }}</a>
 
         <button *ngIf="allowDelete" [class.hidden]="user.deleted || user.deleting" class="btn-secondary" (click)="delete(user)">

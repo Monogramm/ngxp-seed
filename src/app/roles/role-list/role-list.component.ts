@@ -95,10 +95,10 @@ export class RoleListComponent {
         }
     }
 
-    edit(role: Role) {
-        if (!this.allowEdit) {
-            return;
+    edit(role: Role): any[] {
+        if (!this.allowEdit || !!!role.id) {
+            return ['.'];
         }
-        this._router.navigate(['/role', role.id]);
+        return ['/role', role.id];
     }
 }

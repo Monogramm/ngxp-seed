@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -12,7 +12,7 @@ import { Media, MediaService } from '../../data';
     styleUrls: ['./media-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MediaListComponent {
+export class MediaListComponent implements OnInit {
     @Input('filter-selected-only') showSelection: boolean = false;
     @Input('allow-edit') allowEdit: boolean = true;
     @Input('allow-delete') allowDelete: boolean = true;
@@ -95,10 +95,10 @@ export class MediaListComponent {
         }
     }
 
-    edit(media: Media) {
-        if (!this.allowEdit) {
-            return;
+    edit(media: Media): any[] {
+        if (!this.allowEdit || !!!media.id) {
+            return ['.'];
         }
-        this._router.navigate(['/media', media.id]);
+        return ['/media', media.id];
     }
 }

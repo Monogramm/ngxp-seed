@@ -2,8 +2,7 @@
     <li *ngFor="let role of store.items | async | roleStatus:showSelection">
         <i [class]="'icon ' + imageSource(role)" (click)="toggleSelection(role)"></i>
 
-        <a [routerLink]="allowEdit ? ['/role', role.id] : ['.']" [class.selected]="role.selected && !role.deleted">{{ role.name
-            }}</a>
+        <a [routerLink]="edit(role)" [class.selected]="role.selected && !role.deleted">{{ role.name }}</a>
 
         <button *ngIf="allowDelete" [class.hidden]="role.deleted || role.deleting" class="btn-secondary" (click)="delete(role)">
             <i class="icon icon-cross"></i>

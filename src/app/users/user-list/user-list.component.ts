@@ -82,10 +82,10 @@ export class UserListComponent implements OnInit {
         }
     }
 
-    edit(user: User) {
-        if (!this.allowEdit) {
-            return;
+    edit(user: User): any[] {
+        if (!this.allowEdit || !!!user.id) {
+            return ['.'];
         }
-        this._router.navigate(['/user', user.id]);
+        return ['/user', user.id];
     }
 }

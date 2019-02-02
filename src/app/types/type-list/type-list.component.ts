@@ -95,10 +95,10 @@ export class TypeListComponent {
         }
     }
 
-    edit(type: Type) {
-        if (!this.allowEdit) {
-            return;
+    edit(type: Type): any[] {
+        if (!this.allowEdit || !!!type.id) {
+            return ['.'];
         }
-        this._router.navigate(['/type', type.id]);
+        return ['/type', type.id];
     }
 }

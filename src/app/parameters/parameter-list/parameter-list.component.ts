@@ -95,10 +95,11 @@ export class ParameterListComponent implements OnInit {
         }
     }
 
-    edit(parameter: Parameter) {
-        if (!this.allowEdit) {
-            return;
+    edit(parameter: Parameter): any[] {
+        if (!this.allowEdit || !!!parameter.id) {
+            return ['.'];
         }
-        this._router.navigate(['/parameter', parameter.id]);
+        return ['/parameter', parameter.id];
     }
+
 }

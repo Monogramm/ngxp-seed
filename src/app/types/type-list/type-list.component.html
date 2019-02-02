@@ -2,8 +2,7 @@
     <li *ngFor="let type of store.items | async | typeStatus:showSelection">
         <i [class]="'icon ' + imageSource(type)" (click)="toggleSelection(type)"></i>
 
-        <a [routerLink]="allowEdit ? ['/type', type.id] : ['.']" [class.selected]="type.selected && !type.deleted">{{
-            type.name }}</a>
+        <a [routerLink]="edit(type)" [class.selected]="type.selected && !type.deleted">{{ type.name }}</a>
 
         <button *ngIf="allowDelete" [class.hidden]="type.deleted || type.deleting" class="btn-secondary" (click)="delete(type)">
             <i class="icon icon-cross"></i>
