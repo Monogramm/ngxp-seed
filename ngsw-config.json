@@ -1,5 +1,6 @@
 {
   "index": "/index.html",
+  "appData": "Latest update content",
   "assetGroups": [{
     "name": "app",
     "installMode": "prefetch",
