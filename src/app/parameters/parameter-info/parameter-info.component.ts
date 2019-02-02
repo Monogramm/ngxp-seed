@@ -19,6 +19,7 @@ import { ParameterDetailsComponent } from './parameter-details';
 })
 export class ParameterInfoComponent implements OnInit {
     parameter: Parameter;
+    parameterTypeHtmlPattern: string = Parameter.STRING_REGEX;
 
     constructor(public store: ParameterService,
         private _translate: TranslateService,
@@ -74,9 +75,35 @@ export class ParameterInfoComponent implements OnInit {
         }
     }
 
+    updateTypePattern(pattern: string) {
+        this.parameterTypeHtmlPattern = pattern;
+    }
+
     submit(parameter: Parameter) {
+        let name = parameter.name;
+        if (name === null || name.trim() === '') {
+            var msg: string = this._translate.instant('app.message.warning.missing_field');
+            alert(msg);
+            return;
+        }
+        parameter.name = name.trim();
+
+        const initialValue = parameter.value;
+        let value = parameter.value;
+        if (value !== null) {
+            value = Parameter.convertValue(parameter.type, parameter.value);
+        }
+
+        // check if value format match selected type
+        if (!Parameter.isValueValid(value, this.parameterTypeHtmlPattern)) {
+            var msg: string = this._translate.instant('parameters.message.warning.invalid_value');
+            alert(msg);
+            return;
+        }
+        parameter.value = value;
+
         if (parameter.id === null) {
-            this.store.add(parameter.name)
+            this.store.add(parameter)
                 .then(
                     () => {
                         this._location.back();
@@ -87,6 +114,7 @@ export class ParameterInfoComponent implements OnInit {
                         }
                         var msg: string = this._translate.instant('app.message.error.creation');
                         alert(msg);
+                        parameter.value = initialValue;
                     }
                 );
         } else {
@@ -101,6 +129,7 @@ export class ParameterInfoComponent implements OnInit {
                         }
                         var msg: string = this._translate.instant('app.message.error.update');
                         alert(msg);
+                        parameter.value = initialValue;
                     }
                 );
         }

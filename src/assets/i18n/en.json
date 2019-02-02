@@ -176,7 +176,12 @@
     },
     "parameters": {
         "management": "Parameters management",
-        "info": "Parameter"
+        "info": "Parameter",
+        "message": {
+            "warning": {
+                "invalid_value": "Value format doesn't match the selected type."
+            }
+        }
     },
     "media": {
         "management": "Media management",

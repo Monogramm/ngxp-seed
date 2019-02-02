@@ -88,23 +88,10 @@ export class ParameterService {
         return this._allItems.length;
     }
 
-    add(parameterToAdd: string | Parameter | ParameterDTO, parameterDescription?: string, parameterType?: string, parameterValue?: string) {
+    add(parameterToAdd: Parameter | ParameterDTO) {
         let now = new Date();
-        let parameter;
-        if (typeof parameterToAdd === 'string') {
-            parameter = new ParameterDTO(
-                null,
-                parameterToAdd,
-                parameterDescription,
-                parameterType,
-                parameterValue,
-                now,
-                this.backendService.userId,
-                now,
-                this.backendService.userId,
-                this.backendService.userId
-            );
-        } else if (parameterToAdd instanceof Parameter) {
+        let parameter: ParameterDTO;
+        if (parameterToAdd instanceof Parameter) {
             parameter = new ParameterDTO(
                 null,
                 parameterToAdd.name,

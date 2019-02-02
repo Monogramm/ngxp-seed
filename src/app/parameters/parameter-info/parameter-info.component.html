@@ -5,7 +5,7 @@
 
     <div>
         <i *ngIf="!!!parameter" class="icon-rotate" style="font-size: 5em"></i>
-        <parameter-details *ngIf="parameter" [parameter]="parameter"></parameter-details>
+        <parameter-details *ngIf="parameter" [parameter]="parameter" (pattern-change)="updateTypePattern($event)"></parameter-details>
     </div>
 
     <hr>

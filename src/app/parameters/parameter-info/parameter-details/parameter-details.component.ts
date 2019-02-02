@@ -1,4 +1,4 @@
-import {  ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { Parameter, ParameterType, ParameterService } from '../../../data';
 
@@ -9,26 +9,14 @@ import { Parameter, ParameterType, ParameterService } from '../../../data';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ParameterDetailsComponent implements OnInit {
-
-    private static readonly URL_REGEX = '.*';
-    private static readonly PATH_REGEX = '.*';
-    private static readonly COLOR_REGEX = '^\\#[0-9A-F]{6,8}$';
-    private static readonly TIME_REGEX = '^[0-2]?[0-9]\\:[0-5]?[0-9]$';
-    private static readonly DATE_REGEX = '^[0-9]{4}\-[0-1]?[0-9]\-[0-1]?[0-9]$';
-    private static readonly DATE_TIME_REGEX = '^[0-9]{4}\-[0-1]?[0-9]\-[0-1]?[0-9] [0-2]?[0-9]\\:[0-5]?[0-9]$';
-    private static readonly DOUBLE_REGEX = '^(-)?\\d+(\\.\\d||,\\d)?\\d*$';
-    private static readonly INTEGER_REGEX = '^(-)?\\d+$';
-    private static readonly BOOLEAN_REGEX = '^[0-1]?$';
-    private static readonly STRING_REGEX = '.*';
-    private static readonly ANY_REGEX = '.*';
-
     @Input() parameter: Parameter;
+    @Output('pattern-change') patternChange: EventEmitter<string> = new EventEmitter<string>();
 
     parameterTypes: Array<String> = [];
 
     parameterValuePlaceHolder: string = ' ';
     parameterTypeHtml: string = 'text';
-    parameterTypeHtmlPattern: string = ParameterDetailsComponent.STRING_REGEX;
+    parameterTypeHtmlPattern: string = Parameter.STRING_REGEX;
 
     isDateInputSupported: boolean = false;
     isDateTimeInputSupported: boolean = false;
@@ -59,105 +47,116 @@ export class ParameterDetailsComponent implements OnInit {
                 this.parameterTypes.push(ParameterType[enumMember]);
             }
         }
+
+        this.updateType();
     }
 
     updateType() {
         switch (this.parameter.type) {
             case 'URL':
                 this.parameterTypeHtml = 'url';
-                this.parameterTypeHtmlPattern = ParameterDetailsComponent.URL_REGEX;
+                this.parameterTypeHtmlPattern = Parameter.URL_REGEX;
                 this.parameterValuePlaceHolder = 'http://www.mysite.com/';
-                this.parameter.value = '';
+                if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                    this.parameter.value = '';
+                }
                 break;
 
             case 'PATH':
                 this.parameterTypeHtml = 'text';
-                this.parameterTypeHtmlPattern = ParameterDetailsComponent.PATH_REGEX;
+                this.parameterTypeHtmlPattern = Parameter.PATH_REGEX;
                 this.parameterValuePlaceHolder = '/path/to/my/files';
-                this.parameter.value = '';
+                if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                    this.parameter.value = '';
+                }
                 break;
 
             case 'COLOR':
                 this.parameterTypeHtml = 'color';
-                this.parameterTypeHtmlPattern = ParameterDetailsComponent.COLOR_REGEX;
+                this.parameterTypeHtmlPattern = Parameter.COLOR_REGEX;
                 this.parameterValuePlaceHolder = '#RRGGBB';
-                this.parameter.value = '';
+                if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                    this.parameter.value = '';
+                }
                 break;
 
             case 'DATE_TIME':
                 this.parameterTypeHtml = 'datetime-local';
-                if (this.isDateTimeInputSupported) {
-                    this.parameter.value = new Date();
-                } else {
-                    this.parameterTypeHtmlPattern = ParameterDetailsComponent.DATE_TIME_REGEX;
+                if (!this.isDateTimeInputSupported) {
+                    this.parameterTypeHtmlPattern = Parameter.DATE_TIME_REGEX;
                     this.parameterValuePlaceHolder = 'YYYY-MM-DD hh:mm';
-                    this.parameter.value = '';
+                    if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                        this.parameter.value = '';
+                    }
                 }
                 break;
 
             case 'TIME':
                 this.parameterTypeHtml = 'TIME';
-                if (this.isTimeInputSupported) {
-                    this.parameter.value = new Date();
-                } else {
-                    this.parameterTypeHtmlPattern = ParameterDetailsComponent.TIME_REGEX;
+                if (!this.isTimeInputSupported) {
+                    this.parameterTypeHtmlPattern = Parameter.TIME_REGEX;
                     this.parameterValuePlaceHolder = 'hh:mm';
-                    this.parameter.value = '';
+                    if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                        this.parameter.value = '';
+                    }
                 }
                 break;
 
             case 'DATE':
                 this.parameterTypeHtml = 'DATE';
-                if (this.isDateInputSupported) {
-                    this.parameter.value = new Date();
-                } else {
-                    this.parameterTypeHtmlPattern = ParameterDetailsComponent.DATE_REGEX;
+                if (!this.isDateInputSupported) {
+                    this.parameterTypeHtmlPattern = Parameter.DATE_REGEX;
                     this.parameterValuePlaceHolder = 'YYYY-MM-DD';
-                    this.parameter.value = '';
+                    if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                        this.parameter.value = '';
+                    }
                 }
                 break;
 
             case 'DOUBLE':
                 this.parameterTypeHtml = 'text';
-                this.parameterTypeHtmlPattern = ParameterDetailsComponent.DOUBLE_REGEX;
+                this.parameterTypeHtmlPattern = Parameter.DOUBLE_REGEX;
                 this.parameterValuePlaceHolder = ' ';
-                this.parameter.value = 0.0;
+                if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                    this.parameter.value = 0.0;
+                }
                 break;
 
             case 'INTEGER':
                 this.parameterTypeHtml = 'number';
-                this.parameterTypeHtmlPattern = ParameterDetailsComponent.INTEGER_REGEX;
+                this.parameterTypeHtmlPattern = Parameter.INTEGER_REGEX;
                 this.parameterValuePlaceHolder = ' ';
-                this.parameter.value = 0;
+                if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                    this.parameter.value = 0;
+                }
                 break;
 
             case 'BOOLEAN':
                 this.parameterTypeHtml = 'checkbox';
-                this.parameterTypeHtmlPattern = ParameterDetailsComponent.BOOLEAN_REGEX;
+                this.parameterTypeHtmlPattern = Parameter.BOOLEAN_REGEX;
                 this.parameterValuePlaceHolder = ' ';
-                this.parameter.value = false;
+                if (!(this.parameter.value instanceof Boolean) && (this.parameter.value !== 'true')) {
+                    this.parameter.value = false;
+                }
                 break;
 
             case 'STRING':
                 this.parameterTypeHtml = 'text';
-                this.parameterTypeHtmlPattern = ParameterDetailsComponent.STRING_REGEX;
+                this.parameterTypeHtmlPattern = Parameter.STRING_REGEX;
                 this.parameterValuePlaceHolder = ' ';
-                this.parameter.value = '';
+                if (!Parameter.isValueValid(this.parameter.value, this.parameterTypeHtmlPattern)) {
+                    this.parameter.value = '';
+                }
                 break;
 
             case 'ANY':
             default:
                 this.parameterTypeHtml = '';
-                this.parameterTypeHtmlPattern = ParameterDetailsComponent.ANY_REGEX;
+                this.parameterTypeHtmlPattern = Parameter.ANY_REGEX;
                 this.parameterValuePlaceHolder = ' ';
-                this.parameter.value = '';
-
 
         }
+        this.patternChange.emit(this.parameterTypeHtmlPattern);
     }
 
-    isValueValid(value: any) {
-        var reg = new RegExp(this.parameterTypeHtmlPattern, 'i');
-        return value === null || reg.test(String(value).trim());
-    }
 }
