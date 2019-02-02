@@ -29,6 +29,10 @@ export class ParameterListComponent {
         this.load(1);
     }
 
+    reload(): void {
+        this.load(this.pagination.page);
+    }
+
     load(page: number): void {
         this.pagination.page = page;
 
@@ -73,7 +77,13 @@ export class ParameterListComponent {
 
             this.store.delete(parameter)
                 .then(
-                    () => { parameter.deleting = false; parameter.deleted = true; },
+                    () => {
+                        parameter.deleting = false;
+                        parameter.deleted = true;
+                        if (this.pagination.next) {
+                            this.reload();
+                        }
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);

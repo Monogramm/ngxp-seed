@@ -29,6 +29,10 @@ export class MediaListComponent {
         this.load(1);
     }
 
+    reload(): void {
+        this.load(this.pagination.page);
+    }
+
     load(page: number): void {
         this.pagination.page = page;
 
@@ -73,7 +77,13 @@ export class MediaListComponent {
 
             this.store.delete(media)
                 .then(
-                    () => { media.deleting = false; media.deleted = true; },
+                    () => {
+                        media.deleting = false;
+                        media.deleted = true;
+                        if (this.pagination.next) {
+                            this.reload();
+                        }
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);

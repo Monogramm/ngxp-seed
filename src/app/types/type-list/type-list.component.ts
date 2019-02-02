@@ -29,6 +29,10 @@ export class TypeListComponent {
         this.load(1);
     }
 
+    reload(): void {
+        this.load(this.pagination.page);
+    }
+
     load(page: number): void {
         this.pagination.page = page;
 
@@ -73,7 +77,13 @@ export class TypeListComponent {
 
             this.store.delete(type)
                 .then(
-                    () => { type.deleting = false; type.deleted = true; },
+                    () => {
+                        type.deleting = false;
+                        type.deleted = true;
+                        if (this.pagination.next) {
+                            this.reload();
+                        }
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);

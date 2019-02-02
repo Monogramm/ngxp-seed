@@ -93,22 +93,37 @@ export class BackendService extends AbstractBackendService {
                         var firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
                         if (firstPageProp && firstPageProp.length >= 2) {
                             pagination.first = +firstPageProp[1] + 1;
+
+                            if (firstPageProp.length >= 3) {
+                                pagination.size = +firstPageProp[2];
+                            }
                         }
 
                         var prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
                         if (prevPageProp && prevPageProp.length >= 2) {
                             pagination.prev = +prevPageProp[1] + 1;
+
+                            if (prevPageProp.length >= 3) {
+                                pagination.size = +prevPageProp[2];
+                            }
                         }
 
                         var nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
                         if (nextPageProp && nextPageProp.length >= 2) {
                             pagination.next = +nextPageProp[1] + 1;
+
+                            if (nextPageProp.length >= 3) {
+                                pagination.size = +nextPageProp[2];
+                            }
                         }
 
                         var lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
-
                         if (lastPageProp && lastPageProp.length >= 2) {
                             pagination.last = +lastPageProp[1];
+
+                            if (lastPageProp.length >= 3) {
+                                pagination.size = +lastPageProp[2];
+                            }
                         }
                     }
                     if (Logger.isEnabled) {

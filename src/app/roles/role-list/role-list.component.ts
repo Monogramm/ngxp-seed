@@ -29,6 +29,10 @@ export class RoleListComponent {
         this.load(1);
     }
 
+    reload(): void {
+        this.load(this.pagination.page);
+    }
+
     load(page: number): void {
         this.pagination.page = page;
 
@@ -73,7 +77,13 @@ export class RoleListComponent {
 
             this.store.delete(role)
                 .then(
-                    () => { role.deleting = false; role.deleted = true; },
+                    () => {
+                        role.deleting = false;
+                        role.deleted = true;
+                        if (this.pagination.next) {
+                            this.reload();
+                        }
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);

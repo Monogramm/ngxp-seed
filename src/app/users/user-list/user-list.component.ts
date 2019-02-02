@@ -28,6 +28,10 @@ export class UserListComponent implements OnInit {
         this.load(1);
     }
 
+    reload(): void {
+        this.load(this.pagination.page);
+    }
+
     load(page: number): void {
         this.pagination.page = page;
 
@@ -60,7 +64,13 @@ export class UserListComponent implements OnInit {
 
             this.store.delete(user)
                 .then(
-                    () => { },
+                    () => {
+                        user.deleting = false;
+                        user.deleted = true;
+                        if (this.pagination.next) {
+                            this.reload();
+                        }
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
