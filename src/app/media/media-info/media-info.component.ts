@@ -19,6 +19,7 @@ import { MediaDetailsComponent } from './media-details';
 })
 export class MediaInfoComponent implements OnInit {
     media: Media;
+    busy: boolean = false;
 
     constructor(public store: MediaService,
         private _translate: TranslateService,
@@ -29,6 +30,7 @@ export class MediaInfoComponent implements OnInit {
     ngOnInit() {
         this._route.params.pipe(
             switchMap((params: Params) => {
+                this.busy = true;
                 var entityId = params['id'];
                 if (entityId) {
                     return this.store.get(params['id']);
@@ -37,6 +39,7 @@ export class MediaInfoComponent implements OnInit {
                 }
             }))
             .subscribe((data: any) => {
+                this.busy = false;
                 if (data) {
                     this.media = this.store.newModel(data);
                 } else {
@@ -49,7 +52,7 @@ export class MediaInfoComponent implements OnInit {
                     }
                     var msg: string = this._translate.instant('app.message.error.loading');
                     alert(msg);
-                    this._location.back();
+                    this.return();
                 });
     }
 
@@ -58,12 +61,14 @@ export class MediaInfoComponent implements OnInit {
         if (confirm(msg)) {
             media.deleting = true;
 
+            this.busy = true;
             this.store.delete(media)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -76,12 +81,14 @@ export class MediaInfoComponent implements OnInit {
 
     submit(media: Media) {
         if (media.id === null) {
+            this.busy = true;
             this.store.add(media)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -90,12 +97,14 @@ export class MediaInfoComponent implements OnInit {
                     }
                 );
         } else {
+            this.busy = true;
             this.store.update(media)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -106,7 +115,8 @@ export class MediaInfoComponent implements OnInit {
         }
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

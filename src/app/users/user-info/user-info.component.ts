@@ -19,6 +19,7 @@ import { UserDetailsComponent } from './user-details';
 })
 export class UserInfoComponent implements OnInit {
     user: User;
+    busy: boolean = false;
 
     constructor(public store: UserService,
         private _translate: TranslateService,
@@ -29,6 +30,7 @@ export class UserInfoComponent implements OnInit {
     ngOnInit() {
         this._route.params.pipe(
             switchMap((params: Params) => {
+                this.busy = true;
                 var entityId = params['id'];
                 if (entityId) {
                     return this.store.get(params['id']);
@@ -37,6 +39,7 @@ export class UserInfoComponent implements OnInit {
                 }
             }))
             .subscribe((data: any) => {
+                this.busy = false;
                 if (data) {
                     this.user = this.store.newModel(data);
                 } else {
@@ -49,7 +52,7 @@ export class UserInfoComponent implements OnInit {
                     }
                     var msg: string = this._translate.instant('app.message.error.loading');
                     alert(msg);
-                    this._location.back();
+                    this.return();
                 }
             );
     }
@@ -59,12 +62,14 @@ export class UserInfoComponent implements OnInit {
         if (confirm(msg)) {
             user.deleting = true;
 
+            this.busy = true;
             this.store.delete(user)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -79,12 +84,14 @@ export class UserInfoComponent implements OnInit {
         if (user.id === null) {
             var msgCreate: string = this._translate.instant('app.message.confirm.create');
             if (confirm(msgCreate)) {
+                this.busy = true;
                 this.store.add(user)
                     .then(
                         () => {
-                            this._location.back();
+                            this.return();
                         },
                         (error) => {
+                            this.busy = false;
                             if (Logger.isEnabled) {
                                 Logger.dir(error);
                             }
@@ -96,12 +103,14 @@ export class UserInfoComponent implements OnInit {
         } else {
             var msgUpdate: string = this._translate.instant('app.message.confirm.update');
             if (confirm(msgUpdate)) {
+                this.busy = true;
                 this.store.update(user)
                     .then(
                         () => {
-                            this._location.back();
+                            this.return();
                         },
                         (error) => {
+                            this.busy = false;
                             if (Logger.isEnabled) {
                                 Logger.dir(error);
                             }
@@ -113,7 +122,8 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

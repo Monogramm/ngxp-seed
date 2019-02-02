@@ -19,6 +19,7 @@ import { TypeDetailsComponent } from './type-details';
 })
 export class TypeInfoComponent implements OnInit {
     type: Type;
+    busy: boolean = false;
 
     constructor(public store: TypeService,
         private _translate: TranslateService,
@@ -28,9 +29,22 @@ export class TypeInfoComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.pipe(
-            switchMap((params: Params) => this.store.get(params['id'])))
+            switchMap((params: Params) => {
+                this.busy = true;
+                var entityId = params['id'];
+                if (entityId) {
+                    return this.store.get(params['id']);
+                } else {
+                    return Promise.resolve();
+                }
+            }))
             .subscribe((data: any) => {
-                this.type = this.store.newModel(data);
+                this.busy = false;
+                if (data) {
+                    this.type = this.store.newModel(data);
+                } else {
+                    this.type = new Type();
+                }
             },
                 (error) => {
                     if (Logger.isEnabled) {
@@ -38,7 +52,7 @@ export class TypeInfoComponent implements OnInit {
                     }
                     var msg: string = this._translate.instant('app.message.error.loading');
                     alert(msg);
-                    this._location.back();
+                    this.return();
                 });
     }
 
@@ -47,10 +61,11 @@ export class TypeInfoComponent implements OnInit {
         if (confirm(msg)) {
             type.deleting = true;
 
+            this.busy = true;
             this.store.delete(type)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
                         if (Logger.isEnabled) {
@@ -65,10 +80,11 @@ export class TypeInfoComponent implements OnInit {
 
     submit(type: Type) {
         if (type.id === null) {
+            this.busy = true;
             this.store.add(type.name)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
                         if (Logger.isEnabled) {
@@ -79,10 +95,11 @@ export class TypeInfoComponent implements OnInit {
                     }
                 );
         } else {
+            this.busy = true;
             this.store.update(type)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
                         if (Logger.isEnabled) {
@@ -95,7 +112,8 @@ export class TypeInfoComponent implements OnInit {
         }
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

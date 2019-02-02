@@ -19,6 +19,7 @@ import { RoleDetailsComponent } from './role-details';
 })
 export class RoleInfoComponent implements OnInit {
     role: Role;
+    busy: boolean = false;
 
     constructor(public store: RoleService,
         private _translate: TranslateService,
@@ -28,9 +29,22 @@ export class RoleInfoComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.pipe(
-            switchMap((params: Params) => this.store.get(params['id'])))
+            switchMap((params: Params) => {
+                this.busy = true;
+                var entityId = params['id'];
+                if (entityId) {
+                    return this.store.get(params['id']);
+                } else {
+                    return Promise.resolve();
+                }
+            }))
             .subscribe((data: any) => {
-                this.role = this.store.newModel(data);
+                this.busy = false;
+                if (data) {
+                    this.role = this.store.newModel(data);
+                } else {
+                    this.role = new Role();
+                }
             },
                 (error) => {
                     if (Logger.isEnabled) {
@@ -38,7 +52,7 @@ export class RoleInfoComponent implements OnInit {
                     }
                     var msg: string = this._translate.instant('app.message.error.loading');
                     alert(msg);
-                    this._location.back();
+                    this.return();
                 });
     }
 
@@ -47,12 +61,14 @@ export class RoleInfoComponent implements OnInit {
         if (confirm(msg)) {
             role.deleting = true;
 
+            this.busy = true;
             this.store.delete(role)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -65,10 +81,14 @@ export class RoleInfoComponent implements OnInit {
 
     submit(role: Role) {
         if (role.id === null) {
+            this.busy = true;
             this.store.add(role.name)
                 .then(
-                    () => { this._location.back(); },
+                    () => {
+                        this.return();
+                    },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -77,12 +97,14 @@ export class RoleInfoComponent implements OnInit {
                     }
                 );
         } else {
+            this.busy = true;
             this.store.update(role)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -93,7 +115,8 @@ export class RoleInfoComponent implements OnInit {
         }
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

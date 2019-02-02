@@ -12,8 +12,8 @@ export class TypeDTO {
 
 export class Type extends TypeDTO {
     constructor(
-        public id: string,
-        public name: string,
+        public id: string = null,
+        public name: string = null,
         public selected: boolean = false,
         public deleted: boolean = false,
         public deleting: boolean = false,

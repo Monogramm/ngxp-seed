@@ -4,6 +4,9 @@
             "home.title": "Go to home",
             "logout.title": "Logout"
         },
+        "activity": {
+            "loading": "Loading"
+        },
         "message": {
             "logout": "Do you really want to log off?",
             "confirm": {

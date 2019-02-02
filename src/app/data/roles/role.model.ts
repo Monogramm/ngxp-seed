@@ -13,9 +13,9 @@ export class RoleDTO {
 
 export class Role extends RoleDTO {
     constructor(
-        public id: string,
-        public name: string,
-        public permissions: Array<string>,
+        public id: string = null,
+        public name: string = null,
+        public permissions: Array<string> = [],
         public selected: boolean = false,
         public deleted: boolean = false,
         public deleting: boolean = false,

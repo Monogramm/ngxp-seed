@@ -20,6 +20,7 @@ import { ParameterDetailsComponent } from './parameter-details';
 export class ParameterInfoComponent implements OnInit {
     parameter: Parameter;
     parameterTypeHtmlPattern: string = Parameter.STRING_REGEX;
+    busy: boolean = false;
 
     constructor(public store: ParameterService,
         private _translate: TranslateService,
@@ -30,6 +31,7 @@ export class ParameterInfoComponent implements OnInit {
     ngOnInit() {
         this._route.params.pipe(
             switchMap((params: Params) => {
+                this.busy = true;
                 var entityId = params['id'];
                 if (entityId) {
                     return this.store.get(params['id']);
@@ -38,6 +40,7 @@ export class ParameterInfoComponent implements OnInit {
                 }
             }))
             .subscribe((data: any) => {
+                this.busy = false;
                 if (data) {
                     this.parameter = this.store.newModel(data);
                 } else {
@@ -50,7 +53,7 @@ export class ParameterInfoComponent implements OnInit {
                     }
                     var msg: string = this._translate.instant('app.message.error.loading');
                     alert(msg);
-                    this._location.back();
+                    this.return();
                 });
     }
 
@@ -59,12 +62,14 @@ export class ParameterInfoComponent implements OnInit {
         if (confirm(msg)) {
             parameter.deleting = true;
 
+            this.busy = true;
             this.store.delete(parameter)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -103,12 +108,14 @@ export class ParameterInfoComponent implements OnInit {
         parameter.value = value;
 
         if (parameter.id === null) {
+            this.busy = true;
             this.store.add(parameter)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -121,9 +128,10 @@ export class ParameterInfoComponent implements OnInit {
             this.store.update(parameter)
                 .then(
                     () => {
-                        this._location.back();
+                        this.return();
                     },
                     (error) => {
+                        this.busy = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
@@ -135,7 +143,8 @@ export class ParameterInfoComponent implements OnInit {
         }
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

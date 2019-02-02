@@ -22,4 +22,4 @@
   <type-list [filter-selected-only]="isConfirmingDeletion" [allow-selection]="allowSelection" (loaded)="hideLoadingIndicator()"></type-list>
 </div>
 
-<activity-indicator [isLoading]="isLoading"></activity-indicator>
+<activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="isLoading"></activity-indicator>

@@ -16,7 +16,7 @@ import { ParameterDetailsComponent } from './parameter-info';
 })
 export class ParametersComponent implements OnInit {
 
-    allowSelection: boolean = false;
+    allowSelection: boolean = true;
 
     isLoading = false;
     isConfirmingDeletion = false;

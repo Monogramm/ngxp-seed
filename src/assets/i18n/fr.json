@@ -4,6 +4,9 @@
             "home.title": "Accueil",
             "logout.title": "Déconnexion"
         },
+        "activity": {
+            "loading": "Chargement"
+        },
         "message": {
             "logout": "Voulez-vous vraiment vous déconnecter ?",
             "confirm": {

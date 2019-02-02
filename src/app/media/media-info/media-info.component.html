@@ -10,7 +10,7 @@
             <li><a class="btn" [href]="publicLink()">{{ 'media.operations.direct_link' | translate }}</a></li>
         </ul>
 
-        <img *ngIf="isImage()" [src]="publicLink()" [alt]="media.name" [title]="media.name"/>
+        <img *ngIf="isImage()" [src]="publicLink()" [alt]="media.name" [title]="media.name" />
     </div>
 
     <hr>
@@ -24,7 +24,9 @@
     <hr>
 
     <form (submit)="submit(media)">
-        <button class="left btn-primary">{{ 'app.common.save' | translate }}</button>
-        <button type="button" class="right btn-secondary" (click)="cancel()">{{ 'app.common.cancel' | translate }}</button>
+        <button [disabled]="busy" class="left btn-primary">{{ 'app.common.save' | translate }}</button>
+        <button type="button" class="right btn-secondary" (click)="return()">{{ 'app.common.cancel' | translate }}</button>
     </form>
+
+    <activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="busy"></activity-indicator>
 </div>
