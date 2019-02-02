@@ -17,8 +17,10 @@ import { User, LoginService } from '../data'
 })
 export class LoginComponent {
     user: User;
-    isLoggingIn = true;
-    isAuthenticating = false;
+    isLoggingIn: boolean = true;
+    isAuthenticating: boolean = false;
+
+    tosAccepted: boolean = false;
 
     public readonly appName: string = AppService.APP_NAME;
 
@@ -72,6 +74,12 @@ export class LoginComponent {
     signUp() {
         if (!!!this.user.username) {
             this.user.username = this.user.email.substr(0, this.user.email.indexOf('@'));
+        }
+
+        if (!!!this.tosAccepted) {
+            var msg: string = this._translate.instant('login.message.warning.accept_tos');
+            alert(msg);
+            return;
         }
 
         this.loginService.register(this.user)

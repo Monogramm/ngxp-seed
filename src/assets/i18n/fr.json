@@ -9,6 +9,7 @@
         },
         "message": {
             "logout": "Voulez-vous vraiment vous déconnecter ?",
+            "update": "Une nouvelle version de l'application est disponible. Confirmez pour mettre à jour.",
             "confirm": {
                 "create": "Confirmer la création ?",
                 "update": "Confirmer la mise à jour ?",
@@ -97,6 +98,9 @@
         "login": "Connexion",
         "register": "Inscription",
         "signup": "S'inscrire",
+        "username": "Nom d'utilisateur : ",
+        "username_placeholder": "Nom d'utilisateur (laisser vide pour utiliser l'identifiant de votre adresse email)",
+        "terms_of_usage": "En vous inscrivant, vous acceptez nos conditions d'utilisation de ce service.",
         "back_to_login": "Retour",
         "message": {
             "success": {
@@ -104,7 +108,8 @@
                 "token_sent": "Un code de vérification a été envoyé à votre adresse email. Vérifiez vos messages et spams."
             },
             "warning": {
-                "valid_email": "Entrez une adresse email valide"
+                "valid_email": "Entrez une adresse email valide",
+                "accept_tos": "Vous devez accepter nos conditions d'utilisation pour vous inscrire"
             },
             "error": {
                 "login": "Malheureusement, nous n'avons pas pu vous connecter au système.",

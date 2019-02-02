@@ -9,6 +9,7 @@
         },
         "message": {
             "logout": "Do you really want to log off?",
+            "update": "A new version of the application is available. Confirm to update.",
             "confirm": {
                 "create": "Confirm creation?",
                 "update": "Confirm update?",
@@ -97,6 +98,9 @@
         "login": "Login",
         "register": "Register",
         "signup": "Sign Up",
+        "username": "Username: ",
+        "username_placeholder": "Username (leave empty to use the identification of your email address)",
+        "terms_of_usage": "By registering, you accept our terms of usage of this service.",
         "back_to_login": "Back to Login",
         "message": {
             "success": {
@@ -104,7 +108,8 @@
                 "token_sent": "Verification token sent to your email address. Check your mail box and spams."
             },
             "warning": {
-                "valid_email": "Enter a valid email address"
+                "valid_email": "Enter a valid email address",
+                "accept_tos": "You must accept our terms of usage to register"
             },
             "error": {
                 "login": "Unfortunately we were not able to log you into the system.",

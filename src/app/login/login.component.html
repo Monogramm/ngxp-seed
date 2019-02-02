@@ -7,6 +7,14 @@
 
   <h1>{{ appName }}</h1>
   <form (ngSubmit)="submit()" #registerForm="ngForm">
+    <div *ngIf="!isLoggingIn">
+      <label>
+        {{ 'login.username' | translate }}
+        <input [placeholder]="'login.username_placeholder' | translate" name="username" type="username" autocapitalize="off"
+          autocorrect="off" [(ngModel)]="user.username" [disabled]="isAuthenticating">
+      </label>
+    </div>
+
     <div>
       <label>
         {{ 'login.email' | translate }}
@@ -27,6 +35,13 @@
       <a (click)="forgotPassword()">
         {{ 'login.forgot_password' | translate }}
       </a>
+    </div>
+
+    <div class="tos-label" *ngIf="!isLoggingIn">
+      <a [routerLink]="['/info', 'usage']">
+        {{ 'login.terms_of_usage' | translate }}
+      </a>
+      <input name="tos" type="checkbox" required [(ngModel)]="tosAccepted" [disabled]="isAuthenticating">
     </div>
 
     <div class="center">
