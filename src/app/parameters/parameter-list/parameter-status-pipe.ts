@@ -12,6 +12,8 @@ export class ParameterStatusPipe implements PipeTransform {
             this.value = items.filter((parameter: Parameter) => {
                 return parameter.selected === selected;
             });
+        } else {
+            this.value = [];
         }
         return this.value;
     }

@@ -12,6 +12,8 @@ export class RoleStatusPipe implements PipeTransform {
             this.value = items.filter((role: Role) => {
                 return role.selected === selected;
             });
+        } else {
+            this.value = [];
         }
         return this.value;
     }

@@ -12,7 +12,7 @@ import { Parameter, ParameterService } from '../../data';
     styleUrls: ['./parameter-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ParameterListComponent {
+export class ParameterListComponent implements OnInit {
     @Input('filter-selected-only') showSelection: boolean = false;
     @Input('allow-edit') allowEdit: boolean = true;
     @Input('allow-delete') allowDelete: boolean = true;

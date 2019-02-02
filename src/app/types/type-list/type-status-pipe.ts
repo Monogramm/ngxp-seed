@@ -12,6 +12,8 @@ export class TypeStatusPipe implements PipeTransform {
             this.value = items.filter((type: Type) => {
                 return type.selected === selected;
             });
+        } else {
+            this.value = [];
         }
         return this.value;
     }
