@@ -2,17 +2,17 @@ env:
     global:
         - NODE_VERSION=10.15.1
 
-language: android
+language: node_js
 
 jdk: oraclejdk8
 
 android:
   components:
+    - tools
     - platform-tools
-    - build-tools-26.0.3
-    - android-26
+    - build-tools-28.0.2
+    - android-28
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-19
 
 before_cache:
     - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -24,16 +24,10 @@ cache:
         - $HOME/.gradle/wrapper/
 
 install:
-    - nvm install $NODE_VERSION
-    # - npm cache clean
-    # - npm uninstall -g @angular-cli
-    # - npm install -g -f @angular-cli
-    # - ng --version
-    #- wget -O ./nativescript.tgz "https://s3.amazonaws.com/nativescript-ci/build_result/nativescript.tgz"
-    #- npm install -g nativescript.tgz --ignore-scripts
-    - npm install -g nativescript --unsafe-perm
-    #- tns usage-reporting disable
-    #- tns error-reporting disable
+    - pip install six
+    - echo no | npm install -g nativescript --unsafe-perm
+    - tns usage-reporting disable
+    - tns error-reporting disable
     - npm install
 
 # before_script:
@@ -42,7 +36,8 @@ install:
 #     - android-wait-for-emulator
 
 script:
-    # - npm run tslint
+    # - npm run lint
     - npm run build
+    - npm run build.prod
     #- npm run build.android
     # - npm run test.android --emulator --justlaunch
