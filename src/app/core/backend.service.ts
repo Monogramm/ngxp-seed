@@ -285,6 +285,12 @@ export class BackendService extends AbstractBackendService {
         let httpHeaders = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath;
+        if (ids) {
+            url += '?ids=';
+            for (var entityId of ids) {
+                url += entityId + ',';
+            }
+        }
 
         var response: Promise<Response> = this._http.delete(
             url, { headers: httpHeaders }
