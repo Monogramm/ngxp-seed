@@ -19,7 +19,7 @@
     </button>
   </div>
 
-  <type-list [selection]="isConfirmingDeletion" [selectable]="selectable" (loaded)="hideLoadingIndicator()"></type-list>
+  <app-type-list [selection]="isConfirmingDeletion" [selectable]="selectable" (loaded)="hideLoadingIndicator()"></app-type-list>
 </div>
 
 <app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="isLoading"></app-activity-indicator>

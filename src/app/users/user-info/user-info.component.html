@@ -17,7 +17,7 @@
     <div>
         <h3>{{ 'users.details' | translate }}</h3>
         <i *ngIf="!!!user" class="icon icon-rotate" style="font-size: 5em"></i>
-        <user-details *ngIf="user" [user]="user"></user-details>
+        <app-user-details *ngIf="user" [user]="user"></app-user-details>
     </div>
 
     <hr>

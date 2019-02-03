@@ -35,7 +35,7 @@
   </GridLayout>
 
   <!-- Row 3: The type list -->
-  <app-tns-type-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></mg-type-list>
+  <app-tns-type-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></app-tns-type-list>
 
   <ActivityIndicator [busy]="isLoading" row="2"></ActivityIndicator>
 

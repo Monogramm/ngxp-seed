@@ -15,7 +15,8 @@
     </GridLayout>
 
     <!-- Row 2: The user info -->
-    <app-tns-user-details *ngIf="!isLoading" row="1" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [user]="user"></mg-user-details>
+    <app-tns-user-details *ngIf="!isLoading" row="1" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()"
+        [user]="user"></app-tns-user-details>
 
     <ActivityIndicator [busy]="isLoading" row="1"></ActivityIndicator>
 

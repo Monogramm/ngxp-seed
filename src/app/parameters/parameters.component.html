@@ -14,7 +14,7 @@
 
   <hr>
 
-  <parameter-list [selection]="isConfirmingDeletion" [selectable]="selectable" (loaded)="hideLoadingIndicator()"></parameter-list>
+  <app-parameter-list [selection]="isConfirmingDeletion" [selectable]="selectable" (loaded)="hideLoadingIndicator()"></app-parameter-list>
 </div>
 
 <app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="isLoading"></app-activity-indicator>
