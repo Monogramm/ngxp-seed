@@ -6,7 +6,7 @@ declare var expect: any;
 declare var it: any;
 
 describe('Type', function () {
-    let type = new Type('42', 'answer');
+    const type = new Type('42', 'answer');
 
 
     it('Should create Type', function () {

@@ -45,7 +45,7 @@ export enum ParameterType {
     STRING,
     /**
      * A parameter whose value can be anything.
-     * 
+     *
      * Often used for JSON serialization of objects.
      */
     ANY

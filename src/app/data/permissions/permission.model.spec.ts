@@ -6,7 +6,7 @@ declare var expect: any;
 declare var it: any;
 
 describe('Permission', function () {
-    let permission = new Permission('42', 'answer');
+    const permission = new Permission('42', 'answer');
 
 
     it('Should create Permission', function () {

@@ -26,13 +26,13 @@ describe('HomeCommonVM', () => {
       it('authors$ should be defined', () => {
         expect(homeCommonVM.authors$).toBeDefined();
       });
-    
+
       it('#loadAuthorList should load authors', fakeAsync(() => {
         homeCommonVM.loadAuthorList();
         tick();
         expect(homeCommonVM.availablePages.length).toBeGreaterThan(0);
       }));
-    
+
       it('#loadAuthorList should emit loaded authors', fakeAsync(() => {
         homeCommonVM.loadAuthorList();
         tick();
