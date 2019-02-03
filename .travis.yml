@@ -1,6 +1,6 @@
 env:
     global:
-        - NODE_VERSION=6.9.4
+        - NODE_VERSION=10.15.1
 
 language: android
 
@@ -32,8 +32,8 @@ install:
     #- wget -O ./nativescript.tgz "https://s3.amazonaws.com/nativescript-ci/build_result/nativescript.tgz"
     #- npm install -g nativescript.tgz --ignore-scripts
     - npm install -g nativescript --unsafe-perm
-    - tns usage-reporting disable
-    - tns error-reporting disable
+    #- tns usage-reporting disable
+    #- tns error-reporting disable
     - npm install
 
 # before_script:
