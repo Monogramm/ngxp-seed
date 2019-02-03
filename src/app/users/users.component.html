@@ -11,4 +11,4 @@
   <user-list [class.hidden]="store.count === 0" (loaded)="hideLoadingIndicator()"></user-list>
 </div>
 
-<activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="isLoading"></activity-indicator>
+<app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="isLoading"></app-activity-indicator>

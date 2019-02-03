@@ -9,7 +9,7 @@ import { alert } from '../../../shared/dialog-util';
 declare var UIColor: any;
 
 @Component({
-    selector: 'mg-user-details',
+    selector: 'app-tns-user-details',
     moduleId: module.id,
     templateUrl: './user-details.component.html',
     styleUrls: ['./user-details.component.css'],

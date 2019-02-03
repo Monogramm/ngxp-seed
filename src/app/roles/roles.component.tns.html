@@ -35,7 +35,7 @@
   </GridLayout>
 
   <!-- Row 3: The role list -->
-  <mg-role-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></mg-role-list>
+  <app-tns-role-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></mg-role-list>
 
   <ActivityIndicator [busy]="isLoading" row="2"></ActivityIndicator>
 

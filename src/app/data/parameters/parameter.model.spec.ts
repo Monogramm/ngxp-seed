@@ -6,7 +6,7 @@ declare var expect: any;
 declare var it: any;
 
 describe('Parameter', function () {
-    let parameter = new Parameter(null, 'God', 'everything', null, 'answer');
+    const parameter = new Parameter(null, 'God', 'everything', null, 'answer');
 
     it('Should create Parameter', function () {
         expect(parameter).toBeTruthy();

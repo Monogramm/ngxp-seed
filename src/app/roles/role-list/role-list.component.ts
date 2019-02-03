@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -7,16 +7,16 @@ import { Logger, Pagination } from '../../shared';
 import { Role, RoleService } from '../../data';
 
 @Component({
-    selector: 'role-list',
+    selector: 'app-role-list',
     templateUrl: './role-list.component.html',
     styleUrls: ['./role-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RoleListComponent {
-    @Input('filter-selected-only') showSelection: boolean = false;
-    @Input('allow-selection') allowSelection: boolean = false;
-    @Input('allow-edit') allowEdit: boolean = true;
-    @Input('allow-delete') allowDelete: boolean = true;
+export class RoleListComponent implements OnInit {
+    @Input() selection = false;
+    @Input() selectable = false;
+    @Input() viewable = true;
+    @Input() deletable = true;
     @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() loaded: EventEmitter<number> = new EventEmitter<number>();
 
@@ -48,8 +48,8 @@ export class RoleListComponent {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('app.message.error.loading');
-                    alert(msg);
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
                     this.loading.emit(false);
                     this.loaded.emit(0);
                 }
@@ -58,7 +58,7 @@ export class RoleListComponent {
 
     imageSource(role: Role) {
         if (role.deleted) {
-            return role.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked'
+            return role.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked';
         }
         return role.selected ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked';
     }
@@ -69,10 +69,10 @@ export class RoleListComponent {
     }
 
     delete(role: Role) {
-        if (!this.allowDelete) {
+        if (!this.deletable) {
             return;
         }
-        var msg: string = this._translate.instant('app.message.confirm.delete');
+        const msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             role.deleting = true;
 
@@ -89,15 +89,15 @@ export class RoleListComponent {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
         }
     }
 
     edit(role: Role): any[] {
-        if (!this.allowEdit || !!!role.id) {
+        if (!this.viewable || !!!role.id) {
             return ['.'];
         }
         return ['/role', role.id];

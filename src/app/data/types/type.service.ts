@@ -8,7 +8,7 @@ import { Type, TypeDTO } from './type.model';
 
 @Injectable()
 export class TypeService {
-    private basePath: string = 'types';
+    private readonly basePath = 'types';
 
     items: BehaviorSubject<Array<Type>> = new BehaviorSubject([]);
 
@@ -32,7 +32,7 @@ export class TypeService {
                         Logger.dir(response);
                     }
 
-                    var data;
+                    let data;
                     if (response instanceof Response || typeof response.json !== 'undefined') {
                         data = response.json();
                     } else if (response instanceof Array) {
@@ -42,7 +42,7 @@ export class TypeService {
                     }
 
                     data.forEach((rawEntry) => {
-                        let newEntry = this.newModel(rawEntry);
+                        const newEntry = this.newModel(rawEntry);
 
                         this._allItems.push(newEntry);
                     });
@@ -72,7 +72,7 @@ export class TypeService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else if (response instanceof Object) {
@@ -90,8 +90,8 @@ export class TypeService {
     }
 
     add(typeToAdd: string | Type | TypeDTO) {
-        let now = new Date();
-        let type;
+        const now = new Date();
+        let type: TypeDTO;
         if (typeof typeToAdd === 'string') {
             type = new TypeDTO(
                 null,
@@ -115,7 +115,7 @@ export class TypeService {
         } else {
             type = typeToAdd;
         }
-        let body = JSON.stringify(type);
+        const body = JSON.stringify(type);
 
         if (Logger.isEnabled) {
             Logger.log('adding a type = ' + body);
@@ -130,14 +130,14 @@ export class TypeService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else {
                     data = response;
                 }
 
-                let newEntry = this.newModel(data);
+                const newEntry = this.newModel(data);
 
                 this._allItems.unshift(newEntry);
 
@@ -160,7 +160,7 @@ export class TypeService {
     }
 
     updateSelection(selected: boolean) {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((type) => {
             type.selected = selected;
         });
@@ -178,14 +178,14 @@ export class TypeService {
             )
             .then(res => res.json())
             .then(data => {
-                let index = this._allItems.indexOf(type);
+                const index = this._allItems.indexOf(type);
                 this._allItems.splice(index, 1);
                 this.publishUpdates();
             });
     }
 
     deleteSelection() {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((type) => {
             if (type.selected) {
                 indeces.push(type.id);
@@ -202,7 +202,7 @@ export class TypeService {
             .then(data => {
                 this._allItems.forEach((type) => {
                     if (type.selected) {
-                        let index = this._allItems.indexOf(type);
+                        const index = this._allItems.indexOf(type);
                         this._allItems.splice(index, 1);
                         type.selected = false;
                     }

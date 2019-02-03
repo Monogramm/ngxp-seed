@@ -35,7 +35,7 @@
   </GridLayout>
 
   <!-- Row 3: The media list -->
-  <mg-media-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></mg-media-list>
+  <app-tns-media-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></mg-media-list>
 
   <ActivityIndicator [busy]="isLoading" row="2"></ActivityIndicator>
 

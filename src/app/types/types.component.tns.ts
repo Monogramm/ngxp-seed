@@ -16,14 +16,14 @@ import { alert } from '../shared/dialog-util';
 import { TypeListComponent } from './type-list/type-list.component';
 
 @Component({
-    selector: 'mg-types',
+    selector: 'app-tns-types',
     moduleId: module.id,
     templateUrl: './types.component.html',
     styleUrls: ['./types.component-common.css', './types.component.css']
 })
 export class TypesComponent implements OnInit {
-    type: string = '';
-    isAndroid;
+    type = '';
+    isAndroid: boolean;
     isConfirmingDeletion = false;
     isLoading = false;
 
@@ -64,7 +64,7 @@ export class TypesComponent implements OnInit {
             return;
         }
 
-        let textField = <TextField>this.typeTextField.nativeElement;
+        const textField = <TextField>this.typeTextField.nativeElement;
 
         if (this.type.trim() === '') {
             // If the user clicked the add button, and the textfield is empty,
@@ -105,7 +105,7 @@ export class TypesComponent implements OnInit {
     toggleMassDelete(): void {
         if (this.isConfirmingDeletion) {
             this.showActivityIndicator();
-            let result = this._store.deleteSelection();
+            const result = this._store.deleteSelection();
 
             if (result) {
                 result.then(
@@ -142,8 +142,8 @@ export class TypesComponent implements OnInit {
     }
 
     share(): void {
-        let items = this._store.items.value;
-        let list = [];
+        const items = this._store.items.value;
+        const list = [];
         for (let i = 0, size = items.length; i < size; i++) {
             list.push(items[i].name);
         }

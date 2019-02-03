@@ -9,21 +9,21 @@ import { TextField } from 'tns-core-modules/ui/text-field';
 import * as SocialShare from 'nativescript-social-share';
 
 import { LoginService } from '../data';
-import { ParameterService } from '../data/parameters';
+import { Parameter, ParameterService } from '../data/parameters';
 
 import { alert } from '../shared/dialog-util';
 
 import { ParameterListComponent } from './parameter-list/parameter-list.component';
 
 @Component({
-    selector: 'mg-parameters',
+    selector: 'app-tns-parameters',
     moduleId: module.id,
     templateUrl: './parameters.component.html',
     styleUrls: ['./parameters.component-common.css', './parameters.component.css']
 })
 export class ParametersComponent implements OnInit {
-    parameter: string = '';
-    isAndroid;
+    parameter: Parameter = new Parameter();
+    isAndroid: boolean;
     isConfirmingDeletion = false;
     isLoading = false;
 
@@ -64,9 +64,9 @@ export class ParametersComponent implements OnInit {
             return;
         }
 
-        let textField = <TextField>this.parameterTextField.nativeElement;
+        const textField = <TextField>this.parameterTextField.nativeElement;
 
-        if (this.parameter.trim() === '') {
+        if (this.parameter.name.trim() === '') {
             // If the user clicked the add button, and the textfield is empty,
             // focus the text field and return.
             if (target === 'button') {
@@ -86,14 +86,14 @@ export class ParametersComponent implements OnInit {
         this.showActivityIndicator();
         this._store.add(this.parameter)
             .then(
-            () => {
-                this.parameter = '';
-                this.hideActivityIndicator();
-            },
-            () => {
-                alert('An error occurred while adding an item to your list.');
-                this.hideActivityIndicator();
-            }
+                () => {
+                    this.parameter = new Parameter();
+                    this.hideActivityIndicator();
+                },
+                () => {
+                    alert('An error occurred while adding an item to your list.');
+                    this.hideActivityIndicator();
+                }
             );
     }
 
@@ -105,7 +105,7 @@ export class ParametersComponent implements OnInit {
     toggleMassDelete(): void {
         if (this.isConfirmingDeletion) {
             this.showActivityIndicator();
-            let result = this._store.deleteSelection();
+            const result = this._store.deleteSelection();
 
             if (result) {
                 result.then(
@@ -142,8 +142,8 @@ export class ParametersComponent implements OnInit {
     }
 
     share(): void {
-        let items = this._store.items.value;
-        let list = [];
+        const items = this._store.items.value;
+        const list = [];
         for (let i = 0, size = items.length; i < size; i++) {
             list.push(items[i].name);
         }

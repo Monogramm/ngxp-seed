@@ -19,7 +19,7 @@ export class AppComponent {
 
     public readonly appName: string = AppService.APP_NAME;
 
-    title: string = '';
+    title = '';
 
     constructor(
         private _translate: TranslateService,
@@ -53,8 +53,8 @@ export class AppComponent {
         if (this._appService.isInstallable()) {
             this._appService.addToHomeScreen();
         } else if (this._appService.iOS() && !this._appService.isStandalone()) {
-            var msg: string = this._translate.instant('app.message.install');
-            if (confirm(msg) == true) {
+            const msg: string = this._translate.instant('app.message.install');
+            if (confirm(msg) === true) {
                 // Navigate to /info/install
                 this._router.navigate(['/info', 'install']);
             }
@@ -66,8 +66,8 @@ export class AppComponent {
     }
 
     logout() {
-        var msg: string = this._translate.instant('app.message.logout');
-        if (confirm(msg) == true) {
+        const msg: string = this._translate.instant('app.message.logout');
+        if (confirm(msg) === true) {
             this._loginService.logout();
         }
     }

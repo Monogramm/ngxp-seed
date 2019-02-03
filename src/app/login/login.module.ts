@@ -17,13 +17,13 @@ import { RegisterComponent } from './register';
         SharedModule
     ],
     declarations: [
-        LoginComponent, 
+        LoginComponent,
         ResetPasswordComponent, ChangePasswordComponent,
         RegisterComponent
     ],
     providers: [LoginService],
     exports: [
-        LoginComponent, 
+        LoginComponent,
         ResetPasswordComponent, ChangePasswordComponent,
         RegisterComponent
     ]

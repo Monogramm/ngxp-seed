@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '../../shared';
 
 @Component({
-    selector: 'install',
+    selector: 'app-install-info',
     templateUrl: './install-info.component.html',
     styleUrls: ['./install-info.component.scss']
 })

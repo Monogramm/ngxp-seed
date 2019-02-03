@@ -20,17 +20,17 @@ export class CachedValue<T> {
 export class StorageService implements StorageService {
     /**
      * Gets a value (if existing) for a key as a String Object.
-     * 
+     *
      * @param key The key to check for.
      * @param defaultValue An optional value to be returned in case there is no existing value.
      */
     getItem(key: string, defaultValue?: string): any {
-        var value: any = localStorage.getItem(key)
+        const value: any = localStorage.getItem(key);
         return value == null ? defaultValue : value;
     }
     /**
      * Sets an Object for a key.
-     * 
+     *
      * @param key The key.
      * @param value The value.
      */
@@ -39,7 +39,7 @@ export class StorageService implements StorageService {
     }
     /**
      * Removes a value (if existing) for a key.
-     * 
+     *
      * @param key The key to check for.
      */
     removeItem(key: string): void {

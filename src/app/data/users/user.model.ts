@@ -27,8 +27,8 @@ export class UserDTO {
 }
 
 export class User extends UserDTO {
-    deleted: boolean = false;
-    deleting: boolean = false;
+    deleted = false;
+    deleting = false;
 
     constructor();
     constructor(
@@ -82,7 +82,7 @@ export class User extends UserDTO {
         if (this.password === '') {
             return false;
         } else {
-            var passwordData = validator.checkPassword(this.password);
+            const passwordData = validator.checkPassword(this.password);
             return passwordData.isValid;
         }
     }

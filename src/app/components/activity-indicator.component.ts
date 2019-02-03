@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'activity-indicator',
+  selector: 'app-activity-indicator',
   template: `
     <div [class.hidden]="!isLoading">
       <i class="icon icon-rotate"></i>
@@ -27,7 +27,7 @@ import { Component, Input } from '@angular/core';
     }
   `]
 })
-export class ActivityIndicator {
+export class ActivityIndicatorComponent {
   @Input('isLoading') isLoading = false;
   @Input('message') message = 'Loading';
 }

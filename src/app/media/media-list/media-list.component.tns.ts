@@ -9,7 +9,7 @@ import { alert } from '../../shared/dialog-util';
 declare var UIColor: any;
 
 @Component({
-    selector: 'mg-media-list',
+    selector: 'app-tns-media-list',
     moduleId: module.id,
     templateUrl: './media-list.component.html',
     styleUrls: ['./media-list.component.css'],
@@ -43,7 +43,7 @@ export class MediaListComponent {
     // The following trick makes the background color of each cell
     // in the UITableView transparent as it’s created.
     makeBackgroundTransparent(args): void {
-        let cell = args.ios;
+        const cell = args.ios;
         if (cell) {
             // support XCode 8
             cell.backgroundColor = utils.ios.getter(UIColor, UIColor.clearColor);
@@ -68,16 +68,16 @@ export class MediaListComponent {
     }
 
     delete(media: Media): void {
-        var confirmation: any = confirm('Confirm deletion of media "' + media.name + '" ?');
+        const confirmation: any = confirm('Confirm deletion of media "' + media.name + '" ?');
 
-        let deleteConfirmed = () => {
+        const deleteConfirmed = () => {
             this.loading.next('');
-            let successHandler = () => {
+            const successHandler = () => {
                 media.deleting = false;
                 media.deleted = true;
                 this.loaded.next('');
             };
-            let errorHandler = () => {
+            const errorHandler = () => {
                 alert('An error occurred while deleting "' + media.name + '".');
                 this.loaded.next('');
             };

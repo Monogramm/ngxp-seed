@@ -13,13 +13,13 @@ import { Role, RoleService } from '../../data';
 import { RoleDetailsComponent } from './role-details';
 
 @Component({
-    selector: 'role-info',
+    selector: 'app-role-info',
     templateUrl: './role-info.component.html',
     styleUrls: ['./role-info.component.scss']
 })
 export class RoleInfoComponent implements OnInit {
     role: Role;
-    busy: boolean = false;
+    busy = false;
 
     constructor(public store: RoleService,
         private _translate: TranslateService,
@@ -31,7 +31,7 @@ export class RoleInfoComponent implements OnInit {
         this._route.params.pipe(
             switchMap((params: Params) => {
                 this.busy = true;
-                var entityId = params['id'];
+                const entityId = params['id'];
                 if (entityId) {
                     return this.store.get(params['id']);
                 } else {
@@ -50,14 +50,14 @@ export class RoleInfoComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('app.message.error.loading');
-                    alert(msg);
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
                     this.return();
                 });
     }
 
     delete(role: Role) {
-        var msg: string = this._translate.instant('app.message.confirm.delete');
+        const msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             role.deleting = true;
 
@@ -72,8 +72,8 @@ export class RoleInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
         }
@@ -92,8 +92,8 @@ export class RoleInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.creation');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.creation');
+                        alert(errMsg);
                     }
                 );
         } else {
@@ -108,8 +108,8 @@ export class RoleInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.update');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.update');
+                        alert(errMsg);
                     }
                 );
         }

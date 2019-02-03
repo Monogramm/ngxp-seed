@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Type, TypeService } from '../../../data';
 
 @Component({
-    selector: 'type-details',
+    selector: 'app-type-details',
     templateUrl: './type-details.component.html',
     styleUrls: ['./type-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush

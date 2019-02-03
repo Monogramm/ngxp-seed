@@ -16,7 +16,7 @@ import { alert } from '../shared/dialog-util';
 import { UserListComponent } from './user-list/user-list.component';
 
 @Component({
-    selector: 'mg-users',
+    selector: 'app-tns-users',
     moduleId: module.id,
     templateUrl: './users.component.html',
     styleUrls: ['./users.component-common.css', './users.component.css'],

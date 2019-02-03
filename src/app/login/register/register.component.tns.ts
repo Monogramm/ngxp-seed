@@ -9,7 +9,7 @@ import { Logger } from '../../shared/';
 import { LoginService, User, UserService } from '../../data';
 
 @Component({
-    selector: 'mg-register',
+    selector: 'app-tns-register',
     moduleId: module.id,
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
@@ -31,13 +31,13 @@ export class RegisterComponent implements OnInit {
             .subscribe((data: any) => {
                 this.user = this.userService.newModel(data);
             },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    alert('An error occurred while loading the profile information.');
+                    this._location.back();
                 }
-                alert('An error occurred while loading the profile information.');
-                this._location.back();
-            }
             );
     }
 
@@ -45,13 +45,15 @@ export class RegisterComponent implements OnInit {
         if (this.user.email) {
             this.store.sendResetPasswordToken(this.user.email)
                 .then(
-                () => { alert('Account verification token sent to your email address. Check your mail box and spams.') },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        alert('Account verification token sent to your email address. Check your mail box and spams.');
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        alert('An error occurred while sending account verification token.');
                     }
-                    alert('An error occurred while sending account verification token.');
-                }
                 );
         }
     }
@@ -63,15 +65,15 @@ export class RegisterComponent implements OnInit {
         }
         this.store.verify(this.user.id, this.token)
             .then(
-            () => {
-                this._router.navigate(['']);
-            },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                () => {
+                    this._router.navigate(['']);
+                },
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    alert('Could not verify the account. Check entered information or resend token.');
                 }
-                alert('Could not verify the account. Check entered information or resend token.');
-            }
             );
     }
 

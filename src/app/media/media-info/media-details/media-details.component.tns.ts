@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -8,12 +7,12 @@ import { WorkerService } from '../../../core';
 import { Media, MediaService, Permission, PermissionService } from '../../../data';
 
 @Component({
-    selector: 'media-details',
+    selector: 'app-tns-media-details',
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MediaDetailsComponent {
+export class MediaDetailsComponent implements OnInit {
     @Input() media: Media;
     @Output() ready = new EventEmitter();
 

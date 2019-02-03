@@ -9,12 +9,12 @@ import { User } from '../users/user.model';
 
 @Injectable()
 export class LoginService {
-    private basePathOAuth: string = 'oauth/token';
+    private readonly basePathOAuth = 'oauth/token';
 
-    private basePathRegister: string = 'users/register';
-    private basePathResetPwd: string = 'users/reset_password';
-    private basePathSendVerif: string = 'users/send_verification';
-    private basePathVerify: string = 'users/verify';
+    private readonly basePathRegister = 'users/register';
+    private readonly basePathResetPwd = 'users/reset_password';
+    private readonly basePathSendVerif = 'users/send_verification';
+    private readonly basePathVerify = 'users/verify';
 
     constructor(private backendService: BackendService,
         private router: Router) {
@@ -28,7 +28,7 @@ export class LoginService {
     }
 
     register(user: User) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             username: user.username,
             email: user.email,
             password: user.password,
@@ -45,7 +45,7 @@ export class LoginService {
     }
 
     login(user: User): Promise<User> {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             username: user.email,
             email: user.email,
             password: user.password,
@@ -73,7 +73,7 @@ export class LoginService {
                     Logger.dir(response);
                 }
 
-                var data: any;
+                let data: any;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else {
@@ -99,7 +99,7 @@ export class LoginService {
 
         // FIXME We get a 401 on token revocation
         // Logout from the backend (to prevent future usage of old tokens)
-        //this.backendService.remove(this.basePathOAuth, null);
+        // this.backendService.remove(this.basePathOAuth, null);
 
         // Clear backend services info
         this.backendService.clear();
@@ -107,7 +107,7 @@ export class LoginService {
     }
 
     sendResetPasswordToken(email: string) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             email: email
         });
 
@@ -121,7 +121,7 @@ export class LoginService {
     }
 
     resetPassword(email: string, token: string, password: string) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             email: email,
             token: token,
             password: password,
@@ -138,7 +138,7 @@ export class LoginService {
     }
 
     sendVerificationToken(email: string) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             email: email
         });
 
@@ -152,7 +152,7 @@ export class LoginService {
     }
 
     verify(id: string, token: string) {
-        let body = token;
+        const body = token;
 
         if (Logger.isEnabled) {
             Logger.log('verifiying user = ' + body);

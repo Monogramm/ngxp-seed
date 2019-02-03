@@ -1,15 +1,15 @@
 <ul class="entity-list">
-    <li *ngFor="let media of store.items | async | mediaStatus:showSelection">
-        <i *ngIf="allowSelection" [class]="'icon ' + imageSource(media)" (click)="toggleSelection(media)"></i>
+    <li *ngFor="let media of store.items | async | mediaStatus:selection">
+        <i *ngIf="selectable" [class]="'icon ' + imageSource(media)" (click)="toggleSelection(media)"></i>
 
         <a [routerLink]="edit(media)" [class.selected]="media.selected && !media.deleted">{{ media.name }}</a>
 
-        <button *ngIf="allowDelete" [class.hidden]="media.deleted || media.deleting" class="btn-secondary" (click)="delete(media)">
+        <button *ngIf="deletable" [class.hidden]="media.deleted || media.deleting" class="btn-secondary" (click)="delete(media)">
             <i class="icon icon-cross"></i>
         </button>
-        <i *ngIf="allowDelete" [class.hidden]="media.deleted || !media.deleting" class="icon icon-rotate"></i>
+        <i *ngIf="deletable" [class.hidden]="media.deleted || !media.deleting" class="icon icon-rotate"></i>
 
     </li>
 </ul>
-<pagination-controls [pagination]="pagination" (page-change)="load($event)" [first-label]="'app.pagination.first' | translate"
-    [prev-label]="'app.pagination.prev' | translate" [next-label]="'app.pagination.next' | translate" [last-label]="'app.pagination.last' | translate"></pagination-controls>
+<app-pagination-controls [pagination]="pagination" (change)="load($event)" [first]="'app.pagination.first' | translate"
+    [prev]="'app.pagination.prev' | translate" [next]="'app.pagination.next' | translate" [last]="'app.pagination.last' | translate"></app-pagination-controls>

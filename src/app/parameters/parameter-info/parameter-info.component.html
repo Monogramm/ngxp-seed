@@ -5,7 +5,7 @@
 
     <div>
         <i *ngIf="!!!parameter" class="icon icon-rotate" style="font-size: 5em"></i>
-        <parameter-details *ngIf="parameter" [parameter]="parameter" (pattern-change)="updateTypePattern($event)"></parameter-details>
+        <parameter-details *ngIf="parameter" [parameter]="parameter" (patternChange)="updateTypePattern($event)"></parameter-details>
     </div>
 
     <hr>
@@ -15,5 +15,5 @@
         <button type="button" class="right btn-secondary" (click)="return()">{{ 'app.common.cancel' | translate }}</button>
     </form>
 
-    <activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="busy"></activity-indicator>
+    <app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="busy"></app-activity-indicator>
 </div>

@@ -11,12 +11,12 @@ import { TextField } from 'tns-core-modules/ui/text-field';
 
 import { AppService } from '../app.service';
 import { Logger } from '../shared';
-import { User, LoginService } from '../data'
+import { User, LoginService } from '../data';
 
 import { alert } from '../shared/dialog-util';
 
 @Component({
-    selector: 'mg-login',
+    selector: 'app-tns-login',
     moduleId: module.id,
     templateUrl: './login.component.html',
     styleUrls: ['./login.component-common.css', './login.component.css'],
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit {
 
     toggleDisplay() {
         this.isLoggingIn = !this.isLoggingIn;
-        let mainContainer = <View>this.mainContainer.nativeElement;
+        const mainContainer = <View>this.mainContainer.nativeElement;
         mainContainer.animate({
             backgroundColor: this.isLoggingIn ? new Color('white') : new Color('#301217'),
             duration: 200
@@ -130,12 +130,12 @@ export class LoginComponent implements OnInit {
     }
 
     showMainContent() {
-        let initialContainer = <View>this.initialContainer.nativeElement;
-        let mainContainer = <View>this.mainContainer.nativeElement;
-        let logoContainer = <View>this.logoContainer.nativeElement;
-        let formControls = <View>this.formControls.nativeElement;
-        let signUpStack = <View>this.signUpStack.nativeElement;
-        let animations = [];
+        const initialContainer = <View>this.initialContainer.nativeElement;
+        const mainContainer = <View>this.mainContainer.nativeElement;
+        const logoContainer = <View>this.logoContainer.nativeElement;
+        const formControls = <View>this.formControls.nativeElement;
+        const signUpStack = <View>this.signUpStack.nativeElement;
+        const animations = [];
 
         // Fade out the initial content over one half second
         initialContainer.animate({

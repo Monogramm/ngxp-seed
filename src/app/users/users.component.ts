@@ -6,7 +6,7 @@ import { User, UserService } from '../data/users';
 import { UserListComponent } from './user-list';
 
 @Component({
-    selector: 'users',
+    selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
     providers: [UserService]

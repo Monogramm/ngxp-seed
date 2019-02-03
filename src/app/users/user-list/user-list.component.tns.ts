@@ -10,7 +10,7 @@ import { alert } from '../../shared/dialog-util';
 declare var UIColor: any;
 
 @Component({
-    selector: 'mg-user-list',
+    selector: 'app-tns-user-list',
     moduleId: module.id,
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.css'],
@@ -46,7 +46,7 @@ export class UserListComponent {
     // The following trick makes the background color of each cell
     // in the UITableView transparent as it’s created.
     makeBackgroundTransparent(args): void {
-        let cell = args.ios;
+        const cell = args.ios;
         if (cell) {
             // support XCode 8
             cell.backgroundColor = utils.ios.getter(UIColor, UIColor.clearColor);

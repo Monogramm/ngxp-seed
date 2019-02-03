@@ -24,7 +24,7 @@ export class Sort {
 export class Pagination {
     sort: Sort = null;
 
-    page: number = 1;
+    page = 1;
     size: number = null;
 
     first?: number = null;

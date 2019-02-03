@@ -11,7 +11,7 @@ export class LocalDatabaseService {
     getList(collectionName: string): Promise<any[]> {
         return new Promise((resolve, reject) => {
             let data: any[] = [];
-            let rawData: string = this.storageService.getItem(collectionName);
+            const rawData: string = this.storageService.getItem(collectionName);
             if (rawData) {
                 data = JSON.parse(rawData);
             }
@@ -32,11 +32,11 @@ export class LocalDatabaseService {
                 reject('Value cannot be blank');
             }
 
-            let obj = this.getCopy(value);
+            const obj = this.getCopy(value);
             this.getList(collectionName).then((data) => {
                 // create id if not set.
                 if (obj.id) {
-                    let isDataExists = !!(data.filter(item => item.id === obj.id).length);
+                    const isDataExists = !!(data.filter(item => item.id === obj.id).length);
                     if (isDataExists) {
                         reject(`Data with ${obj.id} already exists in database.`);
                     }
@@ -57,7 +57,7 @@ export class LocalDatabaseService {
                 reject('Value must have id property');
             }
             this.getList(collectionName).then((data) => {
-                let existingObj = this.findItemById(data, value.id);
+                const existingObj = this.findItemById(data, value.id);
 
                 if (!existingObj) {
                     reject('Data you want to update does not exists.');
@@ -77,7 +77,7 @@ export class LocalDatabaseService {
             }
 
             this.getList(collectionName).then((data) => {
-                let existingObj = this.findItemById(data, value.id);
+                const existingObj = this.findItemById(data, value.id);
 
                 if (!existingObj) {
                     reject('Data you want to delete does not exists.');
@@ -91,7 +91,7 @@ export class LocalDatabaseService {
     }
 
     private findItemById(collection: any[], id: number) {
-        let existingData = collection.filter(item => item.id === id);
+        const existingData = collection.filter(item => item.id === id);
         return existingData ? existingData[0] : null;
     }
 
@@ -101,7 +101,7 @@ export class LocalDatabaseService {
 
     private getNextId(data: any[]) {
         if (data.length) {
-            let maxId = Math.max.apply(null, data.map(item => item.id));
+            const maxId = Math.max.apply(null, data.map(item => item.id));
             return maxId + 1;
         } else {
             return 1;

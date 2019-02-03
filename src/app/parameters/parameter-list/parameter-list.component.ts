@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -7,16 +7,16 @@ import { Logger, Pagination } from '../../shared';
 import { Parameter, ParameterService } from '../../data';
 
 @Component({
-    selector: 'parameter-list',
+    selector: 'app-parameter-list',
     templateUrl: './parameter-list.component.html',
     styleUrls: ['./parameter-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ParameterListComponent implements OnInit {
-    @Input('filter-selected-only') showSelection: boolean = false;
-    @Input('allow-selection') allowSelection: boolean = false;
-    @Input('allow-edit') allowEdit: boolean = true;
-    @Input('allow-delete') allowDelete: boolean = true;
+    @Input() selection = false;
+    @Input() selectable = false;
+    @Input() viewable = true;
+    @Input() deletable = true;
     @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() loaded: EventEmitter<number> = new EventEmitter<number>();
 
@@ -48,8 +48,8 @@ export class ParameterListComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('app.message.error.loading');
-                    alert(msg);
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
                     this.loading.emit(false);
                     this.loaded.emit(0);
                 }
@@ -58,7 +58,7 @@ export class ParameterListComponent implements OnInit {
 
     imageSource(parameter: Parameter) {
         if (parameter.deleted) {
-            return parameter.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked'
+            return parameter.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked';
         }
         return parameter.selected ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked';
     }
@@ -69,10 +69,10 @@ export class ParameterListComponent implements OnInit {
     }
 
     delete(parameter: Parameter) {
-        if (!this.allowDelete) {
+        if (!this.deletable) {
             return;
         }
-        var msg: string = this._translate.instant('app.message.confirm.delete');
+        const msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             parameter.deleting = true;
 
@@ -89,15 +89,15 @@ export class ParameterListComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
         }
     }
 
     edit(parameter: Parameter): any[] {
-        if (!this.allowEdit || !!!parameter.id) {
+        if (!this.viewable || !!!parameter.id) {
             return ['.'];
         }
         return ['/parameter', parameter.id];

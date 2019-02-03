@@ -13,13 +13,13 @@ import { Media, MediaService } from '../../data';
 import { MediaDetailsComponent } from './media-details';
 
 @Component({
-    selector: 'media-info',
+    selector: 'app-media-info',
     templateUrl: './media-info.component.html',
     styleUrls: ['./media-info.component.scss']
 })
 export class MediaInfoComponent implements OnInit {
     media: Media;
-    busy: boolean = false;
+    busy = false;
 
     constructor(public store: MediaService,
         private _translate: TranslateService,
@@ -31,7 +31,7 @@ export class MediaInfoComponent implements OnInit {
         this._route.params.pipe(
             switchMap((params: Params) => {
                 this.busy = true;
-                var entityId = params['id'];
+                const entityId = params['id'];
                 if (entityId) {
                     return this.store.get(params['id']);
                 } else {
@@ -50,14 +50,14 @@ export class MediaInfoComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('app.message.error.loading');
-                    alert(msg);
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
                     this.return();
                 });
     }
 
     delete(media: Media) {
-        var msg: string = this._translate.instant('app.message.confirm.delete');
+        const msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             media.deleting = true;
 
@@ -72,8 +72,8 @@ export class MediaInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
         }
@@ -92,8 +92,8 @@ export class MediaInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.creation');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.creation');
+                        alert(errMsg);
                     }
                 );
         } else {
@@ -108,8 +108,8 @@ export class MediaInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.update');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.update');
+                        alert(errMsg);
                     }
                 );
         }
@@ -123,7 +123,7 @@ export class MediaInfoComponent implements OnInit {
     isImage(): boolean {
         const mediaName = this.media.name.toLowerCase();
 
-        var isImage: boolean = false;
+        let isImage = false;
         if (mediaName.endsWith('.jpg') || mediaName.endsWith('.jpeg')
             || mediaName.endsWith('.png') || mediaName.endsWith('.bmp')
             || mediaName.endsWith('.svg')) {

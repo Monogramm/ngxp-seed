@@ -8,7 +8,7 @@ import { Permission, PermissionDTO } from './permission.model';
 
 @Injectable()
 export class PermissionService {
-    private basePath: string = 'permissions';
+    private readonly basePath = 'permissions';
 
     items: BehaviorSubject<Array<Permission>> = new BehaviorSubject([]);
 
@@ -30,7 +30,7 @@ export class PermissionService {
                     Logger.dir(response);
                 }
 
-                var data: Array<any>;
+                let data: Array<any>;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else if (response instanceof Array) {
@@ -40,7 +40,7 @@ export class PermissionService {
                 }
 
                 data.forEach((rawEntry) => {
-                    let newEntry = this.newModel(rawEntry);
+                    const newEntry = this.newModel(rawEntry);
 
                     this._allItems.push(newEntry);
                 });
@@ -62,7 +62,7 @@ export class PermissionService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else if (response instanceof Object) {
@@ -80,7 +80,7 @@ export class PermissionService {
     }
 
     add(permissionToAdd: string | Permission | PermissionDTO) {
-        let now = new Date();
+        const now = new Date();
         let permission;
         if (typeof permissionToAdd === 'string') {
             permission = new PermissionDTO(
@@ -105,7 +105,7 @@ export class PermissionService {
         } else {
             permission = permissionToAdd;
         }
-        let body = JSON.stringify(permission);
+        const body = JSON.stringify(permission);
 
         if (Logger.isEnabled) {
             Logger.log('adding a permission = ' + body);
@@ -120,14 +120,14 @@ export class PermissionService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else {
                     data = response;
                 }
 
-                let newEntry = this.newModel(data);
+                const newEntry = this.newModel(data);
 
                 this._allItems.unshift(newEntry);
 
@@ -150,7 +150,7 @@ export class PermissionService {
     }
 
     updateSelection(selected: boolean) {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((permission) => {
             permission.selected = selected;
         });
@@ -164,18 +164,18 @@ export class PermissionService {
 
         return this.backendService
             .remove(
-            this.basePath, permission.id
+                this.basePath, permission.id
             )
             .then(res => res.json())
             .then(data => {
-                let index = this._allItems.indexOf(permission);
+                const index = this._allItems.indexOf(permission);
                 this._allItems.splice(index, 1);
                 this.publishUpdates();
             });
     }
 
     deleteSelection() {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((permission) => {
             if (permission.selected) {
                 indeces.push(permission.id);
@@ -192,7 +192,7 @@ export class PermissionService {
             .then(data => {
                 this._allItems.forEach((permission) => {
                     if (permission.selected) {
-                        let index = this._allItems.indexOf(permission);
+                        const index = this._allItems.indexOf(permission);
                         this._allItems.splice(index, 1);
                         permission.selected = false;
                     }

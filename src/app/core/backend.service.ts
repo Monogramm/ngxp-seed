@@ -33,8 +33,8 @@ export class BackendService extends AbstractBackendService {
 
 
     load(basePath: string | URL, pagination?: Pagination, headers?: { header: string, value: any }[]) {
-        var response: Promise<Response> = null;
-        var relativePath: string;
+        let response: Promise<Response> = null;
+        let relativePath: string;
         if (basePath instanceof URL) {
             relativePath = basePath.toString();
         } else {
@@ -42,7 +42,7 @@ export class BackendService extends AbstractBackendService {
 
             // Try the storage if allowed
             if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
-                var storeValue: any = this.getFromCachedStore(relativePath);
+                const storeValue: any = this.getFromCachedStore(relativePath);
 
                 if (!(storeValue == null)) {
                     response = Promise.resolve(storeValue.value);
@@ -52,7 +52,7 @@ export class BackendService extends AbstractBackendService {
 
         // Try the backend
         if (response === null) {
-            let httpHeaders: Headers = this.getHeaders(headers);
+            const httpHeaders: Headers = this.getHeaders(headers);
 
             let url: string;
             if (basePath instanceof URL) {
@@ -78,7 +78,7 @@ export class BackendService extends AbstractBackendService {
 
             if (pagination && pagination.sort) {
                 // TODO Add sorting mechanisms
-                //httpHeaders.append('X-Custom-Sort', JSON.stringify({ ModifiedAt: -1 }));
+                // httpHeaders.append('X-Custom-Sort', JSON.stringify({ ModifiedAt: -1 }));
 
             }
 
@@ -88,9 +88,9 @@ export class BackendService extends AbstractBackendService {
                 if (pagination) {
                     pagination.reset();
 
-                    var links: string = value.headers.get('link');
+                    const links: string = value.headers.get('link');
                     if (links) {
-                        var firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
+                        const firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
                         if (firstPageProp && firstPageProp.length >= 2) {
                             pagination.first = +firstPageProp[1] + 1;
 
@@ -99,7 +99,7 @@ export class BackendService extends AbstractBackendService {
                             }
                         }
 
-                        var prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
+                        const prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
                         if (prevPageProp && prevPageProp.length >= 2) {
                             pagination.prev = +prevPageProp[1] + 1;
 
@@ -108,7 +108,7 @@ export class BackendService extends AbstractBackendService {
                             }
                         }
 
-                        var nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
+                        const nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
                         if (nextPageProp && nextPageProp.length >= 2) {
                             pagination.next = +nextPageProp[1] + 1;
 
@@ -117,7 +117,7 @@ export class BackendService extends AbstractBackendService {
                             }
                         }
 
-                        var lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
+                        const lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
                         if (lastPageProp && lastPageProp.length >= 2) {
                             pagination.last = +lastPageProp[1];
 
@@ -134,7 +134,7 @@ export class BackendService extends AbstractBackendService {
                 return Promise.resolve(value);
             });
 
-            if (this.fetchBehavior != BackendFetchMode.RemoteOnly) {
+            if (this.fetchBehavior !== BackendFetchMode.RemoteOnly) {
                 response.then(
                     (value: Response) => {
                         this.pushToCachedStore(relativePath, value.json());
@@ -150,12 +150,12 @@ export class BackendService extends AbstractBackendService {
     }
 
     getById(basePath: string, id: string, headers?: { header: string, value: any }[], args?: RequestOptionsArgs): Promise<any> {
-        var relativePath: string = basePath + '/' + id;
+        const relativePath: string = basePath + '/' + id;
 
         // Try the storage if allowed
-        var response: Promise<Response> = null;
+        let response: Promise<Response> = null;
         if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
-            var storeValue: any = this.getFromCachedStore(relativePath);
+            const storeValue: any = this.getFromCachedStore(relativePath);
 
             if (!(storeValue == null)) {
                 response = Promise.resolve(storeValue.value);
@@ -164,11 +164,11 @@ export class BackendService extends AbstractBackendService {
 
         // Try the backend
         if (response === null) {
-            let httpHeaders: Headers = this.getHeaders(headers);
+            const httpHeaders: Headers = this.getHeaders(headers);
 
-            let url = this.config.apiURL + relativePath;
+            const url = this.config.apiURL + relativePath;
 
-            var httpArgs: RequestOptionsArgs;
+            let httpArgs: RequestOptionsArgs;
             if (args) {
                 httpArgs = args;
             } else {
@@ -178,7 +178,7 @@ export class BackendService extends AbstractBackendService {
 
             response = this._http.get(url, httpArgs).toPromise();
 
-            if (this.fetchBehavior != BackendFetchMode.RemoteOnly) {
+            if (this.fetchBehavior !== BackendFetchMode.RemoteOnly) {
                 response.then((value: Response) => {
                     this.pushToCachedStore(relativePath, value.json());
                 });
@@ -195,55 +195,55 @@ export class BackendService extends AbstractBackendService {
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
 
-        let url = this.config.apiURL + basePath;
+        const url = this.config.apiURL + basePath;
 
-        var response: Promise<Response> = this._http.get(
+        const response: Promise<Response> = this._http.get(
             url, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
 
     push(basePath: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders = this.getHeaders(headers);
+        const httpHeaders = this.getHeaders(headers);
 
-        let url = this.config.apiURL + basePath;
+        const url = this.config.apiURL + basePath;
 
-        var response: Promise<Response> = this._http.post(
+        const response: Promise<Response> = this._http.post(
             url, value, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
 
     pushAll(basePath: string, values: any[], headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders = this.getHeaders(headers);
+        const httpHeaders = this.getHeaders(headers);
 
-        let url = this.config.apiURL + basePath;
+        const url = this.config.apiURL + basePath;
 
-        var response: Promise<Response> = this._http.post(
+        const response: Promise<Response> = this._http.post(
             url, values, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
 
     set(basePath: string, id: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders: Headers = this.getHeaders(headers);
+        const httpHeaders: Headers = this.getHeaders(headers);
 
-        let url = this.config.apiURL + basePath + '/' + id;
+        const url = this.config.apiURL + basePath + '/' + id;
 
-        var response: Promise<Response> = this._http.put(
+        const response: Promise<Response> = this._http.put(
             url, value, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
@@ -253,56 +253,56 @@ export class BackendService extends AbstractBackendService {
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
 
-        let url = this.config.apiURL + basePath;
+        const url = this.config.apiURL + basePath;
 
-        var response: Promise<Response> = this._http.put(
+        const response: Promise<Response> = this._http.put(
             url, values, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
 
     remove(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders = this.getHeaders(headers);
+        const httpHeaders = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath;
         if (id) {
             url += '/' + id;
         }
 
-        var response: Promise<Response> = this._http.delete(
+        const response: Promise<Response> = this._http.delete(
             url, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
 
     removeAll(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders = this.getHeaders(headers);
+        const httpHeaders = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath;
         if (ids) {
             url += '?ids=';
-            for (var entityId of ids) {
+            for (const entityId of ids) {
                 url += entityId + ',';
             }
         }
 
-        var response: Promise<Response> = this._http.delete(
+        const response: Promise<Response> = this._http.delete(
             url, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
 
     private getHeaders(headers?: { header: string, value: any }[]): Headers {
-        let httpHeaders: Headers = new Headers();
+        const httpHeaders: Headers = new Headers();
 
         httpHeaders.append('Content-Type', 'application/json');
         if (this.isLoggedIn()) {
@@ -310,7 +310,7 @@ export class BackendService extends AbstractBackendService {
         }
 
         if (headers) {
-            for (var entry of headers) {
+            for (const entry of headers) {
                 if (entry.value) {
                     httpHeaders.set(entry.header, entry.value);
                 } else {
@@ -343,22 +343,22 @@ export class BackendService extends AbstractBackendService {
 
         switch (error.status) {
             case 400:
-                Logger.log("An internal error occurred while sending your request.");
+                Logger.log('An internal error occurred while sending your request.');
                 break;
             case 401:
-                Logger.log("You are not authorized to access this resource.");
+                Logger.log('You are not authorized to access this resource.');
                 break;
             case 403:
-                Logger.log("Access to this resource is forbidden.");
+                Logger.log('Access to this resource is forbidden.');
                 break;
             case 404:
-                Logger.log("This resource does not seem to exist anymore.");
+                Logger.log('This resource does not seem to exist anymore.');
                 break;
             case 409:
-                Logger.log("Your request is not valid. Check that you have filled in all the fields.");
+                Logger.log('Your request is not valid. Check that you have filled in all the fields.');
                 break;
             case 500:
-                Logger.log("An internal error occurred while processing your request.");
+                Logger.log('An internal error occurred while processing your request.');
                 break;
         }
 

@@ -7,16 +7,20 @@ export class DateUtils {
      * Adds time to a date. Modelled after MySQL DATE_ADD function.
      * Example: dateAdd(new Date(), 'minute', 30)  //returns 30 minutes from now.
      * https://stackoverflow.com/a/1214753/18511
-     * 
+     *
      * @param date Date to start with.
      * @param units One of: year, quarter, month, week, day, hour, minute, second.
      * @param interval Number of units of the given interval to add.
      */
     static add(date: Date, units: string, interval: number): Date {
         // don't change original date
-        var ret: Date = new Date(date);
+        let ret: Date = new Date(date);
 
-        var checkRollover = () => { if (ret.getDate() != date.getDate()) ret.setDate(0); };
+        const checkRollover = () => {
+            if (ret.getDate() !== date.getDate()) {
+                ret.setDate(0);
+            }
+        };
 
         switch (units.toLowerCase()) {
             case 'year': ret.setFullYear(ret.getFullYear() + interval); checkRollover(); break;

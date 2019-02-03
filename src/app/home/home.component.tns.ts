@@ -5,7 +5,7 @@ import { Logger } from '../shared';
 import { LoginService } from '../data/login';
 
 @Component({
-    selector: 'mg-home',
+    selector: 'app-tns-home',
     templateUrl: './home/home.component.html',
     styleUrls: ['./home/home.component.css'],
     providers: [HomeCommonViewModel, HomeService, LoginService]

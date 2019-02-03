@@ -4,19 +4,19 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { Parameter, ParameterService } from '../data/parameters';
 
-import { Logger, InputUtils } from '../shared';
+import { Logger } from '../shared';
 
 import { ParameterListComponent } from './parameter-list';
 import { ParameterDetailsComponent } from './parameter-info';
 
 @Component({
-    selector: 'parameters',
+    selector: 'app-parameters',
     templateUrl: './parameters.component.html',
     styleUrls: ['./parameters.component.scss']
 })
 export class ParametersComponent implements OnInit {
 
-    allowSelection: boolean = true;
+    selectable = true;
 
     isLoading = false;
     isConfirmingDeletion = false;
@@ -40,17 +40,19 @@ export class ParametersComponent implements OnInit {
 
     toggleMassDelete() {
         if (this.isConfirmingDeletion) {
-            let result = this._store.deleteSelection();
+            const result = this._store.deleteSelection();
 
             if (result) {
                 result.then(
-                    () => { this.isConfirmingDeletion = false },
+                    () => {
+                        this.isConfirmingDeletion = false;
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
             } else {

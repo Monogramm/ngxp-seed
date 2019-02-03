@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { Logger } from '../shared';
 
 @Component({
-    selector: 'info',
+    selector: 'app-info',
     templateUrl: './info.component.html',
     styleUrls: ['./info.component.scss']
 })

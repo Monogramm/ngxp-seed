@@ -8,7 +8,7 @@ import { LoginService, User } from '../../data';
 import { ChangePasswordComponent } from './change-password';
 
 @Component({
-    selector: 'mg-reset-password',
+    selector: 'app-tns-reset-password',
     moduleId: module.id,
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.css']
@@ -29,13 +29,15 @@ export class ResetPasswordComponent {
         if (this.email) {
             this.store.sendResetPasswordToken(this.email)
                 .then(
-                () => { alert('Password reset token sent to your email address. Check your mail box and spams.') },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        alert('Password reset token sent to your email address. Check your mail box and spams.');
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        alert('An error occurred while sending reset password token.');
                     }
-                    alert('An error occurred while sending reset password token.');
-                }
                 );
         }
     }
@@ -43,13 +45,13 @@ export class ResetPasswordComponent {
     submit() {
         this.store.resetPassword(this.email, this.token, this.password)
             .then(
-            () => { },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                () => { },
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    alert('An error occurred while resetting password.');
                 }
-                alert('An error occurred while resetting password.');
-            }
             );
     }
 

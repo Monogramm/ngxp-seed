@@ -9,7 +9,7 @@ import { alert } from '../../shared/dialog-util';
 declare var UIColor: any;
 
 @Component({
-    selector: 'mg-role-list',
+    selector: 'app-tns-role-list',
     moduleId: module.id,
     templateUrl: './role-list.component.html',
     styleUrls: ['./role-list.component.css'],
@@ -43,7 +43,7 @@ export class RoleListComponent {
     // The following trick makes the background color of each cell
     // in the UITableView transparent as it’s created.
     makeBackgroundTransparent(args): void {
-        let cell = args.ios;
+        const cell = args.ios;
         if (cell) {
             // support XCode 8
             cell.backgroundColor = utils.ios.getter(UIColor, UIColor.clearColor);
@@ -68,16 +68,16 @@ export class RoleListComponent {
     }
 
     delete(role: Role): void {
-        var confirmation: any = confirm('Confirm deletion of role "' + role.name + '" ?');
+        const confirmation: any = confirm('Confirm deletion of role "' + role.name + '" ?');
 
-        let deleteConfirmed = () => {
+        const deleteConfirmed = () => {
             this.loading.next('');
-            let successHandler = () => {
+            const successHandler = () => {
                 role.deleting = false;
                 role.deleted = true;
                 this.loaded.next('');
             };
-            let errorHandler = () => {
+            const errorHandler = () => {
                 alert('An error occurred while deleting "' + role.name + '".');
                 this.loaded.next('');
             };

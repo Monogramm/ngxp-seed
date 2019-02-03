@@ -9,7 +9,7 @@ import { alert } from '../../shared/dialog-util';
 declare var UIColor: any;
 
 @Component({
-    selector: 'mg-type-list',
+    selector: 'app-tns-type-list',
     moduleId: module.id,
     templateUrl: './type-list.component.html',
     styleUrls: ['./type-list.component.css'],
@@ -43,7 +43,7 @@ export class TypeListComponent {
     // The following trick makes the background color of each cell
     // in the UITableView transparent as it’s created.
     makeBackgroundTransparent(args): void {
-        let cell = args.ios;
+        const cell = args.ios;
         if (cell) {
             // support XCode 8
             cell.backgroundColor = utils.ios.getter(UIColor, UIColor.clearColor);
@@ -68,16 +68,16 @@ export class TypeListComponent {
     }
 
     delete(type: Type): void {
-        var confirmation: any = confirm('Confirm deletion of type "' + type.name + '" ?');
+        const confirmation: any = confirm('Confirm deletion of type "' + type.name + '" ?');
 
-        let deleteConfirmed = () => {
+        const deleteConfirmed = () => {
             this.loading.next('');
-            let successHandler = () => {
+            const successHandler = () => {
                 type.deleting = false;
                 type.deleted = true;
                 this.loaded.next('');
             };
-            let errorHandler = () => {
+            const errorHandler = () => {
                 alert('An error occurred while deleting "' + type.name + '".');
                 this.loaded.next('');
             };

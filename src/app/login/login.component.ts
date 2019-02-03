@@ -8,19 +8,19 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AppService } from '../app.service';
 import { Logger } from '../shared';
-import { User, LoginService } from '../data'
+import { User, LoginService } from '../data';
 
 @Component({
-    selector: 'login',
+    selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
     user: User;
-    isLoggingIn: boolean = true;
-    isAuthenticating: boolean = false;
+    isLoggingIn = true;
+    isAuthenticating = false;
 
-    tosAccepted: boolean = false;
+    tosAccepted = false;
 
     public readonly appName: string = AppService.APP_NAME;
 
@@ -33,7 +33,7 @@ export class LoginComponent {
 
     submit() {
         if (!this.user.isValidEmail()) {
-            var msg: string = this._translate.instant('login.message.warning.valid_email');
+            const msg: string = this._translate.instant('login.message.warning.valid_email');
             alert(msg);
             return;
         }
@@ -65,7 +65,7 @@ export class LoginComponent {
                         Logger.dir(error);
                     }
                     this.isAuthenticating = false;
-                    var msg: string = this._translate.instant('login.message.error.login');
+                    const msg: string = this._translate.instant('login.message.error.login');
                     alert(msg);
                 }
             );
@@ -77,7 +77,7 @@ export class LoginComponent {
         }
 
         if (!!!this.tosAccepted) {
-            var msg: string = this._translate.instant('login.message.warning.accept_tos');
+            const msg: string = this._translate.instant('login.message.warning.accept_tos');
             alert(msg);
             return;
         }
@@ -85,7 +85,7 @@ export class LoginComponent {
         this.loginService.register(this.user)
             .then(
                 () => {
-                    var msg: string = this._translate.instant('login.message.success.signup');
+                    const msg: string = this._translate.instant('login.message.success.signup');
                     alert(msg);
                     this.isAuthenticating = false;
                     this.toggleDisplay();
@@ -96,7 +96,7 @@ export class LoginComponent {
                         Logger.dir(error);
                     }
                     this.isAuthenticating = false;
-                    var msg: string = this._translate.instant('login.message.error.signup');
+                    const msg: string = this._translate.instant('login.message.error.signup');
                     alert(msg);
                 }
             );

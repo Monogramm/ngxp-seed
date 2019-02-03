@@ -8,7 +8,7 @@ import { User } from './user.model';
 
 @Injectable()
 export class UserService {
-    private basePath: string = 'users';
+    private basePath = 'users';
 
     items: BehaviorSubject<Array<User>> = new BehaviorSubject([]);
 
@@ -31,7 +31,7 @@ export class UserService {
                         Logger.dir(response);
                     }
 
-                    var data: Array<any>;
+                    let data: Array<any>;
                     if (response instanceof Response || typeof response.json !== 'undefined') {
                         data = response.json();
                     } else if (response instanceof Array) {
@@ -41,7 +41,7 @@ export class UserService {
                     }
 
                     data.forEach((rawEntry) => {
-                        let newEntry = this.newModel(rawEntry);
+                        const newEntry = this.newModel(rawEntry);
 
                         this._allItems.push(newEntry);
                     });
@@ -71,7 +71,7 @@ export class UserService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else if (response instanceof Object) {
@@ -89,7 +89,7 @@ export class UserService {
     }
 
     add(user: User) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             username: user.username,
             email: user.email,
             password: user.password,
@@ -132,7 +132,7 @@ export class UserService {
             .then(data => {
                 user.deleted = true;
                 user.deleting = false;
-                let index = this._allItems.indexOf(user);
+                const index = this._allItems.indexOf(user);
                 this._allItems.splice(index, 1);
                 this.publishUpdates();
             });

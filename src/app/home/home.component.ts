@@ -5,7 +5,7 @@ import { Logger } from '../shared';
 import { LoginService } from '../data/login';
 
 @Component({
-    selector: 'home',
+    selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
     providers: [HomeCommonViewModel, LoginService]

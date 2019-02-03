@@ -11,7 +11,7 @@ import { User, UserService } from '../../data/users';
 import { ChangePasswordComponent } from './change-password';
 
 @Component({
-    selector: 'mg-user-password',
+    selector: 'app-tns-user-password',
     moduleId: module.id,
     templateUrl: './user-password.component.html',
     styleUrls: ['./user-password.component.css']

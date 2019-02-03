@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '../../shared';
 
 @Component({
-    selector: 'legal',
+    selector: 'app-legal-info',
     templateUrl: './legal-info.component.html',
     styleUrls: ['./legal-info.component.scss']
 })

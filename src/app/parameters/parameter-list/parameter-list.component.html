@@ -1,6 +1,6 @@
 <ul class="entity-list">
-    <li *ngFor="let parameter of store.items | async | parameterStatus:showSelection">
-        <i *ngIf="allowSelection" [class]="'icon ' + imageSource(parameter)" (click)="toggleSelection(parameter)"></i>
+    <li *ngFor="let parameter of store.items | async | parameterStatus:selection">
+        <i *ngIf="selectable" [class]="'icon ' + imageSource(parameter)" (click)="toggleSelection(parameter)"></i>
 
         <a [routerLink]="edit(parameter)" [class.selected]="parameter.selected && !parameter.deleted">{{
             parameter.name}}<span>={{
@@ -8,13 +8,13 @@
                 (parameter.value)
                 }}</span></a>
 
-        <button *ngIf="allowDelete" [class.hidden]="parameter.deleted || parameter.deleting" class="btn-secondary"
+        <button *ngIf="deletable" [class.hidden]="parameter.deleted || parameter.deleting" class="btn-secondary"
             (click)="delete(parameter)">
             <i class="icon icon-cross"></i>
         </button>
-        <i *ngIf="allowDelete" [class.hidden]="parameter.deleted || !parameter.deleting" class="icon icon-rotate"></i>
+        <i *ngIf="deletable" [class.hidden]="parameter.deleted || !parameter.deleting" class="icon icon-rotate"></i>
 
     </li>
 </ul>
-<pagination-controls [pagination]="pagination" (page-change)="load($event)" [first-label]="'app.pagination.first' | translate"
-    [prev-label]="'app.pagination.prev' | translate" [next-label]="'app.pagination.next' | translate" [last-label]="'app.pagination.last' | translate"></pagination-controls>
+<app-pagination-controls [pagination]="pagination" (change)="load($event)" [first]="'app.pagination.first' | translate"
+    [prev]="'app.pagination.prev' | translate" [next]="'app.pagination.next' | translate" [last]="'app.pagination.last' | translate"></app-pagination-controls>

@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 
 /**
  * The Backend fetch behavior.
- * 
+ *
  * Defines if the service shall only rely on the backend or should also look in the storage.
  */
 export enum BackendFetchMode {
@@ -38,10 +38,10 @@ export abstract class AbstractBackendService {
         return this.storageService.getItem(key);
     }
     public getFromCachedStore(key: string): any {
-        var value: any = this.getFromStore(key);
+        let value: any = this.getFromStore(key);
 
         if (value) {
-            var json: any = JSON.parse(value);
+            const json: any = JSON.parse(value);
 
             if (json.date && new Date(json.date).getTime() > new Date().getTime()) {
                 value = json;

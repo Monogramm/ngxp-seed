@@ -113,11 +113,11 @@ export class Parameter extends ParameterDTO {
     }
 
     public static isValueValid(value: any, pattern: string): boolean {
-        var valid: boolean;
+        let valid: boolean;
         if (value === null) {
             valid = true;
         } else {
-            var reg = new RegExp(pattern, 'i');
+            const reg = new RegExp(pattern, 'i');
             valid = reg.test(String(value).trim());
         }
         return valid;

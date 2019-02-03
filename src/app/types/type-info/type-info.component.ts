@@ -13,13 +13,13 @@ import { Type, TypeService } from '../../data';
 import { TypeDetailsComponent } from './type-details';
 
 @Component({
-    selector: 'type-info',
+    selector: 'app-type-info',
     templateUrl: './type-info.component.html',
     styleUrls: ['./type-info.component.scss']
 })
 export class TypeInfoComponent implements OnInit {
     type: Type;
-    busy: boolean = false;
+    busy = false;
 
     constructor(public store: TypeService,
         private _translate: TranslateService,
@@ -31,7 +31,7 @@ export class TypeInfoComponent implements OnInit {
         this._route.params.pipe(
             switchMap((params: Params) => {
                 this.busy = true;
-                var entityId = params['id'];
+                const entityId = params['id'];
                 if (entityId) {
                     return this.store.get(params['id']);
                 } else {
@@ -50,14 +50,14 @@ export class TypeInfoComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('app.message.error.loading');
-                    alert(msg);
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
                     this.return();
                 });
     }
 
     delete(type: Type) {
-        var msg: string = this._translate.instant('app.message.confirm.delete');
+        const msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             type.deleting = true;
 
@@ -71,8 +71,8 @@ export class TypeInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
         }
@@ -90,8 +90,8 @@ export class TypeInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.creation');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.creation');
+                        alert(errMsg);
                     }
                 );
         } else {
@@ -105,8 +105,8 @@ export class TypeInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.update');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.update');
+                        alert(errMsg);
                     }
                 );
         }

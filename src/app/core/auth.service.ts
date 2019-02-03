@@ -41,7 +41,7 @@ export class AuthService {
 
     // Authentication mechanisms
     public get user(): User {
-        var userStr = this.getFromStore(AuthService.userKey);
+        const userStr = this.getFromStore(AuthService.userKey);
         return userStr ? <User> JSON.parse(userStr) : null;
     }
     public get currentUser(): Observable<User> {
@@ -88,9 +88,9 @@ export class AuthService {
     }
 
     public isLoggedIn(): boolean {
-        var token: string = this.token;
-        var tokenExpiration: number = this.tokenExpiration;
-        var remainingTime = !!tokenExpiration ? tokenExpiration - Date.now() : -1;
+        const token: string = this.token;
+        const tokenExpiration: number = this.tokenExpiration;
+        const remainingTime = !!tokenExpiration ? tokenExpiration - Date.now() : -1;
 
         return !!token && remainingTime > 0;
     }
@@ -129,12 +129,12 @@ export class AuthService {
     }
 
     public get userId(): string {
-        var tmpUser = this.user;
+        const tmpUser = this.user;
         return tmpUser ? tmpUser.id : null;
     }
 
     public get userRoles(): string[] {
-        let roles: string = <string>this.getFromStore(AuthService.userRolesKey);
+        const roles: string = <string>this.getFromStore(AuthService.userRolesKey);
 
         return JSON.parse(roles);
     }

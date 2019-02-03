@@ -6,7 +6,7 @@ import { AbstractBackendService } from '../abstract.backend.service';
 import { StorageService } from '../storage.service';
 import { AuthService } from '../auth.service';
 
-export class BackendService extends AbstractBackendService {
+export class FakeBackendService extends AbstractBackendService {
 
     constructor(_storageService: StorageService,
         _authService: AuthService) {
@@ -32,6 +32,6 @@ export class BackendService extends AbstractBackendService {
 }
 
 export let fakeBackendServiceProvider: ClassProvider = {
-    provide: BackendService,
-    useClass: BackendService
+    provide: FakeBackendService,
+    useClass: FakeBackendService
 };

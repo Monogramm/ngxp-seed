@@ -30,7 +30,7 @@ export class GuestGuard implements CanLoad, CanActivate, CanActivateChild {
     }
 
     private isGuest(): boolean {
-        var isGuest: boolean = !this.backendService.isLoggedIn();
+        const isGuest: boolean = !this.backendService.isLoggedIn();
         if (!isGuest) {
             this.router.navigate(['/']);
         }

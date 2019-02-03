@@ -3,31 +3,31 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, Output, EventEmitter
 import { Parameter, ParameterType, ParameterService } from '../../../data';
 
 @Component({
-    selector: 'parameter-details',
+    selector: 'app-parameter-details',
     templateUrl: './parameter-details.component.html',
     styleUrls: ['./parameter-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ParameterDetailsComponent implements OnInit {
     @Input() parameter: Parameter;
-    @Output('pattern-change') patternChange: EventEmitter<string> = new EventEmitter<string>();
+    @Output() patternChange: EventEmitter<string> = new EventEmitter<string>();
 
     parameterTypes: Array<String> = [];
 
-    parameterValuePlaceHolder: string = ' ';
-    parameterTypeHtml: string = 'text';
+    parameterValuePlaceHolder = ' ';
+    parameterTypeHtml = 'text';
     parameterTypeHtmlPattern: string = Parameter.STRING_REGEX;
 
-    isDateInputSupported: boolean = false;
-    isDateTimeInputSupported: boolean = false;
-    isTimeInputSupported: boolean = false;
+    isDateInputSupported = false;
+    isDateTimeInputSupported = false;
+    isTimeInputSupported = false;
 
     constructor(public store: ParameterService) {
     }
 
     ngOnInit() {
         // Test html5 input types
-        var test = document.createElement('input');
+        const test = document.createElement('input');
         test.type = 'date';
         if (test.type === 'date') {
             this.isDateInputSupported = true;
@@ -41,10 +41,13 @@ export class ParameterDetailsComponent implements OnInit {
             this.isTimeInputSupported = true;
         }
 
-        for (var enumMember in ParameterType) {
-            var isValueProperty = parseInt(enumMember, 10) >= 0
-            if (isValueProperty) {
-                this.parameterTypes.push(ParameterType[enumMember]);
+        for (const enumMember in ParameterType) {
+            if (ParameterType.hasOwnProperty(enumMember)) {
+                const element = ParameterType[enumMember];
+                const isValueProperty = parseInt(enumMember, 10) >= 0;
+                if (isValueProperty) {
+                    this.parameterTypes.push(element);
+                }
             }
         }
 

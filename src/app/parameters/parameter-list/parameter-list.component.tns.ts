@@ -9,7 +9,7 @@ import { alert } from '../../shared/dialog-util';
 declare var UIColor: any;
 
 @Component({
-    selector: 'mg-parameter-list',
+    selector: 'app-tns-parameter-list',
     moduleId: module.id,
     templateUrl: './parameter-list.component.html',
     styleUrls: ['./parameter-list.component.css'],
@@ -43,7 +43,7 @@ export class ParameterListComponent {
     // The following trick makes the background color of each cell
     // in the UITableView transparent as it’s created.
     makeBackgroundTransparent(args): void {
-        let cell = args.ios;
+        const cell = args.ios;
         if (cell) {
             // support XCode 8
             cell.backgroundColor = utils.ios.getter(UIColor, UIColor.clearColor);
@@ -68,16 +68,16 @@ export class ParameterListComponent {
     }
 
     delete(parameter: Parameter): void {
-        var confirmation: any = confirm('Confirm deletion of parameter "' + parameter.name + '" ?');
+        const confirmation: any = confirm('Confirm deletion of parameter "' + parameter.name + '" ?');
 
-        let deleteConfirmed = () => {
+        const deleteConfirmed = () => {
             this.loading.next('');
-            let successHandler = () => {
+            const successHandler = () => {
                 parameter.deleting = false;
                 parameter.deleted = true;
                 this.loaded.next('');
             };
-            let errorHandler = () => {
+            const errorHandler = () => {
                 alert('An error occurred while deleting "' + parameter.name + '".');
                 this.loaded.next('');
             };

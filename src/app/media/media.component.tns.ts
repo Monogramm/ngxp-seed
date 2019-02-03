@@ -9,20 +9,20 @@ import { TextField } from 'tns-core-modules/ui/text-field';
 import * as SocialShare from 'nativescript-social-share';
 
 import { LoginService } from '../data';
-import { MediaService } from '../data/media';
+import { Media, MediaService } from '../data/media';
 
 import { alert } from '../shared/dialog-util';
 
 import { MediaListComponent } from './media-list/media-list.component';
 
 @Component({
-    selector: 'mg-media',
+    selector: 'app-tns-media',
     moduleId: module.id,
     templateUrl: './media.component.html',
     styleUrls: ['./media.component-common.css', './media.component.css']
 })
 export class MediaComponent implements OnInit {
-    media: string = '';
+    media: Media = new Media();
     isAndroid;
     isConfirmingDeletion = false;
     isLoading = false;
@@ -64,9 +64,9 @@ export class MediaComponent implements OnInit {
             return;
         }
 
-        let textField = <TextField>this.mediaTextField.nativeElement;
+        const textField = <TextField>this.mediaTextField.nativeElement;
 
-        if (this.media.trim() === '') {
+        if (this.media.name.trim() === '') {
             // If the user clicked the add button, and the textfield is empty,
             // focus the text field and return.
             if (target === 'button') {
@@ -86,14 +86,14 @@ export class MediaComponent implements OnInit {
         this.showActivityIndicator();
         this._store.add(this.media)
             .then(
-            () => {
-                this.media = '';
-                this.hideActivityIndicator();
-            },
-            () => {
-                alert('An error occurred while adding an item to your list.');
-                this.hideActivityIndicator();
-            }
+                () => {
+                    this.media = new Media();
+                    this.hideActivityIndicator();
+                },
+                () => {
+                    alert('An error occurred while adding an item to your list.');
+                    this.hideActivityIndicator();
+                }
             );
     }
 
@@ -105,7 +105,7 @@ export class MediaComponent implements OnInit {
     toggleMassDelete(): void {
         if (this.isConfirmingDeletion) {
             this.showActivityIndicator();
-            let result = this._store.deleteSelection();
+            const result = this._store.deleteSelection();
 
             if (result) {
                 result.then(
@@ -142,8 +142,8 @@ export class MediaComponent implements OnInit {
     }
 
     share(): void {
-        let items = this._store.items.value;
-        let list = [];
+        const items = this._store.items.value;
+        const list = [];
         for (let i = 0, size = items.length; i < size; i++) {
             list.push(items[i].name);
         }

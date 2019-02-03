@@ -30,7 +30,7 @@ export class AuthGuard implements CanLoad, CanActivate, CanActivateChild {
     }
 
     private isAuthorized(): boolean {
-        var isAuthenticated: boolean = this.backendService.isLoggedIn();
+        const isAuthenticated: boolean = this.backendService.isLoggedIn();
         if (!isAuthenticated) {
             this.router.navigate(['/login']);
         }

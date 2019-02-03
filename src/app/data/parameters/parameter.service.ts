@@ -8,7 +8,7 @@ import { Parameter, ParameterDTO } from './parameter.model';
 
 @Injectable()
 export class ParameterService {
-    private basePath: string = 'parameters';
+    private readonly basePath = 'parameters';
 
     items: BehaviorSubject<Array<Parameter>> = new BehaviorSubject([]);
 
@@ -31,7 +31,7 @@ export class ParameterService {
                         Logger.dir(response);
                     }
 
-                    var data: Array<any>;
+                    let data: Array<any>;
                     if (response instanceof Response || typeof response.json !== 'undefined') {
                         data = response.json();
                     } else if (response instanceof Array) {
@@ -41,7 +41,7 @@ export class ParameterService {
                     }
 
                     data.forEach((rawEntry) => {
-                        let newEntry = this.newModel(rawEntry);
+                        const newEntry = this.newModel(rawEntry);
 
                         this._allItems.push(newEntry);
                     });
@@ -71,7 +71,7 @@ export class ParameterService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else if (response instanceof Object) {
@@ -89,7 +89,7 @@ export class ParameterService {
     }
 
     add(parameterToAdd: Parameter | ParameterDTO) {
-        let now = new Date();
+        const now = new Date();
         let parameter: ParameterDTO;
         if (parameterToAdd instanceof Parameter) {
             parameter = new ParameterDTO(
@@ -107,7 +107,7 @@ export class ParameterService {
         } else {
             parameter = parameterToAdd;
         }
-        let body = JSON.stringify(parameter);
+        const body = JSON.stringify(parameter);
 
         if (Logger.isEnabled) {
             Logger.log('adding a parameter = ' + body);
@@ -122,14 +122,14 @@ export class ParameterService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else {
                     data = response;
                 }
 
-                let newEntry = this.newModel(data);
+                const newEntry = this.newModel(data);
 
                 this._allItems.unshift(newEntry);
 
@@ -152,7 +152,7 @@ export class ParameterService {
     }
 
     updateSelection(selected: boolean) {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((type) => {
             type.selected = selected;
         });
@@ -170,14 +170,14 @@ export class ParameterService {
             )
             .then(res => res.json())
             .then(data => {
-                let index = this._allItems.indexOf(parameter);
+                const index = this._allItems.indexOf(parameter);
                 this._allItems.splice(index, 1);
                 this.publishUpdates();
             });
     }
 
     deleteSelection() {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((parameter) => {
             if (parameter.selected) {
                 indeces.push(parameter.id);
@@ -194,7 +194,7 @@ export class ParameterService {
             .then(data => {
                 this._allItems.forEach((parameter) => {
                     if (parameter.selected) {
-                        let index = this._allItems.indexOf(parameter);
+                        const index = this._allItems.indexOf(parameter);
                         this._allItems.splice(index, 1);
                         parameter.selected = false;
                     }

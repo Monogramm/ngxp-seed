@@ -4,18 +4,18 @@ import { CommonModule } from '@angular/common';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ActivityIndicator, PaginationControls } from '../components';
+import { ActivityIndicatorComponent, PaginationControlsComponent } from '../components';
 
 @NgModule({
     exports: [
         CommonModule, FormsModule,
         TranslateModule,
-        ActivityIndicator,
-        PaginationControls
+        ActivityIndicatorComponent,
+        PaginationControlsComponent
     ],
     declarations: [
-        ActivityIndicator,
-        PaginationControls
+        ActivityIndicatorComponent,
+        PaginationControlsComponent
     ]
 })
 export class SharedModule { }

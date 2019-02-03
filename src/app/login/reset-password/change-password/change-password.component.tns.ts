@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../../data';
 
 @Component({
-    selector: 'mg-change-password',
+    selector: 'app-tns-change-password',
     moduleId: module.id,
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.css'],

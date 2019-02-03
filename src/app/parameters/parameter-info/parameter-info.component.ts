@@ -13,14 +13,14 @@ import { Parameter, ParameterService } from '../../data';
 import { ParameterDetailsComponent } from './parameter-details';
 
 @Component({
-    selector: 'parameter-info',
+    selector: 'app-parameter-info',
     templateUrl: './parameter-info.component.html',
     styleUrls: ['./parameter-info.component.scss']
 })
 export class ParameterInfoComponent implements OnInit {
     parameter: Parameter;
     parameterTypeHtmlPattern: string = Parameter.STRING_REGEX;
-    busy: boolean = false;
+    busy = false;
 
     constructor(public store: ParameterService,
         private _translate: TranslateService,
@@ -32,7 +32,7 @@ export class ParameterInfoComponent implements OnInit {
         this._route.params.pipe(
             switchMap((params: Params) => {
                 this.busy = true;
-                var entityId = params['id'];
+                const entityId = params['id'];
                 if (entityId) {
                     return this.store.get(params['id']);
                 } else {
@@ -51,14 +51,14 @@ export class ParameterInfoComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('app.message.error.loading');
-                    alert(msg);
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
                     this.return();
                 });
     }
 
     delete(parameter: Parameter) {
-        var msg: string = this._translate.instant('app.message.confirm.delete');
+        const msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             parameter.deleting = true;
 
@@ -73,8 +73,8 @@ export class ParameterInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
         }
@@ -85,9 +85,9 @@ export class ParameterInfoComponent implements OnInit {
     }
 
     submit(parameter: Parameter) {
-        let name = parameter.name;
+        const name = parameter.name;
         if (name === null || name.trim() === '') {
-            var msg: string = this._translate.instant('app.message.warning.missing_field');
+            const msg: string = this._translate.instant('app.message.warning.missing_field');
             alert(msg);
             return;
         }
@@ -101,7 +101,7 @@ export class ParameterInfoComponent implements OnInit {
 
         // check if value format match selected type
         if (!Parameter.isValueValid(value, this.parameterTypeHtmlPattern)) {
-            var msg: string = this._translate.instant('parameters.message.warning.invalid_value');
+            const msg: string = this._translate.instant('parameters.message.warning.invalid_value');
             alert(msg);
             return;
         }
@@ -119,8 +119,8 @@ export class ParameterInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.creation');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.creation');
+                        alert(errMsg);
                         parameter.value = initialValue;
                     }
                 );
@@ -135,8 +135,8 @@ export class ParameterInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.update');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.update');
+                        alert(errMsg);
                         parameter.value = initialValue;
                     }
                 );

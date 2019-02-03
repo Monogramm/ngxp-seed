@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs';
@@ -11,12 +11,12 @@ import { Logger } from '../../../shared';
 import { LoginService, Role, RoleService, User, UserService } from '../../../data';
 
 @Component({
-    selector: 'user-details',
+    selector: 'app-user-details',
     templateUrl: './user-details.component.html',
     styleUrls: ['./user-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserDetailsComponent {
+export class UserDetailsComponent implements OnInit {
     @Input() user: User;
     @Output() ready = new EventEmitter();
 
@@ -59,14 +59,14 @@ export class UserDetailsComponent {
             this.loginService.sendVerificationToken(this.user.email)
                 .then(
                     () => {
-                        var msg: string = this._translate.instant('register.message.success.token_sent');
+                        const msg: string = this._translate.instant('register.message.success.token_sent');
                         alert(msg);
                     },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('register.message.error.send_token');
+                        const msg: string = this._translate.instant('register.message.error.send_token');
                         alert(msg);
                     }
                 );

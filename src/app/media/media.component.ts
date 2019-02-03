@@ -9,14 +9,14 @@ import { Logger } from '../shared';
 import { MediaListComponent } from './media-list';
 
 @Component({
-    selector: 'media',
+    selector: 'app-media',
     templateUrl: './media.component.html',
     styleUrls: ['./media.component.scss']
 })
 export class MediaComponent implements OnInit {
-    media: string = '';
+    media = '';
 
-    allowSelection: boolean = false;
+    selectable = false;
 
     isLoading = false;
     isConfirmingDeletion = false;
@@ -40,17 +40,19 @@ export class MediaComponent implements OnInit {
 
     toggleMassDelete() {
         if (this.isConfirmingDeletion) {
-            let result = this._store.deleteSelection();
-            
+            const result = this._store.deleteSelection();
+
             if (result) {
                 result.then(
-                    () => { this.isConfirmingDeletion = false },
+                    () => {
+                        this.isConfirmingDeletion = false;
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
             } else {

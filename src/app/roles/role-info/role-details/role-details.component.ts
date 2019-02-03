@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs';
@@ -8,12 +8,12 @@ import { WorkerService } from '../../../core';
 import { Role, RoleService, Permission, PermissionService } from '../../../data';
 
 @Component({
-    selector: 'role-details',
+    selector: 'app-role-details',
     templateUrl: './role-details.component.html',
     styleUrls: ['./role-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RoleDetailsComponent {
+export class RoleDetailsComponent implements OnInit {
     @Input() role: Role;
     @Output() ready = new EventEmitter();
 
@@ -21,8 +21,8 @@ export class RoleDetailsComponent {
     permissions: Array<Permission>;
 
     constructor(
-        public store: RoleService, 
-        public permissionService: PermissionService, 
+        public store: RoleService,
+        public permissionService: PermissionService,
         private worker: WorkerService) {
     }
 

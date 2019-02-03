@@ -13,13 +13,13 @@ import { User, UserService } from '../../data';
 import { ChangePasswordComponent } from './change-password';
 
 @Component({
-    selector: 'user',
+    selector: 'app-user-password',
     templateUrl: './user-password.component.html',
     styleUrls: ['./user-password.component.scss']
 })
 export class UserPasswordComponent implements OnInit {
     user: User;
-    busy: boolean = false;
+    busy = false;
 
     constructor(public store: UserService,
         private _translate: TranslateService,
@@ -40,7 +40,7 @@ export class UserPasswordComponent implements OnInit {
     }
 
     submit(user: User) {
-        var msg: string = this._translate.instant('app.message.confirm.password');
+        const msg: string = this._translate.instant('app.message.confirm.password');
         if (confirm(msg)) {
             this.busy = true;
             this.store.update(user)
@@ -54,8 +54,8 @@ export class UserPasswordComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.update');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.update');
+                        alert(errMsg);
                     }
                 );
         }

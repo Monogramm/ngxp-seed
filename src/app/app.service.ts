@@ -31,6 +31,9 @@ export class AppService {
 
     pwaUpdateAvailableEvent: UpdateAvailableEvent = null;
 
+    private _isIOS: boolean = null;
+    private _isStandalone: boolean = null;
+
     constructor(private swUpdate: SwUpdate,
         private translate: TranslateService) {
         window.addEventListener('beforeinstallprompt', (evt: Event) => {
@@ -56,12 +59,14 @@ export class AppService {
      * Trigger PWA install prompt.
      */
     addToHomeScreen(): boolean {
-        var promptDisplayed: boolean;
+        let promptDisplayed: boolean;
 
         if (this.pwaBeforeInstallPromptEvent === null) {
             console.log('No A2HS event to trigger for this device');
+            promptDisplayed = false;
         } else {
             this.pwaBeforeInstallPromptEvent.prompt();
+            promptDisplayed = true;
 
             // Wait for the user to respond to the prompt
             this.pwaBeforeInstallPromptEvent.userChoice
@@ -84,10 +89,9 @@ export class AppService {
         return this.pwaBeforeInstallPromptEvent !== null;
     }
 
-    private _isIOS: boolean = null;
     iOS(): boolean {
         if (this._isIOS === null && !!navigator.platform) {
-            for (var iDevice of AppService.iDevices) {
+            for (const iDevice of AppService.iDevices) {
                 if (navigator.platform === iDevice) {
                     this._isIOS = true;
                     break;
@@ -103,7 +107,6 @@ export class AppService {
         return this._isIOS;
     }
 
-    private _isStandalone: boolean = null;
     isStandalone(): boolean {
         if (this._isStandalone === null) {
             this._isStandalone = window.navigator && ('standalone' in window.navigator) && ((window.navigator as any).standalone);
@@ -113,7 +116,7 @@ export class AppService {
 
     confirmReload(available: { hash: string; appData?: Object; }) {
         this.translate.get('app.message.update', { value: available.appData }).subscribe((msg: string) => {
-            if (confirm(msg) == true) {
+            if (confirm(msg) === true) {
                 this.reload();
             }
         });
@@ -128,7 +131,7 @@ export class AppService {
     }
 
     appendToTitle(appendix: string) {
-        var title = AppService.APP_NAME + ' ' + appendix;
+        const title = AppService.APP_NAME + ' ' + appendix;
         this.setTitle(title);
     }
 }

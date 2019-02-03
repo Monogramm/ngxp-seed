@@ -32,8 +32,8 @@ export class VerifyGuard implements CanLoad, CanActivate, CanActivateChild {
 
     private isVerified(): boolean {
         // TODO Should use the Observable<User> instead ?
-        var user: User = this.backendService.user;
-        var isVerified: boolean = user && user.verified;
+        const user: User = this.backendService.user;
+        const isVerified: boolean = user && user.verified;
         if (!isVerified) {
             if (user && user.id) {
                 this.router.navigate(['register', user.id]);

@@ -16,14 +16,14 @@ import { alert } from '../shared/dialog-util';
 import { RoleListComponent } from './role-list/role-list.component';
 
 @Component({
-    selector: 'mg-roles',
+    selector: 'app-tns-roles',
     moduleId: module.id,
     templateUrl: './roles.component.html',
     styleUrls: ['./roles.component-common.css', './roles.component.css']
 })
 export class RolesComponent implements OnInit {
-    role: string = '';
-    isAndroid;
+    role = '';
+    isAndroid: boolean;
     isConfirmingDeletion = false;
     isLoading = false;
 
@@ -64,7 +64,7 @@ export class RolesComponent implements OnInit {
             return;
         }
 
-        let textField = <TextField>this.roleTextField.nativeElement;
+        const textField = <TextField>this.roleTextField.nativeElement;
 
         if (this.role.trim() === '') {
             // If the user clicked the add button, and the textfield is empty,
@@ -86,14 +86,14 @@ export class RolesComponent implements OnInit {
         this.showActivityIndicator();
         this._store.add(this.role)
             .then(
-            () => {
-                this.role = '';
-                this.hideActivityIndicator();
-            },
-            () => {
-                alert('An error occurred while adding an item to your list.');
-                this.hideActivityIndicator();
-            }
+                () => {
+                    this.role = '';
+                    this.hideActivityIndicator();
+                },
+                () => {
+                    alert('An error occurred while adding an item to your list.');
+                    this.hideActivityIndicator();
+                }
             );
     }
 
@@ -105,7 +105,7 @@ export class RolesComponent implements OnInit {
     toggleMassDelete(): void {
         if (this.isConfirmingDeletion) {
             this.showActivityIndicator();
-            let result = this._store.deleteSelection();
+            const result = this._store.deleteSelection();
 
             if (result) {
                 result.then(
@@ -142,8 +142,8 @@ export class RolesComponent implements OnInit {
     }
 
     share(): void {
-        let items = this._store.items.value;
-        let list = [];
+        const items = this._store.items.value;
+        const list = [];
         for (let i = 0, size = items.length; i < size; i++) {
             list.push(items[i].name);
         }

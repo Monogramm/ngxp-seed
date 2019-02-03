@@ -11,14 +11,14 @@ import { Logger } from '../../shared/';
 import { LoginService, User, UserService } from '../../data';
 
 @Component({
-    selector: 'register',
+    selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
     user: User;
     token: string;
-    busy: boolean = false;
+    busy = false;
 
     constructor(public store: LoginService,
         public userService: UserService,
@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('register.message.error.load_profile');
+                    const msg: string = this._translate.instant('register.message.error.load_profile');
                     alert(msg);
                     this._location.back();
                 }
@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
                 .then(
                     () => {
                         this.busy = false;
-                        var msg: string = this._translate.instant('register.message.success.token_sent');
+                        const msg: string = this._translate.instant('register.message.success.token_sent');
                         alert(msg);
                     },
                     (error) => {
@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('register.message.error.send_token');
+                        const msg: string = this._translate.instant('register.message.error.send_token');
                         alert(msg);
                     }
                 );
@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
 
     submit() {
         if (!!!this.token) {
-            var msg: string = this._translate.instant('register.message.warning.empty_token');
+            const msg: string = this._translate.instant('register.message.warning.empty_token');
             alert(msg);
             return;
         }
@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('register.message.error.verification');
+                    const msg: string = this._translate.instant('register.message.error.verification');
                     alert(msg);
                 }
             );

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -7,16 +7,16 @@ import { Logger, Pagination } from '../../shared';
 import { Media, MediaService } from '../../data';
 
 @Component({
-    selector: 'media-list',
+    selector: 'app-media-list',
     templateUrl: './media-list.component.html',
     styleUrls: ['./media-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MediaListComponent implements OnInit {
-    @Input('filter-selected-only') showSelection: boolean = false;
-    @Input('allow-selection') allowSelection: boolean = false;
-    @Input('allow-edit') allowEdit: boolean = true;
-    @Input('allow-delete') allowDelete: boolean = true;
+    @Input() selection = false;
+    @Input() selectable = false;
+    @Input() viewable = true;
+    @Input() deletable = true;
     @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() loaded: EventEmitter<number> = new EventEmitter<number>();
 
@@ -48,8 +48,8 @@ export class MediaListComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('app.message.error.loading');
-                    alert(msg);
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
                     this.loading.emit(false);
                     this.loaded.emit(0);
                 }
@@ -58,7 +58,7 @@ export class MediaListComponent implements OnInit {
 
     imageSource(media: Media) {
         if (media.deleted) {
-            return media.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked'
+            return media.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked';
         }
         return media.selected ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked';
     }
@@ -69,10 +69,10 @@ export class MediaListComponent implements OnInit {
     }
 
     delete(media: Media) {
-        if (!this.allowDelete) {
+        if (!this.deletable) {
             return;
         }
-        var msg: string = this._translate.instant('app.message.confirm.delete');
+        const msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             media.deleting = true;
 
@@ -89,15 +89,15 @@ export class MediaListComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
         }
     }
 
     edit(media: Media): any[] {
-        if (!this.allowEdit || !!!media.id) {
+        if (!this.viewable || !!!media.id) {
             return ['.'];
         }
         return ['/media', media.id];

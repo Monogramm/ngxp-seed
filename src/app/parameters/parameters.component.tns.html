@@ -35,7 +35,7 @@
   </GridLayout>
 
   <!-- Row 3: The parameter list -->
-  <mg-parameter-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></mg-parameter-list>
+  <app-tns-parameter-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></mg-parameter-list>
 
   <ActivityIndicator [busy]="isLoading" row="2"></ActivityIndicator>
 

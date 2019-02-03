@@ -18,7 +18,7 @@
     <div>
         <h3>{{ 'media.details' | translate }}</h3>
         <i *ngIf="!!!media" class="icon icon-rotate" style="font-size: 5em"></i>
-        <media-details *ngIf="media" [media]="media"></media-details>
+        <app-media-details *ngIf="media" [media]="media"></app-media-details>
     </div>
 
     <hr>
@@ -28,5 +28,5 @@
         <button type="button" class="right btn-secondary" (click)="return()">{{ 'app.common.cancel' | translate }}</button>
     </form>
 
-    <activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="busy"></activity-indicator>
+    <app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="busy"></app-activity-indicator>
 </div>

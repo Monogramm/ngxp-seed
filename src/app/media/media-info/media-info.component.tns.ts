@@ -13,7 +13,7 @@ import { Media, MediaService } from '../../data';
 import { MediaDetailsComponent } from './media-details';
 
 @Component({
-    selector: 'media-info',
+    selector: 'app-tns-media-info',
     templateUrl: './media-info.component.html',
     styleUrls: ['./media-info.component.scss']
 })

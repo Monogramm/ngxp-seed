@@ -6,12 +6,12 @@
             user.username
             }}</a>
 
-        <button *ngIf="allowDelete" [class.hidden]="user.deleted || user.deleting" class="btn-secondary" (click)="delete(user)">
+        <button *ngIf="deletable" [class.hidden]="user.deleted || user.deleting" class="btn-secondary" (click)="delete(user)">
             <i class="icon icon-cross"></i>
         </button>
-        <i *ngIf="allowDelete" [class.hidden]="user.deleted || !user.deleting" class="icon icon-rotate"></i>
+        <i *ngIf="deletable" [class.hidden]="user.deleted || !user.deleting" class="icon icon-rotate"></i>
 
     </li>
 </ul>
-<pagination-controls [pagination]="pagination" (page-change)="load($event)" [first-label]="'app.pagination.first' | translate"
-    [prev-label]="'app.pagination.prev' | translate" [next-label]="'app.pagination.next' | translate" [last-label]="'app.pagination.last' | translate"></pagination-controls>
+<app-pagination-controls [pagination]="pagination" (change)="load($event)" [first]="'app.pagination.first' | translate"
+    [prev]="'app.pagination.prev' | translate" [next]="'app.pagination.next' | translate" [last]="'app.pagination.last' | translate"></app-pagination-controls>

@@ -13,13 +13,13 @@ import { User, UserService } from '../../data';
 import { UserDetailsComponent } from './user-details';
 
 @Component({
-    selector: 'user',
+    selector: 'app-user-info',
     templateUrl: './user-info.component.html',
     styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
     user: User;
-    busy: boolean = false;
+    busy = false;
 
     constructor(public store: UserService,
         private _translate: TranslateService,
@@ -31,7 +31,7 @@ export class UserInfoComponent implements OnInit {
         this._route.params.pipe(
             switchMap((params: Params) => {
                 this.busy = true;
-                var entityId = params['id'];
+                const entityId = params['id'];
                 if (entityId) {
                     return this.store.get(params['id']);
                 } else {
@@ -50,15 +50,15 @@ export class UserInfoComponent implements OnInit {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('app.message.error.loading');
-                    alert(msg);
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
                     this.return();
                 }
             );
     }
 
     delete(user: User) {
-        var msg: string = this._translate.instant('app.message.confirm.delete');
+        const msg: string = this._translate.instant('app.message.confirm.delete');
         if (confirm(msg)) {
             user.deleting = true;
 
@@ -73,8 +73,8 @@ export class UserInfoComponent implements OnInit {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
         }
@@ -82,7 +82,7 @@ export class UserInfoComponent implements OnInit {
 
     submit(user: User) {
         if (user.id === null) {
-            var msgCreate: string = this._translate.instant('app.message.confirm.create');
+            const msgCreate: string = this._translate.instant('app.message.confirm.create');
             if (confirm(msgCreate)) {
                 this.busy = true;
                 this.store.add(user)
@@ -95,13 +95,13 @@ export class UserInfoComponent implements OnInit {
                             if (Logger.isEnabled) {
                                 Logger.dir(error);
                             }
-                            var msg: string = this._translate.instant('app.message.error.creation');
-                            alert(msg);
+                            const errMsg: string = this._translate.instant('app.message.error.creation');
+                            alert(errMsg);
                         }
                     );
             }
         } else {
-            var msgUpdate: string = this._translate.instant('app.message.confirm.update');
+            const msgUpdate: string = this._translate.instant('app.message.confirm.update');
             if (confirm(msgUpdate)) {
                 this.busy = true;
                 this.store.update(user)
@@ -114,8 +114,8 @@ export class UserInfoComponent implements OnInit {
                             if (Logger.isEnabled) {
                                 Logger.dir(error);
                             }
-                            var msg: string = this._translate.instant('app.message.error.update');
-                            alert(msg);
+                            const errMsg: string = this._translate.instant('app.message.error.update');
+                            alert(errMsg);
                         }
                     );
             }

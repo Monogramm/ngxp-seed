@@ -24,7 +24,7 @@ import { alert } from '../../shared/dialog-util';
 import { UserDetailsComponent } from './user-details/user-details.component';
 
 @Component({
-    selector: 'mg-user-info',
+    selector: 'app-tns-user-info',
     moduleId: module.id,
     templateUrl: './user-info.component.html',
     styleUrls: ['./user-info.component-common.css', './user-info.component.css'],

@@ -10,7 +10,7 @@ import { LoginService, User } from '../../data';
 import { ChangePasswordComponent } from './change-password';
 
 @Component({
-    selector: 'reset-password',
+    selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.scss']
 })
@@ -18,7 +18,7 @@ export class ResetPasswordComponent {
     email: string;
     token: string;
     password: string;
-    busy: boolean = false;
+    busy = false;
 
     constructor(public store: LoginService,
         private _translate: TranslateService,
@@ -33,7 +33,7 @@ export class ResetPasswordComponent {
                 .then(
                     () => {
                         this.busy = false;
-                        var msg: string = this._translate.instant('users.message.success.token_sent');
+                        const msg: string = this._translate.instant('users.message.success.token_sent');
                         alert(msg);
                     },
                     (error) => {
@@ -41,7 +41,7 @@ export class ResetPasswordComponent {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('users.message.error.send_token');
+                        const msg: string = this._translate.instant('users.message.error.send_token');
                         alert(msg);
                     }
                 );
@@ -61,7 +61,7 @@ export class ResetPasswordComponent {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    var msg: string = this._translate.instant('users.message.error.reset_password');
+                    const msg: string = this._translate.instant('users.message.error.reset_password');
                     alert(msg);
                 }
             );

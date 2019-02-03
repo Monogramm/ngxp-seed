@@ -15,7 +15,7 @@
   </GridLayout>
 
   <!-- Row 2: The user list -->
-  <mg-user-list [row]="1" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()"></mg-user-list>
+  <app-tns-user-list [row]="1" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()"></mg-user-list>
 
   <ActivityIndicator [busy]="isLoading" row="1"></ActivityIndicator>
 

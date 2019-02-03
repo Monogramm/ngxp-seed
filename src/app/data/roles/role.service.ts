@@ -8,7 +8,7 @@ import { Role, RoleDTO } from './role.model';
 
 @Injectable()
 export class RoleService {
-    private basePath: string = 'roles';
+    private readonly basePath = 'roles';
 
     items: BehaviorSubject<Array<Role>> = new BehaviorSubject([]);
 
@@ -31,7 +31,7 @@ export class RoleService {
                         Logger.dir(response);
                     }
 
-                    var data: Array<any>;
+                    let data: Array<any>;
                     if (response instanceof Response || typeof response.json !== 'undefined') {
                         data = response.json();
                     } else if (response instanceof Array) {
@@ -41,7 +41,7 @@ export class RoleService {
                     }
 
                     data.forEach((rawEntry) => {
-                        let newEntry = this.newModel(rawEntry);
+                        const newEntry = this.newModel(rawEntry);
 
                         this._allItems.push(newEntry);
                     });
@@ -71,7 +71,7 @@ export class RoleService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else if (response instanceof Object) {
@@ -89,7 +89,7 @@ export class RoleService {
     }
 
     add(roleToAdd: string | Role | RoleDTO) {
-        let now = new Date();
+        const now = new Date();
         let role;
         if (typeof roleToAdd === 'string') {
             role = new RoleDTO(
@@ -116,7 +116,7 @@ export class RoleService {
         } else {
             role = roleToAdd;
         }
-        let body = JSON.stringify(role);
+        const body = JSON.stringify(role);
 
         if (Logger.isEnabled) {
             Logger.log('adding a role = ' + body);
@@ -131,14 +131,14 @@ export class RoleService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else {
                     data = response;
                 }
 
-                let newEntry = this.newModel(data);
+                const newEntry = this.newModel(data);
 
                 this._allItems.unshift(newEntry);
 
@@ -161,7 +161,7 @@ export class RoleService {
     }
 
     updateSelection(selected: boolean) {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((type) => {
             type.selected = selected;
         });
@@ -179,14 +179,14 @@ export class RoleService {
             )
             .then(res => res.json())
             .then(data => {
-                let index = this._allItems.indexOf(role);
+                const index = this._allItems.indexOf(role);
                 this._allItems.splice(index, 1);
                 this.publishUpdates();
             });
     }
 
     deleteSelection() {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((role) => {
             if (role.selected) {
                 indeces.push(role.id);
@@ -203,7 +203,7 @@ export class RoleService {
             .then(data => {
                 this._allItems.forEach((role) => {
                     if (role.selected) {
-                        let index = this._allItems.indexOf(role);
+                        const index = this._allItems.indexOf(role);
                         this._allItems.splice(index, 1);
                         role.selected = false;
                     }

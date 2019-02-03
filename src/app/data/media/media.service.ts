@@ -10,9 +10,9 @@ import { FileSystemEntity } from 'tns-core-modules/file-system/file-system';
 
 @Injectable()
 export class MediaService {
-    private basePath: string = 'media';
-    private uploadPath: string = this.basePath + '/upload';
-    public downloadPath: string = this.basePath + '/download';
+    private readonly basePath = 'media';
+    private readonly uploadPath: string = this.basePath + '/upload';
+    public readonly downloadPath: string = this.basePath + '/download';
 
     items: BehaviorSubject<Array<Media>> = new BehaviorSubject([]);
 
@@ -35,7 +35,7 @@ export class MediaService {
                         Logger.dir(response);
                     }
 
-                    var data: Array<any>;
+                    let data: Array<any>;
                     if (response instanceof Response || typeof response.json !== 'undefined') {
                         data = response.json();
                     } else if (response instanceof Array) {
@@ -45,7 +45,7 @@ export class MediaService {
                     }
 
                     data.forEach((rawEntry) => {
-                        let newEntry = this.newModel(rawEntry);
+                        const newEntry = this.newModel(rawEntry);
 
                         this._allItems.push(newEntry);
                     });
@@ -75,7 +75,7 @@ export class MediaService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else if (response instanceof Object) {
@@ -93,7 +93,7 @@ export class MediaService {
     }
 
     add(mediaToAdd: Media | MediaDTO) {
-        let now: Date = new Date();
+        const now: Date = new Date();
         let media: MediaDTO;
         if (mediaToAdd instanceof Media) {
             media = new MediaDTO(
@@ -133,14 +133,14 @@ export class MediaService {
                     Logger.dir(response);
                 }
 
-                var data;
+                let data;
                 if (response instanceof Response || typeof response.json !== 'undefined') {
                     data = response.json();
                 } else {
                     data = response;
                 }
 
-                let newEntry = this.newModel(data);
+                const newEntry = this.newModel(data);
 
                 this._allItems.unshift(newEntry);
 
@@ -163,7 +163,6 @@ export class MediaService {
     }
 
     updateSelection(selected: boolean) {
-        let indeces: string[] = [];
         this._allItems.forEach((type) => {
             type.selected = selected;
         });
@@ -181,14 +180,14 @@ export class MediaService {
             )
             .then(res => res.json())
             .then(data => {
-                let index = this._allItems.indexOf(media);
+                const index = this._allItems.indexOf(media);
                 this._allItems.splice(index, 1);
                 this.publishUpdates();
             });
     }
 
     deleteSelection() {
-        let indeces: string[] = [];
+        const indeces: string[] = [];
         this._allItems.forEach((media) => {
             if (media.selected) {
                 indeces.push(media.id);
@@ -205,7 +204,7 @@ export class MediaService {
             .then(data => {
                 this._allItems.forEach((media) => {
                     if (media.selected) {
-                        let index = this._allItems.indexOf(media);
+                        const index = this._allItems.indexOf(media);
                         this._allItems.splice(index, 1);
                         media.selected = false;
                     }

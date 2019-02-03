@@ -9,14 +9,14 @@ import { Logger } from '../shared';
 import { RoleListComponent } from './role-list';
 
 @Component({
-    selector: 'roles',
+    selector: 'app-roles',
     templateUrl: './roles.component.html',
     styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
-    role: string = '';
+    role = '';
 
-    allowSelection: boolean = false;
+    selectable = false;
 
     isLoading = false;
     isConfirmingDeletion = false;
@@ -35,7 +35,7 @@ export class RolesComponent implements OnInit {
 
     add() {
         if (this.role.trim() === '') {
-            var msg: string = this._translate.instant('app.message.warning.missing_field');
+            const msg: string = this._translate.instant('app.message.warning.missing_field');
             alert(msg);
             return;
         }
@@ -46,8 +46,8 @@ export class RolesComponent implements OnInit {
             if (Logger.isEnabled) {
                 Logger.dir(error);
             }
-            var msg: string = this._translate.instant('app.message.error.creation');
-            alert(msg);
+            const errMsg: string = this._translate.instant('app.message.error.creation');
+            alert(errMsg);
         });
     }
 
@@ -58,17 +58,19 @@ export class RolesComponent implements OnInit {
 
     toggleMassDelete() {
         if (this.isConfirmingDeletion) {
-            let result = this._store.deleteSelection();
-            
+            const result = this._store.deleteSelection();
+
             if (result) {
                 result.then(
-                    () => { this.isConfirmingDeletion = false },
+                    () => {
+                        this.isConfirmingDeletion = false;
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        var msg: string = this._translate.instant('app.message.error.deletion');
-                        alert(msg);
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
             } else {
