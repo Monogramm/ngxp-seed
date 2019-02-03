@@ -6,7 +6,8 @@
   </div>
 
   <div class="title">
-    <h1><img src="./assets/logo.svg" [alt]="appName" /></h1>
+    <h1><img src="./assets/logo.svg" [alt]="appName" [title]="(isInstallable() ? 'app.top_bar.logo.install' : '') | translate" [class.notify]="isInstallable()"
+        (click)="promptInstall()" /></h1>
   </div>
 
   <div class="logout">

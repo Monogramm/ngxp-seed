@@ -27,6 +27,20 @@
         border-radius: 5px;
     }
 
+    .title img.notify {
+        cursor: pointer;
+
+        /* background: rgba( $c-secondary, .3 ); */
+        /* box-shadow: 0 0 5px 4px rgba( $c-secondary, .3 ); */
+        border-radius: 5px;
+
+        -webkit-animation: Blink 1000ms infinite alternate;
+        -moz-animation: Blink 1000ms infinite alternate;
+        -ms-animation: Blink 1000ms infinite alternate;
+        -o-animation: Blink 1000ms infinite alternate;
+        animation: Blink 1000ms infinite alternate;
+    }
+
     .logout {
         position: absolute;
         right: 17px;

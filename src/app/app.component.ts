@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -25,7 +26,8 @@ export class AppComponent {
         private _appService: AppService,
         private _localeService: LocaleService,
         private _titleService: Title,
-        private _loginService: LoginService) {
+        private _loginService: LoginService,
+        private _router: Router) {
         // fallback language when a translation isn't found in the current language
         this._translate.setDefaultLang(AppComponent.LOCALE);
 
@@ -41,6 +43,22 @@ export class AppComponent {
             this.title = title;
             this._titleService.setTitle(title);
         });
+    }
+
+    isInstallable(): boolean {
+        return this._appService.isInstallable() || (this._appService.iOS() && !this._appService.isStandalone());
+    }
+
+    promptInstall(): void {
+        if (this._appService.isInstallable()) {
+            this._appService.addToHomeScreen();
+        } else if (this._appService.iOS() && !this._appService.isStandalone()) {
+            var msg: string = this._translate.instant('app.message.install');
+            if (confirm(msg) == true) {
+                // Navigate to /info/install
+                this._router.navigate(['/info', 'install']);
+            }
+        }
     }
 
     isLoggedIn(): boolean {

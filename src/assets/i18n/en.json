@@ -2,6 +2,7 @@
     "app": {
         "top_bar": {
             "home.title": "Go to home",
+            "logo.install": "Install application",
             "logout.title": "Logout"
         },
         "activity": {
@@ -9,6 +10,7 @@
         },
         "message": {
             "logout": "Do you really want to log off?",
+            "install": "Learn how to install this application on your device?",
             "update": "A new version of the application is available. Confirm to update.",
             "confirm": {
                 "create": "Confirm creation?",

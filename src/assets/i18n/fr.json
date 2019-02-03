@@ -2,6 +2,7 @@
     "app": {
         "top_bar": {
             "home.title": "Accueil",
+            "logo.install": "Installer l'application",
             "logout.title": "Déconnexion"
         },
         "activity": {
@@ -9,6 +10,7 @@
         },
         "message": {
             "logout": "Voulez-vous vraiment vous déconnecter ?",
+            "install": "Découvrir comment installer cette application sur votre appareil ?",
             "update": "Une nouvelle version de l'application est disponible. Confirmez pour mettre à jour.",
             "confirm": {
                 "create": "Confirmer la création ?",
