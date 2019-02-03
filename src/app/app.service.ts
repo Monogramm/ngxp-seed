@@ -106,7 +106,7 @@ export class AppService {
     private _isStandalone: boolean = null;
     isStandalone(): boolean {
         if (this._isStandalone === null) {
-            this._isStandalone = ('standalone' in window.navigator) && (window.navigator.standalone);
+            this._isStandalone = window.navigator && ('standalone' in window.navigator) && ((window.navigator as any).standalone);
         }
         return this._isStandalone;
     }
