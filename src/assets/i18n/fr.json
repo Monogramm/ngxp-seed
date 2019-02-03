@@ -102,7 +102,8 @@
         "signup": "S'inscrire",
         "username": "Nom d'utilisateur : ",
         "username_placeholder": "Nom d'utilisateur (laisser vide pour utiliser l'identifiant de votre adresse email)",
-        "terms_of_usage": "En vous inscrivant, vous acceptez nos conditions d'utilisation de ce service.",
+        "terms_of_usage": "En vous inscrivant, vous acceptez nos conditions générales d'utilisation.",
+        "i_accept_tos": "J'accepte",
         "back_to_login": "Retour",
         "message": {
             "success": {

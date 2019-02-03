@@ -102,7 +102,8 @@
         "signup": "Sign Up",
         "username": "Username: ",
         "username_placeholder": "Username (leave empty to use the identification of your email address)",
-        "terms_of_usage": "By registering, you accept our terms of usage of this service.",
+        "terms_of_usage": "By registering, you accept our terms of usage.",
+        "i_accept_tos": "I accept",
         "back_to_login": "Back to Login",
         "message": {
             "success": {

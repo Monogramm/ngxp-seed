@@ -41,7 +41,10 @@
       <a [routerLink]="['/info', 'usage']">
         {{ 'login.terms_of_usage' | translate }}
       </a>
-      <input name="tos" type="checkbox" required [(ngModel)]="tosAccepted" [disabled]="isAuthenticating">
+      <label name="tos">
+          {{ 'login.i_accept_tos' | translate }}
+        <input name="tos" type="checkbox" required [(ngModel)]="tosAccepted" [disabled]="isAuthenticating">
+      </label>
     </div>
 
     <div class="center">
