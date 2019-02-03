@@ -1,7 +1,3 @@
-env:
-    global:
-        - NODE_VERSION=10.15.1
-
 language: node_js
 
 jdk: oraclejdk8
@@ -25,9 +21,9 @@ cache:
 
 install:
     - pip install six
-    - echo no | npm install -g nativescript --unsafe-perm
-    - tns usage-reporting disable
-    - tns error-reporting disable
+    #- echo no | npm install -g nativescript --unsafe-perm
+    #- tns usage-reporting disable
+    #- tns error-reporting disable
     - npm install
 
 # before_script:
