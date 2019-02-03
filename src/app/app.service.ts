@@ -6,7 +6,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import { environment } from '../environments/environment';
-import { ios } from 'tns-core-modules/application/application';
 
 @Injectable()
 export class AppService {
@@ -49,9 +48,6 @@ export class AppService {
         this.swUpdate.available.subscribe((evt: UpdateAvailableEvent) => {
             this.pwaUpdateAvailableEvent = evt;
             console.log('This app should be updated');
-            // an update is available, ask user to confirm reload
-            // go to ngsw-config.json to edit available update content
-            this.confirmReload(evt.available);
         });
     }
 
@@ -114,12 +110,20 @@ export class AppService {
         return this._isStandalone;
     }
 
-    confirmReload(available: { hash: string; appData?: Object; }) {
-        this.translate.get('app.message.update', { value: available.appData }).subscribe((msg: string) => {
-            if (confirm(msg) === true) {
-                this.reload();
-            }
-        });
+    /**
+     * Is app automatically updatable through PWA update events.
+     */
+    isUpdatable(): boolean {
+        return this.pwaUpdateAvailableEvent !== null;
+    }
+
+    confirmReload() {
+        this.translate.get('app.message.update', { value: this.pwaUpdateAvailableEvent.available.appData })
+            .subscribe((msg: string) => {
+                if (confirm(msg) === true) {
+                    this.reload();
+                }
+            });
     }
 
     reload() {

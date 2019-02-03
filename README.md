@@ -151,6 +151,10 @@ android {
 </dict>
 ```
 
+### How to update PWA?
+To help trigger update on devices that installed the PWA, you should use the `ngsw-config.json` and define the `appData` to describe the content of your latest version.
+This will trigger a different signature for the PWA service worker and trigger the update event.
+
 ## Attributes
 1. [Angular Framework](https://angular.io/)
 2. [Nativescript Framework](http://nativescript.org/)

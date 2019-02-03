@@ -45,12 +45,29 @@ export class AppComponent {
         });
     }
 
-    isInstallable(): boolean {
+    hasPrompt(): boolean {
         return this._appService.isInstallable() || (this._appService.iOS() && !this._appService.isStandalone());
     }
 
-    promptInstall(): void {
-        if (this._appService.isInstallable()) {
+    promptTitle(): string {
+        let msg: string;
+        if (this._appService.isUpdatable()) {
+            msg = this._translate.instant('app.message.update');
+        } else if (this._appService.isInstallable() || (this._appService.iOS() && !this._appService.isStandalone())) {
+            msg = this._translate.instant('app.message.install');
+        }
+        return msg;
+    }
+
+    appPrompt(): void {
+        if (this._appService.isUpdatable()) {
+            const msg: string = this._translate.instant('app.message.update');
+            if (confirm(msg) === true) {
+                // Reload page to update PWA
+                this._appService.reload();
+            }
+        } else if (this._appService.isInstallable()) {
+            // Trigger PWA prompt
             this._appService.addToHomeScreen();
         } else if (this._appService.iOS() && !this._appService.isStandalone()) {
             const msg: string = this._translate.instant('app.message.install');
