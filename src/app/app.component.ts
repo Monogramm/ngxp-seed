@@ -55,6 +55,8 @@ export class AppComponent {
             msg = this._translate.instant('app.message.update');
         } else if (this._appService.isInstallable() || (this._appService.iOS() && !this._appService.isStandalone())) {
             msg = this._translate.instant('app.message.install');
+        } else {
+            msg = this.appName;
         }
         return msg;
     }
