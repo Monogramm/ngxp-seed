@@ -25,17 +25,16 @@ cache:
 
 install:
     - nvm install $NODE_VERSION
-    # - npm cache clean
-    # - npm uninstall -g @angular-cli
-    # - npm install -g -f @angular-cli
-    # - ng --version
+    - npm cache clean
+    - npm uninstall -g @angular-cli
+    - npm install -g -f @angular-cli
+    - ng --version
     #- wget -O ./nativescript.tgz "https://s3.amazonaws.com/nativescript-ci/build_result/nativescript.tgz"
     #- npm install -g nativescript.tgz --ignore-scripts
-    - npm install -g @angular/cli
     #- npm install -g nativescript --unsafe-perm
     #- tns usage-reporting disable
     #- tns error-reporting disable
-    - npm run install
+    - npm install
 
 # before_script:
 #     - echo no | android create avd --force -n test -t android-19 -b armeabi-v7a
