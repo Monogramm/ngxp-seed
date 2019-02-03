@@ -78,7 +78,17 @@ export class BackendService extends AbstractBackendService {
 
             if (pagination && pagination.sort) {
                 // TODO Add sorting mechanisms
-                // httpHeaders.append('X-Custom-Sort', JSON.stringify({ ModifiedAt: -1 }));
+                let sortQuery = '';
+
+                for (const entry of pagination.sort.entries) {
+                    sortQuery += entry.field + ',' + entry.order + ';';
+                }
+                httpHeaders.append('X-Custom-Sort', JSON.stringify({ sortQuery }));
+                if (url.match('?')) {
+                    url += '&sort=' + sortQuery;
+                } else {
+                    url += '?sort=' + sortQuery;
+                }
 
             }
 
