@@ -46,6 +46,16 @@ button {
   cursor: pointer;
 }
 
+.tos-label label {
+  margin-top: 1em;
+  width: 100%;
+  display: inline-block;
+
+  input {
+    width: initial;
+    display: inline-block;
+  }
+}
 
 
 .dark .logo img {
