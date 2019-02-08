@@ -26,48 +26,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom class for rotating icons */
-.icon-rotate {
-  height: 1em;
-  width: 1em;
-  display: inline-block;
-  
-  &:before {
-    content: $icon-spinner10; 
-  }
-  
-  transform-origin: 50% 50%;
-  -o-transform-origin: 50% 50%;
-  -ms-transform-origin: 50% 50%;
-  -moz-transform-origin: 50% 50%;
-  -webkit-transform-origin: 50% 50%;
-  -webkit-animation: Rotate 1000ms infinite linear;
-  -moz-animation: Rotate 1000ms infinite linear;
-  -ms-animation: Rotate 1000ms infinite linear;
-  -o-animation: Rotate 1000ms infinite linear;
-  animation: Rotate 1000ms infinite linear;
-}
-@-o-keyframes Rotate {
-  from {-o-transform:rotate(0deg);}
-  to {-o-transform:rotate(360deg);}
-}
-@-moz-keyframes Rotate {
-  from {-moz-transform:rotate(0deg);}
-  to {-moz-transform:rotate(360deg);}
-}
-@-ms-keyframes Rotate {
-  from {-ms-transform:rotate(0deg);}
-  to {-ms-transform:rotate(360deg);}
-}
-@-webkit-keyframes Rotate {
-  from {-webkit-transform:rotate(0deg);}
-  to {-webkit-transform:rotate(360deg);}
-}
-@keyframes Rotate {
-  from { transform:rotate(0deg);}
-  to { transform:rotate(360deg);}
-}
-
 /* IcoMoon classes */
 
 .icon-home {

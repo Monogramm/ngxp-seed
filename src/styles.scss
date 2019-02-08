@@ -9,101 +9,106 @@
 /* Box Model */
 
 *, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* Basic */
 
 html {
-  height: 100%;
+    height: 100%;
 }
+
 body {
-  height: 100%;
-  margin: 0;
-  background-color: $c-body-background;
-  background-image: url("assets/bg.svg");
-  background-repeat: repeat;
-  background-size: auto;
+    height: 100%;
+    margin: 0;
+    background-color: $c-body-background;
+    background-image: url("assets/bg.svg");
+    background-repeat: repeat;
+    background-size: auto;
 }
 
 /* Type */
 
 body, input, select, textarea {
-  color: $c-secondary-text;
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
-  font-weight: 300;
-  line-height: 2;
-  letter-spacing: 0.2em;
+    color: $c-secondary-text;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    font-weight: 300;
+    line-height: 2;
+    letter-spacing: 0.2em;
 }
+
 input {
-  font-size: 16px;
-  border: solid 1px $c-secondary-border;
-  border-radius: 4px;
-}
-
-a {
-  color: $c-accent;
-}
-
-a:active, a:focus, a:hover {
-  color: $c-dark-accent;
+    font-size: 16px;
+    border: solid 1px $c-secondary-border;
+    border-radius: 4px;
 }
 
 strong, b {
-  color: $c-primary-text;
+    color: $c-primary-text;
 }
 
 em, i {
-  font-style: italic;
+    font-style: italic;
 }
 
 p {
-  margin: 0 0 1.5em 0;
+    margin: 0 0 1.5em 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $c-primary-text;
-  line-height: 1.5;
-  margin: 0 0 0.75em 0;
-  text-align: center;
+    color: $c-primary-text;
+    line-height: 1.5;
+    margin: 0 0 0.75em 0;
+    text-align: center;
 }
 
 h1 {
-  font-size: 1.85em;
-  letter-spacing: 0.22em;
-  margin: 0 0 0.525em 0;
+    font-size: 1.85em;
+    letter-spacing: 0.22em;
+    margin: 0 0 0.525em 0;
 }
 
 hr {
-  border: 0;
-  border-bottom: solid 1px $c-secondary-border;
-  margin: 3em 0 1em 0;
+    border: 0;
+    border-bottom: solid 1px $c-secondary-border;
+    margin: 3em 0 1em 0;
+}
+
+@media screen and (max-width: 768px) {
+    hr {
+        margin: 2em 0 1em 0;
+    }
 }
 
 @media screen and (max-width: 480px) {
-  h1 {
-    font-size: 1.65em;
-  }
+    h1 {
+        font-size: 1.65em;
+    }
+
+    hr {
+        margin: 1em 0;
+    }
 }
 
 /* Form */
 
 .center {
-  padding-top: 1em;
-  text-align: center;
+    padding-top: 1em;
+    text-align: center;
 }
+
 label {
-  color: $c-primary-text;
-  display: block;
-  font-weight: bold;
-  margin: 0 0 0.75em 0;
+    color: $c-primary-text;
+    display: block;
+    font-weight: bold;
+    margin: 0 0 0.75em 0;
 }
 
 input, select, textarea {
-  width: 100%;
-  padding: 0.3em 0.5em;
+    width: 100%;
+    padding: 0.3em 0.5em;
 }
 
 /*
@@ -114,252 +119,467 @@ input[required]::after, select[required]::after, textarea[required]::after {
 }
 */
 input:invalid, select:invalid, textarea:invalid {
-  border: 1px solid rgba($c-danger, 0.616);
+    border: 1px solid rgba($c-danger, 0.616);
 }
+
 input:focus:invalid, select:focus:invalid, textarea:focus:invalid {
-  box-shadow: 0px 0px 3px 2px rgba($c-danger, 0.616);
+    box-shadow: 0px 0px 3px 2px rgba($c-danger, 0.616);
 }
+
 input[required]:focus:valid, select[required]:focus:valid, textarea[required]:focus:valid {
-  border: 1px solid rgba($c-success, 0.616);
-  box-shadow: 0px 0px 3px 2px rgba($c-success, 0.616);
+    border: 1px solid rgba($c-success, 0.616);
+    box-shadow: 0px 0px 3px 2px rgba($c-success, 0.616);
 }
 
 /* List */
 ul {
-  list-style: none;
-  margin: 0 0 1.5em 0;
-  padding-left: 1em;
+    list-style: none;
+    margin: 0 0 1em 0;
+    padding-left: 1em;
 }
 
 ul li {
-  padding-top: 1.5em;
+    padding-top: 1em;
 }
 
+/* Icons */
+
+.icon-rotate {
+    height: 1em;
+    width: 1em;
+    display: inline-block;
+
+    &:before {
+        content: $icon-spinner10;
+    }
+
+    transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -webkit-transform-origin: 50% 50%;
+    -webkit-animation: Rotate 1000ms infinite linear;
+    -moz-animation: Rotate 1000ms infinite linear;
+    -ms-animation: Rotate 1000ms infinite linear;
+    -o-animation: Rotate 1000ms infinite linear;
+    animation: Rotate 1000ms infinite linear;
+}
+
+@-o-keyframes Rotate {
+    from {
+        -o-transform: rotate(0deg);
+    }
+
+    to {
+        -o-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes Rotate {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes Rotate {
+    from {
+        -ms-transform: rotate(0deg);
+    }
+
+    to {
+        -ms-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes Rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes Rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.icon-primary {
+    color: $c-primary;
+}
+
+.icon-secondary {
+    color: $c-secondary;
+}
+
+.icon-plain {
+    color: $c-primary-text;
+}
+
+.icon-success {
+    color: $c-success;
+}
+
+.icon-info {
+    color: $c-info;
+}
+
+.icon-warning {
+    color: $c-warning;
+}
+
+.icon-danger {
+    color: $c-danger;
+}
+
+
+/* Links */
+
+a, .lnk [class^="lnk-"], [class*=" lnk-"] {
+    color: $c-accent;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+}
+
+a:focus, a:hover
+.lnk:focus, .lnk:hover {
+    color: lighten($c-accent, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-accent), 0.60);
+}
+
+a:active
+.lnk:active {
+    color: darken($c-accent, 15%);
+}
+
+.lnk-primary {
+    color: $c-primary;
+}
+
+.lnk-primary:active, .lnk-primary:focus, .lnk-primary:hover {
+    color: lighten($c-primary, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-primary), 0.60);
+}
+
+.lnk-secondary {
+    color: $c-secondary;
+}
+
+.lnk-secondary:active, .lnk-secondary:focus, .lnk-secondary:hover {
+    color: lighten($c-secondary, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-secondary), 0.60);
+}
+
+.lnk-plain {
+    color: $c-primary-text;
+}
+
+.lnk-plain:active, .lnk-plain:focus, .lnk-plain:hover {
+    color: lighten($c-primary-text, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-primary-text), 0.60);
+}
+
+.lnk-success {
+    color: $c-success;
+}
+
+.lnk-success:active, .lnk-success:focus, .lnk-success:hover {
+    color: lighten($c-success, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-success), 0.60);
+}
+
+.lnk-info {
+    color: $c-info;
+}
+
+.lnk-info:active, .lnk-info:focus, .lnk-info:hover {
+    color: lighten($c-info, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-info), 0.60);
+}
+
+.lnk-warning {
+    color: $c-warning;
+}
+
+.lnk-warning:active, .lnk-warning:focus, .lnk-warning:hover {
+    color: lighten($c-warning, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-warning), 0.60);
+}
+
+.lnk-danger {
+    color: $c-danger;
+}
+
+.lnk-danger:active, .lnk-danger:focus, .lnk-danger:hover {
+    color: lighten($c-danger, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-danger), 0.60);
+}
 
 /* Button */
 
 button, .btn, [class^="btn-"], [class*=" btn-"] {
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  
-  display: inline-block;
-  height: 2.75em;
-  padding: 0 1.5em;
-
-  cursor: pointer;
-
-  color: $c-primary-contrast;
-  font: bold 15px Arial;
-  letter-spacing: normal;
-  word-spacing: normal;
-  align-items: flex-start;
-  text-align: center;
-  text-rendering: auto;
-  text-transform: none;
-  text-decoration: none;
-  line-height: 2.75em;
-
-  background-color: transparent;
-  background-color: $c-secondary;
-  
-  border: solid 1px $c-secondary-border;
-  border-radius: 4px;
-  outline: 0;
-
-  box-shadow: 1px 1px 1px 1px rgba($c-secondary-border, 0.6);
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    display: inline-block;
+    height: 2.75em;
+    padding: 0 1.5em;
+    cursor: pointer;
+    color: $c-primary-contrast;
+    font: bold 15px Arial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    align-items: flex-start;
+    text-align: center;
+    text-rendering: auto;
+    text-transform: none;
+    text-decoration: none;
+    line-height: 2.75em;
+    background-color: transparent;
+    background-color: $c-secondary;
+    border: solid 1px $c-secondary-border;
+    border-radius: 4px;
+    outline: 0;
+    box-shadow: 1px 1px 1px 1px rgba($c-secondary-border, 0.6);
 }
-button:active, button:focus, button:hover, 
+
+button:active, button:focus, button:hover,
 .btn:active, .btn:focus, .btn:hover {
-  background-color: lighten($c-secondary, 15%);
-  color: $c-accent-contrast;
+    background-color: lighten($c-secondary, 15%);
+    color: $c-accent-contrast;
 }
 
 .btn-primary {
-  background-color: $c-primary;
-  color: $c-accent-contrast;
-  border: 0;
-  box-shadow: none;
+    background-color: $c-primary;
+    color: $c-accent-contrast;
+    border: 0;
+    box-shadow: none;
 }
+
 .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
-  background-color: lighten($c-primary, 15%);
-  color: $c-accent;
+    background-color: lighten($c-primary, 15%);
+    color: $c-accent;
 }
 
 .btn-secondary {
-  color: $c-secondary;
-  background-color: $c-main-background;
-  border: solid 2px $c-secondary;
-  font-weight: normal;
+    color: $c-secondary;
+    background-color: $c-main-background;
+    border: solid 2px $c-secondary;
+    font-weight: normal;
 }
+
 .btn-secondary:active, .btn-secondary:focus, .btn-secondary:hover {
-  background-color: $c-grey-100;
-  color: $c-secondary;
+    background-color: $c-grey-100;
+    color: $c-secondary;
 }
 
 .btn-plain {
-  background-color: $c-grey-300;
-  color: $c-primary-text;
-  font-weight: normal;
+    background-color: $c-grey-300;
+    color: $c-primary-text;
+    font-weight: normal;
 }
+
 .btn-plain:active, .btn-plain:focus, .btn-plain:hover {
-  background-color: $c-grey-200;
-  color: $c-primary-text;
+    background-color: $c-grey-200;
+    color: $c-primary-text;
 }
 
 .btn-success {
-  background-color: $c-success;
-  color: $c-accent-contrast;
+    background-color: $c-success;
+    color: $c-accent-contrast;
 }
+
 .btn-success:active, .btn-success:focus, .btn-success:hover {
-  background-color: lighten($c-success, 15%);
+    background-color: lighten($c-success, 15%);
 }
 
 .btn-info {
-  background-color: $c-info;
-  color: $c-accent-contrast;
+    background-color: $c-info;
+    color: $c-accent-contrast;
 }
+
 .btn-info:active, .btn-info:focus, .btn-info:hover {
-  background-color: lighten($c-info, 15%);
+    background-color: lighten($c-info, 15%);
 }
 
 .btn-warning {
-  background-color: $c-warning;
-  color: $c-accent-contrast;
+    background-color: $c-warning;
+    color: $c-accent-contrast;
 }
+
 .btn-warning:active, .btn-warning:focus, .btn-warning:hover {
-  background-color: lighten($c-warning, 15%);
+    background-color: lighten($c-warning, 15%);
 }
 
 .btn-danger {
-  background-color: $c-danger;
-  color: $c-accent-contrast;
+    background-color: $c-danger;
+    color: $c-accent-contrast;
 }
+
 .btn-danger:active, .btn-danger:focus, .btn-danger:hover {
-  background-color: lighten($c-danger, 15%);
+    background-color: lighten($c-danger, 15%);
 }
 
 input:disabled, select:disabled, textarea:disabled, button:disabled {
-  -moz-pointer-events: none;
-  -webkit-pointer-events: none;
-  -ms-pointer-events: none;
-  pointer-events: none;
-  opacity: 0.5;
-  transition: opacity 1s;
-
-  background-color: $c-grey-500;
-  color: $c-grey-700;
-  border-color: $c-grey-700;
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 1s;
+    background-color: $c-grey-500;
+    color: $c-grey-700;
+    border-color: $c-grey-700;
 }
-
 
 /* Splash screen */
 
 .splash_screen {
-  height: 100%;
-  vertical-align: middle;
-  padding: 10%;
+    height: 100%;
+    vertical-align: middle;
+    padding: 10%;
 }
 
 .splash_screen .logo {
-  max-width: 80%;
-  max-height: 80%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-
-  padding: 1em;
-  background: rgba( $c-primary, .7 );
-  box-shadow: 0 0 2em 1em rgba( $c-primary, .7 );
-  border-radius: 1.5em 1.5em 1em 1em;
-  
-  transform-origin: 50% 50%;
-  -o-transform-origin: 50% 50%;
-  -ms-transform-origin: 50% 50%;
-  -moz-transform-origin: 50% 50%;
-  -webkit-transform-origin: 50% 50%;
-  -webkit-animation: Blink 1000ms infinite alternate;
-  -moz-animation: Blink 1000ms infinite alternate;
-  -ms-animation: Blink 1000ms infinite alternate;
-  -o-animation: Blink 1000ms infinite alternate;
-  animation: Blink 1000ms infinite alternate;
+    max-width: 80%;
+    max-height: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    background: rgba($c-primary, 0.7);
+    box-shadow: 0 0 2em 1em rgba($c-primary, 0.7);
+    border-radius: 1.5em 1.5em 1em 1em;
+    transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -webkit-transform-origin: 50% 50%;
+    -webkit-animation: Blink 1000ms infinite alternate;
+    -moz-animation: Blink 1000ms infinite alternate;
+    -ms-animation: Blink 1000ms infinite alternate;
+    -o-animation: Blink 1000ms infinite alternate;
+    animation: Blink 1000ms infinite alternate;
 }
+
 @-o-keyframes Blink {
-  from {-o-transform:scale(1.0);}
-  to {-o-transform:scale(0.9);}
-}
-@-moz-keyframes Blink {
-  from {-moz-transform:scale(1.0);}
-  to {-moz-transform:scale(0.9);}
-}
-@-ms-keyframes Blink {
-  from {-ms-transform:scale(1.0);}
-  to {-ms-transform:scale(0.9);}
-}
-@-webkit-keyframes Blink {
-  from {-webkit-transform:scale(1.0);}
-  to {-webkit-transform:scale(0.9);}
-}
-@keyframes Blink {
-  from { transform:scale(1.0);}
-  to { transform:scale(0.9);}
+    from {
+        -o-transform: scale(1);
+    }
+
+    to {
+        -o-transform: scale(0.9);
+    }
 }
 
-/* Main */
+@-moz-keyframes Blink {
+    from {
+        -moz-transform: scale(1);
+    }
+
+    to {
+        -moz-transform: scale(0.9);
+    }
+}
+
+@-ms-keyframes Blink {
+    from {
+        -ms-transform: scale(1);
+    }
+
+    to {
+        -ms-transform: scale(0.9);
+    }
+}
+
+@-webkit-keyframes Blink {
+    from {
+        -webkit-transform: scale(1);
+    }
+
+    to {
+        -webkit-transform: scale(0.9);
+    }
+}
+
+@keyframes Blink {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(0.9);
+    }
+}
+
+/* Main pages */
 
 .main-page {
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  max-width: 80%;
-  margin: 1em auto;
-  padding: 2em;
-  background: $c-main-background;
-  border-radius: 4px;
-  opacity: 0.95;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    max-width: 80%;
+    margin: 1em auto;
+    padding: 2em;
+    background: $c-main-background;
+    border-radius: 4px;
+    opacity: 0.95;
 }
+
 .main-page.dark {
-  background-color: $c-main-background-dark;
+    background-color: $c-main-background-dark;
 }
+
 .main-page.dark h1, .main-page.dark label {
-  color: $c-white;
+    color: $c-white;
 }
+
 .main-page.dark input {
-  color: $c-black;
+    color: $c-black;
 }
 
 @media screen and (max-width: 768px) {
-  .main-page {
-    max-width: 90%;
-    padding-left: 1em;
-    padding-right: 1em;
-  }
+    .main-page {
+        max-width: 90%;
+        padding: 1.5em 1em;
+    }
 }
 
 @media screen and (max-width: 480px) {
-  .main-page {
-    max-width: 95%;
-    padding-left: 1em;
-    padding-right: 1em;
-  }
+    .main-page {
+        max-width: 95%;
+        padding: 1em;
+    }
 }
 
 .big {
-  font-size: 1.35em;
+    font-size: 1.35em;
 }
 
 .left {
-  margin-right: auto;
+    margin-right: auto;
 }
 
 .right {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 .hidden {
-  display: none !important;
+    display: none !important;
 }
 
 .text-primary {
-  color: $c-primary-text;
+    color: $c-primary-text;
 }
 
 .text-secondary {
-  color: $c-secondary-text;
+    color: $c-secondary-text;
 }
