@@ -215,7 +215,6 @@ ul li {
     }
 }
 
-
 .icon-primary {
     color: $c-primary;
 }
@@ -244,7 +243,6 @@ ul li {
     color: $c-danger;
 }
 
-
 /* Links */
 
 a, .lnk [class^="lnk-"], [class*=" lnk-"] {
@@ -256,7 +254,7 @@ a, .lnk [class^="lnk-"], [class*=" lnk-"] {
 a:focus, a:hover,
 .lnk:focus, .lnk:hover {
     color: lighten($c-accent, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-accent, 15%), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-accent, 15%), 0.6);
 }
 
 a:active,
@@ -268,36 +266,52 @@ a:active,
     color: $c-primary;
 }
 
-.lnk-primary:active, .lnk-primary:focus, .lnk-primary:hover {
+.lnk-primary:focus, .lnk-primary:hover {
     color: lighten($c-primary, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-primary, 15%), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-primary, 15%), 0.6);
+}
+
+.lnk-primary:active {
+    color: darken($c-primary, 15%);
 }
 
 .lnk-secondary {
     color: $c-secondary;
 }
 
-.lnk-secondary:active, .lnk-secondary:focus, .lnk-secondary:hover {
+.lnk-secondary:focus, .lnk-secondary:hover {
     color: lighten($c-secondary, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-secondary, 15%), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-secondary, 15%), 0.6);
+}
+
+.lnk-secondary:active {
+    color: darken($c-secondary, 15%);
 }
 
 .lnk-plain {
     color: $c-primary-text;
 }
 
-.lnk-plain:active, .lnk-plain:focus, .lnk-plain:hover {
+.lnk-plain:focus, .lnk-plain:hover {
     color: lighten($c-primary-text, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-primary-text, 15%), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-primary-text, 15%), 0.6);
+}
+
+.lnk-plain:active {
+    color: darken($c-primary-text, 15%);
 }
 
 .lnk-success {
     color: $c-success;
 }
 
-.lnk-success:active, .lnk-success:focus, .lnk-success:hover {
+.lnk-success:focus, .lnk-success:hover {
     color: lighten($c-success, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-success, 15%), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-success, 15%), 0.6);
+}
+
+.lnk-success:active {
+    color: darken($c-success, 15%);
 }
 
 .lnk-info {
@@ -306,25 +320,37 @@ a:active,
 
 .lnk-info:active, .lnk-info:focus, .lnk-info:hover {
     color: lighten($c-info, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-info, 15%), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-info, 15%), 0.6);
+}
+
+.lnk-info:active, .lnk-info:focus, .lnk-info:hover {
+    color: darken($c-info, 15%);
 }
 
 .lnk-warning {
     color: $c-warning;
 }
 
-.lnk-warning:active, .lnk-warning:focus, .lnk-warning:hover {
+.lnk-warning:focus, .lnk-warning:hover {
     color: lighten($c-warning, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-warning, 15%), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-warning, 15%), 0.6);
+}
+
+.lnk-warning:active {
+    color: darken($c-warning, 15%);
 }
 
 .lnk-danger {
     color: $c-danger;
 }
 
-.lnk-danger:active, .lnk-danger:focus, .lnk-danger:hover {
+.lnk-danger:focus, .lnk-danger:hover {
     color: lighten($c-danger, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-danger, 15%), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-danger, 15%), 0.6);
+}
+
+.lnk-danger:active {
+    color: darken($c-danger, 15%);
 }
 
 /* Button */
@@ -353,10 +379,15 @@ button, .btn, [class^="btn-"], [class*=" btn-"] {
     box-shadow: 1px 1px 1px 1px rgba($c-secondary-border, 0.6);
 }
 
-button:active, button:focus, button:hover,
-.btn:active, .btn:focus, .btn:hover {
+button:focus, button:hover,
+.btn:focus, .btn:hover {
     background-color: lighten($c-secondary, 15%);
     color: $c-accent-contrast;
+}
+
+button:active,
+.btn:active {
+    background-color: darken($c-secondary, 5%);
 }
 
 .btn-primary {
@@ -366,21 +397,29 @@ button:active, button:focus, button:hover,
     box-shadow: none;
 }
 
-.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+.btn-primary:focus, .btn-primary:hover {
     background-color: lighten($c-primary, 15%);
     color: $c-accent;
 }
 
+.btn-primary:active {
+    background-color: darken($c-primary, 5%);
+}
+
 .btn-secondary {
-    color: $c-secondary;
     background-color: $c-main-background;
+    color: $c-secondary;
     border: solid 2px $c-secondary;
     font-weight: normal;
 }
 
-.btn-secondary:active, .btn-secondary:focus, .btn-secondary:hover {
-    background-color: $c-grey-100;
+.btn-secondary:focus, .btn-secondary:hover {
+    background-color: lighten($c-main-background, 15%);
     color: $c-secondary;
+}
+
+.btn-secondary:active {
+    background-color: darken($c-main-background, 5%);
 }
 
 .btn-plain {
@@ -389,9 +428,13 @@ button:active, button:focus, button:hover,
     font-weight: normal;
 }
 
-.btn-plain:active, .btn-plain:focus, .btn-plain:hover {
-    background-color: $c-grey-200;
+.btn-plain:focus, .btn-plain:hover {
+    background-color: lighten($c-grey-300, 15%);
     color: $c-primary-text;
+}
+
+.btn-plain:active {
+    background-color: darken($c-grey-300, 5%);
 }
 
 .btn-success {
@@ -399,8 +442,12 @@ button:active, button:focus, button:hover,
     color: $c-accent-contrast;
 }
 
-.btn-success:active, .btn-success:focus, .btn-success:hover {
+.btn-success:focus, .btn-success:hover {
     background-color: lighten($c-success, 15%);
+}
+
+.btn-success:active {
+    background-color: darken($c-success, 5%);
 }
 
 .btn-info {
@@ -408,8 +455,12 @@ button:active, button:focus, button:hover,
     color: $c-accent-contrast;
 }
 
-.btn-info:active, .btn-info:focus, .btn-info:hover {
+.btn-info:focus, .btn-info:hover {
     background-color: lighten($c-info, 15%);
+}
+
+.btn-info:active {
+    background-color: darken($c-info, 5%);
 }
 
 .btn-warning {
@@ -417,8 +468,12 @@ button:active, button:focus, button:hover,
     color: $c-accent-contrast;
 }
 
-.btn-warning:active, .btn-warning:focus, .btn-warning:hover {
+.btn-warning:focus, .btn-warning:hover {
     background-color: lighten($c-warning, 15%);
+}
+
+.btn-warning:active {
+    background-color: darken($c-warning, 5%);
 }
 
 .btn-danger {
@@ -426,8 +481,12 @@ button:active, button:focus, button:hover,
     color: $c-accent-contrast;
 }
 
-.btn-danger:active, .btn-danger:focus, .btn-danger:hover {
+.btn-danger:focus, .btn-danger:hover {
     background-color: lighten($c-danger, 15%);
+}
+
+.btn-danger:active {
+    background-color: darken($c-danger, 5%);
 }
 
 input:disabled, select:disabled, textarea:disabled, button:disabled {
