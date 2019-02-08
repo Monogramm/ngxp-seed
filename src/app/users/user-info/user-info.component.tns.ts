@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -16,7 +17,7 @@ import { Color } from 'tns-core-modules/color';
 import * as SocialShare from 'nativescript-social-share';
 
 import { Logger } from '../../shared';
-import { UserService, User } from '../../data/users';
+import { User, UserDTO, UserService } from '../../data/users';
 import { LoginService } from '../../data/login';
 
 import { alert } from '../../shared/dialog-util';
@@ -50,9 +51,9 @@ export class UserInfoComponent implements OnInit {
 
         this._route.params.pipe(
             switchMap((params: Params) => this.store.get(params['id'])))
-            .subscribe((data: any) => {
+            .subscribe((data: HttpResponse<UserDTO>) => {
                 Logger.dir(data);
-                this.user = this.store.newModel(data);
+                this.user = this.store.newModel(data.body);
                 Logger.dir(this.user);
             });
     }

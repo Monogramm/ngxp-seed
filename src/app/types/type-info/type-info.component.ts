@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -8,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Logger } from '../../shared/';
-import { Type, TypeService } from '../../data';
+import { Type, TypeDTO, TypeService } from '../../data';
 
 import { TypeDetailsComponent } from './type-details';
 
@@ -33,15 +34,17 @@ export class TypeInfoComponent implements OnInit {
                 this.busy = true;
                 const entityId = params['id'];
                 if (entityId) {
-                    return this.store.get(params['id']);
+                    return this.store.get(entityId);
                 } else {
-                    return Promise.resolve();
+                    return Observable.create((observer) => {
+                        observer.next(null);
+                    });
                 }
             }))
-            .subscribe((data: any) => {
+            .subscribe((data: HttpResponse<TypeDTO>) => {
                 this.busy = false;
-                if (data) {
-                    this.type = this.store.newModel(data);
+                if (data && data.body) {
+                    this.type = this.store.newModel(data.body);
                 } else {
                     this.type = new Type();
                 }

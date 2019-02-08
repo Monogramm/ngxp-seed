@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { ParametersRoutingModule } from './parameters-routing.module';
 
@@ -11,7 +11,7 @@ import { ParameterInfoComponent, ParameterDetailsComponent } from './parameter-i
 
 @NgModule({
     imports: [
-        HttpModule,
+        HttpClientModule,
         ParametersRoutingModule,
         SharedModule
     ],

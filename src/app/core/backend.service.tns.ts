@@ -119,7 +119,7 @@ export class BackendService extends AbstractBackendService {
             url, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
@@ -133,7 +133,7 @@ export class BackendService extends AbstractBackendService {
             url, value, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
@@ -147,7 +147,7 @@ export class BackendService extends AbstractBackendService {
             url, values, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
@@ -161,7 +161,7 @@ export class BackendService extends AbstractBackendService {
             url, value, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
@@ -177,7 +177,7 @@ export class BackendService extends AbstractBackendService {
             url, values, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
@@ -191,7 +191,7 @@ export class BackendService extends AbstractBackendService {
             url, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }
@@ -207,7 +207,7 @@ export class BackendService extends AbstractBackendService {
             url, { headers: httpHeaders }
         ).toPromise();
 
-        response.catch(this.logError)
+        response.catch(this.logError);
 
         return response;
     }

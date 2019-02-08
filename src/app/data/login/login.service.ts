@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -60,26 +61,15 @@ export class LoginService {
 
         return this.backendService.push(
             this.basePathOAuth, body,
-            [
-                {
-                    header: 'Authorization',
-                    value: 'Basic ' + Base64.btoa(this.backendService.clientId + ':' + this.backendService.clientSecret)
-                }
-            ]
+            { 'Authorization': 'Basic ' + Base64.btoa(this.backendService.clientId + ':' + this.backendService.clientSecret) }
         )
-            .then(response => {
+            .then((response) => {
                 if (Logger.isEnabled) {
                     Logger.log('Login response = ');
                     Logger.dir(response);
                 }
 
-                let data: any;
-                if (response instanceof Response || typeof response.json !== 'undefined') {
-                    data = response.json();
-                } else {
-                    data = response;
-                }
-
+                const data = response.body;
                 if (data) {
                     if (Logger.isEnabled) {
                         Logger.log('User logged in');

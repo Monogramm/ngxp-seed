@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, ResponseOptions, RequestOptionsArgs } from '@angular/http';
+import { HttpClient, HttpResponse, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { Logger } from '../shared/logger';
 import { Pagination } from '../shared/models';
-import { BackendFetchMode, AbstractBackendService } from './abstract.backend.service';
+import { BackendFetchMode, AbstractBackendService, SimpleHeader } from './abstract.backend.service';
 import { StorageService } from './storage.service';
 import { AuthService } from './auth.service';
 
 import { environment } from '../../environments/environment';
+import { HttpParamsOptions } from '@angular/common/http/src/params';
 
 @Injectable()
 export class BackendService extends AbstractBackendService {
@@ -19,7 +21,7 @@ export class BackendService extends AbstractBackendService {
 
     constructor(_storageService: StorageService,
         _authService: AuthService,
-        private _http: Http) {
+        private _http: HttpClient) {
         super(_storageService, _authService);
     }
 
@@ -32,8 +34,10 @@ export class BackendService extends AbstractBackendService {
     }
 
 
-    load(basePath: string | URL, pagination?: Pagination, headers?: { header: string, value: any }[]) {
-        let response: Promise<Response> = null;
+    load<T>(basePath: string | URL,
+        pagination?: Pagination,
+        headers?: SimpleHeader, params?: HttpParamsOptions): Promise<HttpResponse<T[]>> {
+        let response: Promise<HttpResponse<T[]>> = null;
         let relativePath: string;
         if (basePath instanceof URL) {
             relativePath = basePath.toString();
@@ -52,7 +56,7 @@ export class BackendService extends AbstractBackendService {
 
         // Try the backend
         if (response === null) {
-            const httpHeaders: Headers = this.getHeaders(headers);
+            const httpHeaders: HttpHeaders = this.getHeaders(headers);
 
             let url: string;
             if (basePath instanceof URL) {
@@ -61,40 +65,36 @@ export class BackendService extends AbstractBackendService {
                 url = this.config.apiURL + relativePath;
             }
 
+            let httpParams: HttpParams = new HttpParams(params);
             if (pagination && pagination.page) {
                 let page: number, size: number;
                 page = pagination.page - 1;
 
                 httpHeaders.append('X-Custom-Page', JSON.stringify({ page }));
-                url += '?page=' + page;
+                httpParams = httpParams.set('page', '' + page);
 
                 if (pagination.size) {
                     size = pagination.size;
                     httpHeaders.append('X-Custom-Size', JSON.stringify({ size }));
-                    url += '&size=' + size;
+                    httpParams = httpParams.set('size', '' + size);
                 }
 
             }
 
             if (pagination && pagination.sort) {
-                // TODO Add sorting mechanisms
+                // Add sorting mechanisms
                 let sortQuery = '';
 
                 for (const entry of pagination.sort.entries) {
                     sortQuery += entry.field + ',' + entry.order + ';';
                 }
                 httpHeaders.append('X-Custom-Sort', JSON.stringify({ sortQuery }));
-                if (url.match('?')) {
-                    url += '&sort=' + sortQuery;
-                } else {
-                    url += '?sort=' + sortQuery;
-                }
-
+                httpParams = httpParams.set('sort', sortQuery);
             }
 
-            response = this._http.get(url, { headers: httpHeaders }).toPromise();
+            response = this._http.get<T[]>(url, { observe: 'response', headers: httpHeaders, params: httpParams }).toPromise();
 
-            response.then((value: Response) => {
+            response.then((value: HttpResponse<T[]>) => {
                 if (pagination) {
                     pagination.reset();
 
@@ -146,8 +146,8 @@ export class BackendService extends AbstractBackendService {
 
             if (this.fetchBehavior !== BackendFetchMode.RemoteOnly) {
                 response.then(
-                    (value: Response) => {
-                        this.pushToCachedStore(relativePath, value.json());
+                    (value: HttpResponse<T[]>) => {
+                        this.pushToCachedStore(relativePath, value.body);
                     },
                     (error: any) => {
                         this.logError(error);
@@ -159,70 +159,76 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    getById(basePath: string, id: string, headers?: { header: string, value: any }[], args?: RequestOptionsArgs): Promise<any> {
+    getBlobById(basePath: string, id: string,
+        headers?: SimpleHeader,
+        params?: HttpParamsOptions): Observable<HttpResponse<Blob>> {
         const relativePath: string = basePath + '/' + id;
 
         // Try the storage if allowed
-        let response: Promise<Response> = null;
-        if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
-            const storeValue: any = this.getFromCachedStore(relativePath);
-
-            if (!(storeValue == null)) {
-                response = Promise.resolve(storeValue.value);
-            }
-        }
+        let response: Observable<HttpResponse<Blob>> = null;
 
         // Try the backend
         if (response === null) {
-            const httpHeaders: Headers = this.getHeaders(headers);
+            const httpHeaders: HttpHeaders = this.getHeaders(headers);
+            const httpParams: HttpParams = new HttpParams(params);
 
             const url = this.config.apiURL + relativePath;
 
-            let httpArgs: RequestOptionsArgs;
-            if (args) {
-                httpArgs = args;
-            } else {
-                httpArgs = {};
-            }
-            httpArgs.headers = httpHeaders;
-
-            response = this._http.get(url, httpArgs).toPromise();
-
-            if (this.fetchBehavior !== BackendFetchMode.RemoteOnly) {
-                response.then((value: Response) => {
-                    this.pushToCachedStore(relativePath, value.json());
-                });
-            }
+            response = this._http.get(url, {
+                observe: 'response',
+                responseType: 'blob',
+                headers: httpHeaders, params: httpParams
+            });
         }
-
-        response.catch(this.logError);
 
         return response;
     }
 
-    getByIds(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders: Headers = this.getHeaders(headers);
+    getById<T>(basePath: string, id: string,
+        headers?: SimpleHeader,
+        params?: HttpParamsOptions): Observable<HttpResponse<T>> {
+        const relativePath: string = basePath + '/' + id;
+
+        // Try the storage if allowed
+        let response: Observable<HttpResponse<T>> = null;
+
+        // Try the backend
+        if (response === null) {
+            const httpHeaders: HttpHeaders = this.getHeaders(headers);
+            const httpParams: HttpParams = new HttpParams(params);
+
+            const url = this.config.apiURL + relativePath;
+
+            response = this._http.get<T>(url, {
+                observe: 'response',
+                headers: httpHeaders, params: httpParams
+            });
+        }
+
+        return response;
+    }
+
+    getByIds<T>(basePath: string, ids: string[], headers?: SimpleHeader): Observable<HttpResponse<T[]>> {
+        let httpHeaders: HttpHeaders = this.getHeaders(headers);
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
 
         const url = this.config.apiURL + basePath;
 
-        const response: Promise<Response> = this._http.get(
-            url, { headers: httpHeaders }
-        ).toPromise();
-
-        response.catch(this.logError);
+        const response: Observable<HttpResponse<T[]>> = this._http.get<T[]>(
+            url, { observe: 'response', headers: httpHeaders }
+        );
 
         return response;
     }
 
-    push(basePath: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
+    push<T>(basePath: string, value: any, headers?: SimpleHeader): Promise<HttpResponse<T>> {
         const httpHeaders = this.getHeaders(headers);
 
         const url = this.config.apiURL + basePath;
 
-        const response: Promise<Response> = this._http.post(
-            url, value, { headers: httpHeaders }
+        const response: Promise<HttpResponse<T>> = this._http.post<T>(
+            url, value, { observe: 'response', headers: httpHeaders }
         ).toPromise();
 
         response.catch(this.logError);
@@ -230,13 +236,13 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    pushAll(basePath: string, values: any[], headers?: { header: string, value: any }[]): Promise<any> {
+    pushAll<T>(basePath: string, values: any, headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
         const httpHeaders = this.getHeaders(headers);
 
         const url = this.config.apiURL + basePath;
 
-        const response: Promise<Response> = this._http.post(
-            url, values, { headers: httpHeaders }
+        const response: Promise<HttpResponse<T[]>> = this._http.post<T[]>(
+            url, values, { observe: 'response', headers: httpHeaders }
         ).toPromise();
 
         response.catch(this.logError);
@@ -244,13 +250,13 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    set(basePath: string, id: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
-        const httpHeaders: Headers = this.getHeaders(headers);
+    set<T>(basePath: string, id: string, value: any, headers?: SimpleHeader): Promise<HttpResponse<T>> {
+        const httpHeaders: HttpHeaders = this.getHeaders(headers);
 
         const url = this.config.apiURL + basePath + '/' + id;
 
-        const response: Promise<Response> = this._http.put(
-            url, value, { headers: httpHeaders }
+        const response: Promise<HttpResponse<T>> = this._http.put<T>(
+            url, value, { observe: 'response', headers: httpHeaders }
         ).toPromise();
 
         response.catch(this.logError);
@@ -258,15 +264,15 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    setAll(basePath: string, ids: string[], values: any, headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders: Headers = this.getHeaders(headers);
+    setAll<T>(basePath: string, ids: string[], values: any, headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
+        let httpHeaders: HttpHeaders = this.getHeaders(headers);
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
 
         const url = this.config.apiURL + basePath;
 
-        const response: Promise<Response> = this._http.put(
-            url, values, { headers: httpHeaders }
+        const response: Promise<HttpResponse<T[]>> = this._http.put<T[]>(
+            url, values, { observe: 'response', headers: httpHeaders }
         ).toPromise();
 
         response.catch(this.logError);
@@ -274,7 +280,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    remove(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
+    remove(basePath: string, id: string, headers?: SimpleHeader): Promise<HttpResponse<Object>> {
         const httpHeaders = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath;
@@ -282,8 +288,8 @@ export class BackendService extends AbstractBackendService {
             url += '/' + id;
         }
 
-        const response: Promise<Response> = this._http.delete(
-            url, { headers: httpHeaders }
+        const response: Promise<HttpResponse<Object>> = this._http.delete(
+            url, { observe: 'response', headers: httpHeaders }
         ).toPromise();
 
         response.catch(this.logError);
@@ -291,7 +297,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    removeAll(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any> {
+    removeAll(basePath: string, ids: string[], headers?: SimpleHeader): Promise<HttpResponse<Object>> {
         const httpHeaders = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath;
@@ -302,8 +308,8 @@ export class BackendService extends AbstractBackendService {
             }
         }
 
-        const response: Promise<Response> = this._http.delete(
-            url, { headers: httpHeaders }
+        const response: Promise<HttpResponse<Object>> = this._http.delete(
+            url, { observe: 'response', headers: httpHeaders }
         ).toPromise();
 
         response.catch(this.logError);
@@ -311,29 +317,24 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    private getHeaders(headers?: { header: string, value: any }[]): Headers {
-        const httpHeaders: Headers = new Headers();
+    private getHeaders(headers?: SimpleHeader): HttpHeaders {
+        let httpHeaders: HttpHeaders = new HttpHeaders(headers);
 
-        httpHeaders.append('Content-Type', 'application/json');
-        if (this.isLoggedIn()) {
-            httpHeaders.append('Authorization', 'Bearer ' + this.token);
+        if (!!!httpHeaders.has('Content-Type')) {
+            httpHeaders = httpHeaders.append('Content-Type', 'application/json');
+        } else if (httpHeaders.get('Content-Type') === '') {
+            httpHeaders = httpHeaders.delete('Content-Type');
         }
 
-        if (headers) {
-            for (const entry of headers) {
-                if (entry.value) {
-                    httpHeaders.set(entry.header, entry.value);
-                } else {
-                    httpHeaders.delete(entry.header);
-                }
-            }
+        if (this.isLoggedIn() && !httpHeaders.has('Authorization')) {
+            httpHeaders = httpHeaders.append('Authorization', 'Bearer ' + this.token);
         }
 
         return httpHeaders;
     }
 
-    private appendHeaderIds(httpHeaders: Headers, ids: string[]): Headers {
-        httpHeaders.append('X-Custom-Filter',
+    private appendHeaderIds(httpHeaders: HttpHeaders, ids: string[]): HttpHeaders {
+        httpHeaders = httpHeaders.append('X-Custom-Filter',
             JSON.stringify({
                 'Id': {
                     '$in': ids
@@ -344,7 +345,7 @@ export class BackendService extends AbstractBackendService {
         return httpHeaders;
     }
 
-    private logError(error: Response): Promise<any> {
+    private logError(error: any): Promise<any> {
         if (typeof error.json === 'function') {
             Logger.dir(error.json());
         } else {

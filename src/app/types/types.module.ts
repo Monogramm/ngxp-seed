@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { TypesRoutingModule } from './types-routing.module';
 
@@ -11,7 +11,7 @@ import { TypeInfoComponent, TypeDetailsComponent } from './type-info';
 
 @NgModule({
     imports: [
-        HttpModule,
+        HttpClientModule,
         TypesRoutingModule,
         SharedModule
     ],

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from '../shared/shared.module';
 import { InfoRoutingModule } from './info-routing.module';
@@ -12,7 +12,7 @@ import { UsageInfoComponent } from './usage-info';
 
 @NgModule({
     imports: [
-        HttpModule,
+        HttpClientModule,
         InfoRoutingModule,
         SharedModule
     ],

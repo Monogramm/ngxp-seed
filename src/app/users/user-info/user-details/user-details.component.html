@@ -24,10 +24,10 @@
         <input name="active" type="checkbox" required [disabled]="user.id != null" [(ngModel)]="user.active">
     </label>
 
-    <label *ngIf="!items.hasError">
+    <label *ngIf="busy || rolesAvailable">
         {{ 'entity.user.role' | translate }}
-        <i *ngIf="ready.count == 0" class="icon icon-rotate"></i>
-        <select [(ngModel)]="user.role" [disabled]="ready.count == 0 || items.hasError">
+        <i *ngIf="busy" class="icon icon-rotate"></i>
+        <select [(ngModel)]="user.role" [disabled]="!rolesAvailable">
             <option *ngFor="let r of items | async" [ngValue]="r.id">{{ r.name }}</option>
         </select>
     </label>

@@ -4,7 +4,6 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 
-import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -43,7 +42,6 @@ registerLocaleData(localeFr, 'fr');
     ],
     imports: [
         BrowserModule,
-        HttpModule,
         HttpClientModule,
         TranslateModule.forRoot({
             loader: {

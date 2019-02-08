@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { Logger } from '../../shared/';
-import { User, UserService } from '../../data';
+import { User, UserDTO, UserService } from '../../data';
 
 import { ChangePasswordComponent } from './change-password';
 
@@ -33,9 +34,9 @@ export class UserPasswordComponent implements OnInit {
                 this.busy = true;
                 return this.store.get(params['id']);
             }))
-            .subscribe((data: any) => {
+            .subscribe((data: HttpResponse<UserDTO>) => {
                 this.busy = false;
-                this.user = this.store.newModel(data);
+                this.user = this.store.newModel(data.body);
             });
     }
 

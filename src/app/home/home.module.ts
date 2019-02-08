@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
@@ -11,7 +11,7 @@ import { HomeComponent } from './home.component';
 
 @NgModule({
     imports: [
-        HttpModule,
+        HttpClientModule,
         RouterModule,
         SharedModule
     ],
