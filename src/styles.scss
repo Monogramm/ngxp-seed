@@ -256,7 +256,7 @@ a, .lnk [class^="lnk-"], [class*=" lnk-"] {
 a:focus, a:hover
 .lnk:focus, .lnk:hover {
     color: lighten($c-accent, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-accent), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-accent, 15%), 0.60);
 }
 
 a:active
@@ -270,7 +270,7 @@ a:active
 
 .lnk-primary:active, .lnk-primary:focus, .lnk-primary:hover {
     color: lighten($c-primary, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-primary), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-primary, 15%), 0.60);
 }
 
 .lnk-secondary {
@@ -279,7 +279,7 @@ a:active
 
 .lnk-secondary:active, .lnk-secondary:focus, .lnk-secondary:hover {
     color: lighten($c-secondary, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-secondary), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-secondary, 15%), 0.60);
 }
 
 .lnk-plain {
@@ -288,7 +288,7 @@ a:active
 
 .lnk-plain:active, .lnk-plain:focus, .lnk-plain:hover {
     color: lighten($c-primary-text, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-primary-text), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-primary-text, 15%), 0.60);
 }
 
 .lnk-success {
@@ -297,7 +297,7 @@ a:active
 
 .lnk-success:active, .lnk-success:focus, .lnk-success:hover {
     color: lighten($c-success, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-success), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-success, 15%), 0.60);
 }
 
 .lnk-info {
@@ -306,7 +306,7 @@ a:active
 
 .lnk-info:active, .lnk-info:focus, .lnk-info:hover {
     color: lighten($c-info, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-info), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-info, 15%), 0.60);
 }
 
 .lnk-warning {
@@ -315,7 +315,7 @@ a:active
 
 .lnk-warning:active, .lnk-warning:focus, .lnk-warning:hover {
     color: lighten($c-warning, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-warning), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-warning, 15%), 0.60);
 }
 
 .lnk-danger {
@@ -324,7 +324,7 @@ a:active
 
 .lnk-danger:active, .lnk-danger:focus, .lnk-danger:hover {
     color: lighten($c-danger, 15%);
-    text-shadow: 2px 1px 6px transparentize(darken($c-danger), 0.60);
+    text-shadow: 2px 1px 6px transparentize(darken($c-danger, 15%), 0.60);
 }
 
 /* Button */

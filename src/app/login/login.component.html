@@ -7,19 +7,20 @@
 
   <h1>{{ appName }}</h1>
   <form (ngSubmit)="submit()" #registerForm="ngForm">
-    <div *ngIf="!isLoggingIn">
-      <label>
-        {{ 'login.username' | translate }}
-        <input [placeholder]="'login.username_placeholder' | translate" name="username" type="username" autocapitalize="off"
-          autocorrect="off" [(ngModel)]="user.username" [disabled]="isAuthenticating">
-      </label>
-    </div>
-
     <div>
       <label>
         {{ 'login.email' | translate }}
-        <input [placeholder]="'login.email_placeholder' | translate" name="email" type="email" required autocapitalize="off"
-          autocorrect="off" autofocus [(ngModel)]="user.email" [disabled]="isAuthenticating">
+        <input [placeholder]="'login.email_placeholder' | translate" name="email" type="email" required
+          autocapitalize="off" autocorrect="off" autofocus appDebounceKeyUp (debounceKeyUp)="initUsername()"
+          [(ngModel)]="user.email" [disabled]="isAuthenticating">
+      </label>
+    </div>
+
+    <div *ngIf="!isLoggingIn">
+      <label>
+        {{ 'login.username' | translate }}
+        <input [placeholder]="'login.username_placeholder' | translate" name="username" type="username"
+          autocapitalize="off" autocorrect="off" [(ngModel)]="user.username" [disabled]="isAuthenticating">
       </label>
     </div>
 
@@ -32,13 +33,13 @@
     </div>
 
     <div class="forgot-password-label" *ngIf="isLoggingIn">
-      <a (click)="forgotPassword()">
+      <a class="lnk" [routerLink]="['/reset-password']">
         {{ 'login.forgot_password' | translate }}
       </a>
     </div>
 
     <div class="tos-label" *ngIf="!isLoggingIn">
-      <a [routerLink]="['/info', 'usage']">{{ 'login.terms_of_usage' | translate }}</a>
+      <a class="lnk" [routerLink]="['/info', 'usage']">{{ 'login.terms_of_usage' | translate }}</a>
       <label name="tos">
         {{ 'login.i_accept_tos' | translate }}
         <input name="tos" type="checkbox" required [(ngModel)]="tosAccepted" [disabled]="isAuthenticating">
@@ -51,7 +52,8 @@
         <span *ngIf="isAuthenticating">{{ 'login.loading' | translate }}</span>
         <span *ngIf="!isAuthenticating">{{ (isLoggingIn ? 'login.login' : 'login.register') | translate }}</span>
       </button>
-      <button type="button" class="btn-plain" (click)="toggleDisplay()" [disabled]="!registerForm.form.valid && isAuthenticating">
+      <button type="button" class="btn-plain" (click)="toggleDisplay()"
+        [disabled]="!registerForm.form.valid && isAuthenticating">
         <span>{{ (isLoggingIn ? 'login.signup' : 'login.back_to_login') | translate }}</span>
       </button>
     </div>

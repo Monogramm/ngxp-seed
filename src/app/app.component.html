@@ -1,17 +1,17 @@
 <div class="top-bar" [hidden]="!isLoggedIn()">
   <div class="menu">
-    <span class="link" [routerLink]="['/']" [title]="'app.top_bar.home.title' | translate">
-      <i class="link icon-home"></i>
+    <span class="lnk" [routerLink]="['/']" [title]="'app.top_bar.home.title' | translate">
+      <i class="lnk icon-home"></i>
     </span>
   </div>
 
   <div class="title">
-    <h1><img src="./assets/logo.svg" [alt]="appName" [title]="promptTitle()" [class.notify]="hasPrompt()" (click)="appPrompt()" /></h1>
+    <h1><img src="./assets/logo.svg" [alt]="appName" [title]="promptTitle()" class="lnk" [class.notify]="hasPrompt()" (click)="appPrompt()" /></h1>
   </div>
 
   <div class="logout">
-    <span class="link" (click)="logout()" [title]="'app.top_bar.logout.title' | translate">
-      <i class="link icon-enter"></i>
+    <span class="lnk" (click)="logout()" [title]="'app.top_bar.logout.title' | translate">
+      <i class="lnk icon-enter"></i>
     </span>
   </div>
 </div>

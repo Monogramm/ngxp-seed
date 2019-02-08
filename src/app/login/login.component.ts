@@ -71,9 +71,13 @@ export class LoginComponent {
             );
     }
 
+    initUsername() {
+        this.user.username = this.user.email.substr(0, this.user.email.indexOf('@'));
+    }
+
     signUp() {
         if (!!!this.user.username) {
-            this.user.username = this.user.email.substr(0, this.user.email.indexOf('@'));
+            this.initUsername();
         }
 
         if (!!!this.tosAccepted) {

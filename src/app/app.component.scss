@@ -52,12 +52,12 @@
         color: $c-primary-contrast;
         font-size: xx-large;
     }
-    .menu .link, .title .link, .logout .link {
+    .menu .lnk, .title .lnk, .logout .lnk {
         cursor: pointer;
     }
-    .menu .link:hover, .menu .link:focus, .menu .link:active,
-    .title .link:hover, .title .link:focus, .title .link:active, 
-    .logout .link:hover, .logout .link:focus, .logout .link:active {
+    .menu .lnk:hover, .menu .lnk:focus, .menu .lnk:active,
+    .title .lnk:hover, .title .lnk:focus, .title .lnk:active, 
+    .logout .lnk:hover, .logout .lnk:focus, .logout .lnk:active {
         color: $c-accent;
     }
 }

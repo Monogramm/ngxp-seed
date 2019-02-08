@@ -4,18 +4,23 @@ import { CommonModule } from '@angular/common';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ActivityIndicatorComponent, PaginationControlsComponent } from '../components';
+import { ActivityIndicatorComponent, PaginationControlsComponent } from './components';
+import { DebounceClickDirective, DebounceKeyUpDirective } from './directives';
 
 @NgModule({
     exports: [
         CommonModule, FormsModule,
         TranslateModule,
         ActivityIndicatorComponent,
-        PaginationControlsComponent
+        PaginationControlsComponent,
+        DebounceClickDirective,
+        DebounceKeyUpDirective
     ],
     declarations: [
         ActivityIndicatorComponent,
-        PaginationControlsComponent
+        PaginationControlsComponent,
+        DebounceClickDirective,
+        DebounceKeyUpDirective
     ]
 })
 export class SharedModule { }

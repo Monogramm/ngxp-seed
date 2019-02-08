@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Pagination } from '../shared/models/pagination';
+import { Pagination } from '../models/pagination';
 
 @Component({
   selector: 'app-pagination-controls',

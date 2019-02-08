@@ -1,7 +1,7 @@
 <div class="main-page">
   <h1>{{ 'media.management' | translate }}</h1>
 
-  <div class="link-container">
+  <div class="lnk-container">
     <button *ngIf="selectable" (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="'left ' + (isConfirmingDeletion ? 'btn-secondary' : 'btn-primary')">
       {{ (isConfirmingDeletion ? 'app.common.cancel' : 'app.common.delete') | translate }}
     </button>

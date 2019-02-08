@@ -44,6 +44,7 @@
   background-color: $c-primary;
   border: solid 3px $c-primary;
   color: $c-primary-contrast;
+  text-shadow: none;
 }
 .module:active, .module:focus, .module:hover {
   background-color: rgba($c-main-background, 0.6);
@@ -57,6 +58,14 @@
   margin: 40px auto 0 auto;
   font-size: 500%;
   box-shadow: 0 0 0 0 rgba($c-main-background, 0);
+}
+
+.module i.icon {
+  color: $c-primary-contrast;
+}
+
+.module:active i.icon, .module:focus i.icon, .module:hover i.icon {
+  color: $c-primary;
 }
 
 @media screen and (max-width: 768px) {
