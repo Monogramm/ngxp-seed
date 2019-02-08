@@ -253,13 +253,13 @@ a, .lnk [class^="lnk-"], [class*=" lnk-"] {
     transition: color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
 }
 
-a:focus, a:hover
+a:focus, a:hover,
 .lnk:focus, .lnk:hover {
     color: lighten($c-accent, 15%);
     text-shadow: 2px 1px 6px transparentize(darken($c-accent, 15%), 0.60);
 }
 
-a:active
+a:active,
 .lnk:active {
     color: darken($c-accent, 15%);
 }
