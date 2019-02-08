@@ -56,7 +56,7 @@ export class AppComponent {
         } else if (this._appService.isInstallable() || (this._appService.iOS() && !this._appService.isStandalone())) {
             msg = this._translate.instant('app.message.install');
         } else {
-            msg = this.appName;
+            msg = this._translate.instant('app.top_bar.home.title');
         }
         return msg;
     }
@@ -77,6 +77,8 @@ export class AppComponent {
                 // Navigate to /info/install
                 this._router.navigate(['/info', 'install']);
             }
+        } else {
+            this._router.navigate(['/']);
         }
     }
 
