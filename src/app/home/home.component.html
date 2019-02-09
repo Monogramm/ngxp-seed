@@ -14,5 +14,5 @@
 
     <hr>
 
-    <button class="btn btn-danger" (click)="logoff()">{{ 'home.logout' | translate }}</button>
+    <button *ngIf="isLoggedIn()" class="btn btn-danger" (click)="logoff()">{{ 'home.logout' | translate }}</button>
 </div>

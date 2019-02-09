@@ -15,6 +15,10 @@ export class HomeComponent {
     constructor(public cvm: HomeCommonViewModel,
         private _loginService: LoginService) { }
 
+        isLoggedIn(): boolean {
+            return this._loginService.isLoggedIn();
+        }
+
     logoff() {
         if (Logger.isEnabled) {
             Logger.log('logging off and redirecting to login');
