@@ -101,6 +101,7 @@ export class MediaService {
 
     return this.backendService.push<MediaDTO>(
       this.uploadPath, formData,
+      null, null,
       {
         'Content-Type': '',
         'enctype': 'multipart/form-data'

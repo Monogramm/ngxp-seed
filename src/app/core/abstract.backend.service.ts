@@ -120,28 +120,28 @@ export abstract class AbstractBackendService {
 
 
     // Backend CRUD operations
-    abstract load(basePath: string | URL, pagination?: Pagination, headers?: any, params?: any);
+    abstract load(basePath: string | URL, pagination?: Pagination, params?: any, headers?: any);
 
-    getBlobById(basePath: string, id: string, headers?: SimpleHeader): Observable<any> {
-        return this.getByIds(basePath, [id], headers);
+    getBlobById(basePath: string, id: string, params?: any, headers?: SimpleHeader): Observable<any> {
+        return this.getByIds(basePath, [id], params, headers);
     }
-    getById(basePath: string, id: string, headers?: SimpleHeader): Observable<any> {
-        return this.getByIds(basePath, [id], headers);
+    getById(basePath: string, id: string, params?: any, headers?: SimpleHeader): Observable<any> {
+        return this.getByIds(basePath, [id], params, headers);
     }
-    abstract getByIds(basePath: string, ids: string[], headers?: SimpleHeader): Observable<any>;
+    abstract getByIds(basePath: string, ids: string[], params?: any, headers?: SimpleHeader): Observable<any>;
 
-    push(basePath: string, value: any, headers?: SimpleHeader): Promise<any> {
-        return this.pushAll(basePath, [value], headers);
+    push(basePath: string, value: any, params?: any, headers?: SimpleHeader): Promise<any> {
+        return this.pushAll(basePath, [value], params, headers);
     }
-    abstract pushAll(basePath: string, values: any[], headers?: SimpleHeader): Promise<any>;
+    abstract pushAll(basePath: string, values: any[], params?: any, headers?: SimpleHeader): Promise<any>;
 
-    set(basePath: string, id: string, value: any, headers?: SimpleHeader): Promise<any> {
-        return this.setAll(basePath, [id], value, headers);
+    set(basePath: string, id: string, value: any, params?: any, headers?: SimpleHeader): Promise<any> {
+        return this.setAll(basePath, [id], value, params, headers);
     }
-    abstract setAll(basePath: string, ids: string[], values: any, headers?: SimpleHeader): Promise<any>;
+    abstract setAll(basePath: string, ids: string[], values: any, params?: any, headers?: SimpleHeader): Promise<any>;
 
-    remove(basePath: string, id: string, headers?: SimpleHeader): Promise<any> {
-        return this.removeAll(basePath, [id], headers);
+    remove(basePath: string, id: string, params?: any, headers?: SimpleHeader): Promise<any> {
+        return this.removeAll(basePath, [id], params, headers);
     }
-    abstract removeAll(basePath: string, ids: string[], headers?: SimpleHeader): Promise<any>;
+    abstract removeAll(basePath: string, ids: string[], params?: any, headers?: SimpleHeader): Promise<any>;
 }

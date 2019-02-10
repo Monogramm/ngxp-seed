@@ -35,8 +35,8 @@ export class BackendService extends AbstractBackendService {
 
 
     load<T>(basePath: string | URL,
-        pagination?: Pagination,
-        headers?: SimpleHeader, params?: HttpParamsOptions): Promise<HttpResponse<T[]>> {
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
         let response: Promise<HttpResponse<T[]>> = null;
         let relativePath: string;
         if (basePath instanceof URL) {
@@ -56,8 +56,6 @@ export class BackendService extends AbstractBackendService {
 
         // Try the backend
         if (response === null) {
-            const httpHeaders: HttpHeaders = this.getHeaders(headers);
-
             let url: string;
             if (basePath instanceof URL) {
                 url = relativePath;
@@ -65,32 +63,8 @@ export class BackendService extends AbstractBackendService {
                 url = this.config.apiURL + relativePath;
             }
 
-            let httpParams: HttpParams = new HttpParams(params);
-            if (pagination && pagination.page) {
-                let page: number, size: number;
-                page = pagination.page - 1;
-
-                httpHeaders.append('X-Custom-Page', JSON.stringify({ page }));
-                httpParams = httpParams.set('page', '' + page);
-
-                if (pagination.size) {
-                    size = pagination.size;
-                    httpHeaders.append('X-Custom-Size', JSON.stringify({ size }));
-                    httpParams = httpParams.set('size', '' + size);
-                }
-
-            }
-
-            if (pagination && pagination.sort) {
-                // Add sorting mechanisms
-                let sortQuery = '';
-
-                for (const entry of pagination.sort.entries) {
-                    sortQuery += entry.field + ',' + entry.order + ';';
-                }
-                httpHeaders.append('X-Custom-Sort', JSON.stringify({ sortQuery }));
-                httpParams = httpParams.set('sort', sortQuery);
-            }
+            const httpHeaders: HttpHeaders = this.getHeaders(headers);
+            const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
             response = this._http.get<T[]>(url, { observe: 'response', headers: httpHeaders, params: httpParams }).toPromise();
 
@@ -170,7 +144,7 @@ export class BackendService extends AbstractBackendService {
         // Try the backend
         if (response === null) {
             const httpHeaders: HttpHeaders = this.getHeaders(headers);
-            const httpParams: HttpParams = new HttpParams(params);
+            const httpParams: HttpParams = this.getParameters(null, params, httpHeaders);
 
             const url = this.config.apiURL + relativePath;
 
@@ -185,8 +159,8 @@ export class BackendService extends AbstractBackendService {
     }
 
     getById<T>(basePath: string, id: string,
-        headers?: SimpleHeader,
-        params?: HttpParamsOptions): Observable<HttpResponse<T>> {
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Observable<HttpResponse<T>> {
         const relativePath: string = basePath + '/' + id;
 
         // Try the storage if allowed
@@ -195,7 +169,7 @@ export class BackendService extends AbstractBackendService {
         // Try the backend
         if (response === null) {
             const httpHeaders: HttpHeaders = this.getHeaders(headers);
-            const httpParams: HttpParams = new HttpParams(params);
+            const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
             const url = this.config.apiURL + relativePath;
 
@@ -208,27 +182,33 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    getByIds<T>(basePath: string, ids: string[], headers?: SimpleHeader): Observable<HttpResponse<T[]>> {
+    getByIds<T>(basePath: string, ids: string[],
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Observable<HttpResponse<T[]>> {
         let httpHeaders: HttpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
 
         const url = this.config.apiURL + basePath;
 
         const response: Observable<HttpResponse<T[]>> = this._http.get<T[]>(
-            url, { observe: 'response', headers: httpHeaders }
+            url, { observe: 'response', headers: httpHeaders, params: httpParams }
         );
 
         return response;
     }
 
-    push<T>(basePath: string, value: any, headers?: SimpleHeader): Promise<HttpResponse<T>> {
+    push<T>(basePath: string, value: any,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T>> {
         const httpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         const url = this.config.apiURL + basePath;
 
         const response: Promise<HttpResponse<T>> = this._http.post<T>(
-            url, value, { observe: 'response', headers: httpHeaders }
+            url, value, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
         response.catch(this.logError);
@@ -236,13 +216,16 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    pushAll<T>(basePath: string, values: any, headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
+    pushAll<T>(basePath: string, values: any,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
         const httpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         const url = this.config.apiURL + basePath;
 
         const response: Promise<HttpResponse<T[]>> = this._http.post<T[]>(
-            url, values, { observe: 'response', headers: httpHeaders }
+            url, values, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
         response.catch(this.logError);
@@ -250,13 +233,16 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    set<T>(basePath: string, id: string, value: any, headers?: SimpleHeader): Promise<HttpResponse<T>> {
+    set<T>(basePath: string, id: string, value: any,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T>> {
         const httpHeaders: HttpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         const url = this.config.apiURL + basePath + '/' + id;
 
         const response: Promise<HttpResponse<T>> = this._http.put<T>(
-            url, value, { observe: 'response', headers: httpHeaders }
+            url, value, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
         response.catch(this.logError);
@@ -264,15 +250,18 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    setAll<T>(basePath: string, ids: string[], values: any, headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
+    setAll<T>(basePath: string, ids: string[], values: any,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
         let httpHeaders: HttpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
 
         const url = this.config.apiURL + basePath;
 
         const response: Promise<HttpResponse<T[]>> = this._http.put<T[]>(
-            url, values, { observe: 'response', headers: httpHeaders }
+            url, values, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
         response.catch(this.logError);
@@ -280,8 +269,11 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    remove(basePath: string, id: string, headers?: SimpleHeader): Promise<HttpResponse<Object>> {
+    remove(basePath: string, id: string,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<Object>> {
         const httpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         let url = this.config.apiURL + basePath;
         if (id) {
@@ -289,7 +281,7 @@ export class BackendService extends AbstractBackendService {
         }
 
         const response: Promise<HttpResponse<Object>> = this._http.delete(
-            url, { observe: 'response', headers: httpHeaders }
+            url, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
         response.catch(this.logError);
@@ -297,8 +289,10 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    removeAll(basePath: string, ids: string[], headers?: SimpleHeader): Promise<HttpResponse<Object>> {
+    removeAll(basePath: string, ids: string[],
+        pagination?: Pagination, params?: HttpParamsOptions, headers?: SimpleHeader): Promise<HttpResponse<Object>> {
         const httpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         let url = this.config.apiURL + basePath;
         if (ids) {
@@ -309,12 +303,105 @@ export class BackendService extends AbstractBackendService {
         }
 
         const response: Promise<HttpResponse<Object>> = this._http.delete(
-            url, { observe: 'response', headers: httpHeaders }
+            url, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
         response.catch(this.logError);
 
         return response;
+    }
+
+    private getParameters(pagination: Pagination, params?: HttpParamsOptions, httpHeaders?: HttpHeaders): HttpParams {
+        let httpParams: HttpParams;
+        if (params) {
+            httpParams = new HttpParams(params);
+        } else {
+            httpParams = new HttpParams();
+        }
+
+        if (pagination) {
+            if (pagination.page) {
+                let page: number, size: number;
+                page = pagination.page - 1;
+
+                httpParams = httpParams.set('page', '' + page);
+                if (httpHeaders) {
+                    httpHeaders.append('X-Custom-Page', JSON.stringify({ page }));
+                }
+
+                if (pagination.size) {
+                    size = pagination.size;
+                    httpParams = httpParams.set('size', '' + size);
+                    if (httpHeaders) {
+                        httpHeaders.append('X-Custom-Size', JSON.stringify({ size }));
+                    }
+                }
+
+            }
+
+            if (pagination.sort) {
+                // Add sorting mechanisms
+                let sortQuery = '';
+
+                for (const entry of pagination.sort.entries) {
+                    sortQuery += entry.field + ',' + entry.order + ';';
+                }
+                httpParams = httpParams.set('sort', sortQuery);
+                if (httpHeaders) {
+                    httpHeaders.append('X-Custom-Sort', JSON.stringify({ sortQuery }));
+                }
+            }
+        }
+
+        return httpParams;
+    }
+
+    private updatePagination(pagination: Pagination, value: HttpResponse<any>) {
+        if (pagination) {
+            pagination.reset();
+
+            const links: string = value.headers.get('link');
+            if (links) {
+                const firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
+                if (firstPageProp && firstPageProp.length >= 2) {
+                    pagination.first = +firstPageProp[1] + 1;
+
+                    if (firstPageProp.length >= 3) {
+                        pagination.size = +firstPageProp[2];
+                    }
+                }
+
+                const prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
+                if (prevPageProp && prevPageProp.length >= 2) {
+                    pagination.prev = +prevPageProp[1] + 1;
+
+                    if (prevPageProp.length >= 3) {
+                        pagination.size = +prevPageProp[2];
+                    }
+                }
+
+                const nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
+                if (nextPageProp && nextPageProp.length >= 2) {
+                    pagination.next = +nextPageProp[1] + 1;
+
+                    if (nextPageProp.length >= 3) {
+                        pagination.size = +nextPageProp[2];
+                    }
+                }
+
+                const lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
+                if (lastPageProp && lastPageProp.length >= 2) {
+                    pagination.last = +lastPageProp[1];
+
+                    if (lastPageProp.length >= 3) {
+                        pagination.size = +lastPageProp[2];
+                    }
+                }
+            }
+            if (Logger.isEnabled) {
+                Logger.dir(pagination);
+            }
+        }
     }
 
     private getHeaders(headers?: SimpleHeader): HttpHeaders {

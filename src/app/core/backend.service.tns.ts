@@ -3,7 +3,7 @@ import { Http, Headers, Response, ResponseOptions } from '@angular/http';
 
 import { Logger } from '../shared/logger';
 import { Pagination } from '../shared/models';
-import { BackendFetchMode, AbstractBackendService } from './abstract.backend.service';
+import { BackendFetchMode, SimpleHeader, AbstractBackendService } from './abstract.backend.service';
 import { StorageService } from './storage.service';
 import { AuthService } from './auth.service';
 
@@ -32,7 +32,7 @@ export class BackendService extends AbstractBackendService {
     }
 
 
-    load(basePath: string, pagination?: Pagination, headers?: { header: string, value: any }[]) {
+    load(basePath: string, pagination?: Pagination, params?: any, headers?: SimpleHeader) {
         var relativePath: string = basePath;
 
         // Try the storage if allowed
@@ -75,7 +75,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    getById(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
+    getById(basePath: string, id: string, headers?: SimpleHeader): Promise<any> {
         var relativePath: string = basePath + '/' + id;
 
         // Try the storage if allowed
@@ -108,7 +108,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    getByIds(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any> {
+    getByIds(basePath: string, ids: string[], headers?: SimpleHeader): Promise<any> {
         let httpHeaders: Headers = this.getHeaders(headers);
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
@@ -124,7 +124,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    push(basePath: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
+    push(basePath: string, value: any, headers?: SimpleHeader): Promise<any> {
         let httpHeaders: Headers = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath;
@@ -138,7 +138,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    pushAll(basePath: string, values: any[], headers?: { header: string, value: any }[]): Promise<any> {
+    pushAll(basePath: string, values: any[], headers?: SimpleHeader): Promise<any> {
         let httpHeaders: Headers = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath;
@@ -152,7 +152,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    set(basePath: string, id: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
+    set(basePath: string, id: string, value: any, headers?: SimpleHeader): Promise<any> {
         let httpHeaders: Headers = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath + '/' + id;
@@ -166,7 +166,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    setAll(basePath: string, ids: string[], values: any, headers?: { header: string, value: any }[]): Promise<any> {
+    setAll(basePath: string, ids: string[], values: any, headers?: SimpleHeader): Promise<any> {
         let httpHeaders: Headers = this.getHeaders(headers);
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
@@ -182,7 +182,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    remove(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
+    remove(basePath: string, id: string, headers?: SimpleHeader): Promise<any> {
         let httpHeaders: Headers = this.getHeaders(headers);
 
         let url = this.config.apiURL + basePath + '/' + id;
@@ -196,7 +196,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    removeAll(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any> {
+    removeAll(basePath: string, ids: string[], headers?: SimpleHeader): Promise<any> {
         let httpHeaders: Headers = this.getHeaders(headers);
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
@@ -212,7 +212,7 @@ export class BackendService extends AbstractBackendService {
         return response;
     }
 
-    private getHeaders(headers?: { header: string, value: any }[]): Headers {
+    private getHeaders(headers?: SimpleHeader): Headers {
         let httpHeaders: Headers = new Headers();
 
         httpHeaders.append('Content-Type', 'application/json');
