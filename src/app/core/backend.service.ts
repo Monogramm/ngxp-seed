@@ -70,46 +70,7 @@ export class BackendService extends AbstractBackendService {
 
             response.then((value: HttpResponse<T[]>) => {
                 if (pagination) {
-                    pagination.reset();
-
-                    const links: string = value.headers.get('link');
-                    if (links) {
-                        const firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
-                        if (firstPageProp && firstPageProp.length >= 2) {
-                            pagination.first = +firstPageProp[1] + 1;
-
-                            if (firstPageProp.length >= 3) {
-                                pagination.size = +firstPageProp[2];
-                            }
-                        }
-
-                        const prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
-                        if (prevPageProp && prevPageProp.length >= 2) {
-                            pagination.prev = +prevPageProp[1] + 1;
-
-                            if (prevPageProp.length >= 3) {
-                                pagination.size = +prevPageProp[2];
-                            }
-                        }
-
-                        const nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
-                        if (nextPageProp && nextPageProp.length >= 2) {
-                            pagination.next = +nextPageProp[1] + 1;
-
-                            if (nextPageProp.length >= 3) {
-                                pagination.size = +nextPageProp[2];
-                            }
-                        }
-
-                        const lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
-                        if (lastPageProp && lastPageProp.length >= 2) {
-                            pagination.last = +lastPageProp[1];
-
-                            if (lastPageProp.length >= 3) {
-                                pagination.size = +lastPageProp[2];
-                            }
-                        }
-                    }
+                    this.updatePagination(pagination, value);
                     if (Logger.isEnabled) {
                         Logger.dir(pagination);
                     }
@@ -357,49 +318,44 @@ export class BackendService extends AbstractBackendService {
     }
 
     private updatePagination(pagination: Pagination, value: HttpResponse<any>) {
-        if (pagination) {
-            pagination.reset();
+        pagination.reset();
 
-            const links: string = value.headers.get('link');
-            if (links) {
-                const firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
-                if (firstPageProp && firstPageProp.length >= 2) {
-                    pagination.first = +firstPageProp[1] + 1;
+        const links: string = value.headers.get('link');
+        if (links) {
+            const firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
+            if (firstPageProp && firstPageProp.length >= 2) {
+                pagination.first = +firstPageProp[1] + 1;
 
-                    if (firstPageProp.length >= 3) {
-                        pagination.size = +firstPageProp[2];
-                    }
-                }
-
-                const prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
-                if (prevPageProp && prevPageProp.length >= 2) {
-                    pagination.prev = +prevPageProp[1] + 1;
-
-                    if (prevPageProp.length >= 3) {
-                        pagination.size = +prevPageProp[2];
-                    }
-                }
-
-                const nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
-                if (nextPageProp && nextPageProp.length >= 2) {
-                    pagination.next = +nextPageProp[1] + 1;
-
-                    if (nextPageProp.length >= 3) {
-                        pagination.size = +nextPageProp[2];
-                    }
-                }
-
-                const lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
-                if (lastPageProp && lastPageProp.length >= 2) {
-                    pagination.last = +lastPageProp[1];
-
-                    if (lastPageProp.length >= 3) {
-                        pagination.size = +lastPageProp[2];
-                    }
+                if (firstPageProp.length >= 3) {
+                    pagination.size = +firstPageProp[2];
                 }
             }
-            if (Logger.isEnabled) {
-                Logger.dir(pagination);
+
+            const prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
+            if (prevPageProp && prevPageProp.length >= 2) {
+                pagination.prev = +prevPageProp[1] + 1;
+
+                if (prevPageProp.length >= 3) {
+                    pagination.size = +prevPageProp[2];
+                }
+            }
+
+            const nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
+            if (nextPageProp && nextPageProp.length >= 2) {
+                pagination.next = +nextPageProp[1] + 1;
+
+                if (nextPageProp.length >= 3) {
+                    pagination.size = +nextPageProp[2];
+                }
+            }
+
+            const lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
+            if (lastPageProp && lastPageProp.length >= 2) {
+                pagination.last = +lastPageProp[1];
+
+                if (lastPageProp.length >= 3) {
+                    pagination.size = +lastPageProp[2];
+                }
             }
         }
     }
