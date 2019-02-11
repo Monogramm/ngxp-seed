@@ -168,13 +168,23 @@ export class BackendService extends AbstractBackendService {
 
         const url = this.config.apiURL + basePath;
 
-        const response: Promise<HttpResponse<T>> = this._http.post<T>(
+        const promise: Promise<HttpResponse<T>> = this._http.post<T>(
             url, value, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
-        response.catch(this.logError);
+        promise.then((response: HttpResponse<T>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
 
-        return response;
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
     }
 
     pushAll<T>(basePath: string, values: any,
@@ -185,13 +195,23 @@ export class BackendService extends AbstractBackendService {
 
         const url = this.config.apiURL + basePath;
 
-        const response: Promise<HttpResponse<T[]>> = this._http.post<T[]>(
+        const promise: Promise<HttpResponse<T[]>> = this._http.post<T[]>(
             url, values, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
-        response.catch(this.logError);
+        promise.then((response: HttpResponse<T[]>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
 
-        return response;
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
     }
 
     set<T>(basePath: string, id: string, value: any,
@@ -202,13 +222,23 @@ export class BackendService extends AbstractBackendService {
 
         const url = this.config.apiURL + basePath + '/' + id;
 
-        const response: Promise<HttpResponse<T>> = this._http.put<T>(
+        const promise: Promise<HttpResponse<T>> = this._http.put<T>(
             url, value, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
-        response.catch(this.logError);
+        promise.then((response: HttpResponse<T>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
 
-        return response;
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
     }
 
     setAll<T>(basePath: string, ids: string[], values: any,
@@ -221,13 +251,23 @@ export class BackendService extends AbstractBackendService {
 
         const url = this.config.apiURL + basePath;
 
-        const response: Promise<HttpResponse<T[]>> = this._http.put<T[]>(
+        const promise: Promise<HttpResponse<T[]>> = this._http.put<T[]>(
             url, values, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
-        response.catch(this.logError);
+        promise.then((response: HttpResponse<T[]>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
 
-        return response;
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
     }
 
     remove(basePath: string, id: string,
@@ -241,13 +281,23 @@ export class BackendService extends AbstractBackendService {
             url += '/' + id;
         }
 
-        const response: Promise<HttpResponse<Object>> = this._http.delete(
+        const promise: Promise<HttpResponse<Object>> = this._http.delete(
             url, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
-        response.catch(this.logError);
+        promise.then((response: HttpResponse<any>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
 
-        return response;
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
     }
 
     removeAll(basePath: string, ids: string[],
@@ -263,13 +313,23 @@ export class BackendService extends AbstractBackendService {
             }
         }
 
-        const response: Promise<HttpResponse<Object>> = this._http.delete(
+        const promise: Promise<HttpResponse<Object>> = this._http.delete(
             url, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
-        response.catch(this.logError);
+        promise.then((response: HttpResponse<any>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
 
-        return response;
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
     }
 
     private getParameters(pagination: Pagination, params?: HttpParamsOptions, httpHeaders?: HttpHeaders): HttpParams {
