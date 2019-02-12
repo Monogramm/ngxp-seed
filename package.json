@@ -61,6 +61,7 @@
     "nativescript-ngx-fonticon": "~4.0.0",
     "nativescript-social-share": "~1.5.0",
     "nativescript-theme-core": "~1.0.4",
+    "ng-sidebar": "^8.0.0",
     "reflect-metadata": "~0.1.8",
     "rxjs": "^6.0.0",
     "tns-core-modules": "^5.1.1",

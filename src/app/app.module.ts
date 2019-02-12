@@ -10,6 +10,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { SidebarModule } from 'ng-sidebar';
+
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { LocaleService } from './locale.service';
@@ -50,6 +52,7 @@ registerLocaleData(localeFr, 'fr');
                 deps: [HttpClient]
             }
         }),
+        SidebarModule,
         AppRoutingModule,
         CoreModule,
         SharedModule,

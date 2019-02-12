@@ -1,19 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+
+import { Subscription } from 'rxjs';
 
 import { TranslateService } from '@ngx-translate/core';
 
 import { AppService } from './app.service';
 import { LocaleService } from './locale.service';
 import { LoginService } from './data/login';
+import { HomeService, HomeModule } from './data/home';
+import { User } from './data/users';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
 
     public static readonly LOCALE: string = LocaleService.LOCALE;
 
@@ -21,12 +25,19 @@ export class AppComponent {
 
     title = '';
 
+    private _opened = false;
+
+    mainMenuEntries: HomeModule[];
+
+    userSub: Subscription;
+
     constructor(
         private _translate: TranslateService,
         private _appService: AppService,
         private _localeService: LocaleService,
         private _titleService: Title,
         private _loginService: LoginService,
+        private homeService: HomeService,
         private _router: Router) {
         // fallback language when a translation isn't found in the current language
         this._translate.setDefaultLang(AppComponent.LOCALE);
@@ -45,6 +56,22 @@ export class AppComponent {
         });
     }
 
+    ngOnInit() {
+        this.mainMenuEntries = this.homeService.loadModules();
+
+        this.userSub = this._loginService.currentUser().subscribe(() => {
+            this.mainMenuEntries = this.homeService.loadModules();
+        });
+    }
+
+    ngOnDestroy() {
+        this.userSub.unsubscribe();
+    }
+
+    private _toggleSidebar() {
+        this._opened = !this._opened;
+    }
+
     hasPrompt(): boolean {
         return this._appService.isInstallable() || (this._appService.iOS() && !this._appService.isStandalone());
     }
@@ -56,7 +83,7 @@ export class AppComponent {
         } else if (this._appService.isInstallable() || (this._appService.iOS() && !this._appService.isStandalone())) {
             msg = this._translate.instant('app.message.install');
         } else {
-            msg = this._translate.instant('app.top_bar.home.title');
+            msg = this.appName;
         }
         return msg;
     }
@@ -86,10 +113,22 @@ export class AppComponent {
         return this._loginService.isLoggedIn();
     }
 
-    logout() {
+    private logout() {
         const msg: string = this._translate.instant('app.message.logout');
         if (confirm(msg) === true) {
             this._loginService.logout();
+        }
+    }
+
+    private login() {
+        this._router.navigate(['/login']);
+    }
+
+    logInOrOut() {
+        if (this.isLoggedIn()) {
+            this.logout();
+        } else {
+            this.login();
         }
     }
 

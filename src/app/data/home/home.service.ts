@@ -27,6 +27,10 @@ export class HomeService {
 
         this.availableModules.length = 0;
 
+        this.availableModules.push(
+            new HomeModule('home.title', ['/'], 'icon-home', String.fromCharCode(0xe900)),
+        );
+
         if (this._backendService.isLoggedIn()) {
             this.availableModules.push(
                 new HomeModule('home.profile', ['/user', this._backendService.userId], 'icon-profile', String.fromCharCode(0xe923)),

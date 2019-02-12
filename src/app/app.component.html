@@ -1,21 +1,48 @@
-<div class="top-bar" [hidden]="!isLoggedIn()">
-  <div class="menu">
-    <span class="lnk" [routerLink]="['/']" [title]="'app.top_bar.home.title' | translate">
-      <i class="lnk icon-home"></i>
-    </span>
-  </div>
+<ng-sidebar-container>
+  <ng-sidebar [(opened)]="_opened" [sidebarClass]="'app-sidebar'" [keyClose]="true" [autoFocus]="false"
+    [showBackdrop]="true" [closeOnClickBackdrop]="true">
+    <div class="app-menu-header">
+      <a [routerLink]="['/']"><img src="./assets/logo.svg" [alt]="appName" [title]="promptTitle()" class="lnk"
+          [class.notify]="hasPrompt()" /></a>
+    </div>
 
-  <div class="title">
-    <h1><img src="./assets/logo.svg" [alt]="appName" [title]="promptTitle()" class="lnk" [class.notify]="hasPrompt()" (click)="appPrompt()" /></h1>
-  </div>
+    <ul class="menu">
+      <li class="menu-entry" *ngFor="let menu of mainMenuEntries"><a class="menu-link" [routerLink]="menu.route"
+          routerLinkActive="active">
+          <i [class]="'icon ' + menu.iconClass"></i>
+          {{ menu.text | translate }}
+        </a></li>
+    </ul>
 
-  <div class="logout">
-    <span class="lnk" (click)="logout()" [title]="'app.top_bar.logout.title' | translate">
-      <i class="lnk icon-enter"></i>
-    </span>
-  </div>
-</div>
+    <div class="app-menu-control">
+      <a class="lnk lnk-menu-toggle" [title]="'app.top_bar.menu.hide' | translate" (click)="_toggleSidebar()">
+        <i class="icon icon-circle-left"></i>
+        {{ 'app.top_bar.menu.hide' | translate }}
+      </a>
+    </div>
+  </ng-sidebar>
 
-<div class="content-container">
-  <router-outlet></router-outlet>
-</div>
+  <div ng-sidebar-content class="content-container">
+    <div class="top-bar">
+      <div class="menu">
+        <span class="lnk" (click)="_toggleSidebar()" [title]="'app.top_bar.home.title' | translate">
+          <i class="lnk icon icon-menu"></i>
+        </span>
+      </div>
+
+      <div class="title">
+        <h1><img src="./assets/logo.svg" [alt]="appName" [title]="promptTitle()" class="lnk"
+            [class.notify]="hasPrompt()" (click)="appPrompt()" /></h1>
+      </div>
+
+      <div class="logout">
+        <span class="lnk" (click)="logInOrOut()"
+          [title]="(isLoggedIn() ? 'app.top_bar.logout.title' : 'login.login') | translate">
+          <i [class]="isLoggedIn() ? 'lnk icon icon-exit' : 'lnk icon icon-user'"></i>
+        </span>
+      </div>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+</ng-sidebar-container>

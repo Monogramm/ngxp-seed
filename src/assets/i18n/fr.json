@@ -1,6 +1,8 @@
 {
     "app": {
         "top_bar": {
+            "menu.title": "Menu",
+            "menu.hide": "Masquer",
             "home.title": "Accueil",
             "logo.install": "Installer l'application",
             "logout.title": "Déconnexion"
@@ -204,6 +206,7 @@
         "details": "Détails"
     },
     "home": {
+        "title": "Accueil",
         "welcome": "Bienvenue",
         "logout": "Déconnexion",
         "profile": "Profil",
@@ -213,7 +216,7 @@
         "users": "Utilisateurs",
         "parameters": "Paramètres",
         "media": "Média",
-        "info": "Info"
+        "info": "Informations"
     },
     "info": {
         "title": "Informations",

@@ -85,6 +85,8 @@ export class AuthService {
         this.storage.removeItem(AuthService.refreshTokenKey);
         this.storage.removeItem(AuthService.userKey);
         this.storage.removeItem(AuthService.userRolesKey);
+
+        this.user$.next(null);
     }
 
     public isLoggedIn(): boolean {
