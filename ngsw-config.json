@@ -9,7 +9,9 @@
         "/favicon.ico",
         "/index.html",
         "/*.css",
-        "/*.js"
+        "/*.js",
+        "/*.png",
+        "/assets/i18n/*.json"
       ]
     }
   }, {
@@ -18,7 +20,8 @@
     "updateMode": "prefetch",
     "resources": {
       "files": [
-        "/assets/**"
+        "/assets/icons/**",
+        "/assets/images/**"
       ]
     }
   }]
