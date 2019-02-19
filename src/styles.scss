@@ -18,6 +18,9 @@
 
 html {
     height: 100%;
+
+    // Disable pinch to zoom in IE10
+    -ms-content-zooming: none;
 }
 
 body {

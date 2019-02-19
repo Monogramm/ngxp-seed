@@ -31,6 +31,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     userSub: Subscription;
 
+    lastTouchEnd = 0;
+
     constructor(
         private _translate: TranslateService,
         private _appService: AppService,
@@ -54,6 +56,12 @@ export class AppComponent implements OnInit, OnDestroy {
             this.title = title;
             this._titleService.setTitle(title);
         });
+
+        // disable viewport zooming iOS 10+ safari
+        if (this._appService.iOS()) {
+            document.addEventListener('touchmove', this.preventIosSlideZoom, false);
+            document.addEventListener('touchend', this.preventIosDoubleTapZoom, false);
+        }
     }
 
     ngOnInit() {
@@ -66,6 +74,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.userSub.unsubscribe();
+    }
+
+    private preventIosSlideZoom(event: any) {
+        if (event.scale !== 1) {
+            event.preventDefault();
+        }
+    }
+
+    private preventIosDoubleTapZoom(event: any) {
+        const now = (new Date()).getTime();
+        if (now - this.lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        this.lastTouchEnd = now;
     }
 
     private _toggleSidebar() {
