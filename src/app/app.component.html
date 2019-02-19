@@ -15,7 +15,7 @@
     </ul>
 
     <div class="app-menu-control">
-      <a class="lnk lnk-menu-toggle" [title]="'app.top_bar.menu.hide' | translate" (click)="_toggleSidebar()">
+      <a class="lnk lnk-menu-toggle" [title]="'app.top_bar.menu.hide' | translate" (click)="toggleSidebar()">
         <i class="icon icon-circle-left"></i>
         {{ 'app.top_bar.menu.hide' | translate }}
       </a>
@@ -25,7 +25,7 @@
   <div ng-sidebar-content class="content-container">
     <div class="top-bar">
       <div class="menu">
-        <span class="lnk" (click)="_toggleSidebar()" [title]="'app.top_bar.menu.title' | translate">
+        <span class="lnk" (click)="toggleSidebar()" [title]="'app.top_bar.menu.title' | translate">
           <i class="lnk icon icon-menu"></i>
         </span>
       </div>

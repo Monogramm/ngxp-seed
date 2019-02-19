@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.lastTouchEnd = now;
     }
 
-    private _toggleSidebar() {
+    private toggleSidebar() {
         this.opened = !this.opened;
     }
 
