@@ -73,7 +73,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     hasPrompt(): boolean {
-        return this._appService.isInstallable() || (this._appService.iOS() && !this._appService.isStandalone());
+        return this._appService.isUpdatable()
+            || this._appService.isInstallable()
+            || (this._appService.iOS() && !this._appService.isStandalone());
     }
 
     promptTitle(): string {
