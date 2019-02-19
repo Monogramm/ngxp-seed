@@ -1,5 +1,5 @@
 <ng-sidebar-container>
-  <ng-sidebar [(opened)]="_opened" [sidebarClass]="'app-sidebar'" [keyClose]="true" [autoFocus]="false"
+  <ng-sidebar [(opened)]="opened" [sidebarClass]="'app-sidebar'" [keyClose]="true" [autoFocus]="false"
     [showBackdrop]="true" [closeOnClickBackdrop]="true">
     <div class="app-menu-header">
       <a [routerLink]="['/']"><img src="./assets/images/logo.svg" [alt]="appName" [title]="promptTitle()" class="lnk"

@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     title = '';
 
-    private _opened = false;
+    private opened = false;
 
     mainMenuEntries: HomeModule[];
 
@@ -91,7 +91,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     private _toggleSidebar() {
-        this._opened = !this._opened;
+        this.opened = !this.opened;
     }
 
     hasPrompt(): boolean {
