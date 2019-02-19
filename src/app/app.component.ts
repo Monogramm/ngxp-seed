@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     title = '';
 
-    private opened = false;
+    opened = false;
 
     mainMenuEntries: HomeModule[];
 
