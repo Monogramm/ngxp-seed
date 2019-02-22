@@ -223,7 +223,7 @@
         "links": "Liens utiles",
         "description": "Les liens suivants peuvent vous aider à en apprendre plus sur l'application et sur la façon d'exploiter tout son potentiel.",
         "legal_links": "Informations légales",
-        "legal_description": "Les liens suivants peuvent vous aider à en apprendre plus sur l'application et sur la façon d'exploiter tout son potentiel.",
+        "legal_description": "Les liens suivants listent les informations légales sur cette application.",
         "about": {
             "link": "En savoir plus sur cette application",
             "title": "À propos de",
@@ -259,8 +259,8 @@
             "description": "À définir"
         },
         "usage": {
-            "link": "Découvrez les conditions générales d'utilisation de cette application",
-            "title": "Conditions générales d'utilisation",
+            "link": "Découvrez les conditions générales d'utilisation et la politique de confidentialité de cette application",
+            "title": "Conditions générales d'utilisation et politique de confidentialité",
             "description": "À définir"
         }
     }
