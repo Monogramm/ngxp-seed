@@ -2,6 +2,7 @@
     "app": {
         "top_bar": {
             "menu.title": "Menu",
+            "menu.install": "Install",
             "menu.hide": "Hide",
             "home.title": "Go to home",
             "logo.install": "Install application",

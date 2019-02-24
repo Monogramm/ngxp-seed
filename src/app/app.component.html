@@ -12,6 +12,11 @@
           <i [class]="'icon ' + menu.iconClass"></i>
           {{ menu.text | translate }}
         </a></li>
+      <li class="menu-entry"><a class="menu-link" [class.hidden]="!hasPrompt()" [routerLink]="['/info', 'install']"
+          (click)="appPrompt()">
+          <i class="'icon icon-pwa-inverse"></i>
+          {{ 'app.top_bar.menu.install' | translate }}
+        </a></li>
     </ul>
 
     <div class="app-menu-control">
