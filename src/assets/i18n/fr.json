@@ -237,8 +237,8 @@
                 "title": "Installer sur iOS",
                 "description": "Pour installer une PWA sur votre écran d'accueil, procédez comme suit :",
                 "steps": {
-                    "share": "appuyez sur le bouton 'Partager' dans 'Safari'",
-                    "home_screen": "appuyez sur l'icône 'Ajouter à l'écran d'accueil'",
+                    "share": "appuyez sur le bouton 'Partager' du navigateur 'Safari'",
+                    "home_screen": "appuyez sur l'icône 'Sur l'écran d'accueil'",
                     "add": "appuyez sur 'Ajouter' dans le coin supérieur droit",
                     "name": "confirmez le nom du PWA, puis appuyez sur 'Ajouter' dans le coin supérieur droit",
                     "launch": "vous pouvez maintenant lancer l'application à partir de votre écran d'accueil"

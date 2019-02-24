@@ -237,7 +237,7 @@
                 "title": "Install on iOS",
                 "description": "To install a PWA on your Home Screen, follow these steps:",
                 "steps": {
-                    "share": "Tap the 'Share' button in 'Safari'",
+                    "share": "Tap the 'Share' button of 'Safari'",
                     "home_screen": "Tap the icon labeled 'Add to Home Screen'",
                     "add": "Tap 'Add' in the upper-right corner",
                     "name": "Confirm the name of the PWA then tap 'Add' in the upper-right corner",

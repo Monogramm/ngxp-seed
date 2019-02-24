@@ -19,7 +19,8 @@ export class InstallInfoComponent implements OnDestroy, AfterViewInit {
 
     constructor(private _route: ActivatedRoute,
         private _router: Router,
-        private _location: Location) { }
+        private _location: Location,
+        public translate: TranslateService) { }
 
     public ngAfterViewInit(): void {
         this.subscription = this._route.fragment
@@ -32,6 +33,7 @@ export class InstallInfoComponent implements OnDestroy, AfterViewInit {
                 }
             });
     }
+
     public ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
