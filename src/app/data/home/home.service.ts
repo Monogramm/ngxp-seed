@@ -32,10 +32,16 @@ export class HomeService {
         );
 
         if (this._backendService.isLoggedIn()) {
-            this.availableModules.push(
-                new HomeModule('home.profile', ['/user', this._backendService.userId], 'icon-profile', String.fromCharCode(0xe923)),
-                new HomeModule('home.password', ['/user', this._backendService.userId, 'password'], 'icon-key', String.fromCharCode(0xe98d))
-            );
+            if (this._backendService.userId) {
+                this.availableModules.push(
+                    new HomeModule('home.profile',
+                        ['/user', this._backendService.userId],
+                        'icon-profile', String.fromCharCode(0xe923)),
+                    new HomeModule('home.password',
+                        ['/user', this._backendService.userId, 'password'],
+                        'icon-key', String.fromCharCode(0xe98d))
+                );
+            }
 
             if (this._backendService.hasRole('ADMIN') || this._backendService.hasRole('SUPPORT')) {
                 this.availableModules.push(
