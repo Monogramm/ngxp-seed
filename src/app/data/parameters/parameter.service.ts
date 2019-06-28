@@ -113,6 +113,7 @@ export class ParameterService {
         this._allItems.unshift(newEntry);
 
         this.publishUpdates();
+        return newEntry;
       });
   }
 

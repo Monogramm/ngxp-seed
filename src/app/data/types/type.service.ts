@@ -122,6 +122,7 @@ export class TypeService {
         this._allItems.unshift(newEntry);
 
         this.publishUpdates();
+        return newEntry;
       });
   }
 

@@ -123,6 +123,7 @@ export class RoleService {
         this._allItems.unshift(newEntry);
 
         this.publishUpdates();
+        return newEntry;
       });
   }
 

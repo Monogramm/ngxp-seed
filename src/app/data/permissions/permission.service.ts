@@ -112,6 +112,7 @@ export class PermissionService {
         this._allItems.unshift(newEntry);
 
         this.publishUpdates();
+        return newEntry;
       });
   }
 
