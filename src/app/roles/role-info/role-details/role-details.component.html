@@ -8,7 +8,7 @@
     <label>
         {{ 'entity.role.permissions' | translate }}
         <i *ngIf="ready.count == 0" class="icon icon-rotate"></i>
-        <select [(ngModel)]="role.permissions" [disabled]="ready.count == 0" multiple>
+        <select class="select-multiple" [(ngModel)]="role.permissions" [disabled]="ready.count == 0" multiple>
             <option *ngFor="let p of items | async" [ngValue]="p.id">{{ p.name }}</option>
         </select>
     </label>
