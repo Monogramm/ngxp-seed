@@ -110,7 +110,13 @@ export class TypeService {
           Logger.dir(response);
         }
 
-        const data: TypeDTO = response.body;
+        let data: TypeDTO;
+        if (Array.isArray(response.body)) {
+          data = response.body[0];
+        } else {
+          data = response.body;
+        }
+
         const newEntry = this.newModel(data);
 
         this._allItems.unshift(newEntry);

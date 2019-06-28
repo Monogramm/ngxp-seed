@@ -111,7 +111,13 @@ export class RoleService {
           Logger.dir(response);
         }
 
-        const data: RoleDTO = response.body;
+        let data: RoleDTO;
+        if (Array.isArray(response.body)) {
+          data = response.body[0];
+        } else {
+          data = response.body;
+        }
+
         const newEntry = this.newModel(data);
 
         this._allItems.unshift(newEntry);

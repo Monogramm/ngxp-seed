@@ -113,12 +113,19 @@ export class MediaService {
           Logger.dir(response);
         }
 
-        const data: MediaDTO = response.body;
+        let data: MediaDTO;
+        if (Array.isArray(response.body)) {
+          data = response.body[0];
+        } else {
+          data = response.body;
+        }
+
         const newEntry = this.newModel(data);
 
         this._allItems.unshift(newEntry);
 
         this.publishUpdates();
+        return newEntry;
       });
   }
 
