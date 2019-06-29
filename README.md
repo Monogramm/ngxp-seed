@@ -27,6 +27,18 @@ Also, you can edit all occurrences of `com.monogramm.ngxp.seed` and `ngxp-seed` 
   * [App_Resources\Android\settings.json](App_Resources\Android\settings.json)
   * [App_Resources\Android\strings.xml](App_Resources\Android\strings.xml)
 
+Next comes the SEO part:
+* in the [src/index.html](src/index.html)
+  * you should edit the intended language `html` tag
+  * update the default title (should be between 20 and 70 characters)
+  * update the default description (should be between 70 and 160 characters)
+  * update the [Open Graph](http://ogp.me/) `og:*` tags
+* in the [src/robots.txt](src/robots.txt)
+  * update the link to your `sitemap.xml` (mostly the domain name)
+* in the [nginx/conf.d/default.conf](nginx/conf.d/default.conf)
+  * Specify the list [intended languages](https://www.w3.org/International/questions/qa-http-and-lang#http_summary) for your site
+
+
 ## Run Web application
 `npm run start` - This will start the application at http://localhost:4200. 
 
