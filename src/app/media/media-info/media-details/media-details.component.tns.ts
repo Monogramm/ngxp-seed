@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-
-import { BehaviorSubject } from 'rxjs';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { WorkerService } from '../../../core';
 
-import { Media, MediaService, Permission, PermissionService } from '../../../data';
+import { Media, MediaService } from '../../../data';
 
 @Component({
     selector: 'app-tns-media-details',
@@ -12,26 +10,10 @@ import { Media, MediaService, Permission, PermissionService } from '../../../dat
     styleUrls: ['./media-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MediaDetailsComponent implements OnInit {
+export class MediaDetailsComponent {
     @Input() media: Media;
     @Output() ready = new EventEmitter();
 
-    private items: BehaviorSubject<Array<Permission>> = new BehaviorSubject([]);
-    permissions: Array<Permission>;
-
-    constructor(public store: MediaService, public permissionService: PermissionService, private worker: WorkerService) {
-    }
-
-    ngOnInit() {
-        this.permissionService.load()
-            .then(() => {
-                // Make sure all updates are published inside NgZone so that change detection is triggered if needed
-                this.worker.run(() => {
-                    this.permissions = this.permissionService.items.getValue();
-                    // must emit a *new* value (immutability!)
-                    this.items.next([...this.permissions]);
-                    this.ready.emit('permissions loaded');
-                });
-            });
+    constructor(public store: MediaService, private worker: WorkerService) {
     }
 }
