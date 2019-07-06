@@ -1,4 +1,4 @@
-Sitemap: http://your.website.com/sitemap.xml
+Sitemap: https://your.website.com/sitemap.xml
 
 User-agent: *
 Disallow: /assets/

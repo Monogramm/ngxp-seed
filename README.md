@@ -35,6 +35,8 @@ Next comes the SEO part:
   * update the [Open Graph](http://ogp.me/) `og:*` tags
 * in the [src/robots.txt](src/robots.txt)
   * update the link to your `sitemap.xml` (mostly the domain name)
+* in the [src/sitemap.xml](src/robots.txt)
+  * update the link to your website (mostly the domain name)
 * in the [nginx/conf.d/default.conf](nginx/conf.d/default.conf)
   * Specify the list [intended languages](https://www.w3.org/International/questions/qa-http-and-lang#http_summary) for your site
 
