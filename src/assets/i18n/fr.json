@@ -26,10 +26,18 @@
                 "invalid_format": "La valeur fournie ne correspond pas au format de type sélectionné"
             },
             "error": {
-                "loading": "Une erreur s'est produite lors du chargement de la ressource",
-                "creation": "Une erreur s'est produite lors de la création de la ressource",
+                "loading": "Une erreur s'est produite lors du chargement de la ressource.",
+                "creation": "Une erreur s'est produite lors de la création de la ressource.",
                 "update": "Une erreur s'est produite lors de la mise à jour de la ressource.",
-                "deletion": "Une erreur s'est produite lors de la suppression de la sélection"
+                "deletion": "Une erreur s'est produite lors de la suppression de la sélection.",
+                "bad_request": "Votre demande n'a pas pu être envoyée ou a été refusée.",
+                "unauthorized": "Vous n'êtes pas autorisé à faire cela.",
+                "forbidden": "L'accès à cette ressource est interdit.",
+                "not_found": "Cette ressource ne semble plus exister.",
+                "invalid_request": "Votre demande n'est pas valide. Vérifiez que vous avez rempli tous les champs correctement.",
+                "internal_error": "Votre demande n'a pas pu être traitée.",
+                "unavailable": "Le service est actuellement indisponible.",
+                "timeout": "Votre demande n'a pas pu être traitée à temps."
             }
         },
         "common": {

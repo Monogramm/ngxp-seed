@@ -26,10 +26,18 @@
                 "invalid_format": "Value provided doesn't match selected type format"
             },
             "error": {
-                "loading": "An error occurred while loading the resource",
-                "creation": "An error occurred while creating the resource",
-                "update": "An error occurred while updating the resource",
-                "deletion": "An error occurred while deleting the selection"
+                "loading": "An error occurred while loading the resource.",
+                "creation": "An error occurred while creating the resource.",
+                "update": "An error occurred while updating the resource.",
+                "deletion": "An error occurred while deleting the selection.",
+                "bad_request": "Your request could not be sent or was refused.",
+                "unauthorized": "You are not authorized to do this.",
+                "forbidden": "Access to this resource is forbidden.",
+                "not_found": "This resource does not seem to exist anymore.",
+                "invalid_request": "Your request is not valid. Check that you have filled in all the fields.",
+                "internal_error": "Your request could not be processed.",
+                "unavailable": "The service is currently unavailable.",
+                "timeout": "Your request could not be processed in time."
             }
         },
         "common": {
