@@ -13,6 +13,7 @@ export class AuthService {
     private static readonly tokenExpirationKey = 'token_expiration';
     private static readonly refreshTokenKey = 'refresh_token';
 
+    // TODO Use directly the JWT token to retrieve user/roles/permissions
     private static readonly userKey = 'principal_user';
     private static readonly userRolesKey = 'principal_user_roles';
 
