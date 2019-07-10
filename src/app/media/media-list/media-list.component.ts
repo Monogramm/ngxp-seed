@@ -86,11 +86,13 @@ export class MediaListComponent implements OnInit {
                         }
                     },
                     (error) => {
+                        media.deleting = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
                         const errMsg: string = this._translate.instant('app.message.error.deletion');
                         alert(errMsg);
+                        this.reload();
                     }
                 );
         }

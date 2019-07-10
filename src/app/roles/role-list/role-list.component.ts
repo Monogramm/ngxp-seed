@@ -86,11 +86,13 @@ export class RoleListComponent implements OnInit {
                         }
                     },
                     (error) => {
+                        role.deleting = false;
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
                         const errMsg: string = this._translate.instant('app.message.error.deletion');
                         alert(errMsg);
+                        this.reload();
                     }
                 );
         }
