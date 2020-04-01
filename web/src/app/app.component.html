@@ -2,7 +2,7 @@
   <ng-sidebar [(opened)]="opened" [sidebarClass]="'app-sidebar'" [keyClose]="true" [autoFocus]="false"
     [showBackdrop]="true" [closeOnClickBackdrop]="true">
     <div class="app-menu-header">
-      <a [routerLink]="['/']"><img src="./assets/logo_white.png" [alt]="appName" [title]="promptTitle()" class="link"
+      <a [routerLink]="['/']"><img src="./assets/logo.png" [alt]="appName" [title]="promptTitle()" class="link"
           [class.notify]="hasPrompt()" /></a>
     </div>
 
@@ -36,7 +36,7 @@
       </div>
 
       <div class="title">
-        <h1><img src="./assets/logo_white.png" [alt]="appName" [title]="promptTitle()" class="link"
+        <h1><img src="./assets/logo.png" [alt]="appName" [title]="promptTitle()" class="link"
             [class.notify]="hasPrompt()" (click)="appPrompt()" /></h1>
       </div>
 
