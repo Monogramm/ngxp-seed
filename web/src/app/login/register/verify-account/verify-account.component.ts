@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { User } from '../../../../x-shared/app/users';
+import { User } from '@xapp/users';
 
 @Component({
     selector: 'verify-account',
