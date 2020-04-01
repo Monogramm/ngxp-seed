@@ -2,6 +2,7 @@ export class RoleDTO {
     constructor(
         public id: string,
         public name: string,
+        public permissions: Array<string>,
         public createdAt: Date = null,
         public createdBy: string = null,
         public modifiedAt: Date = null,
@@ -12,11 +13,12 @@ export class RoleDTO {
 
 export class Role extends RoleDTO {
     constructor(
-        public id: string,
-        public name: string,
-        public selected: boolean = false,
-        public deleted: boolean = false,
-        public deleting: boolean = false,
+        public id: string = null,
+        public name: string = null,
+        public permissions: Array<string> = [],
+        public selected = false,
+        public deleted = false,
+        public deleting = false,
         public createdAt: Date = null,
         public createdBy: string = null,
         public modifiedAt: Date = null,
@@ -26,9 +28,10 @@ export class Role extends RoleDTO {
         super(
             id,
             name,
-            createdAt ? new Date(createdAt) : null,
+            permissions,
+            createdAt ? createdAt : null,
             createdBy,
-            modifiedAt ? new Date(modifiedAt) : null,
+            modifiedAt ? modifiedAt : null,
             modifiedBy,
             owner
         );

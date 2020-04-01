@@ -1,56 +1,65 @@
 <div *ngIf="user">
     <label>
-        Id:
-        <span>{{ user.id }}</span>
-    </label>
-
-    <label>
-        Username:
-        <input placeholder="Username" name="username" required autocapitalize="off" autocorrect="off" [disabled]="user.id != null"
-            [(ngModel)]="user.username">
+        {{ 'entity.user.username' | translate }}
+        <input [placeholder]="'entity.user.username_placeholder' | translate" name="username" required autofocus
+            autocapitalize="off" autocorrect="off" [disabled]="user.id != null" [(ngModel)]="user.username">
     </label>
     <label>
-        Email:
-        <input placeholder="Email Address" name="email" type="email" required autocapitalize="off" autocorrect="off" [disabled]="user.id != null"
-            [(ngModel)]="user.email">
+        {{ 'entity.user.email' | translate }}
+        <input [placeholder]="'entity.user.email_placeholder' | translate" name="email" type="email" required
+            autocapitalize="off" autocorrect="off" [disabled]="user.id != null" [(ngModel)]="user.email">
     </label>
 
-    <label *ngIf="user.id != null">
-        Is verified:
-        <span>{{ user.verified }}</span>
+    <label *ngIf="user.id && user.verified">
+        {{ 'entity.user.verified' | translate }}
+    </label>
+    <div *ngIf="user.id && !user.verified">
+        <span></span>
+        <button class="button button" (click)="sendToken()">{{ 'register.resend_token' |
+            translate }}</button>
+    </div>
+
+    <label *ngIf="user.id">
+        {{ 'entity.user.active' | translate }}
+        <input name="active" type="checkbox" required [disabled]="user.id != null" [(ngModel)]="user.active">
     </label>
 
-    <label *ngIf="user.id != null">
-        Is active:
-        <span>{{ user.active }}</span>
+    <label *ngIf="busy || rolesAvailable">
+        {{ 'entity.user.role' | translate }}
+        <i *ngIf="busy" class="icon icon-rotate"></i>
+        <select [(ngModel)]="user.role" [disabled]="!rolesAvailable">
+            <option *ngFor="let r of items | async" [ngValue]="r.id">{{ r.name }}</option>
+        </select>
     </label>
 
-    <label>
-        Role:
-        <span>{{ user.role }}</span>
-    </label>
+    <div *ngIf="user.id" class="technical-details">
+        <label>
+            {{ 'entity.id' | translate }}
+            <span>{{ user.id }}</span>
+        </label>
 
-    <label *ngIf="user.id != null">
-        Created At:
-        <span>{{ user.createdAt }}</span>
-    </label>
-    <label *ngIf="user.id != null">
-        Created By:
-        <span>{{ user.createdBy }}</span>
-    </label>
+        <label>
+            {{ 'entity.created_at' | translate }}
+            <span>{{ user.createdAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.created_by' | translate }}
+            <span>{{ user.createdBy }}</span>
+        </label>
 
-    <label *ngIf="user.id != null">
-        Modified At:
-        <span>{{ user.modifiedAt }}</span>
-    </label>
-    <label *ngIf="user.id != null">
-        Modified By:
-        <span>{{ user.modifiedBy }}</span>
-    </label>
+        <label>
+            {{ 'entity.modified_at' | translate }}
+            <span>{{ user.modifiedAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.modified_by' | translate }}
+            <span>{{ user.modifiedBy }}</span>
+        </label>
 
-    <label *ngIf="user.id != null">
-        Owner:
-        <span>{{ user.owner }}</span>
-    </label>
+        <label>
+            {{ 'entity.owner' | translate }}
+            <span>{{ user.owner }}</span>
+        </label>
+    </div>
 
 </div>

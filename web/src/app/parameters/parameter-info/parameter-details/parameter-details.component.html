@@ -1,0 +1,64 @@
+<div *ngIf="parameter">
+    <label for="parameterName">
+        {{ 'entity.parameter.name' | translate }}
+        <input name="parameterName" type="text" required autofocus [(ngModel)]="parameter.name">
+    </label>
+
+    <label for="parameterDescription">
+        {{ 'entity.parameter.description' | translate }}
+        <textarea name="parameterDescription" type="text" [(ngModel)]="parameter.description"></textarea>
+    </label>
+
+    <label for="parameterType">
+        {{ 'entity.parameter.type' | translate }}
+        <select name="parameterType" type="text" [(ngModel)]="parameter.type" (change)="updateType()">
+            <option disabled selected hidden>Type</option>
+            <option *ngFor="let type of parameterTypes">{{type}}</option>
+        </select>
+    </label>
+
+    <label for="parameterValue">
+        {{ 'entity.parameter.value' | translate }}
+        <input #parameterValue *ngIf="parameter.type !== 'BOOLEAN' && parameter.type !== 'ANY'" name="parameterValue"
+            placeholder="{{parameterValuePlaceHolder}}" type="{{parameterTypeHtml}}" pattern="{{parameterTypeHtmlPattern}}"
+            [(ngModel)]="parameter.value">
+
+        <input #parameterValue *ngIf="parameter.type === 'BOOLEAN'" name="parameterValue" type="checkbox" [checked]="parameter.value"
+            (change)="parameter.value = !parameter.value">
+
+        <textarea #parameterValue *ngIf="parameter.type === 'ANY'" name="parameterValue" placeholder="{{parameterValuePlaceHolder}}"
+            [(ngModel)]="parameter.value">
+        </textarea>
+    </label>
+
+    <div *ngIf="parameter.id" class="technical-details">
+        <label>
+            {{ 'entity.id' | translate }}
+            <span>{{ parameter.id }}</span>
+        </label>
+
+        <label>
+            {{ 'entity.created_at' | translate }}
+            <span>{{ parameter.createdAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.created_by' | translate }}
+            <span>{{ parameter.createdBy }}</span>
+        </label>
+
+        <label>
+            {{ 'entity.modified_at' | translate }}
+            <span>{{ parameter.modifiedAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.modified_by' | translate }}
+            <span>{{ parameter.modifiedBy }}</span>
+        </label>
+
+        <label>
+            {{ 'entity.owner' | translate }}
+            <span>{{ parameter.owner }}</span>
+        </label>
+    </div>
+
+</div>

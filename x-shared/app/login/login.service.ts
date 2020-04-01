@@ -1,38 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, ResponseOptions } from '@angular/http';
-
-import { Observable, BehaviorSubject } from 'rxjs';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
-
+import { HttpResponse } from '@angular/common/http';
+import { NavigationExtras } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { BackendService } from '../core';
-import { Logger, Base64, Pagination } from '../shared';
+import { Logger, Base64 } from '../shared';
 import { User } from '../users/user.model';
 
 @Injectable()
 export class LoginService {
-    private basePath: string = 'Users/register';
+    private readonly basePathOAuth = 'oauth/token';
 
-    private basePathOAuth: string = 'oauth/token';
-
-    private basePathResetPwd: string = 'Users/reset_password';
-
-    private basePathSendVerif: string = 'Users/send_verification';
-
-    private basePathVerify: string = 'Users/verify';
+    private readonly basePathRegister = 'users/register';
+    private readonly basePathResetPwd = 'users/reset_password';
+    private readonly basePathSendVerif = 'users/send_verification';
+    private readonly basePathVerify = 'users/verify';
 
     constructor(private backendService: BackendService) {
     }
 
+    currentUser(): Observable<User> {
+        return this.backendService.currentUser;
+    }
     isLoggedIn(): boolean {
         return this.backendService.isLoggedIn();
     }
 
     register(user: User) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             username: user.username,
             email: user.email,
             password: user.password,
@@ -40,16 +35,16 @@ export class LoginService {
         });
 
         if (Logger.isEnabled) {
-            Logger.log('registering in user = ' + body);
+            Logger.log('Registering user = ' + body);
         }
 
         return this.backendService.push(
-            this.basePath, body
+            this.basePathRegister, body
         );
     }
 
-    login(user: User) {
-        let body = JSON.stringify({
+    login(user: User): Promise<User> {
+        const body = JSON.stringify({
             username: user.email,
             email: user.email,
             password: user.password,
@@ -59,62 +54,48 @@ export class LoginService {
         });
 
         if (Logger.isEnabled) {
-            Logger.log('logging in user = ' + user.email);
+            Logger.log('Login user = ' + user.email);
         }
 
         return this.backendService.push(
             this.basePathOAuth, body,
-            [
-                {
-                    header: 'Authorization',
-                    value: 'Basic ' + Base64.btoa(this.backendService.clientId + ':' + this.backendService.clientSecret)
-                }
-            ]
+            null,
+            { 'Authorization': 'Basic ' + Base64.btoa(this.backendService.clientId + ':' + this.backendService.clientSecret) }
         )
-            .then(response => {
+            .then((response) => {
                 if (Logger.isEnabled) {
-                    Logger.log('response = ');
+                    Logger.log('Login response = ');
                     Logger.dir(response);
                 }
 
-                var data;
-                if (response instanceof Response || typeof response.json !== 'undefined') {
-                    data = response.json();
-                } else {
-                    data = response;
-                }
-
+                const data = response.body;
                 if (data) {
                     if (Logger.isEnabled) {
                         Logger.log('User logged in');
                         Logger.dir(response);
                     }
-                    // Update user
-                    user.verified = data.verified;
-                    user.id = data.principal_id;
-
-                    this.backendService.token = data.access_token;
-                    this.backendService.userId = data.principal_id;
-
-                    this.backendService.userRoles = data.roles;
+                    // Authentify user against login response
+                    return this.backendService.authentifyUser(data);
                 }
+                return null;
             });
     }
 
-    logoff() {
+    logout() {
         if (Logger.isEnabled) {
-            Logger.log('logging off');
+            Logger.log('Logging off');
         }
 
-        this.backendService.token = '';
-        this.backendService.userId = '';
-        this.backendService.userRoles = [];
+        // FIXME We get a 401 on token revocation
+        // Logout from the backend (to prevent future usage of old tokens)
+        // this.backendService.remove(this.basePathOAuth, null);
 
-        this.backendService.clearStore();
+        // Clear backend services info
+        this.backendService.clear();
     }
 
     sendResetPasswordToken(email: string) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             email: email
         });
 
@@ -128,7 +109,7 @@ export class LoginService {
     }
 
     resetPassword(email: string, token: string, password: string) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             email: email,
             token: token,
             password: password,
@@ -145,7 +126,7 @@ export class LoginService {
     }
 
     sendVerificationToken(email: string) {
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             email: email
         });
 
@@ -159,9 +140,7 @@ export class LoginService {
     }
 
     verify(id: string, token: string) {
-        let body = JSON.stringify({
-            token: token
-        });
+        const body = token;
 
         if (Logger.isEnabled) {
             Logger.log('verifiying user = ' + body);

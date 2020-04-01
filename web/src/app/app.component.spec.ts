@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
-import { RoutingStubsModule } from '../testing';
+import { RoutingStubsModule } from 'testing';
 
 describe('AppComponent', () => {
 

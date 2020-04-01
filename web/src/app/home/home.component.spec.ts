@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 
 import { SharedModule } from '../shared';
 import { HomeComponent } from './home.component';
-import { click } from '../../testing';
+import { click } from 'testing';
 
 let fixture: ComponentFixture<HomeComponent>;
 let comp: HomeComponent;

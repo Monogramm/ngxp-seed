@@ -68,6 +68,30 @@ export class NativeBackendService extends BackendService {
         super.pushToStore(BackendService.tokenKey, theToken);
     }
 
+    get tokenExpiration(): Date {
+        return <Date>super.getFromStore(BackendService.tokenExpirationKey);
+    }
+
+    set tokenExpiration(theTokenExpiration: Date) {
+        if (Logger.isEnabled) {
+            Logger.log('setting new persistent token expiration = ' + theTokenExpiration);
+        }
+
+        super.pushToStore(BackendService.tokenExpirationKey, theTokenExpiration);
+    }
+
+    get refreshToken(): string {
+        return <string>super.getFromStore(BackendService.refreshTokenKey);
+    }
+
+    set refreshToken(theRefreshToken: string) {
+        if (Logger.isEnabled) {
+            Logger.log('setting new persistent refresh token = ' + theRefreshToken);
+        }
+
+        super.pushToStore(BackendService.refreshTokenKey, theRefreshToken);
+    }
+
     get userId(): string {
         return <string>super.getFromStore(BackendService.userIdKey);
     }
@@ -101,27 +125,40 @@ export class NativeBackendService extends BackendService {
     get clientSecret(): string {
         return this.config.clientSecret;
     }
+    get apiUrl(): string {
+        return this.config.apiURL;
+    }
 
 
-    load(basePath: string, pagination?: Pagination, headers?: { header: string, value: any }[]) {
-        var relativePath: string = basePath;
-
-        // Try the storage if allowed
+    load(basePath: string | URL, pagination?: Pagination, headers?: { header: string, value: any }[]) {
         var response: Promise<Response> = null;
-        if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
-            var storeValue: any = this.getFromCachedStore(relativePath);
+        var relativePath: string;
+        if (basePath instanceof URL) {
+            relativePath = basePath.toString();
+        } else {
+            relativePath = basePath;
 
-            if (!(storeValue == null)) {
-                response = Promise.resolve(storeValue.value);
+            // Try the storage if allowed
+            if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
+                var storeValue: any = this.getFromCachedStore(relativePath);
+
+                if (!(storeValue == null)) {
+                    response = Promise.resolve(storeValue.value);
+                }
             }
         }
 
         // Try the backend
         if (response === null) {
             let httpHeaders: Headers = this.getHeaders(headers);
-            httpHeaders.append('X-Monogramm-Sort', JSON.stringify({ ModifiedAt: -1 }));
+            httpHeaders.append('X-Custom-Sort', JSON.stringify({ ModifiedAt: -1 }));
 
-            let url = this.config.apiURL + relativePath;
+            let url: string;
+            if (basePath instanceof URL) {
+                url = relativePath;
+            } else {
+                url = this.config.apiURL + relativePath;
+            }
 
             if (pagination) {
                 let startAt, endAt;
@@ -301,7 +338,7 @@ export class NativeBackendService extends BackendService {
     }
 
     private appendHeaderIds(httpHeaders: Headers, ids: string[]): Headers {
-        httpHeaders.append('X-Monogramm-Filter',
+        httpHeaders.append('X-Custom-Filter',
             JSON.stringify({
                 'Id': {
                     '$in': ids

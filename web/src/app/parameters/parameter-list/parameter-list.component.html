@@ -1,0 +1,20 @@
+<ul class="entity-list">
+    <li *ngFor="let parameter of store.items | async | parameterStatus:selection">
+        <i *ngIf="selectable" [class]="'icon ' + imageSource(parameter)" (click)="toggleSelection(parameter)"></i>
+
+        <a [routerLink]="edit(parameter)" [class.selected]="parameter.selected && !parameter.deleted">{{
+            parameter.name}}<span>={{
+                (parameter.value && parameter.value.length > 9)? (parameter.value | slice:0:9)+'...' :
+                (parameter.value)
+                }}</span></a>
+
+        <button *ngIf="deletable" [class.hidden]="parameter.deleted || parameter.deleting" class="button is-secondary"
+            (click)="delete(parameter)">
+            <i class="icon icon-cross"></i>
+        </button>
+        <i *ngIf="deletable" [class.hidden]="parameter.deleted || !parameter.deleting" class="icon icon-rotate"></i>
+
+    </li>
+</ul>
+<app-pagination-controls [pagination]="pagination" (change)="load($event)" [first]="'app.pagination.first' | translate"
+    [prev]="'app.pagination.prev' | translate" [next]="'app.pagination.next' | translate" [last]="'app.pagination.last' | translate"></app-pagination-controls>

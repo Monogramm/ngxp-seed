@@ -1,99 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, ResponseOptions } from '@angular/http';
+import { HttpClient, HttpResponse, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpParamsOptions } from '@angular/common/http/src/params';
 
-import { Observable, BehaviorSubject } from 'rxjs';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs';
 
-import { Logger, DateUtils, Pagination } from '../../x-shared/app/shared';
-import { BackendFetchMode, BackendService, CachedValue, StorageService } from '../../x-shared/app/core';
-import { forEach } from '@angular/router/src/utils/collection';
+import { Logger, Pagination } from '@xapp/shared';
+import { BackendFetchMode, BackendService, SimpleHeader, AuthService, StorageService } from '@xapp/core';
+
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class WebBackendService extends BackendService {
     public readonly config = {
-        apiURL: BackendService.apiUrl,
-        clientId: 'clientWebIdPassword',
-        clientSecret: 'secret'
+        apiURL: environment.backendUrl,
+        clientId: environment.clientId,
+        clientSecret: environment.clientSecret
     };
 
-    constructor(private _storage: StorageService, private _http: Http) {
-        super(_storage);
-    }
-
-
-    getFromCachedStore(key: string): any {
-        var value: any = this.getFromStore(key);
-
-        if (value) {
-            var json: any = JSON.parse(value);
-
-            if (json.date && new Date(json.date).getTime() > new Date().getTime()) {
-                value = json;
-            } else {
-                this.removeFromStore(key);
-                value = null;
-            }
-        }
-
-        return value;
-    }
-    pushToStore(key: string, value: any): void {
-        if (typeof value === 'string') {
-            return super.pushToStore(key, value);
-        } else {
-            return super.pushToStore(key, JSON.stringify(value));
-        }
-    }
-    pushToCachedStore(key: string, value: any, date?: Date): void {
-        return this.pushToStore(key, new CachedValue(value, date));
-    }
-
-
-
-    isLoggedIn(): boolean {
-        return !!super.getFromStore(BackendService.tokenKey);
-    }
-
-    get token(): string {
-        return <string>super.getFromStore(BackendService.tokenKey);
-    }
-
-    set token(theToken: string) {
-        if (Logger.isEnabled) {
-            Logger.log('setting new persistent token = ' + theToken);
-        }
-
-        super.pushToStore(BackendService.tokenKey, theToken);
-    }
-
-    get userId(): string {
-        return <string>this.getFromStore(BackendService.userIdKey);
-    }
-
-    set userId(theId: string) {
-        if (Logger.isEnabled) {
-            Logger.log('setting new persistent user id = ' + theId);
-        }
-
-        this._storage.setItem(BackendService.userIdKey, theId);
-    }
-
-    get userRoles(): string[] {
-        let roles: string = <string>super.getFromStore('user.roles');
-
-        return JSON.parse(roles);
-    }
-
-    set userRoles(roles: string[]) {
-        if (Logger.isEnabled) {
-            Logger.log('setting new persistent user roles = ' + roles);
-        }
-
-        super.pushToStore('user.roles', JSON.stringify(roles));
+    constructor(_storageService: StorageService,
+        _authService: AuthService,
+        private _http: HttpClient) {
+        super(_storageService, _authService);
     }
 
 
@@ -103,205 +30,414 @@ export class WebBackendService extends BackendService {
     get clientSecret(): string {
         return this.config.clientSecret;
     }
+    get apiUrl(): string {
+        return this.config.apiURL;
+    }
 
+    load<T>(basePath: string | URL,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
+        let response: Promise<HttpResponse<T[]>> = null;
+        let relativePath: string;
+        if (basePath instanceof URL) {
+            relativePath = basePath.toString();
+        } else {
+            relativePath = basePath;
 
-    load(basePath: string, pagination?: Pagination, headers?: { header: string, value: any }[]) {
-        var relativePath: string = basePath;
+            // Try the storage if allowed
+            if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
+                const storeValue: any = this.getFromCachedStore(relativePath);
 
-        // Try the storage if allowed
-        var response: Promise<Response> = null;
-        if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
-            var storeValue: any = this.getFromCachedStore(relativePath);
-
-            if (!(storeValue == null)) {
-                response = Promise.resolve(storeValue.value);
+                if (!(storeValue == null)) {
+                    response = Promise.resolve(storeValue.value);
+                }
             }
         }
 
         // Try the backend
         if (response === null) {
-            let httpHeaders: Headers = this.getHeaders(headers);
-            httpHeaders.append('X-Monogramm-Sort', JSON.stringify({ ModifiedAt: -1 }));
+            let url: string;
+            if (basePath instanceof URL) {
+                url = relativePath;
+            } else {
+                url = this.config.apiURL + relativePath;
+            }
 
-            let url = this.config.apiURL + relativePath;
+            const httpHeaders: HttpHeaders = this.getHeaders(headers);
+            const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
+            response = this._http.get<T[]>(url, { observe: 'response', headers: httpHeaders, params: httpParams }).toPromise();
+
+            response.then((value: HttpResponse<T[]>) => {
+                if (pagination) {
+                    this.updatePagination(pagination, value);
+                    if (Logger.isEnabled) {
+                        Logger.dir(pagination);
+                    }
+                }
+
+                return Promise.resolve(value);
+            });
+
+            if (this.fetchBehavior !== BackendFetchMode.RemoteOnly) {
+                response.then(
+                    (value: HttpResponse<T[]>) => {
+                        this.pushToCachedStore(relativePath, value.body);
+                    },
+                    (error: any) => {
+                        this.logError(error);
+                    }
+                );
+            }
+        }
+
+        return response;
+    }
+
+    getBlobById(basePath: string, id: string,
+        headers?: SimpleHeader,
+        params?: HttpParamsOptions): Observable<HttpResponse<Blob>> {
+        const relativePath: string = basePath + '/' + id;
+
+        // Try the storage if allowed
+        let response: Observable<HttpResponse<Blob>> = null;
+
+        // Try the backend
+        if (response === null) {
+            const httpHeaders: HttpHeaders = this.getHeaders(headers);
+            const httpParams: HttpParams = this.getParameters(null, params, httpHeaders);
+
+            const url = this.config.apiURL + relativePath;
+
+            response = this._http.get(url, {
+                observe: 'response',
+                responseType: 'blob',
+                headers: httpHeaders, params: httpParams
+            });
+        }
+
+        return response;
+    }
+
+    getById<T>(basePath: string, id: string,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Observable<HttpResponse<T>> {
+        const relativePath: string = basePath + '/' + id;
+
+        // Try the storage if allowed
+        let response: Observable<HttpResponse<T>> = null;
+
+        // Try the backend
+        if (response === null) {
+            const httpHeaders: HttpHeaders = this.getHeaders(headers);
+            const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
+
+            const url = this.config.apiURL + relativePath;
+
+            response = this._http.get<T>(url, {
+                observe: 'response',
+                headers: httpHeaders, params: httpParams
+            });
+        }
+
+        return response;
+    }
+
+    getByIds<T>(basePath: string, ids: string[],
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Observable<HttpResponse<T[]>> {
+        let httpHeaders: HttpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
+
+        httpHeaders = this.appendHeaderIds(httpHeaders, ids);
+
+        const url = this.config.apiURL + basePath;
+
+        const response: Observable<HttpResponse<T[]>> = this._http.get<T[]>(
+            url, { observe: 'response', headers: httpHeaders, params: httpParams }
+        );
+
+        return response;
+    }
+
+    push<T>(basePath: string, value: any,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T>> {
+        const httpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
+
+        const url = this.config.apiURL + basePath;
+
+        const promise: Promise<HttpResponse<T>> = this._http.post<T>(
+            url, value, { observe: 'response', headers: httpHeaders, params: httpParams }
+        ).toPromise();
+
+        promise.then((response: HttpResponse<T>) => {
             if (pagination) {
-                let startAt, endAt;
-                startAt = (pagination.page - 1) * pagination.size;
-                endAt = pagination.page * pagination.size - 1;
-
-                httpHeaders.append('X-Monogramm-Start-At', JSON.stringify({ startAt }));
-                httpHeaders.append('X-Monogramm-End-At', JSON.stringify({ endAt }));
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
             }
 
-            response = this._http.get(url, { headers: httpHeaders }).toPromise();
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
 
-            if (this.fetchBehavior != BackendFetchMode.RemoteOnly) {
-                response.then((value: Response) => {
-                    this.pushToCachedStore(relativePath, value.json());
-                });
-            }
-        }
-
-        response.catch(this.logError);
-
-        return response;
+        return promise;
     }
 
-    getById(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
-        var relativePath: string = basePath + '/' + id;
+    pushAll<T>(basePath: string, values: any,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
+        const httpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
-        // Try the storage if allowed
-        var response: Promise<Response> = null;
-        if (this.fetchBehavior === BackendFetchMode.StorageThenRemote) {
-            var storeValue: any = this.getFromCachedStore(relativePath);
+        const url = this.config.apiURL + basePath;
 
-            if (!(storeValue == null)) {
-                response = Promise.resolve(storeValue.value);
+        const promise: Promise<HttpResponse<T[]>> = this._http.post<T[]>(
+            url, values, { observe: 'response', headers: httpHeaders, params: httpParams }
+        ).toPromise();
+
+        promise.then((response: HttpResponse<T[]>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
             }
-        }
 
-        // Try the backend
-        if (response === null) {
-            let httpHeaders: Headers = this.getHeaders(headers);
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
 
-            let url = this.config.apiURL + relativePath;
-
-            response = this._http.get(url, { headers: httpHeaders }).toPromise();
-
-            if (this.fetchBehavior != BackendFetchMode.RemoteOnly) {
-                response.then((value: Response) => {
-                    this.pushToCachedStore(relativePath, value.json());
-                });
-            }
-        }
-
-        response.catch(this.logError);
-
-        return response;
+        return promise;
     }
 
-    getByIds(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders: Headers = this.getHeaders(headers);
+    set<T>(basePath: string, id: string, value: any,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T>> {
+        const httpHeaders: HttpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
+
+        const url = this.config.apiURL + basePath + '/' + id;
+
+        const promise: Promise<HttpResponse<T>> = this._http.put<T>(
+            url, value, { observe: 'response', headers: httpHeaders, params: httpParams }
+        ).toPromise();
+
+        promise.then((response: HttpResponse<T>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
+
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
+    }
+
+    setAll<T>(basePath: string, ids: string[], values: any,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
+        let httpHeaders: HttpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         httpHeaders = this.appendHeaderIds(httpHeaders, ids);
 
-        let url = this.config.apiURL + basePath;
+        const url = this.config.apiURL + basePath;
 
-        var response: Promise<Response> = this._http.get(
-            url, { headers: httpHeaders }
+        const promise: Promise<HttpResponse<T[]>> = this._http.put<T[]>(
+            url, values, { observe: 'response', headers: httpHeaders, params: httpParams }
         ).toPromise();
 
-        response.catch(this.logError)
+        promise.then((response: HttpResponse<T[]>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
 
-        return response;
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
     }
 
-    push(basePath: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders = this.getHeaders(headers);
-
-        let url = this.config.apiURL + basePath;
-
-        var response: Promise<Response> = this._http.post(
-            url, value, { headers: httpHeaders }
-        ).toPromise();
-
-        response.catch(this.logError)
-
-        return response;
-    }
-
-    pushAll(basePath: string, values: any[], headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders = this.getHeaders(headers);
-
-        let url = this.config.apiURL + basePath;
-
-        var response: Promise<Response> = this._http.post(
-            url, values, { headers: httpHeaders }
-        ).toPromise();
-
-        response.catch(this.logError)
-
-        return response;
-    }
-
-    set(basePath: string, id: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders: Headers = this.getHeaders(headers);
-
-        let url = this.config.apiURL + basePath + '/' + id;
-
-        var response: Promise<Response> = this._http.put(
-            url, value, { headers: httpHeaders }
-        ).toPromise();
-
-        response.catch(this.logError)
-
-        return response;
-    }
-
-    setAll(basePath: string, ids: string[], values: any, headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders: Headers = this.getHeaders(headers);
-
-        httpHeaders = this.appendHeaderIds(httpHeaders, ids);
+    remove(basePath: string, id: string,
+        pagination?: Pagination, params?: HttpParamsOptions,
+        headers?: SimpleHeader): Promise<HttpResponse<Object>> {
+        const httpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
         let url = this.config.apiURL + basePath;
-
-        var response: Promise<Response> = this._http.put(
-            url, values, { headers: httpHeaders }
-        ).toPromise();
-
-        response.catch(this.logError)
-
-        return response;
-    }
-
-    remove(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders = this.getHeaders(headers);
-
-        let url = this.config.apiURL + basePath + '/' + id;
-
-        var response: Promise<Response> = this._http.delete(
-            url, { headers: httpHeaders }
-        ).toPromise();
-
-        response.catch(this.logError)
-
-        return response;
-    }
-
-    removeAll(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any> {
-        let httpHeaders = this.getHeaders(headers);
-
-        let url = this.config.apiURL + basePath;
-
-        var response: Promise<Response> = this._http.delete(
-            url, { headers: httpHeaders }
-        ).toPromise();
-
-        response.catch(this.logError)
-
-        return response;
-    }
-
-    private getHeaders(headers?: { header: string, value: any }[]): Headers {
-        let httpHeaders: Headers = new Headers();
-
-        httpHeaders.append('Content-Type', 'application/json');
-        if (this.isLoggedIn()) {
-            httpHeaders.append('Authorization', 'Bearer ' + this.token);
+        if (id) {
+            url += '/' + id;
         }
 
-        if (headers) {
-            for (var entry of headers) {
-                httpHeaders.append(entry.header, entry.value);
+        const promise: Promise<HttpResponse<Object>> = this._http.delete(
+            url, { observe: 'response', headers: httpHeaders, params: httpParams }
+        ).toPromise();
+
+        promise.then((response: HttpResponse<any>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
             }
+
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
+    }
+
+    removeAll(basePath: string, ids: string[],
+        pagination?: Pagination, params?: HttpParamsOptions, headers?: SimpleHeader): Promise<HttpResponse<Object>> {
+        const httpHeaders = this.getHeaders(headers);
+        const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
+
+        let url = this.config.apiURL + basePath;
+        if (ids) {
+            url += '?ids=';
+            for (const entityId of ids) {
+                url += entityId + ',';
+            }
+        }
+
+        const promise: Promise<HttpResponse<Object>> = this._http.delete(
+            url, { observe: 'response', headers: httpHeaders, params: httpParams }
+        ).toPromise();
+
+        promise.then((response: HttpResponse<any>) => {
+            if (pagination) {
+                this.updatePagination(pagination, response);
+                if (Logger.isEnabled) {
+                    Logger.dir(pagination);
+                }
+            }
+
+            return Promise.resolve(response);
+        });
+        promise.catch(this.logError);
+
+        return promise;
+    }
+
+    private getParameters(pagination: Pagination, params?: HttpParamsOptions, httpHeaders?: HttpHeaders): HttpParams {
+        let httpParams: HttpParams;
+        if (params) {
+            httpParams = new HttpParams(params);
+        } else {
+            httpParams = new HttpParams();
+        }
+
+        if (pagination) {
+            if (pagination.page) {
+                let page: number, size: number;
+                page = pagination.page - 1;
+
+                httpParams = httpParams.set('page', '' + page);
+                if (httpHeaders) {
+                    httpHeaders.append('X-Custom-Page', JSON.stringify({ page }));
+                }
+
+                if (pagination.size) {
+                    size = pagination.size;
+                    httpParams = httpParams.set('size', '' + size);
+                    if (httpHeaders) {
+                        httpHeaders.append('X-Custom-Size', JSON.stringify({ size }));
+                    }
+                }
+
+            }
+
+            if (pagination.sort) {
+                // Add sorting mechanisms
+                let sortQuery = '';
+
+                for (const entry of pagination.sort.entries) {
+                    sortQuery += entry.field + ',' + entry.order + ';';
+                }
+                httpParams = httpParams.set('sort', sortQuery);
+                if (httpHeaders) {
+                    httpHeaders.append('X-Custom-Sort', JSON.stringify({ sortQuery }));
+                }
+            }
+        }
+
+        return httpParams;
+    }
+
+    private updatePagination(pagination: Pagination, value: HttpResponse<any>) {
+        pagination.reset();
+
+        const links: string = value.headers.get('link');
+        if (links) {
+            const firstPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="first"');
+            if (firstPageProp && firstPageProp.length >= 2) {
+                pagination.first = +firstPageProp[1] + 1;
+
+                if (firstPageProp.length >= 3) {
+                    pagination.size = +firstPageProp[2];
+                }
+            }
+
+            const prevPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="prev"');
+            if (prevPageProp && prevPageProp.length >= 2) {
+                pagination.prev = +prevPageProp[1] + 1;
+
+                if (prevPageProp.length >= 3) {
+                    pagination.size = +prevPageProp[2];
+                }
+            }
+
+            const nextPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="next"');
+            if (nextPageProp && nextPageProp.length >= 2) {
+                pagination.next = +nextPageProp[1] + 1;
+
+                if (nextPageProp.length >= 3) {
+                    pagination.size = +nextPageProp[2];
+                }
+            }
+
+            const lastPageProp: RegExpMatchArray = links.match('page=([0-9]+)&size=([0-9]+)>; rel="last"');
+            if (lastPageProp && lastPageProp.length >= 2) {
+                pagination.last = +lastPageProp[1];
+
+                if (lastPageProp.length >= 3) {
+                    pagination.size = +lastPageProp[2];
+                }
+            }
+        }
+    }
+
+    private getHeaders(headers?: SimpleHeader): HttpHeaders {
+        let httpHeaders: HttpHeaders = new HttpHeaders(headers);
+
+        if (!!!httpHeaders.has('Content-Type')) {
+            httpHeaders = httpHeaders.append('Content-Type', 'application/json');
+        } else if (httpHeaders.get('Content-Type') === '') {
+            httpHeaders = httpHeaders.delete('Content-Type');
+        }
+
+        if (this.isLoggedIn() && !httpHeaders.has('Authorization')) {
+            httpHeaders = httpHeaders.append('Authorization', 'Bearer ' + this.token);
         }
 
         return httpHeaders;
     }
 
-    private appendHeaderIds(httpHeaders: Headers, ids: string[]): Headers {
-        httpHeaders.append('X-Monogramm-Filter',
+    private appendHeaderIds(httpHeaders: HttpHeaders, ids: string[]): HttpHeaders {
+        httpHeaders = httpHeaders.append('X-Custom-Filter',
             JSON.stringify({
                 'Id': {
                     '$in': ids
@@ -312,13 +448,48 @@ export class WebBackendService extends BackendService {
         return httpHeaders;
     }
 
-    private logError(error: Response): Promise<any> {
+    private logError(error: any): Promise<any> {
         if (typeof error.json === 'function') {
             Logger.dir(error.json());
         } else {
             Logger.dir(error);
         }
-        return Promise.reject(error);
+
+        let msg: string;
+        switch (error.status) {
+            case 400:
+                msg = 'app.message.error.bad_request';
+                break;
+            case 401:
+                msg = 'app.message.error.unauthorized';
+                break;
+            case 403:
+                msg = 'app.message.error.forbidden';
+                break;
+            case 404:
+                msg = 'app.message.error.not_found';
+                break;
+            case 409:
+                msg = 'app.message.error.invalid_request';
+                break;
+            case 500:
+                msg = 'app.message.error.internal_error';
+                break;
+            case 503:
+                msg = 'app.message.error.unavailable';
+                break;
+            case 504:
+                msg = 'app.message.error.timeout';
+                break;
+        }
+
+        // Hide the technical error from the end user as much as possible
+        if (msg) {
+            Logger.log(msg);
+            return Promise.reject(msg);
+        } else {
+            return Promise.reject(error);
+        }
     }
 
 }

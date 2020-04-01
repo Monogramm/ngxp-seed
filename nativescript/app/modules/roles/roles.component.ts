@@ -1,32 +1,32 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { action } from 'ui/dialogs';
-import { Color } from 'color';
-import { Page } from 'ui/page';
-import { TextField } from 'ui/text-field';
-import * as SocialShare from 'nativescript-social-share';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { action } from "ui/dialogs";
+import { Color } from "color";
+import { Page } from "ui/page";
+import { TextField } from "ui/text-field";
+import * as SocialShare from "nativescript-social-share";
 
-import { Logger } from '../../x-shared/app/shared';
-import { RoleService } from '../../x-shared/app/roles';
-import { LoginService } from '../../x-shared/app/login';
+import { Logger } from "../../x-shared//shared";
+import { RoleService } from "../../x-shared/app/roles";
+import { LoginService } from "../../x-shared/app/login";
 
-import { alert } from '../shared';
+import { alert } from "../shared";
 
-import { RoleListComponent } from './role-list/role-list.component';
+import { RoleListComponent } from "./role-list/role-list.component";
 
 @Component({
-    selector: 'mg-roles',
+    selector: "mg-roles",
     moduleId: module.id,
-    templateUrl: './roles.component.html',
-    styleUrls: ['./roles-common.css', './roles.component.css']
+    templateUrl: "./roles.component.html",
+    styleUrls: ["./roles-common.css", "./roles.component.css"]
 })
 export class RolesComponent implements OnInit {
-    role: string = '';
+    role: string = "";
     isAndroid;
     isConfirmingDeletion = false;
     isLoading = false;
 
-    @ViewChild('roleTextField') roleTextField: ElementRef;
+    @ViewChild("roleTextField") roleTextField: ElementRef;
 
     constructor(private _router: Router,
         private _store: RoleService,
@@ -36,7 +36,7 @@ export class RolesComponent implements OnInit {
     ngOnInit(): void {
         this.isAndroid = !!this._page.android;
         this._page.actionBarHidden = true;
-        this._page.className = 'list-page';
+        this._page.className = "list-page";
     }
 
     // Prevent the first textfield from receiving focus on Android
@@ -65,14 +65,14 @@ export class RolesComponent implements OnInit {
 
         let textField = <TextField>this.roleTextField.nativeElement;
 
-        if (this.role.trim() === '') {
+        if (this.role.trim() === "") {
             // If the user clicked the add button, and the textfield is empty,
             // focus the text field and return.
-            if (target === 'button') {
+            if (target === "button") {
                 textField.focus();
             } else {
                 // If the user clicked return with an empty text field show an error.
-                alert('Enter a role item');
+                alert("Enter a role item");
             }
             return;
         }
@@ -86,11 +86,11 @@ export class RolesComponent implements OnInit {
         this._store.add(this.role)
             .then(
             () => {
-                this.role = '';
+                this.role = "";
                 this.hideActivityIndicator();
             },
             () => {
-                alert('An error occurred while adding an item to your list.');
+                alert("An error occurred while adding an item to your list.");
                 this.hideActivityIndicator();
             }
             );
@@ -113,7 +113,7 @@ export class RolesComponent implements OnInit {
                         this.hideActivityIndicator();
                     },
                     () => {
-                        alert('An error occurred while deleting roles.');
+                        alert("An error occurred while deleting roles.");
                         this.hideActivityIndicator();
                     }
                 );
@@ -128,13 +128,13 @@ export class RolesComponent implements OnInit {
 
     showMenu(): void {
         action({
-            message: 'What would you like to do?',
-            actions: ['Share', 'Log Off'],
-            cancelButtonText: 'Cancel'
+            message: "What would you like to do?",
+            actions: ["Share", "Log Off"],
+            cancelButtonText: "Cancel"
         }).then((result) => {
-            if (result === 'Share') {
+            if (result === "Share") {
                 this.share();
-            } else if (result === 'Log Off') {
+            } else if (result === "Log Off") {
                 this.logoff();
             }
         });
@@ -146,11 +146,11 @@ export class RolesComponent implements OnInit {
         for (let i = 0, size = items.length; i < size; i++) {
             list.push(items[i].name);
         }
-        SocialShare.shareText(list.join(', ').trim());
+        SocialShare.shareText(list.join(", ").trim());
     }
 
     logoff(): void {
         this._loginService.logoff();
-        this._router.navigate(['/login']);
+        this._router.navigate(["/login"]);
     }
 }

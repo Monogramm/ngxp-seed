@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { UsersRoutingModule } from './users-routing.module';
 
-import { UserService } from '../../x-shared/app/users';
+import { UserService } from '@xapp/users';
 
 import { UsersComponent } from './users.component';
 import { UserListComponent } from './user-list';
@@ -12,7 +12,7 @@ import { UserPasswordComponent, ChangePasswordComponent } from './user-password'
 
 @NgModule({
     imports: [
-        HttpModule,
+        HttpClientModule,
         UsersRoutingModule,
         SharedModule
     ],

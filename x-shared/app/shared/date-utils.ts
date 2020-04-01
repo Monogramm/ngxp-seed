@@ -14,9 +14,9 @@ export class DateUtils {
      */
     static add(date: Date, units: string, interval: number): Date {
         // don't change original date
-        var ret: Date = new Date(date);
+        let ret: Date = new Date(date);
 
-        var checkRollover = () => { if (ret.getDate() != date.getDate()) ret.setDate(0); };
+        let checkRollover = () => { if (ret.getDate() !== date.getDate()) ret.setDate(0); };
 
         switch (units.toLowerCase()) {
             case 'year': ret.setFullYear(ret.getFullYear() + interval); checkRollover(); break;

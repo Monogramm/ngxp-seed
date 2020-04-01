@@ -1,24 +1,24 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { action } from 'ui/dialogs';
-import { Color } from 'color';
-import { Page } from 'ui/page';
-import { TextField } from 'ui/text-field';
-import * as SocialShare from 'nativescript-social-share';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { action } from "ui/dialogs";
+import { Color } from "color";
+import { Page } from "ui/page";
+import { TextField } from "ui/text-field";
+import * as SocialShare from "nativescript-social-share";
 
-import { Logger } from '../../x-shared/app/shared';
-import { UserService, User } from '../../x-shared/app/users';
-import { LoginService } from '../../x-shared/app/login';
+import { Logger } from "../../x-shared/app/shared";
+import { UserService, User } from "../../x-shared/app/users";
+import { LoginService } from "../../x-shared/app/login";
 
-import { alert } from '../shared';
+import { alert } from "../shared";
 
-import { UserListComponent } from './user-list/user-list.component';
+import { UserListComponent } from "./user-list/user-list.component";
 
 @Component({
-    selector: 'mg-users',
+    selector: "mg-users",
     moduleId: module.id,
-    templateUrl: './users.component.html',
-    styleUrls: ['./users-common.css', './users.component.css'],
+    templateUrl: "./users.component.html",
+    styleUrls: ["./users-common.css", "./users.component.css"],
     providers: [UserService, LoginService]
 })
 export class UsersComponent implements OnInit {
@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
     isShowingRecent = false;
     isLoading = false;
 
-    @ViewChild('userTextField') userTextField: ElementRef;
+    @ViewChild("userTextField") userTextField: ElementRef;
 
     constructor(private _router: Router,
         private _store: UserService,
@@ -37,7 +37,7 @@ export class UsersComponent implements OnInit {
     ngOnInit() {
         this.isAndroid = !!this._page.android;
         this._page.actionBarHidden = true;
-        this._page.className = 'list-page';
+        this._page.className = "list-page";
     }
 
     // Prevent the first textfield from receiving focus on Android
@@ -58,28 +58,28 @@ export class UsersComponent implements OnInit {
     }
 
     delete(user: User) {
-        if (confirm('Confirm deletion of user "' + user.username + '" ?')) {
+        if (confirm("Confirm deletion of user "" + user.username + "" ?")) {
             user.deleting = true;
 
             this._store.delete(user)
                 .then(
                 () => { },
-                () => alert('An error occurred while deleting a user.')
+                () => alert("An error occurred while deleting a user.")
                 );
         }
     }
 
     edit(user: User) {
-        this._router.navigate(['/user', user.id]);
+        this._router.navigate(["/user", user.id]);
     }
 
     showMenu() {
         action({
-            message: 'What would you like to do?',
-            actions: ['Log Off'],
-            cancelButtonText: 'Cancel'
+            message: "What would you like to do?",
+            actions: ["Log Off"],
+            cancelButtonText: "Cancel"
         }).then((result) => {
-            if (result === 'Log Off') {
+            if (result === "Log Off") {
                 this.logoff();
             }
         });
@@ -87,6 +87,6 @@ export class UsersComponent implements OnInit {
 
     logoff() {
         this._loginService.logoff();
-        this._router.navigate(['/login']);
+        this._router.navigate(["/login"]);
     }
 }

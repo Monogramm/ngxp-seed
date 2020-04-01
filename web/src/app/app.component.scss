@@ -1,28 +1,151 @@
 @import "../scss/_variables";
 
 .top-bar {
-  background-color: $c-primary;
-  color: $c-primary-contrast;
-  border: solid 1px $c-primary-border;
-  height: 70px;
-  padding: 17px;
+    background-color: $c-primary;
+    color: $c-primary-contrast;
+    border-bottom: solid 1px $c-primary-border;
+    height: 70px;
+    padding: 5px 17px;
 
-  .title {
-    text-align: center;
-  }
-  .title * {
-    color: $c-primary-contrast;
-  }
-  
-  .logoff {
-    text-align: right;
-    margin-top: -3.8em;
-  }
-  .logoff * {
-    color: $c-primary-contrast;
-  }
+    .button {
+        box-shadow: none;
+    }
+
+    .menu {
+        position: absolute;
+        left: 17px;
+        top: 7px;
+        text-align: left;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .title img {
+        max-height: 60px;
+        border-radius: 5px;
+    }
+
+    .title img.notify {
+        cursor: pointer;
+
+        /* background: rgba( $c-secondary, .3 ); */
+        /* box-shadow: 0 0 5px 4px rgba( $c-secondary, .3 ); */
+        border-radius: 5px;
+        -webkit-animation: Blink 1000ms infinite alternate;
+        -moz-animation: Blink 1000ms infinite alternate;
+        -ms-animation: Blink 1000ms infinite alternate;
+        -o-animation: Blink 1000ms infinite alternate;
+        animation: Blink 1000ms infinite alternate;
+    }
+
+    .logout {
+        position: absolute;
+        right: 17px;
+        top: 7px;
+        text-align: right;
+    }
+
+    .menu *, .title *, .logout * {
+        color: $c-primary-contrast;
+        font-size: xx-large;
+    }
+
+    .menu .link, .title .link, .logout .link {
+        cursor: pointer;
+    }
+
+    .menu .link:hover, .menu .link:focus, .menu .link:active,
+    .title .link:hover, .title .link:focus, .title .link:active,
+    .logout .link:hover, .logout .link:focus, .logout .link:active {
+        color: $c-accent;
+    }
+}
+
+ng-sidebar /deep/ .app-sidebar, ng-sidebar /deep/ .ng-sidebar {
+    background-color: $c-menu-background;
+
+    &.ng-sidebar--opened.ng-sidebar--over { 
+        box-shadow: 0 0 2.5em transparentize($color: $c-menu-shadow, $amount: 0.5);
+        padding-bottom: 50px;
+        min-width: 240px;
+        max-width: 50%;
+    }
+
+    &.ng-sidebar--left {
+        border-right: 1px solid $c-menu-border;
+    }
+
+    &.ng-sidebar--right {
+        border-left: 1px solid $c-menu-border;
+    }
+
+    .app-menu-header {
+        margin: 1em 2em;
+        text-align: center;
+
+        img {
+          max-width: 5em;
+        }
+    }
+
+    .menu {
+        margin: 0;
+        padding: 0;
+
+        .menu-entry {
+            padding: 0.5em 0.5em 0 0.5em;
+            border-top: 2px solid $c-menu-border;
+
+            .menu-link {
+                color: $c-menu-color;
+                text-decoration: none;
+                font-size: 1.5em;
+                transition: color 0.2s ease-in-out,  text-shadow 0.2s ease-in-out;
+
+                .icon {
+                    color: $c-menu-color;
+                    font-size: 1.5em;
+                    transition: color 0.2s ease-in-out,  text-shadow 0.2s ease-in-out;
+                }
+
+                &:hover, &:focus,
+                &:hover .icon, &:focus .icon {
+                    color: $c-secondary;
+                    text-shadow: 2px 1px 6px transparentize(darken($c-secondary, 15%), 0.6);
+                }
+            }
+        }
+    }
+
+    .app-menu-control {
+        .link-menu-toggle {
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.5em;
+            padding: 0 0.5em;
+            position: fixed;
+            bottom: 0;
+            background-color: $c-menu-background;
+            max-height: 50px;
+            min-width: 238px;
+        }
+    }
+
+    &.ng-sidebar--left .app-menu-control .link-menu-toggle {
+        border-radius: 0 10px 0 0;
+        border-top: 1px dotted;
+        border-right: 1px dotted;
+    }
+
+    &.ng-sidebar--right .app-menu-control .link-menu-toggle {
+        border-radius: 0 0 10px 0;
+        border-top: 1px dotted;
+        border-left: 1px dotted;
+    }
 }
 
 .content-container {
-  text-align: center;
+    text-align: center;
 }

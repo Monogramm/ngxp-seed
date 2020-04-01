@@ -1,3 +1,8 @@
 export const environment = {
-  production: true
+  production: true,
+  locale: 'fr',
+  appName: 'NGXP',
+  backendUrl: 'https://app.example.com/api/',
+  clientId: 'clientWebIdPassword',
+  clientSecret: 'mysupersecretproductionpassword'
 };

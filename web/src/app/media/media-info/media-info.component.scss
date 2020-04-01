@@ -1,0 +1,26 @@
+@import '../../../scss/variables';
+
+form {
+  display: flex;
+}
+input {
+  flex: 5;
+  margin-right: 0.5em;
+}
+
+img {
+  max-width: 100%;
+}
+
+.link-container {
+  overflow: hidden;
+}
+.link-container button {
+  float: right;
+}
+.left {
+  margin-right: auto;
+}
+.right {
+  margin-left: auto;
+}

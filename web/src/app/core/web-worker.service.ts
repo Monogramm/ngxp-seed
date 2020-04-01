@@ -1,7 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 
-import { Logger, Pagination } from '../../x-shared/app/shared';
-import { WorkerService } from '../../x-shared/app/core';
+import { WorkerService } from '@xapp/core';
 
 @Injectable()
 export class WebWorkerService extends WorkerService {

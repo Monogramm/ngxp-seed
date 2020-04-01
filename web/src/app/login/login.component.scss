@@ -7,6 +7,9 @@ input {
 img[src*=gif] {
   height: 50px;
 }
+button {
+  margin: 0.5em 1em;
+}
 
 .logo {
   position: relative;
@@ -19,8 +22,8 @@ img[src*=gif] {
   display: block;
   margin: 0 auto;
   border-radius: 100%;
-  background-color: $c-background;
-  box-shadow: 0 0 0 1.5em $c-background;
+  background-color: $c-main-background;
+  box-shadow: 0 0 0 1.5em $c-main-background;
 }
 
 .logo:before {
@@ -35,8 +38,6 @@ img[src*=gif] {
   background: $c-secondary-border;
 }
 
-
-
 .forgot-password-label {
   text-align: left;
   padding: 10px 0;
@@ -45,20 +46,24 @@ img[src*=gif] {
   cursor: pointer;
 }
 
+.tos-label label {
+  margin-top: 1em;
+  width: 100%;
+  display: inline-block;
+
+  input {
+    width: initial;
+    display: inline-block;
+  }
+}
 
 
 .dark .logo img {
-  background-color: $c-background-dark;
-  box-shadow: 0 0 0 1.5em $c-background-dark;
+  background-color: $c-main-background-dark;
+  box-shadow: 0 0 0 1.5em $c-main-background-dark;
 }
 
 @media screen and (max-width: 480px) {
-  .login-page, .list-page {
-    max-width: 95%;
-    padding-left: 1em;
-    padding-right: 1em;
-  }
-
   .logo:before {
     left: 0;
     width: 100%;

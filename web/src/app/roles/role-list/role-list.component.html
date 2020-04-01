@@ -1,13 +1,18 @@
-<ul>
-    <li *ngFor="let role of _store.items | async | roleStatus:showSelection">
-        <i [class]="imageSource(role)" (click)="toggleSelection(role)" style="font-size: 1.5em"></i>
+<ul class="entity-list">
+    <li *ngFor="let role of store.items | async | roleStatus:selection">
+        <i *ngIf="selectable" [class]="'icon ' + imageSource(role)" (click)="toggleSelection(role)"></i>
 
-        <span [class.done]="role.selected && !role.deleted">{{ role.name }}</span>
+        <a [routerLink]="edit(role)" [class.selected]="role.selected && !role.deleted">{{ role.name }}</a>
 
-        <button *ngIf="!role.deleted && !role.deleting" class="btn-secondary" (click)="delete(role)">
-            <i class="icon-cross"></i>
+        <button *ngIf="deletable" [class.hidden]="role.deleted || role.deleting" class="button is-secondary" (click)="delete(role)">
+            <i class="icon icon-cross"></i>
         </button>
-        <i *ngIf="!role.deleted && role.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+        <i *ngIf="deletable" [class.hidden]="role.deleted || !role.deleting" class="icon icon-rotate"></i>
 
     </li>
 </ul>
+<app-pagination-controls [pagination]="pagination" (change)="load($event)"
+    [first]="'app.pagination.first' | translate"
+    [prev]="'app.pagination.prev' | translate"
+    [next]="'app.pagination.next' | translate"
+    [last]="'app.pagination.last' | translate"></app-pagination-controls>

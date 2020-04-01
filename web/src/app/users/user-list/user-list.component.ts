@@ -1,45 +1,93 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Logger } from '../../../x-shared/app/shared';
-import { User, UserService } from '../../../x-shared/app/users';
+import { TranslateService } from '@ngx-translate/core';
+
+import { Logger, Pagination } from '@xshared/index';
+import { User, UserService } from '@xapp/users';
 
 @Component({
-    selector: 'user-list',
+    selector: 'app-user-list',
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements OnInit {
-    @Input() selectedUser: User;
-    @Output() loaded = new EventEmitter();
+    @Input() viewable = true;
+    @Input() deletable = true;
+    @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() loaded: EventEmitter<number> = new EventEmitter<number>();
+
+    pagination: Pagination = new Pagination();
 
     constructor(public store: UserService,
+        private _translate: TranslateService,
         private _router: Router) { }
 
     ngOnInit() {
-        this.store.load()
-            .then(() => this.loaded.emit('loaded'));
+        this.load(1);
     }
 
-    delete(user: User) {
-        if (confirm('Confirm deletion of user "' + user.username + '" ?')) {
-            user.deleting = true;
+    reload(): void {
+        this.load(this.pagination.page);
+    }
 
-            this.store.delete(user)
-                .then(
-                () => { },
+    load(page: number): void {
+        this.pagination.page = page;
+
+        this.loading.emit(true);
+        this.store.load(this.pagination)
+            .then(
+                () => {
+                    this.loading.emit(false);
+                    this.loaded.emit(this.store.count);
+                },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    alert('An error occurred while deleting a user.');
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
+                    this.loading.emit(false);
+                    this.loaded.emit(0);
                 }
+            );
+    }
+
+    delete(user: User) {
+        if (!this.deletable) {
+            return;
+        }
+        const msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
+            user.deleting = true;
+
+            this.store.delete(user)
+                .then(
+                    () => {
+                        user.deleting = false;
+                        user.deleted = true;
+                        if (this.pagination.next) {
+                            this.reload();
+                        }
+                    },
+                    (error) => {
+                        user.deleting = false;
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
+                        this.reload();
+                    }
                 );
         }
     }
 
-    edit(user: User) {
-        this._router.navigate(['/user', user.id]);
+    edit(user: User): any[] {
+        if (!this.viewable || !!!user.id) {
+            return ['.'];
+        }
+        return ['/user', user.id];
     }
 }

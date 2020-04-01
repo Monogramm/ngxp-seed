@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Type } from '../../../x-shared/app/types/type.model';
+import { Type } from '@xapp/types/type.model';
 
 @Pipe({
     name: 'typeStatus'
@@ -12,6 +12,8 @@ export class TypeStatusPipe implements PipeTransform {
             this.value = items.filter((type: Type) => {
                 return type.selected === selected;
             });
+        } else {
+            this.value = [];
         }
         return this.value;
     }

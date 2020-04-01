@@ -12,11 +12,11 @@ export class TypeDTO {
 
 export class Type extends TypeDTO {
     constructor(
-        public id: string,
-        public name: string,
-        public selected: boolean = false,
-        public deleted: boolean = false,
-        public deleting: boolean = false,
+        public id: string = null,
+        public name: string = null,
+        public selected = false,
+        public deleted = false,
+        public deleting = false,
         public createdAt: Date = null,
         public createdBy: string = null,
         public modifiedAt: Date = null,

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AuthGuard, AdminGuard, SupportGuard } from '../shared';
+import { AuthGuard, VerifyGuard, RoleGuard } from '../shared';
 
 import { TypesComponent } from './types.component';
 import { TypeInfoComponent } from './type-info';
@@ -9,8 +9,25 @@ import { TypeInfoComponent } from './type-info';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: 'types', pathMatch: 'full', component: TypesComponent, canActivate: [AuthGuard], canLoad: [AdminGuard, SupportGuard] },
-            { path: 'type/:id', component: TypeInfoComponent, canActivate: [AuthGuard], canLoad: [AdminGuard, SupportGuard] }
+            {
+                path: 'types',
+                pathMatch: 'full',
+                component: TypesComponent,
+                canActivate: [AuthGuard, VerifyGuard],
+                canLoad: [RoleGuard],
+                data: {
+                    expectedRoles: ['Admin', 'Support']
+                }
+            },
+            {
+                path: 'type/:id',
+                component: TypeInfoComponent,
+                canActivate: [AuthGuard, VerifyGuard],
+                canLoad: [RoleGuard],
+                data: {
+                    expectedRoles: ['Admin', 'Support']
+                }
+            }
         ])
     ],
     exports: [RouterModule]

@@ -1,0 +1,4 @@
+Sitemap: https://your.website.com/sitemap.xml
+
+User-agent: *
+Disallow: /assets/

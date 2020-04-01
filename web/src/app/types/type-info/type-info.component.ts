@@ -1,84 +1,122 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Logger } from '../../../x-shared/app/shared';
-import { Type, TypeService } from '../../../x-shared/app/types';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import { TranslateService } from '@ngx-translate/core';
+
+import { Logger } from '@xapp/shared';
+import { Type, TypeService, TypeDTO } from '@xapp/types';
 
 import { TypeDetailsComponent } from './type-details';
 
 @Component({
-    selector: 'type-info',
+    selector: 'app-type-info',
     templateUrl: './type-info.component.html',
     styleUrls: ['./type-info.component.scss']
 })
 export class TypeInfoComponent implements OnInit {
     type: Type;
+    busy = false;
 
     constructor(public store: TypeService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
 
     ngOnInit() {
-        this._route.params
-            .switchMap((params: Params) => this.store.get(params['id']))
-            .subscribe((data: any) => {
-                this.type = this.store.newModel(data);
-            },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+        this._route.params.pipe(
+            switchMap((params: Params) => {
+                this.busy = true;
+                const entityId = params['id'];
+                if (entityId) {
+                    return this.store.get(entityId);
+                } else {
+                    return Observable.create((observer) => {
+                        observer.next(null);
+                    });
                 }
-                alert('An error occurred while loading a type.');
-                this._location.back();
-            });
-    }
-
-    delete(type: Type) {
-        if (confirm('Confirm deletion of type "' + type.name + '" ?')) {
-            type.deleting = true;
-
-            this.store.delete(type)
-                .then(
-                () => { },
+            }))
+            .subscribe((data: HttpResponse<TypeDTO>) => {
+                this.busy = false;
+                if (data && data.body) {
+                    this.type = this.store.newModel(data.body);
+                } else {
+                    this.type = new Type();
+                }
+            },
                 (error) => {
                     if (Logger.isEnabled) {
                         Logger.dir(error);
                     }
-                    alert('An error occurred while deleting a type.');
-                }
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
+                    this.return();
+                });
+    }
+
+    delete(type: Type) {
+        const msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
+            type.deleting = true;
+
+            this.busy = true;
+            this.store.delete(type)
+                .then(
+                    () => {
+                        this.return();
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
+                    }
                 );
         }
     }
 
     submit(type: Type) {
         if (type.id === null) {
+            this.busy = true;
             this.store.add(type.name)
                 .then(
-                () => { this._location.back() },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        this.return();
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        const errMsg: string = this._translate.instant('app.message.error.creation');
+                        alert(errMsg);
                     }
-                    alert('An error occurred while adding an type.');
-                }
                 );
         } else {
+            this.busy = true;
             this.store.update(type)
                 .then(
-                () => { this._location.back() },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        this.return();
+                    },
+                    (error) => {
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        const errMsg: string = this._translate.instant('app.message.error.update');
+                        alert(errMsg);
                     }
-                    alert('An error occurred while updating a type.');
-                }
                 );
         }
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { User } from './user.model';
 
-declare var describe: any;
-declare var expect: any;
-declare var it: any;
+declare let describe: any;
+declare let expect: any;
+declare let it: any;
 
 describe('User', function () {
     let user = new User();

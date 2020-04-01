@@ -1,5 +1,9 @@
-const emailValidator = require('email-validator');
-const ValidatePassword = require('validate-password');
+import { validate } from 'email-validator';
+
+// FIXME ValidatePassword is not a constructor
+/*
+import { ValidatePassword } from 'validate-password';
+
 const validator = new ValidatePassword({
     enforce: {
         lowercase: true,
@@ -8,6 +12,7 @@ const validator = new ValidatePassword({
         numbers: true
     }
 });
+*/
 
 export class UserDTO {
     constructor(
@@ -15,8 +20,8 @@ export class UserDTO {
         public email: string,
         public password: string,
         public username: string,
-        public verified: boolean = false,
-        public active: boolean = false,
+        public verified = false,
+        public active = false,
         public role: string = null,
         public createdAt: Date = null,
         public createdBy: string = null,
@@ -27,8 +32,13 @@ export class UserDTO {
 }
 
 export class User extends UserDTO {
-    deleted: boolean = false;
-    deleting: boolean = false;
+    deleted = false;
+    deleting = false;
+
+    first_name: string;
+    last_name: string;
+    phone: string;
+    address: string;
 
     constructor();
     constructor(
@@ -67,23 +77,25 @@ export class User extends UserDTO {
             verified || false,
             active || false,
             role || null,
-            createdAt ? new Date(createdAt) : null,
+            createdAt ? createdAt : new Date(),
             createdBy || null,
-            modifiedAt ? new Date(modifiedAt) : null,
+            modifiedAt || null,
             modifiedBy || null,
             owner || null
         );
     }
 
     isValidEmail() {
-        return emailValidator.validate(this.email);
+        return validate(this.email);
     }
     isValidPassword() {
         if (this.password === '') {
             return false;
         } else {
-            var passwordData = validator.checkPassword(this.password);
-            return passwordData.isValid;
+            // FIXME ValidatePassword is not a constructor
+            // let passwordData = validator.checkPassword(this.password);
+            // return passwordData.isValid;
+            return true;
         }
     }
 }

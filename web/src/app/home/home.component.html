@@ -1,18 +1,18 @@
-<div class="home">
-    <h1 class="title text-primary">Welcome</h1>
+<div class="main-page home">
+    <h1 class="title is-plain">{{ 'home.welcome' | translate }}</h1>
 
     <hr>
 
     <div [class]="cvm.isReady ? 'modules' : 'modules hidden'" class="modules">
         <a class="module" *ngFor="let module of cvm.availablePages" [routerLink]="module.route" routerLinkActive="active">
             <i [class]="'icon ' + module.iconClass"></i>
-            {{module.text}}
+            {{ module.text | translate }}
         </a>
     </div>
 
-    <activity-indicator [isLoading]="!cvm.isReady"></activity-indicator>
+    <app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="!cvm.isReady"></app-activity-indicator>
 
     <hr>
 
-    <button class="btn btn-danger" (click)="logoff()">Log off</button>
+    <button *ngIf="isLoggedIn()" class="button is-danger" (click)="logoff()">{{ 'home.logout' | translate }}</button>
 </div>

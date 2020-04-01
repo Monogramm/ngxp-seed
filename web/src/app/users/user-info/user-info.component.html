@@ -1,17 +1,31 @@
-<div class="list-page">
-    <h1>Profile management</h1>
+<div class="main-page">
+    <h1>{{ 'users.profile' | translate }}</h1>
 
     <hr>
 
     <div>
-        <i *ngIf="!!!user" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
-        <user-details *ngIf="user" [user]="user"></user-details>
+        <h3>{{ 'app.common.operations' | translate }}</h3>
+        <ul *ngIf="user">
+            <li><a [routerLink]="['/user', user.id, 'password']">{{ 'users.operations.change_password' | translate }}</a></li>
+            <li *ngIf="user && !user.verified"><a [routerLink]="['/register', user.id]">{{ 'users.operations.verify' |
+                    translate }}</a></li>
+        </ul>
     </div>
 
     <hr>
 
-    <form (submit)="submit(user)">
-        <button class="left btn-primary">Save</button>
-        <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
-    </form>
+    <div>
+        <h3>Détails</h3>
+        <i *ngIf="!!!user" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
+        <app-user-details *ngIf="user" [user]="user"></app-user-details>
+
+        <hr>
+
+        <form (submit)="submit(user)">
+            <button [disabled]="busy" class="left button is-primary">{{ 'app.common.save' | translate }}</button>
+            <button type="button" class="right button is-secondary" (click)="return()">{{ 'app.common.cancel' | translate }}</button>
+        </form>
+    </div>
+
+    <app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="busy"></app-activity-indicator>
 </div>

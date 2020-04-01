@@ -1,0 +1,276 @@
+{
+    "app": {
+        "top_bar": {
+            "menu.title": "Menu",
+            "menu.install": "Install",
+            "menu.hide": "Hide",
+            "home.title": "Go to home",
+            "logo.install": "Install application",
+            "logout.title": "Logout"
+        },
+        "activity": {
+            "loading": "Loading"
+        },
+        "message": {
+            "logout": "Do you really want to log off?",
+            "install": "Learn how to install this application on your device?",
+            "update": "A new version of the application is available. Confirm to update.",
+            "confirm": {
+                "create": "Confirm creation?",
+                "update": "Confirm update?",
+                "delete": "Confirm deletion?",
+                "password": "Confirm password update?"
+            },
+            "warning": {
+                "missing_field": "Enter all needed information",
+                "invalid_format": "Value provided doesn't match selected type format"
+            },
+            "error": {
+                "loading": "An error occurred while loading the resource.",
+                "creation": "An error occurred while creating the resource.",
+                "update": "An error occurred while updating the resource.",
+                "deletion": "An error occurred while deleting the selection.",
+                "bad_request": "Your request could not be sent or was refused.",
+                "unauthorized": "You are not authorized to do this.",
+                "forbidden": "Access to this resource is forbidden.",
+                "not_found": "This resource does not seem to exist anymore.",
+                "invalid_request": "Your request is not valid. Check that you have filled in all the fields.",
+                "internal_error": "Your request could not be processed.",
+                "unavailable": "The service is currently unavailable.",
+                "timeout": "Your request could not be processed in time."
+            }
+        },
+        "common": {
+            "operations": "Operations",
+            "add": "Add",
+            "delete": "Delete selection",
+            "confirm": "Confirm",
+            "save": "Save",
+            "cancel": "Cancel",
+            "back": "Back"
+        },
+        "pagination": {
+            "first": "First",
+            "prev": "Previous",
+            "cur": "Current",
+            "next": "Next",
+            "last": "Last"
+        }
+    },
+    "entity": {
+        "id": "Id: ",
+        "created_at": "Created at: ",
+        "created_by": "Created by: ",
+        "modified_at": "Modified at: ",
+        "modified_by": "Modified by: ",
+        "owner": "Owner: ",
+        "user": {
+            "username": "Username: ",
+            "username_placeholder": "Username",
+            "email": "Email: ",
+            "email_placeholder": "Email",
+            "verified": "Verified account",
+            "active": "Is account active: ",
+            "role": "Role: "
+        },
+        "role": {
+            "name": "Name: ",
+            "name_placeholder": "Name",
+            "permissions": "Permissions: "
+        },
+        "type": {
+            "name": "Name: ",
+            "name_placeholder": "Name"
+        },
+        "parameter": {
+            "name": "Name: ",
+            "name_placeholder": "Name",
+            "description": "Description: ",
+            "description_placeholder": "Description",
+            "type": "Type: ",
+            "value": "Value: "
+        },
+        "media": {
+            "name": "Name: ",
+            "name_placeholder": "Name",
+            "description": "Description: ",
+            "description_placeholder": "Description",
+            "start_date": "Start date: ",
+            "end_date": "End date: ",
+            "resource": "File: ",
+            "path": "Path: "
+        }
+    },
+    "login": {
+        "email": "Email: ",
+        "email_placeholder": "Email",
+        "password": "Password: ",
+        "password_placeholder": "Password",
+        "forgot_password": "Forgot password?",
+        "loading": "Loading",
+        "login": "Login",
+        "register": "Register",
+        "signup": "Sign Up",
+        "username": "Username: ",
+        "username_placeholder": "Username (leave empty to use the identification of your email address)",
+        "terms_of_usage": "By registering, you accept our terms of usage.",
+        "i_accept_tos": "I accept",
+        "back_to_login": "Back to Login",
+        "message": {
+            "success": {
+                "signup": "Your account was successfully created. An email has been sent to activate your account.",
+                "token_sent": "Verification token sent to your email address. Check your mail box and spams."
+            },
+            "warning": {
+                "valid_email": "Enter a valid email address",
+                "accept_tos": "You must accept our terms of usage to register"
+            },
+            "error": {
+                "login": "Unfortunately we were not able to log you into the system.",
+                "load_profile": "An error occurred while loading the profile information.",
+                "send_token": "An error occurred while sending verification token.",
+                "verification": "Could not verify the account email address. Check entered information or resend token.",
+                "signup": "Unfortunately we were unable to create your account."
+            }
+        }
+    },
+    "register": {
+        "title": "Complete registration",
+        "resend_token": "Resend verification email",
+        "token": "Token",
+        "token_placeholder": "Token",
+        "complete": "Complete",
+        "message": {
+            "success": {
+                "token_sent": "Verification token sent to your email address. Check your mail box and spams."
+            },
+            "warning": {
+                "empty_token": "The token cannot be empty!"
+            },
+            "error": {
+                "load_profile": "An error occurred while loading the profile information.",
+                "send_token": "An error occurred while sending verification token.",
+                "verification": "Could not verify the account email address. Check entered information or resend token."
+            }
+        }
+    },
+    "users": {
+        "management": "Users management",
+        "profile": "User profile",
+        "password_management": "Password management: ",
+        "email": "Email: ",
+        "email_placeholder": "Email",
+        "token": "Token: ",
+        "token_placeholder": "Token",
+        "operations": {
+            "change_password": "Change password",
+            "verify": "Verify address email"
+        },
+        "details": "Details",
+        "password": {
+            "old_password": "Current password: ",
+            "old_password_placeholder": "Current password",
+            "new_password": "New password: ",
+            "new_password_placeholder": "New password",
+            "confirm_password": "Confirm password: ",
+            "confirm_password_placeholder": "Confirm password",
+            "reset_password_management": "Reset password",
+            "resend_reset_token": "Resend password reset token email",
+            "reset_password": "Reset"
+        },
+        "message": {
+            "success": {
+                "token_sent": "Password reset token sent to your email address. Check your mail box and spams."
+            },
+            "error": {
+                "send_token": "An error occurred while sending reset password token.",
+                "reset_password": "An error occurred while resetting password."
+            }
+        }
+    },
+    "roles": {
+        "management": "Roles management",
+        "info": "Role"
+    },
+    "types": {
+        "management": "Types management",
+        "info": "Type"
+    },
+    "parameters": {
+        "management": "Parameters management",
+        "info": "Parameter",
+        "message": {
+            "warning": {
+                "invalid_value": "Value format doesn't match the selected type."
+            }
+        }
+    },
+    "media": {
+        "management": "Media management",
+        "info": "Media",
+        "operations": {
+            "download": "Download media",
+            "direct_link": "Direct link"
+        },
+        "details": "Details"
+    },
+    "home": {
+        "title": "Home",
+        "welcome": "Welcome",
+        "logout": "Log out",
+        "profile": "Profile",
+        "password": "Password",
+        "roles": "Roles",
+        "types": "Types",
+        "users": "Users",
+        "parameters": "Parameters",
+        "media": "Media",
+        "info": "Information"
+    },
+    "info": {
+        "title": "Information",
+        "links": "Useful links",
+        "description": "The following links may help you to learn about the application and how harness its full potential.",        
+        "legal_links": "Legal links",
+        "legal_description": "The following links present legal information about this application.",
+        "about": {
+            "link": "Learn more about this application",
+            "title": "About",
+            "description": "This application is a sample application built using Monogramm starters. Learn more by visiting our GitHub repositories: https://github.com/Monogramm"
+        },
+        "install": {
+            "link": "Learn how to install this application on your device",
+            "title": "How to install",
+            "description": "This application is actually a Progressive Web App (PWA) that can be directly installed to your device. Learn more about how to install this application on your device:",
+            "ios": {
+                "title": "Install on iOS",
+                "description": "To install a PWA on your Home Screen, follow these steps:",
+                "steps": {
+                    "share": "Tap the 'Share' button of 'Safari'",
+                    "home_screen": "Tap the icon labeled 'Add to Home Screen'",
+                    "add": "Tap 'Add' in the upper-right corner",
+                    "name": "Confirm the name of the PWA then tap 'Add' in the upper-right corner",
+                    "launch": "You can now launch the application from your Home Screen"
+                }
+            },
+            "android": {
+                "title": "Install on Android",
+                "description": "Using Chrome for Android, you will automatically be prompted to install the app on your system. Click 'Install' to install the application on your device."
+            },
+            "chrome": {
+                "title": "Install on Chrome (desktop)",
+                "description": "When using Chrome for Desktop, you can click on the menu (the 3 dots in the upper-right corner), then 'Install ...' to add the application to Chrome Applications."
+            }
+        },
+        "legal": {
+            "link": "Learn more about the application legal information",
+            "title": "Legal notice",
+            "description": "To define"
+        },
+        "usage": {
+            "link": "Learn the Terms of Use and Privacy Policy of this application",
+            "title": "Terms of Use",
+            "description": "To define"
+        }
+    }
+}

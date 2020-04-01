@@ -1,29 +1,54 @@
-@import '../../../scss/variables';
+@import "../../../scss/variables";
 
-li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: $c-primary-border 1px;
-}
-li img {
-  height: 30px;
-}
-li span {
-  flex-grow: 1;
-  display: inline-block;
-  padding: 0 1em;
-}
-.inactive {
-  text-decoration: line-through;
-}
-.not-verified {
-  font-style: italic;
-  color: $c-primary;
-}
-li button {
-  height: 35px;
-  width: 35px;
-  line-height: 35px;
+.entity-list {
+  margin: 0.5em;
   padding: 0;
+  border: 1px solid $c-secondary-border;
+
+  li {
+    padding: 0.25em 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px dashed $c-secondary-border;
+  }
+
+  li:first-child {
+    border-top: none;
+  }
+
+  li i.icon {
+    font-size: 25px;
+  }
+
+  li img {
+    height: 30px;
+  }
+
+  li span {
+    flex-grow: 1;
+    display: inline-block;
+    padding: 0 1em;
+  }
+
+  .selected {
+    font-style: italic;
+  }
+
+  li button {
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    padding: 0;
+  }
+  li button i.icon {
+    font-size: 21px;
+  }
+
+  .not-verified {
+    font-style: italic;
+  }
+  .not-active {
+    text-decoration: line-through;
+  }
 }

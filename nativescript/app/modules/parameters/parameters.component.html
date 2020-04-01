@@ -1,0 +1,42 @@
+<GridLayout #container rows="auto, auto, *">
+
+    <!-- Row 1: The custom action bar -->
+    <GridLayout row="0" columns="44, *, auto" class="action-bar-custom">
+        <Label col="1" text="Parameters"></Label>
+
+        <!-- Wrap the image in a StackLayout to give it a bigger tap target -->
+        <StackLayout col="2" (tap)="showMenu()">
+            <Label class="icomoon" text="&#xf141;"></Label>
+            <!-- FIXME use fonticons classes instead of codes -->
+            <!-- 
+            <Label class="icomoon" [text]="'icon-ellipsis-h' | fonticon"></Label>
+            -->
+        </StackLayout>
+    </GridLayout>
+
+    <!-- Row 2: The text field to add parameters, and selection button -->
+    <GridLayout row="1" columns="auto, *, auto" [class]="'items-bar ' + (isConfirmingDeletion ? 'alt' : '')">
+        <StackLayout class="items-bar-image-container" col="0" (tap)="add('button')">
+            <Label col="0" class="icon icomoon" [text]="isConfirmingDeletion ? '&#xe94e;' : '&#xea0a;'"></Label>
+            <!-- FIXME use fonticons classes instead of codes -->
+            <!-- 
+            <Label col="0" class="icon icomoon" [text]="isConfirmingDeletion ? 'icon-clock' : 'plus' | fonticon"></Label>
+            -->
+        </StackLayout>
+
+        <TextField #parameterTextField col="1" [(ngModel)]="parameter" (loaded)="handleAndroidFocus(parameterTextField, container)" [hint]="isAndroid ? 'ADD A TYPE' : 'Add a parameter'"
+            returnKeyParameter="done" *ngIf="!isConfirmingDeletion" (returnPress)="add('textfield')"></TextField>
+
+        <Label col="1" text="Selected items" *ngIf="isConfirmingDeletion" class="items-bar-select-label"></Label>
+
+        <StackLayout col="2" class="items-bar-select-container" (tap)="toggleMassDelete()">
+            <Label class="items-bar-select-toggle" [text]="isConfirmingDeletion ? 'Confirm' : 'Supprimer la sélection'"></Label>
+        </StackLayout>
+    </GridLayout>
+
+    <!-- Row 3: The parameter list -->
+    <mg-parameter-list [row]="2" (loading)="showActivityIndicator()" (loaded)="hideActivityIndicator()" [showSelection]="isConfirmingDeletion"></mg-parameter-list>
+
+    <ActivityIndicator [busy]="isLoading" row="2"></ActivityIndicator>
+
+</GridLayout>

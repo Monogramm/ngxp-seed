@@ -1,25 +1,25 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { action } from 'ui/dialogs';
-import { Frame } from 'ui/frame';
-import { Page } from 'ui/page';
-import { TextField } from 'ui/text-field';
-import { Color } from 'color';
-import * as SocialShare from 'nativescript-social-share';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Router, ActivatedRoute, Params } from "@angular/router";
+import { action } from "ui/dialogs";
+import { Frame } from "ui/frame";
+import { Page } from "ui/page";
+import { TextField } from "ui/text-field";
+import { Color } from "color";
+import * as SocialShare from "nativescript-social-share";
 
-import { Logger } from '../../../x-shared/app/shared';
-import { UserService, User } from '../../../x-shared/app/users';
-import { LoginService } from '../../../x-shared/app/login';
+import { Logger } from "../../../x-shared/app/shared";
+import { UserService, User } from "../../../x-shared/app/users";
+import { LoginService } from "../../../x-shared/app/login";
 
-import { alert } from '../../shared';
+import { alert } from "../../shared";
 
-import { UserDetailsComponent } from './user-details/user-details.component';
+import { UserDetailsComponent } from "./user-details/user-details.component";
 
 @Component({
-    selector: 'mg-user-info',
+    selector: "mg-user-info",
     moduleId: module.id,
-    templateUrl: './user-info.component.html',
-    styleUrls: ['./user-common.css', './user-info.component.css'],
+    templateUrl: "./user-info.component.html",
+    styleUrls: ["./user-common.css", "./user-info.component.css"],
     providers: [UserService, LoginService]
 })
 export class UserInfoComponent implements OnInit {
@@ -37,10 +37,10 @@ export class UserInfoComponent implements OnInit {
     ngOnInit() {
         this.isAndroid = !!this._page.android;
         this._page.actionBarHidden = true;
-        this._page.className = 'list-page';
+        this._page.className = "list-page";
 
         this._route.params
-            .switchMap((params: Params) => this.store.get(params['id']))
+            .switchMap((params: Params) => this.store.get(params["id"]))
             .subscribe((data: any) => {
                 Logger.dir(data);
                 this.user = this.store.newModel(data);
@@ -66,14 +66,14 @@ export class UserInfoComponent implements OnInit {
     }
 
     delete(user: User) {
-        if (confirm('Confirm deletion of user "' + user.username + '" ?')) {
+        if (confirm("Confirm deletion of user "" + user.username + "" ?")) {
             user.deleting = true;
 
             this.showActivityIndicator();
             this.store.delete(user)
                 .then(
                 () => this.hideActivityIndicator(),
-                () => { alert('An error occurred while deleting a user.'); this.hideActivityIndicator(); }
+                () => { alert("An error occurred while deleting a user."); this.hideActivityIndicator(); }
                 );
         }
     }
@@ -84,24 +84,24 @@ export class UserInfoComponent implements OnInit {
             this.store.add(user)
                 .then(
                 () => this.hideActivityIndicator(),
-                () => { alert('An error occurred while adding an user.'); this.hideActivityIndicator(); }
+                () => { alert("An error occurred while adding an user."); this.hideActivityIndicator(); }
                 );
         } else {
             this.store.update(user)
                 .then(
                 () => this.hideActivityIndicator(),
-                () => { alert('An error occurred while updating a user.'); this.hideActivityIndicator(); }
+                () => { alert("An error occurred while updating a user."); this.hideActivityIndicator(); }
                 );
         }
     }
 
     showMenu() {
         action({
-            message: 'What would you like to do?',
-            actions: ['Log Off'],
-            cancelButtonText: 'Cancel'
+            message: "What would you like to do?",
+            actions: ["Log Off"],
+            cancelButtonText: "Cancel"
         }).then((result) => {
-            if (result === 'Log Off') {
+            if (result === "Log Off") {
                 this.logoff();
             }
         });
@@ -113,6 +113,6 @@ export class UserInfoComponent implements OnInit {
 
     logoff() {
         this._loginService.logoff();
-        this._router.navigate(['/login']);
+        this._router.navigate(["/login"]);
     }
 }

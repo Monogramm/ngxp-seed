@@ -23,11 +23,12 @@ export class Base64 {
      * @returns a Base64 String
      */
     public static btoa(textString: string): string {
-        var str: String = String(textString);
+        let str: String = String(textString);
 
+        let output = '';
         for (
             // initialize result and counter
-            var block, charCode, idx = 0, map = Base64.CHARS, output = '';
+            let block: number, charCode: number, idx = 0, map = Base64.CHARS, output = '';
             // if the next str index does not exist:
             //   change the mapping table to "="
             //   check if d has no fractional digits
@@ -53,15 +54,17 @@ export class Base64 {
      * @returns a String
      */
     public static atob(base64String: string): string {
-        var str: String = String(base64String).replace(/=+$/, '');
+        let str: String = String(base64String).replace(/=+$/, '');
 
-        if (str.length % 4 == 1) {
+        if (str.length % 4 === 1) {
             throw new InvalidCharacterError("'atob' failed: The string to be decoded is not correctly encoded.");
         }
 
+
+        let output = '';
         for (
             // initialize result and counters
-            var bc = 0, bs, buffer, idx = 0, output = '';
+            let bc = 0, bs: number, buffer: string | number, idx = 0;
             // get next character
             buffer = str.charAt(idx++);
             // character found in table? initialize bit storage and add its ascii value;

@@ -1,17 +1,19 @@
-<div class="list-page">
-    <h1>Type management</h1>
+<div class="main-page">
+    <h1>{{ 'types.info' | translate }}</h1>
 
     <hr>
 
     <div>
-        <i *ngIf="!!!role" class="icon-rotate icon-spinner10" style="font-size: 5em"></i>
-        <type-details *ngIf="type" [type]="type"></type-details>
+        <i *ngIf="!!!type" class="icon icon-rotate" style="font-size: 5em"></i>
+        <app-type-details *ngIf="type" [type]="type"></app-type-details>
     </div>
 
     <hr>
 
     <form (submit)="submit(type)">
-        <button class="left btn-primary">Save</button>
-        <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+        <button [disabled]="busy" class="left button is-primary">{{ 'app.common.save' | translate }}</button>
+        <button type="button" class="right button is-secondary" (click)="return()">{{ 'app.common.cancel' | translate }}</button>
     </form>
+
+    <app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="busy"></app-activity-indicator>
 </div>

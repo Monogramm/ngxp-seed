@@ -1,24 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 
-import { BackendService } from '../../x-shared/app/core';
-import { Type, TypeService } from '../../x-shared/app/types';
+import { TranslateService } from '@ngx-translate/core';
 
-import { Logger } from '../../x-shared/app/shared';
+import { Type, TypeService } from '@xapp/types';
+
+import { Logger } from '@xapp/shared';
 
 import { TypeListComponent } from './type-list';
 
 @Component({
-    selector: 'types',
+    selector: 'app-types',
     templateUrl: './types.component.html',
     styleUrls: ['./types.component.scss']
 })
 export class TypesComponent implements OnInit {
-    type: string = '';
+    type = '';
+
+    selectable = false;
 
     isLoading = false;
     isConfirmingDeletion = false;
 
-    constructor(private _store: TypeService) { }
+    constructor(
+        private _translate: TranslateService,
+        private _store: TypeService) { }
 
     ngOnInit() {
         this.isLoading = true;
@@ -30,7 +35,8 @@ export class TypesComponent implements OnInit {
 
     add() {
         if (this.type.trim() === '') {
-            alert('Enter a type item');
+            const msg: string = this._translate.instant('app.message.warning.missing_field');
+            alert(msg);
             return;
         }
 
@@ -41,7 +47,8 @@ export class TypesComponent implements OnInit {
                 if (Logger.isEnabled) {
                     Logger.dir(error);
                 }
-                alert('An error occurred while adding a type to your list.');
+                const errMsg: string = this._translate.instant('app.message.error.creation');
+                alert(errMsg);
             });
     }
 
@@ -52,16 +59,19 @@ export class TypesComponent implements OnInit {
 
     toggleMassDelete() {
         if (this.isConfirmingDeletion) {
-            let result = this._store.deleteSelection();
-            
+            const result = this._store.deleteSelection();
+
             if (result) {
                 result.then(
-                    () => { this.isConfirmingDeletion = false },
+                    () => {
+                        this.isConfirmingDeletion = false;
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        alert('An error occurred while deleting types.');
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
             } else {

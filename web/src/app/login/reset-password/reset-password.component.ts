@@ -2,58 +2,74 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Logger } from '../../../x-shared/app/shared';
-import { LoginService } from '../../../x-shared/app/login';
-import { User } from '../../../x-shared/app/users';
+import { TranslateService } from '@ngx-translate/core';
+
+import { Logger } from '@xapp/shared';
+import { LoginService } from '@xapp/login';
+import { User } from '@xapp/users';
 
 import { ChangePasswordComponent } from './change-password';
 
 @Component({
-    selector: 'reset-password',
+    selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent {
     email: string;
-
     token: string;
-
     password: string;
+    busy = false;
 
     constructor(public store: LoginService,
+        private _translate: TranslateService,
         private _route: ActivatedRoute,
         private _router: Router,
         private _location: Location) { }
 
     sendToken() {
         if (this.email) {
+            this.busy = true;
             this.store.sendResetPasswordToken(this.email)
                 .then(
-                () => { alert('Password reset token sent to your email address. Check your mail box and spams.') },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        this.busy = false;
+                        const msg: string = this._translate.instant('users.message.success.token_sent');
+                        alert(msg);
+                    },
+                    (error) => {
+                        this.busy = false;
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        const msg: string = this._translate.instant('users.message.error.send_token');
+                        alert(msg);
                     }
-                    alert('An error occurred while sending reset password token.');
-                }
                 );
         }
     }
 
     submit() {
+        this.busy = true;
         this.store.resetPassword(this.email, this.token, this.password)
             .then(
-            () => { },
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                () => {
+                    this.busy = false;
+                    this._router.navigate(['']);
+                },
+                (error) => {
+                    this.busy = false;
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    const msg: string = this._translate.instant('users.message.error.reset_password');
+                    alert(msg);
                 }
-                alert('An error occurred while resetting password.');
-            }
             );
     }
 
-    cancel() {
+    return() {
+        this.busy = false;
         this._location.back();
     }
 

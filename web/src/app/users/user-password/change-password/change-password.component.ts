@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { User } from '../../../../x-shared/app/users';
+import { User } from '@xapp/users';
 
 @Component({
-    selector: 'change-password',
+    selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -22,6 +22,8 @@ export class ChangePasswordComponent {
     }
 
     get valid(): boolean {
-        return !(this.checkOldPassword && this.oldPassword == null) && !(this.user.password == null) && this.user.password === this.newPasswordConfirmation;
+        return !(this.checkOldPassword && this.oldPassword == null)
+            && !(this.user.password == null)
+            && this.user.password === this.newPasswordConfirmation;
     }
 }

@@ -20,10 +20,8 @@
     <ActivityIndicator [busy]="isLoading" row="1"></ActivityIndicator>
 
     <!-- Row 3: The form actions -->
-    <DockLayout row="2" class="form-actions" stretchLastChild="false">
-        <Button dock="left" text="Cancel" [isEnabled]="!isLoading" class="left submit-button" (tap)="cancel()"></Button>
-
-        <Button dock="right" text="Save" [isEnabled]="!isLoading" class="right submit-button" (tap)="submit(user)"></Button>
-    </DockLayout>
-
+    <StackLayout row="2">
+        <Button text="Cancel" [isEnabled]="!isLoading" class="left submit-button" (tap)="cancel()"></Button>
+        <Button text="Save" [isEnabled]="!isLoading" class="right submit-button" (tap)="submit(user)"></Button>
+    </StackLayout>
 </GridLayout>

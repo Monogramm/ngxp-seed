@@ -1,4 +1,4 @@
-# NGXP Starter [![Build Status](https://secure.travis-ci.org/Monogramm/ngxp-seed.png)](https://travis-ci.org/Monogramm/ngxp-seed)
+# NGXP Seed [![Build Status](https://secure.travis-ci.org/Monogramm/ngxp-seed.png)](https://travis-ci.org/Monogramm/ngxp-seed)
 
 A "simple" starter project to create native mobile and web apps with single shared code base using angular and nativescript. It is designed to plug to the [spring-rest-api-starter](https://github.com/Monogramm/spring-rest-api-starter) backend.
 
@@ -7,9 +7,13 @@ The frontend is based on the [nativescript-angular-web-starter](https://github.c
 Check this [Open Souce Cross Platform Quotes Application](https://github.com/shripalsoni04/ngxp-quotes-app) for reference, which is made with the exact same architecture as this starter project.
 
 ## Prerequisites
-0. Globally installed [Git](https://git-scm.com/), [Node.js](https://nodejs.org), [npm](https://www.npmjs.com/)
-1. Globally installed Angular CLI - `npm install -g @angular/cli`
-2. Globally installed NativeScript  - `npm install -g nativescript`
+0. Globally installed
+  * [Git](https://git-scm.com/)
+  * [Node.js](https://nodejs.org) **8** & [npm](https://www.npmjs.com/)
+  * `gcc` & `g++`
+  * `make`
+1. Globally installed Angular CLI - `npm install -g @angular/cli@1.1.1`
+2. Globally installed NativeScript  - `npm install -g nativescript@3.2.0`
 3. (optional). Mac OS to build iOS app and Android emulator or device for building Android app.
 
 ## Installation

@@ -1,35 +1,38 @@
 <div *ngIf="type">
     <label>
-        Id:
-        <span>{{ type.id }}</span>
+        {{ 'entity.type.name' | translate }}
+        <input [placeholder]="'entity.type.name' | translate" name="name" required autofocus autocapitalize="off"
+            autocorrect="off" [(ngModel)]="type.name">
     </label>
 
-    <label>
-        Display name:
-        <input placeholder="Display name" name="name" required autocapitalize="off" autocorrect="off" [(ngModel)]="type.name">
-    </label>
+    <div *ngIf="type.id" class="technical-details">
+        <label>
+            {{ 'entity.id' | translate }}
+            <span>{{ type.id }}</span>
+        </label>
 
-    <label>
-        Created At:
-        <span>{{ type.createdAt }}</span>
-    </label>
-    <label>
-        Created By:
-        <span>{{ type.createdBy }}</span>
-    </label>
+        <label>
+            {{ 'entity.created_at' | translate }}
+            <span>{{ type.createdAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.created_by' | translate }}
+            <span>{{ type.createdBy }}</span>
+        </label>
 
-    <label>
-        Modified At:
-        <span>{{ type.modifiedAt }}</span>
-    </label>
-    <label>
-        Modified By:
-        <span>{{ type.modifiedBy }}</span>
-    </label>
+        <label>
+            {{ 'entity.modified_at' | translate }}
+            <span>{{ type.modifiedAt | date:'short' }}</span>
+        </label>
+        <label>
+            {{ 'entity.modified_by' | translate }}
+            <span>{{ type.modifiedBy }}</span>
+        </label>
 
-    <label>
-        Owner:
-        <span>{{ type.owner }}</span>
-    </label>
+        <label>
+            {{ 'entity.owner' | translate }}
+            <span>{{ type.owner }}</span>
+        </label>
+    </div>
 
 </div>

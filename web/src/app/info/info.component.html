@@ -1,0 +1,29 @@
+<div class="main-page">
+    <h1 class="title is-plain">{{ 'info.title' | translate }}</h1>
+
+    <hr>
+
+    <div class="info-details">
+        <h3>{{ 'info.links' | translate }}</h3>
+        <p>{{ 'info.description' | translate }}</p>
+
+        <ul>
+            <li><a [routerLink]="['about']">{{ 'info.about.link' | translate }}</a></li>
+            <li><a [routerLink]="['install']">{{ 'info.install.link' | translate }}</a></li>
+        </ul>
+
+        <h3>{{ 'info.legal_links' | translate }}</h3>
+        <p>{{ 'info.legal_description' | translate }}</p>
+
+        <ul>
+            <li><a [routerLink]="['legal']">{{ 'info.legal.link' | translate }}</a></li>
+            <li><a [routerLink]="['usage']">{{ 'info.usage.link' | translate }}</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div>
+        <button type="button" class="center button is-secondary" (click)="back()">{{ 'app.common.back' | translate }}</button>
+    </div>
+</div>

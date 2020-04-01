@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { Type } from './type.model';
 
-declare var describe: any;
-declare var expect: any;
-declare var it: any;
+declare let describe: any;
+declare let expect: any;
+declare let it: any;
 
 describe('Type', function () {
     let type = new Type('42', 'answer');

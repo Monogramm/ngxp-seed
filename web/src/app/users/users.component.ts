@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User, UserService } from '../../x-shared/app/users';
-import { BackendService } from '../../x-shared/app/core';
+import { User, UserService } from '@xapp/users';
 
 import { UserListComponent } from './user-list';
 

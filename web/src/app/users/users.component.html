@@ -1,9 +1,14 @@
-<div class="list-page">
-  <h1>Users management</h1>
+<div class="main-page">
+  <h1>{{ 'users.management' | translate }}</h1>
+
+  <div class="link-container">
+    <button [routerLink]="['/user']" class="right button is-primary">
+      {{ 'app.common.add' | translate }}</button>
+  </div>
 
   <hr>
 
-  <user-list [class.hidden]="store.count === 0" (loaded)="hideLoadingIndicator()"></user-list>
+  <app-user-list [class.hidden]="store.count === 0" (loaded)="hideLoadingIndicator()"></app-user-list>
 </div>
 
-<activity-indicator [isLoading]="isLoading"></activity-indicator>
+<app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="isLoading"></app-activity-indicator>

@@ -1,12 +1,20 @@
-<ul>
+<ul class="entity-list">
     <li *ngFor="let user of store.items | async">
-        <i [class]="user.verified ? 'icon-user-check' : 'icon-user'" style="font-size: 1.5em"></i>
-        <a [class.not-verified]="!user.verified" [routerLink]="['/user', user.id]">{{ user.username }}</a>
+        <i [class]="user.verified ? 'success icon icon-user-check' : 'icon icon-user'"></i>
 
-        <button *ngIf="!user.deleted && !user.deleting" class="btn-secondary" (click)="delete(user)">
-            <i class="icon-cross"></i>
+        <a [routerLink]="edit(user)" [class.not-verified]="!user.verified" [class.not-active]="!user.active">{{
+            user.username
+            }}</a>
+
+        <button *ngIf="deletable" [class.hidden]="user.deleted || user.deleting" class="button is-secondary" (click)="delete(user)">
+            <i class="icon icon-cross"></i>
         </button>
-        <i *ngIf="!user.deleted && user.deleting" class="icon-rotate icon-spinner10" style="font-size: 2em"></i>
+        <i *ngIf="deletable" [class.hidden]="user.deleted || !user.deleting" class="icon icon-rotate"></i>
 
     </li>
 </ul>
+<app-pagination-controls [pagination]="pagination" (change)="load($event)"
+    [first]="'app.pagination.first' | translate"
+    [prev]="'app.pagination.prev' | translate"
+    [next]="'app.pagination.next' | translate"
+    [last]="'app.pagination.last' | translate"></app-pagination-controls>

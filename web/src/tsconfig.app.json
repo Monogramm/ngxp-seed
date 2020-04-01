@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/out-tsc/app",
+    "module": "es6",
+    "types": []
+  },
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts",
+    "**/*.tns.ts",
+    "**/*.android.ts",
+    "**/*.ios.ts"
+  ]
+}

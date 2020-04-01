@@ -44,3 +44,8 @@ Button, Label, StackLayout {
 .module:active {
   color: $c-background;
 }
+
+.icon {
+  font-size: 64;
+  padding: 5;
+}

@@ -1,13 +1,6 @@
 @import '../../scss/variables';
 
 .home {
-  max-width: 480px;
-  margin: 1em auto;
-  padding: 2em;
-  background: #ffffff;
-  border-radius: 4px;
-  opacity: 0.9;
-
   .title {
     margin-bottom: 10px;
   }
@@ -18,7 +11,7 @@
 }
 
 .modules {
-	display: flex;
+	/* display: flex; */
 	flex-direction: row;
 	flex-wrap: wrap;
 	
@@ -28,8 +21,9 @@
 }
 .modules > * {
 	flex: 0 0 auto;
-	width: 40%; 
-  margin: 1em 5%;
+	width: 169px;
+	height: 169px;
+  margin: 15px;
 	display: block;  /* IE fix */
 	
 	/* Inline-block fallback */
@@ -47,25 +41,58 @@
   border-radius: 8px;
   font-weight: bold;
   font-size: 1em;
-  background-color: $c-secondary;
-  border: solid 1px $c-secondary-border;
+  background-color: $c-primary;
+  border: solid 3px $c-primary;
   color: $c-primary-contrast;
+  text-shadow: none;
 }
 .module:active, .module:focus, .module:hover {
-  background-color: rgba($c-background, 0.6);
-  color: $c-dark-accent;
+  background-color: rgba($c-main-background, 0.6);
+  color: $c-primary;
   border-radius: 100%;
 }
 
 .module i {
   display: block;
   max-width: 100%;
-  margin: 40px auto 15px auto;
+  margin: 40px auto 0 auto;
   font-size: 500%;
-  box-shadow: 0 0 0 0 rgba($c-background, 0);
+  box-shadow: 0 0 0 0 rgba($c-main-background, 0);
+}
+
+.module i.icon {
+  color: $c-primary-contrast;
+}
+
+.module:active i.icon, .module:focus i.icon, .module:hover i.icon {
+  color: $c-primary;
+}
+
+@media screen and (max-width: 768px) {
+  .modules > * {
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+  }
+
+  .module i {
+    margin: 27px auto 0 auto;
+    font-size: 500%;
+  }
 }
 
 @media screen and (max-width: 480px) {
+  .modules > * {
+    width: 125px;
+    height: 125px;
+    margin: 5px;
+  }
+
+  .module i {
+    margin: 19px auto 0 auto;
+    font-size: 400%;
+  }
+
   .module:before {
     left: -2em;
     width: calc(100% + 4em);

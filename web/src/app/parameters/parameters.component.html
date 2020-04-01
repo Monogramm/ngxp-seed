@@ -1,0 +1,20 @@
+<div class="main-page">
+  <h1>{{ 'parameters.management' | translate }}</h1>
+
+  <div class="link-container">
+    <button (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="'left ' + (isConfirmingDeletion ? 'button is-secondary' : 'button is-primary')">
+      {{ (isConfirmingDeletion ? 'app.common.cancel' : 'app.common.delete') | translate }}
+    </button>
+
+    <button [routerLink]="['/parameter']" class="right button is-primary" [class.hidden]="isConfirmingDeletion">
+      {{ 'app.common.add' | translate }}</button>
+    <button (click)="toggleMassDelete()" class="right button is-primary" [class.hidden]="!isConfirmingDeletion">
+      {{ 'app.common.confirm' | translate }}</button>
+  </div>
+
+  <hr>
+
+  <app-parameter-list [selection]="isConfirmingDeletion" [selectable]="selectable" (loaded)="hideLoadingIndicator()"></app-parameter-list>
+</div>
+
+<app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="isLoading"></app-activity-indicator>

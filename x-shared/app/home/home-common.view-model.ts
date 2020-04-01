@@ -7,7 +7,7 @@ export class HomeCommonViewModel {
 
     availablePages: HomeModule[];
 
-    isReady: boolean = false;
+    isReady = false;
 
     constructor(private homeService: HomeService) {
         this.init();

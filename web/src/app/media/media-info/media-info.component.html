@@ -1,0 +1,32 @@
+<div class="main-page">
+    <h1>{{ 'media.info' | translate }}</h1>
+
+    <div *ngIf="media && media.id">
+        <hr>
+
+        <h3>{{ 'app.common.operations' | translate }}</h3>
+        <ul>
+            <li><button (click)="download()">{{ 'media.operations.download' | translate }}</button></li>
+            <li><a class="button" [href]="publicLink()">{{ 'media.operations.direct_link' | translate }}</a></li>
+        </ul>
+
+        <img *ngIf="isImage()" [src]="publicLink()" [alt]="media.name" [title]="media.name" />
+    </div>
+
+    <hr>
+
+    <div>
+        <h3>{{ 'media.details' | translate }}</h3>
+        <i *ngIf="!!!media" class="icon icon-rotate" style="font-size: 5em"></i>
+        <app-media-details *ngIf="media" [media]="media"></app-media-details>
+    </div>
+
+    <hr>
+
+    <form (submit)="submit(media)">
+        <button [disabled]="busy" class="left button is-primary">{{ 'app.common.save' | translate }}</button>
+        <button type="button" class="right button is-secondary" (click)="return()">{{ 'app.common.cancel' | translate }}</button>
+    </form>
+
+    <app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="busy"></app-activity-indicator>
+</div>

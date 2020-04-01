@@ -1,32 +1,32 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { action } from 'ui/dialogs';
-import { Color } from 'color';
-import { Page } from 'ui/page';
-import { TextField } from 'ui/text-field';
-import * as SocialShare from 'nativescript-social-share';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { action } from "ui/dialogs";
+import { Color } from "color";
+import { Page } from "ui/page";
+import { TextField } from "ui/text-field";
+import * as SocialShare from "nativescript-social-share";
 
-import { Logger } from '../../x-shared/app/shared';
-import { TypeService } from '../../x-shared/app/types';
-import { LoginService } from '../../x-shared/app/login';
+import { Logger } from "../../x-shared/app/shared";
+import { TypeService } from "../../x-shared/app/types";
+import { LoginService } from "../../x-shared/app/login";
 
-import { alert } from '../shared';
+import { alert } from "../shared";
 
-import { TypeListComponent } from './type-list/type-list.component';
+import { TypeListComponent } from "./type-list/type-list.component";
 
 @Component({
-    selector: 'mg-types',
+    selector: "mg-types",
     moduleId: module.id,
-    templateUrl: './types.component.html',
-    styleUrls: ['./types-common.css', './types.component.css']
+    templateUrl: "./types.component.html",
+    styleUrls: ["./types-common.css", "./types.component.css"]
 })
 export class TypesComponent implements OnInit {
-    type: string = '';
+    type: string = "";
     isAndroid;
     isConfirmingDeletion = false;
     isLoading = false;
 
-    @ViewChild('typeTextField') typeTextField: ElementRef;
+    @ViewChild("typeTextField") typeTextField: ElementRef;
 
     constructor(private _router: Router,
         private _store: TypeService,
@@ -36,7 +36,7 @@ export class TypesComponent implements OnInit {
     ngOnInit(): void {
         this.isAndroid = !!this._page.android;
         this._page.actionBarHidden = true;
-        this._page.className = 'list-page';
+        this._page.className = "list-page";
     }
 
     // Prevent the first textfield from receiving focus on Android
@@ -65,14 +65,14 @@ export class TypesComponent implements OnInit {
 
         let textField = <TextField>this.typeTextField.nativeElement;
 
-        if (this.type.trim() === '') {
+        if (this.type.trim() === "") {
             // If the user clicked the add button, and the textfield is empty,
             // focus the text field and return.
-            if (target === 'button') {
+            if (target === "button") {
                 textField.focus();
             } else {
                 // If the user clicked return with an empty text field show an error.
-                alert('Enter a type item');
+                alert("Enter a type item");
             }
             return;
         }
@@ -86,11 +86,11 @@ export class TypesComponent implements OnInit {
         this._store.add(this.type)
             .then(
             () => {
-                this.type = '';
+                this.type = "";
                 this.hideActivityIndicator();
             },
             () => {
-                alert('An error occurred while adding an item to your list.');
+                alert("An error occurred while adding an item to your list.");
                 this.hideActivityIndicator();
             }
             );
@@ -113,7 +113,7 @@ export class TypesComponent implements OnInit {
                         this.hideActivityIndicator();
                     },
                     () => {
-                        alert('An error occurred while deleting types.');
+                        alert("An error occurred while deleting types.");
                         this.hideActivityIndicator();
                     }
                 );
@@ -128,13 +128,13 @@ export class TypesComponent implements OnInit {
 
     showMenu(): void {
         action({
-            message: 'What would you like to do?',
-            actions: ['Share', 'Log Off'],
-            cancelButtonText: 'Cancel'
+            message: "What would you like to do?",
+            actions: ["Share", "Log Off"],
+            cancelButtonText: "Annuler"
         }).then((result) => {
-            if (result === 'Share') {
+            if (result === "Share") {
                 this.share();
-            } else if (result === 'Log Off') {
+            } else if (result === "Log Off") {
                 this.logoff();
             }
         });
@@ -146,11 +146,11 @@ export class TypesComponent implements OnInit {
         for (let i = 0, size = items.length; i < size; i++) {
             list.push(items[i].name);
         }
-        SocialShare.shareText(list.join(', ').trim());
+        SocialShare.shareText(list.join(", ").trim());
     }
 
     logoff(): void {
         this._loginService.logoff();
-        this._router.navigate(['/login']);
+        this._router.navigate(["/login"]);
     }
 }

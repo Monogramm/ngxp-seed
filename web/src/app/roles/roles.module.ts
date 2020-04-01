@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { RolesRoutingModule } from './roles-routing.module';
 
-import { RoleService } from '../../x-shared/app/roles';
+import { RoleService } from '@xapp/roles';
+import { PermissionService } from '@xapp/permissions';
 
 import { RolesComponent } from './roles.component';
 import { RoleListComponent, RoleStatusPipe } from './role-list';
@@ -11,7 +12,7 @@ import { RoleInfoComponent, RoleDetailsComponent } from './role-info';
 
 @NgModule({
     imports: [
-        HttpModule,
+        HttpClientModule,
         RolesRoutingModule,
         SharedModule
     ],
@@ -22,7 +23,7 @@ import { RoleInfoComponent, RoleDetailsComponent } from './role-info';
         RoleInfoComponent,
         RoleDetailsComponent
     ],
-    providers: [RoleService],
+    providers: [RoleService, PermissionService],
     exports: [
         RolesComponent,
         RoleListComponent,

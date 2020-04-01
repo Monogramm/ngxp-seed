@@ -1,20 +1,24 @@
-<div class="list-page">
-  <h1>Complete registration</h1>
+<div class="main-page">
+  <h1>{{ 'register.title' | translate }}</h1>
 
   <div class="send-token-verification-label">
-    <a (click)="sendToken()">Resend verification email</a>
+    <a class="link" (click)="sendToken()">{{ 'register.resend_token' | translate }}</a>
   </div>
 
   <hr>
 
   <div>
-    <verify-account #accountManager [token]="token"></verify-account>
+    <label>
+      {{ 'register.token' | translate }}
+      <input [placeholder]="'register.token_placeholder' | translate" name="token" type="text" required autofocus
+        [(ngModel)]="token">
+    </label>
   </div>
 
   <hr>
 
-  <form #accountForm="ngForm" (submit)="submit()">
-    <button class="left btn-primary" [disabled]="!accountForm.form.valid">Complete</button>
-    <button type="button" class="right btn-secondary" (click)="cancel()">Cancel</button>
+  <form (submit)="submit()">
+    <button class="left button is-primary" [disabled]="valid">{{ 'register.complete' | translate }}</button>
+    <button type="button" class="right button is-secondary" (click)="return()">{{ 'app.common.cancel' | translate }}</button>
   </form>
 </div>

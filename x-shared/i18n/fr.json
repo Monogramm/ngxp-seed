@@ -1,0 +1,276 @@
+{
+    "app": {
+        "top_bar": {
+            "menu.title": "Menu",
+            "menu.install": "Installer",
+            "menu.hide": "Masquer",
+            "home.title": "Accueil",
+            "logo.install": "Installer l'application",
+            "logout.title": "Déconnexion"
+        },
+        "activity": {
+            "loading": "Chargement"
+        },
+        "message": {
+            "logout": "Voulez-vous vraiment vous déconnecter ?",
+            "install": "Découvrir comment installer cette application sur votre appareil ?",
+            "update": "Une nouvelle version de l'application est disponible. Confirmez pour mettre à jour.",
+            "confirm": {
+                "create": "Confirmer la création ?",
+                "update": "Confirmer la mise à jour ?",
+                "delete": "Confirmer la suppression ?",
+                "password": "Confirmer la mise à jour du mot de passe ?"
+            },
+            "warning": {
+                "missing_field": "Entrez toutes les informations nécessaires",
+                "invalid_format": "La valeur fournie ne correspond pas au format de type sélectionné"
+            },
+            "error": {
+                "loading": "Une erreur s'est produite lors du chargement de la ressource.",
+                "creation": "Une erreur s'est produite lors de la création de la ressource.",
+                "update": "Une erreur s'est produite lors de la mise à jour de la ressource.",
+                "deletion": "Une erreur s'est produite lors de la suppression de la sélection.",
+                "bad_request": "Votre demande n'a pas pu être envoyée ou a été refusée.",
+                "unauthorized": "Vous n'êtes pas autorisé à faire cela.",
+                "forbidden": "L'accès à cette ressource est interdit.",
+                "not_found": "Cette ressource ne semble plus exister.",
+                "invalid_request": "Votre demande n'est pas valide. Vérifiez que vous avez rempli tous les champs correctement.",
+                "internal_error": "Votre demande n'a pas pu être traitée.",
+                "unavailable": "Le service est actuellement indisponible.",
+                "timeout": "Votre demande n'a pas pu être traitée à temps."
+            }
+        },
+        "common": {
+            "operations": "Opérations",
+            "add": "Ajouter",
+            "delete": "Supprimer selection",
+            "confirm": "Confirmer",
+            "save": "Sauvegarder",
+            "cancel": "Annuler",
+            "back": "Retour"
+        },
+        "pagination": {
+            "first": "Début",
+            "prev": "Précédent",
+            "cur": "Actuel",
+            "next": "Suivant",
+            "last": "Fin"
+        }
+    },
+    "entity": {
+        "id": "Identifiant: ",
+        "created_at": "Créé à : ",
+        "created_by": "Créé par : ",
+        "modified_at": "Modifié à : ",
+        "modified_by": "Modifié par : ",
+        "owner": "Propriétaire : ",
+        "user": {
+            "username": "Nom d'utilisateur : ",
+            "username_placeholder": "Nom d'utilisateur",
+            "email": "Adresse email : ",
+            "email_placeholder": "Adresse email",
+            "verified": "Compte vérifié",
+            "active": "Compte actif : ",
+            "role": "Role : "
+        },
+        "role": {
+            "name": "Nom : ",
+            "name_placeholder": "Nom",
+            "permissions": "Permissions : "
+        },
+        "type": {
+            "name": "Nom : ",
+            "name_placeholder": "Nom"
+        },
+        "parameter": {
+            "name": "Nom : ",
+            "name_placeholder": "Nom",
+            "description": "Description : ",
+            "description_placeholder": "Description",
+            "type": "Type : ",
+            "value": "Valeur : "
+        },
+        "media": {
+            "name": "Nom : ",
+            "name_placeholder": "Nom",
+            "description": "Description : ",
+            "description_placeholder": "Description",
+            "start_date": "Date de début : ",
+            "end_date": "Date de fin : ",
+            "resource": "Fichier : ",
+            "path": "Chemin : "
+        }
+    },
+    "login": {
+        "email": "Adresse email : ",
+        "email_placeholder": "Adresse email",
+        "password": "Mot de passe : ",
+        "password_placeholder": "Mot de passe",
+        "forgot_password": "Mot de passe oublié ?",
+        "loading": "Chargement",
+        "login": "Connexion",
+        "register": "Inscription",
+        "signup": "S'inscrire",
+        "username": "Nom d'utilisateur : ",
+        "username_placeholder": "Nom d'utilisateur (laisser vide pour utiliser l'identifiant de votre adresse email)",
+        "terms_of_usage": "En vous inscrivant, vous acceptez nos conditions générales d'utilisation.",
+        "i_accept_tos": "J'accepte",
+        "back_to_login": "Retour",
+        "message": {
+            "success": {
+                "signup": "Votre compte a été créé avec succès. Un email a été envoyé pour activer votre compte.",
+                "token_sent": "Un code de vérification a été envoyé à votre adresse email. Vérifiez vos messages et spams."
+            },
+            "warning": {
+                "valid_email": "Entrez une adresse email valide",
+                "accept_tos": "Vous devez accepter nos conditions d'utilisation pour vous inscrire"
+            },
+            "error": {
+                "login": "Malheureusement, nous n'avons pas pu vous connecter au système.",
+                "load_profile": "Une erreur s'est produite lors du chargement des informations du profil utilisateur.",
+                "send_token": "Une erreur s'est produite lors de l'envoi du code de vérification.",
+                "verification": "Impossible de vérifier l'adresse email du compte. Vérifiez les informations saisies ou renvoyez le code.",
+                "signup": "Malheureusement, nous n'avons pas pu créer votre compte."
+            }
+        }
+    },
+    "register": {
+        "title": "Enregistrement complet",
+        "resend_token": "Renvoyer l'e-mail de vérification",
+        "token": "Code",
+        "token_placeholder": "Code",
+        "complete": "Valider",
+        "message": {
+            "success": {
+                "token_sent": "Jeton de vérification envoyé à votre adresse email. Vérifiez vos messages et spams."
+            },
+            "warning": {
+                "empty_token": "Le code ne peut être vide !"
+            },
+            "error": {
+                "load_profile": "Une erreur s'est produite lors du chargement des informations du profil utilisateur.",
+                "send_token": "Une erreur s'est produite lors de l'envoi du code de vérification.",
+                "verification": "Impossible de vérifier l'adresse e-mail du compte. Vérifiez les informations saisies ou renvoyez le code de vérification."
+            }
+        }
+    },
+    "users": {
+        "management": "Gestion des utilisateurs",
+        "profile": "Profil utilisateur",
+        "password_management": "Changement du mot de passe",
+        "email": "Adresse email : ",
+        "email_placeholder": "Adresse email",
+        "token": "Code : ",
+        "token_placeholder": "Code",
+        "operations": {
+            "change_password": "Changer le mot de passe",
+            "verify": "Vérifier l'adresse email"
+        },
+        "details": "Détails",
+        "password": {
+            "old_password": "Ancien mot de passe : ",
+            "old_password_placeholder": "Mot de passe actuel",
+            "new_password": "Nouveau mot de passe : ",
+            "new_password_placeholder": "Nouveau mot de passe",
+            "confirm_password": "Confirmez mot de passe : ",
+            "confirm_password_placeholder": "Mot de passe",
+            "reset_password_management": "Réinitialiser mot de passe",
+            "resend_reset_token": "Renvoyer l'e-mail de réinitialisation du mot de passe",
+            "reset_password": "Réinitialiser"
+        },
+        "message": {
+            "success": {
+                "token_sent": "Un code de réinitialisation de mot de passe a été envoyé à votre adresse email. Vérifiez vos messages et spams."
+            },
+            "error": {
+                "send_token": "Une erreur s'est produite lors de l'envoi du code de réinitialisation du mot de passe.",
+                "reset_password": "Une erreur s'est produite lors de la réinitialisation du mot de passe."
+            }
+        }
+    },
+    "roles": {
+        "management": "Gestion des rôles",
+        "info": "Role"
+    },
+    "types": {
+        "management": "Gestion des types de données",
+        "info": "Type"
+    },
+    "parameters": {
+        "management": "Gestion des paramètres",
+        "info": "Paramètre",
+        "message": {
+            "warning": {
+                "invalid_value": "Le format de la valeur ne correspond pas au type sélectionné."
+            }
+        }
+    },
+    "media": {
+        "management": "Gestion des média",
+        "info": "Média",
+        "operations": {
+            "download": "Télécharger média",
+            "direct_link": "Lien direct"
+        },
+        "details": "Détails"
+    },
+    "home": {
+        "title": "Accueil",
+        "welcome": "Bienvenue",
+        "logout": "Déconnexion",
+        "profile": "Profil",
+        "password": "Mot de passe",
+        "roles": "Roles",
+        "types": "Types",
+        "users": "Utilisateurs",
+        "parameters": "Paramètres",
+        "media": "Média",
+        "info": "Informations"
+    },
+    "info": {
+        "title": "Informations",
+        "links": "Liens utiles",
+        "description": "Les liens suivants peuvent vous aider à en apprendre plus sur l'application et sur la façon d'exploiter tout son potentiel.",
+        "legal_links": "Informations légales",
+        "legal_description": "Les liens suivants listent les informations légales sur cette application.",
+        "about": {
+            "link": "En savoir plus sur cette application",
+            "title": "À propos de",
+            "description": "Cette application est un exemple d'application créée à l'aide de kits Monogramm. Pour en savoir plus, visitez nos dépôts GitHub: https://github.com/Monogramm"
+        },
+        "install": {
+            "link": "Découvrez comment installer cette application sur votre appareil",
+            "title": "Comment installer",
+            "description": "Cette site est en fait une Application Web Progressive (PWA) pouvant être installée directement sur votre appareil. Découvrez comment installer cette application sur votre appareil :",
+            "ios": {
+                "title": "Installer sur iOS",
+                "description": "Pour installer une PWA sur votre écran d'accueil, procédez comme suit :",
+                "steps": {
+                    "share": "appuyez sur le bouton 'Partager' du navigateur 'Safari'",
+                    "home_screen": "appuyez sur l'icône 'Sur l'écran d'accueil'",
+                    "add": "appuyez sur 'Ajouter' dans le coin supérieur droit",
+                    "name": "confirmez le nom du PWA, puis appuyez sur 'Ajouter' dans le coin supérieur droit",
+                    "launch": "vous pouvez maintenant lancer l'application à partir de votre écran d'accueil"
+                }
+            },
+            "android": {
+                "title": "Installer sur Android",
+                "description": "À l'aide de Chrome pour Android, vous serez automatiquement invité à installer l'application sur votre système. Cliquez sur 'Installer' pour installer l'application sur votre appareil."
+            },
+            "chrome": {
+                "title": "Installer sur Chrome (bureau)",
+                "description": "Si vous utilisez Chrome pour bureau, vous pouvez cliquer sur le menu (les 3 points situés dans le coin supérieur droit), puis sur 'Installer ...' pour ajouter l'application aux applications Chrome."
+            }
+        },
+        "legal": {
+            "link": "Découvrez les mentions légales de cette application",
+            "title": "Mentions légales",
+            "description": "À définir"
+        },
+        "usage": {
+            "link": "Découvrez les conditions générales d'utilisation et la politique de confidentialité de cette application",
+            "title": "Conditions générales d'utilisation et politique de confidentialité",
+            "description": "À définir"
+        }
+    }
+}

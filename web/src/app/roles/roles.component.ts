@@ -1,25 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Role } from '../../x-shared/app/roles/role.model';
-import { RoleService } from '../../x-shared/app/roles';
-import { BackendService } from '../../x-shared/app/core';
+import { TranslateService } from '@ngx-translate/core';
 
-import { Logger } from '../../x-shared/app/shared';
+import { Role, RoleService } from '@xapp/roles';
+import { BackendService } from '@xapp/core';
+
+import { Logger } from '@xapp/shared';
 
 import { RoleListComponent } from './role-list';
 
 @Component({
-    selector: 'roles',
+    selector: 'app-roles',
     templateUrl: './roles.component.html',
     styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
-    role: string = '';
+    role = '';
+
+    selectable = false;
 
     isLoading = false;
     isConfirmingDeletion = false;
 
-    constructor(private _store: RoleService) { }
+    constructor(
+        private _translate: TranslateService,
+        private _store: RoleService) { }
 
     ngOnInit() {
         this.isLoading = true;
@@ -31,7 +36,8 @@ export class RolesComponent implements OnInit {
 
     add() {
         if (this.role.trim() === '') {
-            alert('Enter a role item');
+            const msg: string = this._translate.instant('app.message.warning.missing_field');
+            alert(msg);
             return;
         }
 
@@ -41,7 +47,8 @@ export class RolesComponent implements OnInit {
             if (Logger.isEnabled) {
                 Logger.dir(error);
             }
-            alert('An error occurred while adding a role to your list.');
+            const errMsg: string = this._translate.instant('app.message.error.creation');
+            alert(errMsg);
         });
     }
 
@@ -52,16 +59,19 @@ export class RolesComponent implements OnInit {
 
     toggleMassDelete() {
         if (this.isConfirmingDeletion) {
-            let result = this._store.deleteSelection();
-            
+            const result = this._store.deleteSelection();
+
             if (result) {
                 result.then(
-                    () => { this.isConfirmingDeletion = false },
+                    () => {
+                        this.isConfirmingDeletion = false;
+                    },
                     (error) => {
                         if (Logger.isEnabled) {
                             Logger.dir(error);
                         }
-                        alert('An error occurred while deleting roles.');
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
                     }
                 );
             } else {

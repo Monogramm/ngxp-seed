@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 
-import { WorkerService, BackendService, StorageService } from '../../x-shared/app/core';
+import { WorkerService, AuthService, BackendService, StorageService } from '@xapp/core';
 
 import { WebWorkerService } from './web-worker.service';
 import { WebBackendService } from './web-backend.service';
 import { LocalStorageService } from './local-storage.service';
-import { LocalDatabaseService } from '../../x-shared/app/core/local-database.service';
+import { LocalDatabaseService } from '@xapp/core/local-database.service';
 import { UtilityService } from './utility.service';
 
 @NgModule({
     providers: [
         WebWorkerService,
+        AuthService,
         WebBackendService,
         LocalStorageService,
         LocalDatabaseService,

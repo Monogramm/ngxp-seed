@@ -1,39 +1,64 @@
-import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Logger } from '../../../x-shared/app/shared';
-import { Role, RoleService } from '../../../x-shared/app/roles';
+import { TranslateService } from '@ngx-translate/core';
+
+import { Logger, Pagination } from '@xapp/shared';
+import { Role, RoleService } from '@xapp/roles';
 
 @Component({
-    selector: 'role-list',
+    selector: 'app-role-list',
     templateUrl: './role-list.component.html',
     styleUrls: ['./role-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RoleListComponent {
-    @Input() showSelection: boolean;
-    @Output() loaded = new EventEmitter();
+export class RoleListComponent implements OnInit {
+    @Input() selection = false;
+    @Input() selectable = false;
+    @Input() viewable = true;
+    @Input() deletable = true;
+    @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() loaded: EventEmitter<number> = new EventEmitter<number>();
 
-    constructor(private _store: RoleService,
+    pagination: Pagination = new Pagination();
+
+    constructor(public store: RoleService,
+        private _translate: TranslateService,
         private _router: Router) { }
 
     ngOnInit() {
-        this._store.load()
+        this.load(1);
+    }
+
+    reload(): void {
+        this.load(this.pagination.page);
+    }
+
+    load(page: number): void {
+        this.pagination.page = page;
+
+        this.loading.emit(true);
+        this.store.load(this.pagination)
             .then(
-            () => this.loaded.emit('loaded'),
-            (error) => {
-                if (Logger.isEnabled) {
-                    Logger.dir(error);
+                () => {
+                    this.loading.emit(false);
+                    this.loaded.emit(this.store.count);
+                },
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
+                    this.loading.emit(false);
+                    this.loaded.emit(0);
                 }
-                alert('An error occurred while loading items.');
-                this.loaded.emit('loaded');
-            }
             );
     }
 
     imageSource(role: Role) {
         if (role.deleted) {
-            return role.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked'
+            return role.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked';
         }
         return role.selected ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked';
     }
@@ -44,23 +69,39 @@ export class RoleListComponent {
     }
 
     delete(role: Role) {
-        if (confirm('Confirm deletion of role "' + role.name + '" ?')) {
+        if (!this.deletable) {
+            return;
+        }
+        const msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
             role.deleting = true;
 
-            this._store.delete(role)
+            this.store.delete(role)
                 .then(
-                () => { role.deleting = false; role.deleted = true; },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        role.deleting = false;
+                        role.deleted = true;
+                        if (this.pagination.next) {
+                            this.reload();
+                        }
+                    },
+                    (error) => {
+                        role.deleting = false;
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
+                        this.reload();
                     }
-                    alert('An error occurred while deleting an item.');
-                }
                 );
         }
     }
 
-    edit(role: Role) {
-        this._router.navigate(['/role', role.id]);
+    edit(role: Role): any[] {
+        if (!this.viewable || !!!role.id) {
+            return ['.'];
+        }
+        return ['/role', role.id];
     }
 }

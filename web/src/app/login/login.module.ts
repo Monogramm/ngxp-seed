@@ -1,31 +1,31 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
 import { SharedModule } from '../shared/shared.module';
 import { LoginRoutingModule } from './login-routing.module';
 
-import { LoginService } from '../../x-shared/app/login';
+import { LoginService } from '@xapp/login';
 
 import { LoginComponent } from './login.component';
 import { ResetPasswordComponent, ChangePasswordComponent } from './reset-password';
-import { RegisterComponent, VerifyAccountComponent } from './register';
+import { RegisterComponent } from './register';
 
 @NgModule({
     imports: [
-        HttpModule,
+        HttpClientModule,
         LoginRoutingModule,
         SharedModule
     ],
     declarations: [
-        LoginComponent, 
+        LoginComponent,
         ResetPasswordComponent, ChangePasswordComponent,
-        RegisterComponent, VerifyAccountComponent
+        RegisterComponent
     ],
     providers: [LoginService],
     exports: [
-        LoginComponent, 
+        LoginComponent,
         ResetPasswordComponent, ChangePasswordComponent,
-        RegisterComponent, VerifyAccountComponent
+        RegisterComponent
     ]
 })
 export class LoginModule { }

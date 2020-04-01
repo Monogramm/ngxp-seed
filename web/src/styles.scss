@@ -9,38 +9,43 @@
 /* Box Model */
 
 *, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* Basic */
 
 html {
-  height: 100%;
+    height: 100%;
+
+    // Disable pinch to zoom in IE10
+    -ms-content-zooming: none;
 }
+
 body {
-  height: 100%;
-  margin: 0;
-  background-color: $c-background-dark;
-  background-image: url("./assets/bg.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+    height: 100%;
+    margin: 0;
+    background-color: $c-body-background;
+    background-image: url("assets/bg.jpg");
+    background-repeat: repeat-y;
+    background-size: cover;
 }
 
 /* Type */
 
 body, input, select, textarea {
-  color: $c-secondary-text;
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
-  font-weight: 300;
-  line-height: 2;
-  letter-spacing: 0.2em;
+    color: $c-secondary-text;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    font-weight: 300;
+    line-height: 2;
+    letter-spacing: 0.2em;
 }
+
 input {
-  font-size: 16px;
-  border: solid 1px $c-secondary-border;
-  border-radius: 4px;
+    font-size: 16px;
+    border: solid 1px $c-secondary-border;
+    border-radius: 4px;
 }
 
 a {
@@ -52,197 +57,581 @@ a:active, a:focus, a:hover {
 }
 
 strong, b {
-  color: $c-primary-text;
+    color: $c-primary-text;
 }
 
 em, i {
-  font-style: italic;
+    font-style: italic;
 }
 
 p {
-  margin: 0 0 1.5em 0;
+    margin: 0 0 1.5em 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
+    line-height: 1.5;
+    margin: 0 0 0.75em 0;
+    text-align: center;
+}
+
+h1, h2, h3, h4 {
+  color: $c-primary;
+}
+
+h5, h6 {
   color: $c-primary-text;
-  line-height: 1.5;
-  margin: 0 0 0.75em 0;
-  text-align: center;
 }
 
 h1 {
-  font-size: 1.85em;
+  font-size: 2rem;
   letter-spacing: 0.22em;
   margin: 0 0 0.525em 0;
 }
 
+h2, h3, h4 {
+  font-size: 1.85rem;
+}
+
+h5, h6 {
+  font-size: 1.65rem;
+}
+
 hr {
-  border: 0;
-  border-bottom: solid 1px $c-secondary-border;
-  margin: 3em 0 1em 0;
+    border: 0;
+    border-bottom: solid 1px $c-secondary-border;
+    margin: 3em 0 1em 0;
+}
+
+@media screen and (max-width: 768px) {
+    hr {
+        margin: 2em 0 1em 0;
+    }
 }
 
 @media screen and (max-width: 480px) {
-  h1 {
-    font-size: 1.65em;
-  }
+    h1 {
+        font-size: 1.65em;
+    }
+
+    hr {
+        margin: 1em 0;
+    }
 }
 
 /* Form */
 
-.center {
-  padding-top: 1em;
-  text-align: center;
-}
 label {
-  color: $c-primary-text;
-  display: block;
-  font-weight: bold;
-  margin: 0 0 0.75em 0;
+    color: $c-primary-text;
+    display: block;
+    font-weight: bold;
+    margin: 0 0 0.75em 0;
 }
 
 input, select, textarea {
-  padding: 0.3em 0.5em;
+    width: 100%;
+    padding: 0.3em 0.5em;
+}
+
+/*
+input[required]::after, select[required]::after, textarea[required]::after {
+  content: " *";
+  color: $c-danger;
+  font-size: 2em;
+}
+*/
+input:invalid, select:invalid, textarea:invalid {
+    border: 1px solid rgba($c-danger, 0.616);
+}
+
+input:focus:invalid, select:focus:invalid, textarea:focus:invalid {
+    box-shadow: 0px 0px 3px 2px rgba($c-danger, 0.616);
+}
+
+input[required]:focus:valid, select[required]:focus:valid, textarea[required]:focus:valid {
+    border: 1px solid rgba($c-success, 0.616);
+    box-shadow: 0px 0px 3px 2px rgba($c-success, 0.616);
 }
 
 /* List */
 ul {
-  list-style: none;
-  margin: 0 0 1.5em 0;
-  padding-left: 1em;
+    list-style: none;
+    margin: 0 0 1em 0;
+    padding-left: 1em;
 }
 
 ul li {
-  padding-top: 1.5em;
+    padding-top: 1em;
 }
 
+/* Theme classes */
+
+.is-primary {
+    color: $c-primary;
+}
+
+.is-secondary {
+    color: $c-secondary;
+}
+
+.is-plain {
+    color: $c-primary-text;
+}
+
+.is-success {
+    color: $c-success;
+}
+
+.is-info {
+    color: $c-info;
+}
+
+.is-warning {
+    color: $c-warning;
+}
+
+.is-danger {
+    color: $c-danger;
+}
+
+/* Links */
+
+a, .link [class^="link-"], [class*=" link-"] {
+    color: $c-accent;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+}
+
+a:focus, a:hover,
+.link:focus, .link:hover {
+    color: $c-dark-accent;
+    text-shadow: 2px 1px 6px transparentize($c-primary-text, 0.6);
+}
+
+a:active,
+.link:active {
+    color: $c-primary;
+}
+
+// TODO Use SCSS arrays to generate link theme classes
+
+a.is-primary,
+.link.is-primary {
+    color: $c-primary;
+}
+
+a.is-primary:focus, a.is-primary:hover,
+.link.is-primary:focus, .link.is-primary:hover {
+    color: lighten($c-primary, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-primary, 15%), 0.6);
+}
+
+a.is-primary:active,
+.link.is-primary:active {
+    color: darken($c-primary, 15%);
+}
+
+a.is-secondary,
+.link.is-secondary {
+    color: $c-secondary;
+}
+
+a.is-secondary:focus, a.is-secondary:hover,
+.link.is-secondary:focus, .link.is-secondary:hover {
+    color: lighten($c-secondary, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-secondary, 15%), 0.6);
+}
+
+a.is-secondary:active,
+.link.is-secondary:active {
+    color: darken($c-secondary, 15%);
+}
+
+a.is-plain,
+.link.is-plain {
+    color: $c-primary-text;
+}
+
+a.is-plain:focus, a.is-plain:hover,
+.link.is-plain:focus, .link.is-plain:hover {
+    color: lighten($c-primary-text, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-primary-text, 15%), 0.6);
+}
+
+a.is-plain:active,
+.link.is-plain:active {
+    color: darken($c-primary-text, 15%);
+}
+
+a.is-success,
+.link.is-success {
+    color: $c-success;
+}
+
+a.is-success:focus, a.is-success:hover,
+.link.is-success:focus, .link.is-success:hover {
+    color: lighten($c-success, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-success, 15%), 0.6);
+}
+
+a.is-success:active,
+.link.is-success:active {
+    color: darken($c-success, 15%);
+}
+
+a.is-info,
+.link.is-info {
+    color: $c-info;
+}
+
+a.is-info:active, a.is-info:focus, a.is-info:hover,
+.link.is-info:active, .link.is-info:focus, .link.is-info:hover {
+    color: lighten($c-info, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-info, 15%), 0.6);
+}
+
+a.is-info:active, a.is-info:focus, a.is-info:hover,
+.link.is-info:active, .link.is-info:focus, .link.is-info:hover {
+    color: darken($c-info, 15%);
+}
+
+a.is-warning,
+.link.is-warning {
+    color: $c-warning;
+}
+
+a.is-warning:focus, a.is-warning:hover,
+.link.is-warning:focus, .link.is-warning:hover {
+    color: lighten($c-warning, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-warning, 15%), 0.6);
+}
+
+a.is-warning:active,
+.link.is-warning:active {
+    color: darken($c-warning, 15%);
+}
+
+a.is-danger,
+.link.is-danger {
+    color: $c-danger;
+}
+
+a.is-danger:focus, a.is-danger:hover,
+.link.is-danger:focus, .link.is-danger:hover {
+    color: lighten($c-danger, 15%);
+    text-shadow: 2px 1px 6px transparentize(darken($c-danger, 15%), 0.6);
+}
+
+a.is-danger:active,
+.link.is-danger:active {
+    color: darken($c-danger, 15%);
+}
 
 /* Button */
 
-button, .btn, [class^="btn-"], [class*=" btn-"] {
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  
-  display: inline-block;
-  height: 2.75em;
-  padding: 0 1.5em;
-
-  cursor: pointer;
-
-  color: $c-primary-contrast;
-  font-weight: bold;
-  font-size: 1em;
-  line-height: 2.75em;
-
-  background-color: transparent;
-  background-color: $c-secondary;
-  
-  border: solid 1px $c-secondary-border;
-  border-radius: 4px;
-  outline: 0;
-
-  box-shadow: 1px 1px 1px 1px rgba($c-secondary-border, 0.6);
-}
-.btn:active, .btn:focus, .btn:hover, button:active, button:focus, button:hover {
-  background-color: $c-primary;
+button, .button, [class^="button-"], [class*=" button-"] {
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    display: inline-block;
+    height: 2.75em;
+    padding: 0 1.5em;
+    cursor: pointer;
+    color: $c-primary-contrast;
+    font: bold 15px Arial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    align-items: flex-start;
+    text-align: center;
+    text-rendering: auto;
+    text-transform: none;
+    text-decoration: none;
+    line-height: 2.75em;
+    background-color: transparent;
+    background-color: $c-secondary;
+    border: solid 1px $c-secondary-border;
+    border-radius: 4px;
+    outline: 0;
+    box-shadow: 1px 1px 1px 1px rgba($c-secondary-border, 0.6);
 }
 
-.btn-primary {
-  background-color: $c-primary;
-  color: $c-accent-contrast;
-  border: 0;
-  box-shadow: none;
-}
-.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
-  background-color: $c-accent;
+button:focus, button:hover,
+.button:focus, .button:hover {
+    background-color: lighten($c-secondary, 15%);
+    color: $c-accent-contrast;
 }
 
-.btn-secondary {
-  color: $c-accent;
-  background-color: $c-background;
-  border: solid 2px $c-accent;
-  font-weight: normal;
-}
-.btn-secondary:active, .btn-secondary:focus, .btn-secondary:hover {
-  background-color: $c-grey-200;
+button:active,
+.button:active {
+    background-color: darken($c-secondary, 5%);
 }
 
-.btn-plain {
-  background-color: $c-grey-300;
-  color: $c-primary-text;
-  font-weight: normal;
-}
-.btn-plain:active, .btn-plain:focus, .btn-plain:hover {
-  background-color: $c-grey-200;
+// TODO Use SCSS arrays to generate button theme classes
+
+button.is-primary,
+.button.is-primary {
+    background-color: $c-primary;
+    color: $c-accent-contrast;
+    border: 0;
+    box-shadow: none;
 }
 
-.btn-danger {
-  background-color: $c-danger;
-  color: $c-accent-contrast;
-  border: 0;
-  box-shadow: none;
-}
-.btn-danger:active, .btn-danger:focus, .btn-danger:hover {
-  background-color: $c-danger-dark;
+button.is-primary:focus, button.is-primary:hover,
+.button.is-primary:focus, .button.is-primary:hover {
+    background-color: lighten($c-primary, 10%);
 }
 
-input:disabled, button:disabled {
-  -moz-pointer-events: none;
-  -webkit-pointer-events: none;
-  -ms-pointer-events: none;
-  pointer-events: none;
-  opacity: 0.5;
-  transition: opacity 1s;
+button.is-primary:active,
+.button.is-primary:active {
+    background-color: darken($c-primary, 5%);
 }
 
+button.is-secondary,
+.button.is-secondary {
+    background-color: $c-main-background;
+    color: $c-secondary;
+    border: solid 2px $c-secondary;
+    font-weight: normal;
+}
 
-/* Main */
-.list-page {
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  max-width: 480px;
-  margin: 1em auto;
-  padding: 2em;
-  background: $c-background;
-  border-radius: 4px;
-  opacity: 0.95;
+button.is-secondary:focus, button.is-secondary:hover,
+.button.is-secondary:focus, .button.is-secondary:hover {
+    background-color: lighten($c-main-background, 15%);
+    color: $c-secondary;
 }
-.list-page.dark {
-  background-color: $c-background-dark;
+
+button.is-secondary:active,
+.button.is-secondary:active {
+    background-color: darken($c-main-background, 5%);
 }
-.list-page.dark h1, .list-page.dark label {
-  color: $c-white;
+
+button.is-plain,
+.button.is-plain {
+    background-color: $c-grey-300;
+    color: $c-primary-text;
+    font-weight: normal;
 }
-.list-page.dark input {
-  color: $c-black;
+
+button.is-plain:focus, button.is-plain:hover,
+.button.is-plain:focus, .button.is-plain:hover {
+    background-color: lighten($c-grey-300, 15%);
+    color: $c-primary-text;
+}
+
+button.is-plain:active,
+.button.is-plain:active {
+    background-color: darken($c-grey-300, 5%);
+}
+
+button.is-success,
+.button.is-success {
+    background-color: $c-success;
+    color: $c-accent-contrast;
+}
+
+button.is-success:focus, button.is-success:hover,
+.button.is-success:focus, .button.is-success:hover {
+    background-color: lighten($c-success, 15%);
+}
+
+button.is-success:active,
+.button.is-success:active {
+    background-color: darken($c-success, 5%);
+}
+
+button.is-info,
+.button.is-info {
+    background-color: $c-info;
+    color: $c-accent-contrast;
+}
+
+button.is-info:focus, button.is-info:hover,
+.button.is-info:focus, .button.is-info:hover {
+    background-color: lighten($c-info, 15%);
+}
+
+button.is-info:active,
+.button.is-info:active {
+    background-color: darken($c-info, 5%);
+}
+
+button.is-warning,
+.button.is-warning {
+    background-color: $c-warning;
+    color: $c-accent-contrast;
+}
+
+button.is-warning:focus, button.is-warning:hover,
+.button.is-warning:focus, .button.is-warning:hover {
+    background-color: lighten($c-warning, 15%);
+}
+
+button.is-warning:active,
+.button.is-warning:active {
+    background-color: darken($c-warning, 5%);
+}
+
+button.is-danger,
+.button.is-danger {
+    background-color: $c-danger;
+    color: $c-accent-contrast;
+}
+
+button.is-danger:focus, button.is-danger:hover,
+.button.is-danger:focus, .button.is-danger:hover {
+    background-color: lighten($c-danger, 15%);
+}
+
+button.is-danger:active,
+.button.is-danger:active {
+    background-color: darken($c-danger, 5%);
+}
+
+input:disabled, select:disabled, textarea:disabled, button:disabled {
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 1s;
+    background-color: $c-grey-500;
+    color: $c-grey-700;
+    border-color: $c-grey-700;
+}
+
+/* Splash screen */
+
+.splash_screen {
+    height: 100%;
+    vertical-align: middle;
+    padding: 10%;
+}
+
+.splash_screen .logo {
+    max-width: 80%;
+    max-height: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    background: rgba($c-secondary, 0.7);
+    box-shadow: 0 0 2em 1em rgba($c-secondary, 0.7);
+    border-radius: 1.5em 1.5em 1em 1em;
+    transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -webkit-transform-origin: 50% 50%;
+    -webkit-animation: Blink 1000ms infinite alternate;
+    -moz-animation: Blink 1000ms infinite alternate;
+    -ms-animation: Blink 1000ms infinite alternate;
+    -o-animation: Blink 1000ms infinite alternate;
+    animation: Blink 1000ms infinite alternate;
+}
+
+@-o-keyframes Blink {
+    from {
+        -o-transform: scale(1);
+    }
+
+    to {
+        -o-transform: scale(0.9);
+    }
+}
+
+@-moz-keyframes Blink {
+    from {
+        -moz-transform: scale(1);
+    }
+
+    to {
+        -moz-transform: scale(0.9);
+    }
+}
+
+@-ms-keyframes Blink {
+    from {
+        -ms-transform: scale(1);
+    }
+
+    to {
+        -ms-transform: scale(0.9);
+    }
+}
+
+@-webkit-keyframes Blink {
+    from {
+        -webkit-transform: scale(1);
+    }
+
+    to {
+        -webkit-transform: scale(0.9);
+    }
+}
+
+@keyframes Blink {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(0.9);
+    }
+}
+
+/* Main pages */
+
+.main-page {
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    max-width: 80%;
+    margin: 1em auto;
+    padding: 2em;
+    background: $c-main-background;
+    border-radius: 4px;
+    opacity: 0.95;
+}
+
+.main-page.dark {
+    background-color: $c-main-background-dark;
+}
+
+.main-page.dark h1, .main-page.dark label {
+    color: $c-white;
+}
+
+.main-page.dark input {
+    color: $c-black;
+}
+
+@media screen and (max-width: 768px) {
+    .main-page {
+        max-width: 90%;
+        padding: 1.5em 1em;
+    }
 }
 
 @media screen and (max-width: 480px) {
-  .list-page {
-    max-width: 95%;
-    padding-left: 1em;
-    padding-right: 1em;
-  }
+    .main-page {
+        max-width: 95%;
+        padding: 1em;
+    }
 }
 
 .big {
-  font-size: 1.35em;
+    font-size: 1.35em;
+}
+
+.center {
+    padding-top: 1em;
+    text-align: center;
 }
 
 .left {
-  margin-right: auto;
+    margin-right: auto;
 }
 
 .right {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 .hidden {
-  display: none !important;
-}
-
-.text-primary {
-  color: $c-primary-text;
-}
-
-.text-secondary {
-  color: $c-secondary-text;
+    display: none !important;
 }

@@ -3,8 +3,10 @@
  */
 export abstract class AppResources {
     /**
-     * The application name.
+     * The "default" application name.
+     *
+     * This is usually overridden by environment configuration.
      */
-    public static readonly appName = 'MyApp';
+    public static appName = 'NGXP Seed';
 
 }

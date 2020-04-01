@@ -1,10 +1,14 @@
-import { Logger, Pagination } from '../shared';
+import { Observable } from 'rxjs';
 
-import { StorageService } from './storage.service';
+import { Pagination } from '../shared';
+import { User } from '../users/user.model';
+
+import { CachedValue, StorageService } from './storage.service';
+import { AuthService } from './auth.service';
 
 /**
  * The Backend fetch behavior.
- * 
+ *
  * Defines if the service shall only rely on the backend or should also look in the storage.
  */
 export enum BackendFetchMode {
@@ -18,69 +22,123 @@ export enum BackendFetchMode {
     StorageThenRemote
 }
 
+export interface SimpleHeader {
+    [name: string]: string | string[];
+}
+
 export abstract class BackendService {
-    protected static readonly apiUrl = 'http://192.168.1.24:8080/spring-rest-api-starter/api/';
-
-    protected static readonly tokenKey = 'access_token';
-    protected static readonly userIdKey = 'principal_user_id';
-
     fetchBehavior: BackendFetchMode = BackendFetchMode.RemoteOnly;
 
-    constructor(private _storageService: StorageService) {
+    constructor(private storageService: StorageService,
+        private authService: AuthService) {
+        // Clear the backend's store if not valid anymore
+        if (!this.isLoggedIn()) {
+            this.clear();
+        }
     }
 
-    getFromStore(key: string): any {
-        return this._storageService.getItem(key);
+    // Storage mechanisms
+    protected getFromStore(key: string): any {
+        return this.storageService.getItem(key);
     }
-    pushToStore(key: string, value: any): void {
-        return this._storageService.setItem(key, value);
-    }
-    removeFromStore(key: string): void {
-        return this._storageService.removeItem(key);
-    }
-    clearStore(): void {
-        return this._storageService.clear();
-    }
+    public getFromCachedStore(key: string): any {
+        let value: any = this.getFromStore(key);
 
-    abstract isLoggedIn(): boolean;
+        if (value) {
+            const json: any = JSON.parse(value);
 
-    abstract get token(): string;
-    abstract set token(theToken: string);
+            if (json.date && new Date(json.date).getTime() > new Date().getTime()) {
+                value = json;
+            } else {
+                this.removeFromStore(key);
+                value = null;
+            }
+        }
 
-    abstract get userId(): string;
-    abstract set userId(theId: string);
-
-    abstract get userRoles(): string[];
-    abstract set userRoles(roles: string[]);
-
-    hasRole(role: string) :boolean {
-        return this.userRoles && this.userRoles.indexOf('ROLE_' + role) > -1;
+        return value;
     }
 
+    public pushToStore(key: string, value: any): void {
+        if (typeof value === 'string') {
+            return this.storageService.setItem(key, value);
+        } else {
+            return this.storageService.setItem(key, JSON.stringify(value));
+        }
+    }
+    pushToCachedStore(key: string, value: any, date?: Date): void {
+        return this.pushToStore(key, new CachedValue(value, date));
+    }
+
+    protected removeFromStore(key: string): void {
+        return this.storageService.removeItem(key);
+    }
+    protected clearStore(): void {
+        return this.storageService.clear();
+    }
+
+
+
+    // Authentication mechanisms
+    public get user(): User {
+        return this.authService.user;
+    }
+    public get currentUser(): Observable<User> {
+        return this.authService.currentUser;
+    }
+    public authentifyUser(data: any): User {
+        return this.authService.authentifyUser(data);
+    }
+    clear() {
+        this.authService.clear();
+        // TODO Track other services / entries that need to be cleared
+    }
+
+    public isLoggedIn(): boolean {
+        return this.authService.isLoggedIn();
+    }
+    protected get token(): string {
+        return this.authService.token;
+    }
+    protected get tokenExpiration(): number {
+        return this.authService.tokenExpiration;
+    }
+    protected get refreshToken(): string {
+        return this.authService.refreshToken;
+    }
+    public get userId(): string {
+        return this.authService.userId;
+    }
+    public hasRole(role: string): boolean {
+        return this.authService.hasRole(role);
+    }
 
     abstract get clientId(): string;
     abstract get clientSecret(): string;
+    abstract get apiUrl(): string;
 
+    // Backend CRUD operations
+    abstract load(basePath: string | URL, pagination?: Pagination, params?: any, headers?: any);
 
-    abstract load(basePath: string, pagination?: Pagination);
-
-    getById(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
-        return this.getByIds(basePath, [id], headers);
+    getBlobById(basePath: string, id: string, params?: any, headers?: SimpleHeader): Observable<any> {
+        return this.getByIds(basePath, [id], params, headers);
     }
-    abstract getByIds(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any>;
-
-    push(basePath: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
-        return this.pushAll(basePath, [value], headers);
+    getById(basePath: string, id: string, params?: any, headers?: SimpleHeader): Observable<any> {
+        return this.getByIds(basePath, [id], params, headers);
     }
-    abstract pushAll(basePath: string, values: any[], headers?: { header: string, value: any }[]): Promise<any>;
+    abstract getByIds(basePath: string, ids: string[], params?: any, headers?: SimpleHeader): Observable<any>;
 
-    set(basePath: string, id: string, value: any, headers?: { header: string, value: any }[]): Promise<any> {
-        return this.setAll(basePath, [id], value, headers);
+    push(basePath: string, value: any, params?: any, headers?: SimpleHeader): Promise<any> {
+        return this.pushAll(basePath, [value], params, headers);
     }
-    abstract setAll(basePath: string, ids: string[], values: any, headers?: { header: string, value: any }[]): Promise<any>;
+    abstract pushAll(basePath: string, values: any[], params?: any, headers?: SimpleHeader): Promise<any>;
 
-    remove(basePath: string, id: string, headers?: { header: string, value: any }[]): Promise<any> {
-        return this.removeAll(basePath, [id], headers);
+    set(basePath: string, id: string, value: any, params?: any, headers?: SimpleHeader): Promise<any> {
+        return this.setAll(basePath, [id], value, params, headers);
     }
-    abstract removeAll(basePath: string, ids: string[], headers?: { header: string, value: any }[]): Promise<any>;
+    abstract setAll(basePath: string, ids: string[], values: any, params?: any, headers?: SimpleHeader): Promise<any>;
+
+    remove(basePath: string, id: string, params?: any, headers?: SimpleHeader): Promise<any> {
+        return this.removeAll(basePath, [id], params, headers);
+    }
+    abstract removeAll(basePath: string, ids: string[], params?: any, headers?: SimpleHeader): Promise<any>;
 }

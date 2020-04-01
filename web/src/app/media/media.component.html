@@ -1,0 +1,20 @@
+<div class="main-page">
+  <h1>{{ 'media.management' | translate }}</h1>
+
+  <div class="link-container">
+    <button *ngIf="selectable" (click)="isConfirmingDeletion ? cancelMassDelete() : toggleMassDelete()" [class]="'left ' + (isConfirmingDeletion ? 'button is-secondary' : 'button is-primary')">
+      {{ (isConfirmingDeletion ? 'app.common.cancel' : 'app.common.delete') | translate }}
+    </button>
+
+    <button [routerLink]="['/media']" class="right button is-primary" [class.hidden]="isConfirmingDeletion">
+      {{ 'app.common.add' | translate }}</button>
+    <button (click)="toggleMassDelete()" class="right button is-primary" [class.hidden]="!isConfirmingDeletion">
+      {{ 'app.common.confirm' | translate }}</button>
+  </div>
+
+  <hr>
+
+  <app-media-list [selection]="isConfirmingDeletion" [selectable]="selectable" (loaded)="hideLoadingIndicator()"></app-media-list>
+</div>
+
+<app-activity-indicator [message]="'app.activity.loading' | translate" [isLoading]="isLoading"></app-activity-indicator>

@@ -1,0 +1,10 @@
+<div [class.hidden]="!pagination.available()" class="pagination">
+    <button class="button is-secondary" [disabled]="!pagination.first" (click)="select(pagination.first)" [title]="first"><i
+            class="icon icon-first"></i></button>
+    <button class="button is-secondary" [disabled]="!pagination.prev" (click)="select(pagination.prev)" [title]="prev"><i
+            class="icon icon-backward2"></i></button>
+    <button class="button is-secondary" [disabled]="!pagination.next" (click)="select(pagination.next)" [title]="next"><i
+            class="icon icon-forward3"></i></button>
+    <button class="button is-secondary" [disabled]="!pagination.last" (click)="select(pagination.last)" [title]="last"><i
+            class="icon icon-last"></i></button>
+</div>

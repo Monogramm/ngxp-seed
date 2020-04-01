@@ -1,30 +1,64 @@
 import { ChangeDetectorRef, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Logger } from '../../../x-shared/app/shared';
-import { Type, TypeService } from '../../../x-shared/app/types';
+import { TranslateService } from '@ngx-translate/core';
+
+import { Logger, Pagination } from '@xapp/shared';
+import { Type, TypeService } from '@xapp/types';
 
 @Component({
-    selector: 'type-list',
+    selector: 'app-type-list',
     templateUrl: './type-list.component.html',
     styleUrls: ['./type-list.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TypeListComponent {
-    @Input() showSelection: boolean;
-    @Output() loaded = new EventEmitter();
+export class TypeListComponent implements OnInit {
+    @Input() selection = false;
+    @Input() selectable = false;
+    @Input() viewable = true;
+    @Input() deletable = true;
+    @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() loaded: EventEmitter<number> = new EventEmitter<number>();
 
-    constructor(private _store: TypeService,
+    pagination: Pagination = new Pagination();
+
+    constructor(public store: TypeService,
+        private _translate: TranslateService,
         private _router: Router) { }
 
     ngOnInit() {
-        this._store.load()
-            .then(() => this.loaded.emit('loaded'));
+        this.load(1);
+    }
+
+    reload(): void {
+        this.load(this.pagination.page);
+    }
+
+    load(page: number): void {
+        this.pagination.page = page;
+
+        this.loading.emit(true);
+        this.store.load(this.pagination)
+            .then(
+                () => {
+                    this.loading.emit(false);
+                    this.loaded.emit(this.store.count);
+                },
+                (error) => {
+                    if (Logger.isEnabled) {
+                        Logger.dir(error);
+                    }
+                    const errMsg: string = this._translate.instant('app.message.error.loading');
+                    alert(errMsg);
+                    this.loading.emit(false);
+                    this.loaded.emit(0);
+                }
+            );
     }
 
     imageSource(type: Type) {
         if (type.deleted) {
-            return type.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked'
+            return type.selected ? 'icon-radio-checked2' : 'icon-radio-unchecked';
         }
         return type.selected ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked';
     }
@@ -35,23 +69,39 @@ export class TypeListComponent {
     }
 
     delete(type: Type) {
-        if (confirm('Confirm deletion of type "' + type.name + '" ?')) {
+        if (!this.deletable) {
+            return;
+        }
+        const msg: string = this._translate.instant('app.message.confirm.delete');
+        if (confirm(msg)) {
             type.deleting = true;
 
-            this._store.delete(type)
+            this.store.delete(type)
                 .then(
-                () => { type.deleting = false; type.deleted = true; },
-                (error) => {
-                    if (Logger.isEnabled) {
-                        Logger.dir(error);
+                    () => {
+                        type.deleting = false;
+                        type.deleted = true;
+                        if (this.pagination.next) {
+                            this.reload();
+                        }
+                    },
+                    (error) => {
+                        type.deleting = false;
+                        if (Logger.isEnabled) {
+                            Logger.dir(error);
+                        }
+                        const errMsg: string = this._translate.instant('app.message.error.deletion');
+                        alert(errMsg);
+                        this.reload();
                     }
-                    alert('An error occurred while deleting an item from your list.');
-                }
                 );
         }
     }
 
-    edit(type: Type) {
-        this._router.navigate(['/type', type.id]);
+    edit(type: Type): any[] {
+        if (!this.viewable || !!!type.id) {
+            return ['.'];
+        }
+        return ['/type', type.id];
     }
 }
