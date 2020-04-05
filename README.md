@@ -9,7 +9,7 @@ Check this [Open Souce Cross Platform Quotes Application](https://github.com/shr
 ## Prerequisites
 0. Globally installed
   * [Git](https://git-scm.com/)
-  * [Node.js](https://nodejs.org) **8** & [npm](https://www.npmjs.com/)
+  * [Node.js](https://nodejs.org) **12** & [npm](https://www.npmjs.com/)
   * `gcc` & `g++`
   * `make`
 1. Globally installed Angular CLI - `npm install -g @angular/cli@8`
