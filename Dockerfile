@@ -6,7 +6,13 @@ FROM node:lts-alpine AS builder
 
 # WIP
 RUN set -ex; \
-    npm install -g @angular/cli@1.1.1; \
+    apk add --no-cache \
+        g++ \
+        gcc \
+        make \
+    ; \
+    npm install -g @angular/cli@8; \
+    npm install -g nativescript@6; \
     npm run ngxp-install; \
     npm run build.prod
 
