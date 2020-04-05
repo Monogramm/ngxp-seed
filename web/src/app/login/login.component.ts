@@ -55,9 +55,6 @@ export class LoginComponent {
           if (!user.verified) {
             // Request user account verification
             this._router.navigate(['register', user.id]);
-          } else if (this._authService.isDisplayIntro()) {
-            // Display intro on first login
-            this._router.navigate(['intro']);
           } else {
             this._router.navigate(['']);
           }
