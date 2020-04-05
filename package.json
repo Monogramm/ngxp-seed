@@ -50,23 +50,23 @@
     "typings": "~2.1.1"
   },
   "dependencies": {
-    "@angular/animations": "^7.2.16",
-    "@angular/common": "^7.2.16",
-    "@angular/compiler": "^7.2.16",
-    "@angular/compiler-cli": "^7.2.16",
-    "@angular/core": "^7.2.16",
-    "@angular/forms": "^7.2.16",
-    "@angular/platform-browser": "^7.2.16",
-    "@angular/platform-browser-dynamic": "^7.2.16",
-    "@angular/platform-server": "^7.2.16",
-    "@angular/router": "^7.2.16",
+    "@angular/animations": "^8.2.14",
+    "@angular/common": "^8.2.14",
+    "@angular/compiler": "^8.2.14",
+    "@angular/compiler-cli": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "@angular/forms": "^8.2.14",
+    "@angular/platform-browser": "^8.2.14",
+    "@angular/platform-browser-dynamic": "^8.2.14",
+    "@angular/platform-server": "^8.2.14",
+    "@angular/router": "^8.2.14",
     "core-js": "^2.6.9",
     "email-validator": "^2.0.4",
     "ng-sidebar": "^8.0.0",
-    "rxjs": "~6.3.3",
+    "rxjs": "^6.4.0",
     "ts-helpers": "~1.1.1",
-    "typescript": "^3.2.4",
+    "typescript": "^3.4.5",
     "validate-password": "^1.0.4",
-    "zone.js": "^0.8.29"
+    "zone.js": "^0.9.1"
   }
 }

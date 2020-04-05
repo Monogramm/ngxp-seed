@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
-import { HttpParamsOptions } from '@angular/common/http/src/params';
 
 import { Observable } from 'rxjs';
 
@@ -35,7 +34,8 @@ export class WebBackendService extends BackendService {
     }
 
     load<T>(basePath: string | URL,
-        pagination?: Pagination, params?: HttpParamsOptions,
+        pagination?: Pagination,
+        params?: any,
         headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
         let response: Promise<HttpResponse<T[]>> = null;
         let relativePath: string;
@@ -96,7 +96,7 @@ export class WebBackendService extends BackendService {
 
     getBlobById(basePath: string, id: string,
         headers?: SimpleHeader,
-        params?: HttpParamsOptions): Observable<HttpResponse<Blob>> {
+        params?: any): Observable<HttpResponse<Blob>> {
         const relativePath: string = basePath + '/' + id;
 
         // Try the storage if allowed
@@ -120,7 +120,8 @@ export class WebBackendService extends BackendService {
     }
 
     getById<T>(basePath: string, id: string,
-        pagination?: Pagination, params?: HttpParamsOptions,
+        pagination?: Pagination,
+        params?: any,
         headers?: SimpleHeader): Observable<HttpResponse<T>> {
         const relativePath: string = basePath + '/' + id;
 
@@ -144,7 +145,8 @@ export class WebBackendService extends BackendService {
     }
 
     getByIds<T>(basePath: string, ids: string[],
-        pagination?: Pagination, params?: HttpParamsOptions,
+        pagination?: Pagination,
+        params?: any,
         headers?: SimpleHeader): Observable<HttpResponse<T[]>> {
         let httpHeaders: HttpHeaders = this.getHeaders(headers);
         const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
@@ -161,7 +163,8 @@ export class WebBackendService extends BackendService {
     }
 
     push<T>(basePath: string, value: any,
-        pagination?: Pagination, params?: HttpParamsOptions,
+        pagination?: Pagination,
+        params?: any,
         headers?: SimpleHeader): Promise<HttpResponse<T>> {
         const httpHeaders = this.getHeaders(headers);
         const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
@@ -188,7 +191,8 @@ export class WebBackendService extends BackendService {
     }
 
     pushAll<T>(basePath: string, values: any,
-        pagination?: Pagination, params?: HttpParamsOptions,
+        pagination?: Pagination,
+        params?: any,
         headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
         const httpHeaders = this.getHeaders(headers);
         const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
@@ -215,7 +219,8 @@ export class WebBackendService extends BackendService {
     }
 
     set<T>(basePath: string, id: string, value: any,
-        pagination?: Pagination, params?: HttpParamsOptions,
+        pagination?: Pagination,
+        params?: any,
         headers?: SimpleHeader): Promise<HttpResponse<T>> {
         const httpHeaders: HttpHeaders = this.getHeaders(headers);
         const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
@@ -242,7 +247,8 @@ export class WebBackendService extends BackendService {
     }
 
     setAll<T>(basePath: string, ids: string[], values: any,
-        pagination?: Pagination, params?: HttpParamsOptions,
+        pagination?: Pagination,
+        params?: any,
         headers?: SimpleHeader): Promise<HttpResponse<T[]>> {
         let httpHeaders: HttpHeaders = this.getHeaders(headers);
         const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
@@ -271,7 +277,8 @@ export class WebBackendService extends BackendService {
     }
 
     remove(basePath: string, id: string,
-        pagination?: Pagination, params?: HttpParamsOptions,
+        pagination?: Pagination,
+        params?: any,
         headers?: SimpleHeader): Promise<HttpResponse<Object>> {
         const httpHeaders = this.getHeaders(headers);
         const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
@@ -301,7 +308,9 @@ export class WebBackendService extends BackendService {
     }
 
     removeAll(basePath: string, ids: string[],
-        pagination?: Pagination, params?: HttpParamsOptions, headers?: SimpleHeader): Promise<HttpResponse<Object>> {
+        pagination?: Pagination,
+        params?: any,
+        headers?: SimpleHeader): Promise<HttpResponse<Object>> {
         const httpHeaders = this.getHeaders(headers);
         const httpParams: HttpParams = this.getParameters(pagination, params, httpHeaders);
 
@@ -332,7 +341,9 @@ export class WebBackendService extends BackendService {
         return promise;
     }
 
-    private getParameters(pagination: Pagination, params?: HttpParamsOptions, httpHeaders?: HttpHeaders): HttpParams {
+    private getParameters(pagination: Pagination,
+        params?: any,
+        httpHeaders?: HttpHeaders): HttpParams {
         let httpParams: HttpParams;
         if (params) {
             httpParams = new HttpParams(params);

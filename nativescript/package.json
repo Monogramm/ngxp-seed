@@ -59,7 +59,7 @@
     "babel-types": "6.24.1",
     "babylon": "6.17.0",
     "clean-webpack-plugin": "~0.1.19",
-    "codelyzer": "~3.1.1",
+    "codelyzer": "^5.0.1",
     "copy-webpack-plugin": "~4.0.1",
     "css-loader": "~0.28.7",
     "extract-text-webpack-plugin": "~3.0.0",
@@ -68,10 +68,12 @@
     "karma": "4.1.0",
     "karma-jasmine": "2.0.1",
     "karma-nativescript-launcher": "^0.4.0",
+    "karma-webpack": "3.0.5",
     "lazy": "1.0.11",
     "nativescript-css-loader": "~0.26.1",
     "nativescript-dev-webpack": "1.0.1",
     "nativescript-worker-loader": "~0.8.1",
+    "node-sass": "4.12.0",
     "raw-loader": "~0.5.1",
     "resolve-url-loader": "~2.1.0",
     "sass-loader": "~6.0.6",
@@ -80,8 +82,6 @@
     "uglifyjs-webpack-plugin": "~1.2.4",
     "webpack": "~3.2.0",
     "webpack-bundle-analyzer": "^2.8.2",
-    "webpack-sources": "^1.0.2",
-    "node-sass": "4.12.0",
-    "karma-webpack": "3.0.5"
+    "webpack-sources": "^1.0.2"
   }
 }
