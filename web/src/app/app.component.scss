@@ -63,7 +63,7 @@
     }
 }
 
-ng-sidebar /deep/ .app-sidebar, ng-sidebar /deep/ .ng-sidebar {
+ng-sidebar ::ng-deep .app-sidebar, ng-sidebar ::ng-deep .ng-sidebar {
     background-color: $c-menu-background;
 
     &.ng-sidebar--opened.ng-sidebar--over { 
