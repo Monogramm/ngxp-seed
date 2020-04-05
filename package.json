@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.16",
-    "codelyzer": "~4.2.1",
+    "codelyzer": "^5.0.1",
     "tslint": "~5.9.1",
     "typings": "~2.1.1"
   },
