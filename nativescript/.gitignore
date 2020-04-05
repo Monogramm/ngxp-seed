@@ -1,8 +1,33 @@
-hooks
-lib
-node_modules
-platforms
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+
+# dependencies
+/node_modules
+/bower_components
+/hooks
+/lib
+
+# IDEs and editors
+/.idea
+/.vscode
+.project
+.classpath
+*.launch
+.settings/
+
+# tns
+.migration_backup
 app/**/*.js.map
 app/**/*.js
-app/x-shared
 app/**/*.css
+platforms
+
+#System Files
+.DS_Store
+Thumbs.db
+
+# x-shared
+app/x-shared

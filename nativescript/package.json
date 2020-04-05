@@ -9,10 +9,10 @@
   "nativescript": {
     "id": "io.monogramm.ngxp.seed",
     "tns-ios": {
-      "version": "3.2.0"
+      "version": "6.0.1"
     },
     "tns-android": {
-      "version": "3.2.0"
+      "version": "6.0.0"
     }
   },
   "scripts": {
@@ -26,35 +26,35 @@
     "build-ios-bundle": "npm run ns-bundle --ios --build-app"
   },
   "dependencies": {
-    "@angular/animations": "~4.2.6",
-    "@angular/common": "~4.2.6",
-    "@angular/compiler": "~4.2.6",
-    "@angular/core": "~4.2.6",
-    "@angular/forms": "~4.2.6",
-    "@angular/http": "~4.2.6",
-    "@angular/platform-browser": "~4.2.6",
-    "@angular/platform-browser-dynamic": "~4.2.6",
-    "@angular/router": "~4.2.6",
+    "@angular/animations": "8.0.0",
+    "@angular/common": "8.0.0",
+    "@angular/compiler": "8.0.0",
+    "@angular/core": "8.0.0",
+    "@angular/forms": "8.0.0",
+    "@angular/http": "8.0.0-beta.10",
+    "@angular/platform-browser": "8.0.0",
+    "@angular/platform-browser-dynamic": "8.0.0",
+    "@angular/router": "8.0.0",
     "clean-webpack-plugin": "~0.1.19",
     "email-validator": "^1.0.7",
-    "nativescript-angular": "~4.2.0",
+    "nativescript-angular": "8.0.2",
     "nativescript-iqkeyboardmanager": "1.0.1",
     "nativescript-ngx-fonticon": "~3.0.0",
-    "nativescript-social-share": "~1.3.2",
+    "nativescript-social-share": "1.5.2",
     "nativescript-swiss-army-knife": "~1.1.7",
     "nativescript-theme-core": "~1.0.4",
-    "nativescript-unit-test-runner": "^0.3.4",
+    "nativescript-unit-test-runner": "0.7.0",
     "node-gyp": "^3.6.2",
     "reflect-metadata": "~0.1.8",
-    "rxjs": "^5.4.0",
-    "tns-core-modules": "~3.2.0",
+    "rxjs": "6.3.3",
+    "tns-core-modules": "6.0.1",
     "validate-password": "~1.0.4",
-    "zone.js": "^0.8.17"
+    "zone.js": "0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/core": "~0.5.5",
-    "@angular/compiler-cli": "~4.2.5",
-    "@ngtools/webpack": "~1.5.3",
+    "@angular/compiler-cli": "8.0.0",
+    "@ngtools/webpack": "8.0.0",
     "babel-traverse": "6.24.1",
     "babel-types": "6.24.1",
     "babylon": "6.17.0",
@@ -65,23 +65,23 @@
     "extract-text-webpack-plugin": "~3.0.0",
     "filewalker": "^0.1.3",
     "jasmine-core": "~2.6.4",
-    "karma": "~1.7.0",
-    "karma-jasmine": "~1.1.0",
+    "karma": "4.1.0",
+    "karma-jasmine": "2.0.1",
     "karma-nativescript-launcher": "^0.4.0",
     "lazy": "1.0.11",
     "nativescript-css-loader": "~0.26.1",
-    "nativescript-dev-sass": "~1.1.1",
-    "nativescript-dev-typescript": "^0.4.6",
-    "nativescript-dev-webpack": "~0.8.0",
+    "nativescript-dev-webpack": "1.0.1",
     "nativescript-worker-loader": "~0.8.1",
     "raw-loader": "~0.5.1",
     "resolve-url-loader": "~2.1.0",
     "sass-loader": "~6.0.6",
     "tslint": "^5.4.3",
-    "typescript": "~2.6.2",
+    "typescript": "3.4.5",
     "uglifyjs-webpack-plugin": "~1.2.4",
     "webpack": "~3.2.0",
     "webpack-bundle-analyzer": "^2.8.2",
-    "webpack-sources": "^1.0.2"
+    "webpack-sources": "^1.0.2",
+    "node-sass": "4.12.0",
+    "karma-webpack": "3.0.5"
   }
 }
