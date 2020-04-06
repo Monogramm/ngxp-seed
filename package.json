@@ -45,28 +45,28 @@
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.16",
-    "codelyzer": "^5.0.1",
+    "codelyzer": "^5.2.2",
     "tslint": "~5.9.1",
     "typings": "~2.1.1"
   },
   "dependencies": {
-    "@angular/animations": "^8.2.14",
-    "@angular/common": "^8.2.14",
-    "@angular/compiler": "^8.2.14",
-    "@angular/compiler-cli": "^8.2.14",
-    "@angular/core": "^8.2.14",
-    "@angular/forms": "^8.2.14",
-    "@angular/platform-browser": "^8.2.14",
-    "@angular/platform-browser-dynamic": "^8.2.14",
-    "@angular/platform-server": "^8.2.14",
-    "@angular/router": "^8.2.14",
+    "@angular/animations": "^9.1.0",
+    "@angular/common": "^9.1.0",
+    "@angular/compiler": "^9.1.0",
+    "@angular/compiler-cli": "^9.1.0",
+    "@angular/core": "^9.1.0",
+    "@angular/forms": "^9.1.0",
+    "@angular/platform-browser": "^9.1.0",
+    "@angular/platform-browser-dynamic": "^9.1.0",
+    "@angular/platform-server": "^9.1.0",
+    "@angular/router": "^9.1.0",
     "core-js": "^2.6.9",
     "email-validator": "^2.0.4",
     "ng-sidebar": "^8.0.0",
-    "rxjs": "^6.4.0",
+    "rxjs": "^6.5.5",
     "ts-helpers": "~1.1.1",
-    "typescript": "^3.4.5",
+    "typescript": "^3.7.5",
     "validate-password": "^1.0.4",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.10.3"
   }
 }
