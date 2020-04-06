@@ -1,10 +1,9 @@
-# You are free to change the contents of this file
 FROM node:lts-alpine AS builder
 
 # We do not copy current directory for perfs, but we expect it to mounted
 #COPY . .
 
-# WIP
+# Install dependencies
 RUN set -ex; \
     apk add --no-cache \
         g++ \
@@ -13,10 +12,12 @@ RUN set -ex; \
     ; \
     npm install -g @angular/cli@8; \
     npm install -g nativescript@6; \
-    npm run ngxp-install; \
+    npm run ngxp-install
+
+# Build web site
+RUN set -ex; \
     npm run build.prod
 
-# You are free to change the contents of this file
 FROM nginx:alpine
 
 # NGINX configurations
