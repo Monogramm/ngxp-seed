@@ -21,13 +21,13 @@
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],
       "@xapp/*": [
-        "../x-shared/app/*"
+        "src/x-shared/app/*"
       ],
       "@xcore/*": [
-        "../x-shared/app/core/*"
+        "src/x-shared/app/core/*"
       ],
       "@xshared/*": [
-        "../x-shared/app/shared/*"
+        "src/x-shared/app/shared/*"
       ]
     }
   }
