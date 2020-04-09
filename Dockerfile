@@ -1,17 +1,23 @@
-FROM node:lts-alpine AS builder
+#FROM node:lts-alpine AS builder
+#
+## We do not copy current directory for perfs, but we expect it to mounted
+##COPY . .
+#
+## Install dependencies
+#RUN set -ex; \
+#    apk add --no-cache \
+#        g++ \
+#        gcc \
+#        make \
+#    ; \
+#    npm install -g @angular/cli@8; \
+#    npm install -g nativescript@6
 
-# We do not copy current directory for perfs, but we expect it to mounted
-#COPY . .
+# Custom builder image
+FROM monogramm/docker-ngxp:jdk AS builder
 
-# Install dependencies
+# Install NGXP
 RUN set -ex; \
-    apk add --no-cache \
-        g++ \
-        gcc \
-        make \
-    ; \
-    npm install -g @angular/cli@8; \
-    npm install -g nativescript@6; \
     npm run ngxp-install
 
 # Build web site
