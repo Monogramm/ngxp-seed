@@ -20,13 +20,14 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-# Install NGXP
-RUN set -ex; \
-    npm run ngxp-install
-
+# Install NGXP project dependencies
 # Build web site
 RUN set -ex; \
-    npm run build.prod
+    node --version; \
+    npm --version; \
+    npm run ngxp-install; \
+    npm run build.prod; \
+    ls -al dist
 
 FROM nginx:alpine
 
@@ -34,4 +35,4 @@ FROM nginx:alpine
 COPY ./nginx/conf.d /etc/nginx/conf.d
 
 # Copy built app from builder to www root
-COPY --from=builder dist/app /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist/app /usr/share/nginx/html
