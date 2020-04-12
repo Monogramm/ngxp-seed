@@ -31,6 +31,8 @@ before_install:
   - export VCS_REF=`git rev-parse --short HEAD`
   - export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
   - export IMAGE_NAME="monogramm/docker-ngxp:${TAG}"
+  - docker --version
+  - docker-compose --version
 
 install:
     # Test containers build

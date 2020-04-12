@@ -16,6 +16,10 @@
 # Custom builder image
 FROM monogramm/docker-ngxp:jdk AS builder
 
+WORKDIR /usr/src/app
+
+COPY . .
+
 # Install NGXP
 RUN set -ex; \
     npm run ngxp-install

@@ -7,6 +7,4 @@ services:
       - "8080:80"
       - "443:443"
     volumes:
-      # Mount local dir to build from sources
-      - .:/src
       - ./nginx/keys/:/etc/nginx/keys
