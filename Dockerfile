@@ -27,7 +27,7 @@ RUN set -ex; \
     npm --version; \
     npm run ngxp-install; \
     npm run build.prod; \
-    ls -al dist
+    ls -al web/dist
 
 FROM nginx:alpine
 
@@ -35,4 +35,4 @@ FROM nginx:alpine
 COPY ./nginx/conf.d /etc/nginx/conf.d
 
 # Copy built app from builder to www root
-COPY --from=builder /usr/src/app/dist/app /usr/share/nginx/html
+COPY --from=builder /usr/src/app/web/dist/app /usr/share/nginx/html
