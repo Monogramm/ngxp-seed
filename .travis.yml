@@ -64,10 +64,10 @@ before_script:
 
 script:
     # Test containers run
-    - travis_retry docker-compose -d && sleep 90
+    - docker-compose up -d && sleep 90
     - docker-compose ps
-    #- docker-compose logs "ngxp-seed"
-    #- docker-compose ps "ngxp-seed" | grep "Up"
+    - docker-compose logs "app_web"
+    - docker-compose ps "app_web" | grep "Up"
     # TODO Migrate android package build into Dockerfile
     # - npm run tslint
     # - npm run build.android
