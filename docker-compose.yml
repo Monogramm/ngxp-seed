@@ -6,7 +6,7 @@ services:
       context: ./
       dockerfile: Dockerfile.web
     image: monogramm/ngxp-seed:latest-travis
-    container: app_web
+    container_name: app_web
     ports:
       - "8081:80"
       - "443:443"
