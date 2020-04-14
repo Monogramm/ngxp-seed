@@ -15,8 +15,8 @@ services:
       - app_external_network
     depends_on:
       - app_api
-    volumes:
-      - ./nginx/keys/:/etc/nginx/keys
+    #volumes:
+    #  - ./nginx/keys/:/etc/nginx/keys
 
   app_db:
     image: postgres:10-alpine
