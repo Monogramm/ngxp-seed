@@ -8,13 +8,14 @@ services:
     image: monogramm/ngxp-seed:latest-travis
     container_name: app_web
     ports:
-      - "8081:80"
+      - "80:80"
       - "443:443"
     networks:
       - app_internal_network
       - app_external_network
     depends_on:
       - app_api
+    # Mount SSL keys for SSL
     #volumes:
     #  - ./nginx/keys/:/etc/nginx/keys
 
