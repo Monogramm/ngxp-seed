@@ -1,0 +1,54 @@
+# Ignore SCM and IDE items
+.git
+.idea
+.project
+.eclipse
+.vscode
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# gradle
+gradle/
+.gradle/
+bin/
+
+# eclipse
+.project
+.classpath
+.settings
+
+#ant specific
+dist/
+build/
+
+#netbeans specific
+#core
+nbproject/*
+!nbproject/project.properties
+!nbproject/project.xml
+
+#spring specific
+.springBeans
+
+#general swap/backup files
+*.so
+*.log
+*.out
+*~
+*.swp
+*.DS_Store
+*.lock
+Thumbs.db
+
+# Docker files
+docker-compose*.yml
+
+# CI
+Jenkinsfile
+.travis.yml

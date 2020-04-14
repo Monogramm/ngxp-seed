@@ -1,0 +1,31 @@
+{
+    "index": "/index.html",
+    "appData": "Latest update content",
+    "assetGroups": [
+        {
+            "name": "app",
+            "installMode": "prefetch",
+            "resources": {
+                "files": [
+                    "/favicon.ico",
+                    "/index.html",
+                    "/*.css",
+                    "/*.js",
+                    "/*.png",
+                    "/assets/i18n/*.json"
+                ]
+            }
+        },
+        {
+            "name": "assets",
+            "installMode": "lazy",
+            "updateMode": "prefetch",
+            "resources": {
+                "files": [
+                    "/assets/icons/**",
+                    "/assets/images/**"
+                ]
+            }
+        }
+    ]
+}

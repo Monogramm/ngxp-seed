@@ -3,26 +3,33 @@ dist: trusty
 
 services: docker
 
-language: android
+branches:
+  only:
+    - master
 
-jdk: oraclejdk11
+language: shell
 
-android:
-    components:
-        - platform-tools
-        - build-tools-23.0.1
-        - android-23
-        - extra-android-m2repository
-        - sys-img-armeabi-v7a-android-19
-
-before_cache:
-    - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-
-cache:
-    directories:
-        - .nvm
-        - $HOME/.gradle/caches/
-        - $HOME/.gradle/wrapper/
+## Section needed if local build
+#language: android
+#
+#jdk: oraclejdk11
+#
+#android:
+#    components:
+#        - platform-tools
+#        - build-tools-28.0.1
+#        - android-28
+#        - extra-android-m2repository
+#        - sys-img-armeabi-v7a-android-19
+#
+#before_cache:
+#    - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+#
+#cache:
+#    directories:
+#        - .nvm
+#        - $HOME/.gradle/caches/
+#        - $HOME/.gradle/wrapper/
 
 before_install:
   - env | sort
@@ -31,6 +38,8 @@ before_install:
   - export VCS_REF=`git rev-parse --short HEAD`
   - export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
   - export IMAGE_NAME="monogramm/docker-ngxp:${TAG}"
+  - docker --version
+  - docker-compose --version
 
 install:
     # Test containers build
@@ -55,10 +64,10 @@ before_script:
 
 script:
     # Test containers run
-    - travis_retry docker-compose -d && sleep 90
+    - docker-compose up -d && sleep 90
     - docker-compose ps
-    #- docker-compose logs "ngxp-seed"
-    #- docker-compose ps "ngxp-seed" | grep "Up"
+    - docker-compose logs "app_web"
+    - docker-compose ps "app_web" | grep "Up"
     # TODO Migrate android package build into Dockerfile
     # - npm run tslint
     # - npm run build.android
