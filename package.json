@@ -18,7 +18,7 @@
     "angular"
   ],
   "scripts": {
-    "ngxp-install": "npm install && cd web && npm install && cd ../nativescript && tns install && node ../tools/install.js && cd .. && typings install",
+    "ngxp-install": "npm install && cd web && npm install && cd ../nativescript && tns install && node ../tools/install.js",
     "build": "cd web && ng build",
     "build.prod": "cd web && ng build --prod",
     "build.aot": "cd web && ng build --aot",
