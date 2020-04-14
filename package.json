@@ -1,6 +1,6 @@
 {
   "name": "monogramm-ngxp-seed",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A cross platform starter application.",
   "author": "Monogramm Maintainers <opensource@monogramm.io> (https://github.com/Monogramm/ngxp-seed)",
   "repository": {
@@ -13,8 +13,8 @@
   "homepage": "https://github.com/Monogramm/ngxp-seed",
   "keywords": [
     "nativescript",
-    "angular4",
-    "ng4",
+    "angular8",
+    "ng8",
     "angular"
   ],
   "scripts": {
@@ -45,28 +45,28 @@
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.16",
-    "codelyzer": "~4.2.1",
+    "codelyzer": "^5.2.2",
     "tslint": "~5.9.1",
     "typings": "~2.1.1"
   },
   "dependencies": {
-    "@angular/animations": "^6.1.0",
-    "@angular/common": "^6.1.0",
-    "@angular/compiler": "^6.1.0",
-    "@angular/compiler-cli": "^6.1.0",
-    "@angular/core": "^6.1.0",
-    "@angular/forms": "^6.1.0",
-    "@angular/platform-browser": "^6.1.0",
-    "@angular/platform-browser-dynamic": "^6.1.0",
-    "@angular/platform-server": "^6.1.0",
-    "@angular/router": "^6.1.0",
+    "@angular/animations": "^9.1.0",
+    "@angular/common": "^9.1.0",
+    "@angular/compiler": "^9.1.0",
+    "@angular/compiler-cli": "^9.1.0",
+    "@angular/core": "^9.1.0",
+    "@angular/forms": "^9.1.0",
+    "@angular/platform-browser": "^9.1.0",
+    "@angular/platform-browser-dynamic": "^9.1.0",
+    "@angular/platform-server": "^9.1.0",
+    "@angular/router": "^9.1.0",
     "core-js": "^2.6.9",
     "email-validator": "^2.0.4",
     "ng-sidebar": "^8.0.0",
-    "rxjs": "~6.3.3",
+    "rxjs": "^6.5.5",
     "ts-helpers": "~1.1.1",
-    "typescript": "^2.9.2",
+    "typescript": "^3.7.5",
     "validate-password": "^1.0.4",
-    "zone.js": "^0.8.29"
+    "zone.js": "^0.10.3"
   }
 }

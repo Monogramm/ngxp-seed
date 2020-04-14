@@ -9,11 +9,11 @@ Check this [Open Souce Cross Platform Quotes Application](https://github.com/shr
 ## Prerequisites
 0. Globally installed
   * [Git](https://git-scm.com/)
-  * [Node.js](https://nodejs.org) **8** & [npm](https://www.npmjs.com/)
+  * [Node.js](https://nodejs.org) **12** & [npm](https://www.npmjs.com/)
   * `gcc` & `g++`
   * `make`
-1. Globally installed Angular CLI - `npm install -g @angular/cli@1.1.1`
-2. Globally installed NativeScript  - `npm install -g nativescript@3.2.0`
+1. Globally installed Angular CLI - `npm install -g @angular/cli@8`
+2. Globally installed NativeScript  - `npm install -g nativescript@6`
 3. (optional). Mac OS to build iOS app and Android emulator or device for building Android app.
 
 ## Installation
@@ -23,7 +23,7 @@ Check this [Open Souce Cross Platform Quotes Application](https://github.com/shr
 4.  Make sure to edit the local adress of your backend in [backend.service.ts](x-shared/app/core/backend.service.ts).
 
 ## Run Web application
-`npm run start` - This will start the application at http://localhost:4200. 
+`npm run start` - This will start the application at http://localhost:4200 or http://localhost:4200/webpack-dev-server/. 
 
 ## Run iOS Application
 - First start the simulator or connect the iOS device.

@@ -18,8 +18,6 @@ export class AuthService {
     protected static readonly userIdKey = 'principal_user_id';
     private static readonly userRolesKey = 'principal_user_roles';
 
-    protected static readonly displayedIntrosKey = 'displayed_intros';
-
     protected static readonly keysToClear = [
         AuthService.tokenKey,
         AuthService.tokenExpirationKey,
@@ -160,20 +158,6 @@ export class AuthService {
 
     public hasRole(role: string): boolean {
         return this.userRoles && this.userRoles.indexOf('ROLE_' + role) > -1;
-    }
-
-    private displayedIntros(): string[] {
-        return this.getFromStore(AuthService.displayedIntrosKey) || [];
-    }
-
-    isDisplayIntro(): boolean {
-        return  this.displayedIntros().indexOf(this.userId) < 0;
-    }
-
-    introDisplayed(): void {
-        let displayedIntros = this.displayedIntros();
-        displayedIntros.push(this.userId);
-        this.pushToStore(AuthService.displayedIntrosKey, displayedIntros);
     }
 
 }
