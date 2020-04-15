@@ -3,7 +3,8 @@ FROM monogramm/docker-ngxp:jdk AS builder
 
 WORKDIR /usr/src/app
 
-COPY . .
+# Sources should be mounted to persist the built APK
+#COPY . .
 
 # Install NGXP project dependencies
 # Build web site
@@ -12,11 +13,3 @@ RUN set -ex; \
     npm --version; \
     npm run ngxp-install; \
     npm run build.android
-
-FROM nginx:alpine
-
-# NGINX configurations
-COPY ./nginx/conf.d /etc/nginx/conf.d
-
-# Copy built app from builder to www root
-COPY --from=builder /usr/src/app/web/dist/app /usr/share/nginx/html
