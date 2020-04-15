@@ -105,6 +105,8 @@ services:
       - MAIL_PASSWORD=${APP_SMTP_PASSWD}
       - MAIL_SSL=false
       - MAIL_STARTTLS=false
+      # Wait for it...
+      - WAIT_FOR=app_db:5432
 
 networks:
   app_external_network:
