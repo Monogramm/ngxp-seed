@@ -15,9 +15,10 @@ services:
       - app_external_network
     depends_on:
       - app_api
-    # Mount SSL keys for SSL
-    #volumes:
-    #  - ./nginx/keys/:/etc/nginx/keys
+    volumes:
+      - /srv/app/nginx/logs:/var/logs/nginx
+      # Mount SSL keys for SSL
+      #- ./nginx/keys/:/etc/nginx/keys
 
   app_db:
     image: postgres:10-alpine
@@ -75,10 +76,10 @@ services:
       - app_db
       - app_mailer
     volumes:
-      - /srv/spring_rest_api_starter/back/logs:/srv/app/logs
-      - /srv/spring_rest_api_starter/back/keys:/srv/app/keys
-      - /srv/spring_rest_api_starter/back/config:/srv/app/config
-      - /srv/spring_rest_api_starter/back/data:/srv/app/data
+      - /srv/app/backend/logs:/srv/app/logs
+      - /srv/app/backend/keys:/srv/app/keys
+      - /srv/app/backend/config:/srv/app/config
+      - /srv/app/backend/data:/srv/app/data
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     environment:
