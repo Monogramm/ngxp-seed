@@ -1,0 +1,6 @@
+image:
+  file: Dockerfile.gitpod
+
+tasks:
+  - init: npm run ngxp-install
+    command: npm run start
