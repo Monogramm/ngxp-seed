@@ -46,6 +46,9 @@ nbproject/*
 *.lock
 Thumbs.db
 
+# Docs
+docs/
+
 # Docker files
 docker-compose*.yml
 
