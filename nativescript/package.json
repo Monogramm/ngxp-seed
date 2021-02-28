@@ -73,7 +73,7 @@
     "nativescript-css-loader": "~0.26.1",
     "nativescript-dev-webpack": "1.0.1",
     "nativescript-worker-loader": "~0.8.1",
-    "node-sass": "4.12.0",
+    "node-sass": "4.14.1",
     "raw-loader": "~0.5.1",
     "resolve-url-loader": "~2.1.0",
     "sass-loader": "~6.0.6",
