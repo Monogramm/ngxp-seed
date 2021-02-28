@@ -5,7 +5,7 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>https://app.example.com/</loc>
+  <loc>https://localhost/</loc>
   <lastmod>2019-06-28T22:55:34+00:00</lastmod>
 </url>
 </urlset>

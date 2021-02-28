@@ -15,7 +15,7 @@ Check this [Open Souce Cross Platform Quotes Application](https://github.com/shr
   * [Node.js](https://nodejs.org) **12** & [npm](https://www.npmjs.com/)
   * `gcc` & `g++`
   * `make`
-1. Globally installed Angular CLI - `npm install -g @angular/cli@8`
+1. Globally installed Angular CLI - `npm install -g @angular/cli@9`
 2. Globally installed NativeScript  - `npm install -g nativescript@6`
 3. (optional). Mac OS to build iOS app and Android emulator or device for building Android app.
 

@@ -19,4 +19,41 @@ FROM nginx:alpine
 COPY ./nginx/conf.d /etc/nginx/conf.d
 
 # Copy built app from builder to www root
-COPY --from=builder /usr/src/app/web/dist/app /usr/share/nginx/html
+COPY --from=builder /usr/src/app/web/dist/app /var/www/html
+
+# Arguments to label built container
+ARG DOMAIN=localhost
+RUN set -ex; \
+    sed -i \
+        -e "s|localhost|${DOMAIN}|g" \
+        -e "s|lastmod>.*</lastmod|lastmod>${BUILD_DATE}</lastmod|g" \
+        /var/www/html/robots.txt \
+        /var/www/html/sitemap.xml
+
+ARG VCS_REF=unknown
+ARG BUILD_DATE=unknown
+ARG VERSION=1.1.0
+
+# Container labels (http://label-schema.org/)
+# Container annotations (https://github.com/opencontainers/image-spec)
+LABEL maintainer="opensource@monogramm.io" \
+      product="NGXP-Seed" \
+      version=$VERSION \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/Monogramm/ngxp-seed/" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="NGXP-Seed" \
+      org.label-schema.description="Cross-platform application." \
+      org.label-schema.url="https://${DOMAIN}/" \
+      org.label-schema.vendor="Monogramm" \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0" \
+      org.opencontainers.image.revision=$VCS_REF \
+      org.opencontainers.image.source="https://github.com/Monogramm/ngxp-seed/" \
+      org.opencontainers.image.created=$BUILD_DATE \
+      org.opencontainers.image.title="NGXP-Seed" \
+      org.opencontainers.image.description="Cross-platform application." \
+      org.opencontainers.image.url="https://${DOMAIN}/" \
+      org.opencontainers.image.vendor="Monogramm" \
+      org.opencontainers.image.version=$VERSION \
+      org.opencontainers.image.authors="opensource@monogramm.io"

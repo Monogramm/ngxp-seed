@@ -13,12 +13,12 @@
   "homepage": "https://github.com/Monogramm/ngxp-seed",
   "keywords": [
     "nativescript",
-    "angular8",
-    "ng8",
+    "angular9",
+    "ng9",
     "angular"
   ],
   "scripts": {
-    "ngxp-install": "npm install && cd web && npm install && cd ../nativescript && tns install && node ../tools/install.js && cd .. && typings install",
+    "ngxp-install": "npm install && cd web && npm install && cd ../nativescript && tns install && node ../tools/install.js",
     "build": "cd web && ng build",
     "build.prod": "cd web && ng build --prod",
     "build.aot": "cd web && ng build --aot",
@@ -44,10 +44,10 @@
     "test.ios": "cd nativescript && tns test ios --watch"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.8.16",
+    "@types/jasmine": "^3.5.10",
+    "@types/node": "^12.12.34",
     "codelyzer": "^5.2.2",
-    "tslint": "~5.9.1",
-    "typings": "~2.1.1"
+    "tslint": "^6.1.1"
   },
   "dependencies": {
     "@angular/animations": "^9.1.0",
@@ -60,9 +60,9 @@
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@angular/platform-server": "^9.1.0",
     "@angular/router": "^9.1.0",
-    "core-js": "^2.6.9",
+    "core-js": "^3.6.4",
     "email-validator": "^2.0.4",
-    "ng-sidebar": "^8.0.0",
+    "ng-sidebar": "^9.2.0",
     "rxjs": "^6.5.5",
     "ts-helpers": "~1.1.1",
     "typescript": "^3.7.5",
