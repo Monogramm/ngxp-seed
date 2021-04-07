@@ -88,13 +88,24 @@ function init_compose {
         log 'Init docker compose environment variables...'
         cp .env_template .env
     fi
+
+    export VARIANT=${VARANT:-web}
+    export DOCKER_REPO=${DOCKER_REPO:-monogramm/ngxp-seed}
+    export DOCKERFILE_PATH=Dockerfile.${VARIANT}
+    export DOCKER_TAG=${DOCKER_TAG:-${VARIANT}}
+
+    if [ -n "${DOCKER_REGISTRY}" ]; then
+        export IMAGE_NAME=${DOCKER_REGISTRY}/${DOCKER_REPO}:${DOCKER_TAG}
+    else
+        export IMAGE_NAME=${DOCKER_REPO}:${DOCKER_TAG}
+    fi
 }
 
 function compose {
     init_compose
 
     docker-compose \
-        -f docker-compose.yml \
+        -f docker-compose.test.yml \
         "$@"
 }
 
@@ -102,7 +113,7 @@ function compose_config {
     init_compose "$@"
 
     docker-compose \
-        -f docker-compose.yml \
+        -f docker-compose.test.yml \
         config
 }
 

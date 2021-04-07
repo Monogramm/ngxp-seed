@@ -6,21 +6,21 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
     parameters {
-        string(name: 'IMAGE_NAME', defaultValue: 'ngxp-seed', description: 'Docker Image name.')
+        string(name: 'DOCKER_REPO', defaultValue: 'ngxp-seed', description: 'Docker Image name.')
 
         string(name: 'DOCKER_TAG', defaultValue: 'latest', description: 'Docker Image tag.')
 
-        choice(name: 'VARIANT', choices: ['alpine'], description: 'Docker Image variant.')
+        choice(name: 'VARIANT', choices: ['web'], description: 'Docker Image variant.')
 
         choice(name: 'BUILD_ENV', choices: ['prod'], description: 'Build target environment.')
 
-        //choice(name: 'BUILD_LOCALE', choices: ['fr', 'en'], description: 'Build target locale.')
+        choice(name: 'CLIENT_LOCALE', choices: ['en', 'fr'], description: 'Client target locale.')
 
-        //password(name: 'BUILD_SECRET', defaultValue: 'secret', description: 'Build target secret (shared with backend).')
+        credentials(name: 'API_WEB_CREDENTIALS', credentialType: 'Username with password', required: true, description: 'Web Client API credentials.')
 
-        //credentials(name: 'NEXUS_CREDENTIALS', credentialType: 'Username with password', description: 'Nexus credentials to pull private libraries.')
+        //credentials(name: 'PACKAGE_REPO_CREDENTIALS', credentialType: 'Username with password', required: true, description: 'Private Package Repository credentials to pull packages.')
 
-        string(name: 'DOCKER_REGISTRY', defaultValue: 'registry-1.docker.io', description: 'Docker Registry to publish the result image to.')
+        string(name: 'DOCKER_REGISTRY', defaultValue: '', description: 'Docker Registry to publish the result image to. Leave empty for DockerHub.')
 
         credentials(name: 'DOCKER_CREDENTIALS', credentialType: 'Username with password', required: true, description: 'Docker credentials to push on the Docker registry.')
     }
@@ -39,24 +39,77 @@ pipeline {
             steps {
                 sh "docker --version"
                 sh "docker-compose --version"
+                sh "docker info"
             }
         }
 
-        stage('build web') {
+        stage('build-hooks') {
+            environment {
+                //PACKAGE_REPO_CREDS = credentials("${PACKAGE_REPO_CREDENTIALS}")
+                API_CREDS = credentials("${API_CREDENTIALS}")
+            }
             steps {
                 updateGitlabCommitStatus name: 'jenkins', state: 'running'
 
-                script {
-                    docker.withRegistry("https://${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS}") {
-                        def customImage = docker.build(
-                            "${DOCKER_REGISTRY}/${IMAGE_NAME}:${DOCKER_TAG}",
-                            "--build-arg TAG=${DOCKER_TAG} --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg BUILD_DATE=`date -u +'%Y-%m-%dT%H:%M:%SZ'` -f Dockerfile.web ."
-                        )
+                sh 'export API_WEB_CLIENT_ID=${API_CREDS_USR}; export API_WEB_CLIENT_SECRET=${API_CREDS_PSW}; export PACKAGE_REPO_LOGIN=${PACKAGE_REPO_CREDS_USR}; export PACKAGE_REPO_PASSWORD=${PACKAGE_REPO_CREDS_PSW}; ./hooks/run build "${VARIANT}"'
+            }
+        }
 
-                        customImage.push()
-                        customImage.push("${VARIANT}")
-                    }
-                }
+        stage('test-hooks') {
+            steps {
+                updateGitlabCommitStatus name: 'jenkins', state: 'running'
+
+                sh './hooks/run test "${VARIANT}"'
+            }
+        }
+
+        stage('push-hooks') {
+            environment {
+                DOCKER_CREDS = credentials("${DOCKER_CREDENTIALS}")
+            }
+            steps {
+                updateGitlabCommitStatus name: 'jenkins', state: 'running'
+
+                // Write Docker image tags to push
+                sh '([ "${DOCKER_TAG}" = "latest" ] && echo "${VARIANT} " || echo "${DOCKER_TAG}-${VARIANT} ") > .dockertags'
+                // Export variables to login and push to Docker Registry
+                sh 'export DOCKER_LOGIN=${DOCKER_CREDS_USR}; export DOCKER_PASSWORD=${DOCKER_CREDS_PSW}; ./hooks/run push "${VARIANT}"'
+                sh 'rm -f .dockertags'
+            }
+        }
+
+        stage('build-hooks') {
+            environment {
+                NEXUS_CREDS = credentials("${NEXUS_CREDENTIALS}")
+                API_CREDS = credentials("${API_CREDENTIALS}")
+            }
+            steps {
+                updateGitlabCommitStatus name: 'jenkins', state: 'running'
+
+                sh 'export API_WEB_CLIENT_ID=${API_CREDS_USR}; export API_WEB_CLIENT_SECRET=${API_CREDS_PSW}; export NEXUS_LOGIN=${NEXUS_CREDS_USR}; export NEXUS_PASSWORD=${NEXUS_CREDS_PSW}; ./hooks/run build "${VARIANT}"'
+            }
+        }
+
+        stage('test-hooks') {
+            steps {
+                updateGitlabCommitStatus name: 'jenkins', state: 'running'
+
+                sh './hooks/run test "${VARIANT}"'
+            }
+        }
+
+        stage('push-hooks') {
+            environment {
+                DOCKER_CREDS = credentials("${DOCKER_CREDENTIALS}")
+            }
+            steps {
+                updateGitlabCommitStatus name: 'jenkins', state: 'running'
+
+                // Write Docker image tags to push
+                sh '([ "${DOCKER_TAG}" = "latest" ] && echo "${VARIANT} " || echo "${DOCKER_TAG}-${VARIANT} ") > .dockertags'
+                // Export variables to login and push to Docker Registry
+                sh 'export DOCKER_LOGIN=${DOCKER_CREDS_USR}; export DOCKER_PASSWORD=${DOCKER_CREDS_PSW}; ./hooks/run push "${VARIANT}"'
+                sh 'rm -f .dockertags'
             }
         }
     }

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# See documentation for details:
+# https://docs.docker.com/docker-hub/builds/advanced/
+
+if [ ! -f '.env' ]; then
+    echo 'Init docker compose environment variables...'
+    cp .env_template .env.tmp
+
+    # For test performances, only load monaco
+    sed -i \
+        -e "s|OSRM_GEOFABRIK_PATH=.*|OSRM_GEOFABRIK_PATH=europe/monaco-latest.osm.pbf|" \
+        -e "s|OSRM_DATA_FILENAME=.*|OSRM_DATA_FILENAME=monaco-latest|" \
+        -e "s|NOMINATIM_GEOFABRIK_REPLICATION_PATH=.*|NOMINATIM_GEOFABRIK_REPLICATION_PATH=europe/monaco-updates|" \
+        .env.tmp
+
+    mv .env.tmp .env
+fi
+
+echo 'Preparing persisted data...'
+mkdir -p "${APP_HOME:-.docker/app}"
+chmod 777 "${APP_HOME:-.docker/app}"

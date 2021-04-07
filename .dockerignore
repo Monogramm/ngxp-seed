@@ -5,8 +5,19 @@
 .eclipse
 .vscode
 
+# NativeScript
+nativescript/node_modules/
+nativescript/platforms/
+nativescript/hooks/
+nativescript/app/**/*.js
+nativescript/app/x-shared/
+
+# Angular
+web/dist/dist
+web/node_modules
+web/src/x-shared/
+
 # compiled output
-/dist
 /tmp
 /out-tsc
 
@@ -55,3 +66,10 @@ docker-compose*.yml
 # CI
 Jenkinsfile
 .travis.yml
+.gitlab-ci.yml
+
+# Custom files
+.docker/
+.docker-build-date
+.docker-build
+manage.sh

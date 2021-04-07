@@ -1,7 +1,17 @@
+# NativeScript
+nativescript/node_modules/
+nativescript/platforms/
+nativescript/hooks/
+nativescript/app/**/*.js
+nativescript/app/x-shared/
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Angular
+web/dist/dist
+web/node_modules
+web/src/x-shared/
+
 # compiled output
-/dist
 /tmp
 /out-tsc
 

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# See documentation for details:
+# https://docs.docker.com/docker-hub/builds/advanced/
+# https://microbadger.com/labels
+
+docker build \
+    --build-arg "VCS_REF=${SOURCE_COMMIT}" \
+    --build-arg "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
+    --build-arg "TAG=${DOCKER_TAG}" \
+    --build-arg "BUILD_ENV=${BUILD_ENV}" \
+    --build-arg "CLIENT_LOCALE=${CLIENT_LOCALE}" \
+    --build-arg "API_CLIENT_ID=${API_WEB_CLIENT_ID}" \
+    --build-arg "API_CLIENT_SECRET=${API_WEB_CLIENT_SECRET}" \
+    -f "$DOCKERFILE_PATH" \
+    -t "$IMAGE_NAME" .
