@@ -46,7 +46,7 @@ pipeline {
         stage('build-hooks') {
             environment {
                 //PACKAGE_REPO_CREDS = credentials("${PACKAGE_REPO_CREDENTIALS}")
-                API_CREDS = credentials("${API_CREDENTIALS}")
+                API_CREDS = credentials("${API_WEB_CREDENTIALS}")
             }
             steps {
                 updateGitlabCommitStatus name: 'jenkins', state: 'running'
