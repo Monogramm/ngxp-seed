@@ -3,6 +3,12 @@ FROM monogramm/docker-ngxp:jdk AS builder
 
 WORKDIR /usr/src/app
 
+ARG BUILD_ENV=prod
+ARG CLIENT_LOCALE=en
+
+ARG API_CLIENT_ID
+ARG API_CLIENT_SECRET
+
 COPY . .
 
 # Install NGXP project dependencies
@@ -10,8 +16,19 @@ COPY . .
 RUN set -ex; \
     node --version; \
     npm --version; \
+    test -n "${API_CLIENT_ID}" || exit 1; \
+    test -n "${API_CLIENT_SECRET}" || exit 1; \
     npm run ngxp-install; \
-    npm run build.prod
+    sed -i \
+        -e "s|  locale: '.*',|  locale: '${CLIENT_LOCALE}',|gm" \
+        -e "s|  clientId: '.*',|  clientId: '${API_CLIENT_ID}',|gm" \
+        -e "s|  clientSecret: '.*',|  clientSecret: '${API_CLIENT_SECRET}',|gm" \
+        "web/src/environments/environment.${BUILD_ENV}.ts" \
+    ; \
+    npm run "build.${BUILD_ENV}"; \
+    mkdir -p /usr/src/dist; \
+    mv /usr/src/app/web/dist/app /usr/src/dist/app; \
+    rm -rf /usr/src/app
 
 FROM nginx:alpine
 
@@ -19,20 +36,23 @@ FROM nginx:alpine
 COPY ./nginx/conf.d /etc/nginx/conf.d
 
 # Copy built app from builder to www root
-COPY --from=builder /usr/src/app/web/dist/app /var/www/html
+COPY --from=builder /usr/src/dist/app /var/www/html
 
 # Arguments to label built container
+ARG VCS_REF=unknown
+ARG BUILD_DATE=unknown
+ARG VERSION=1.1.0
+
 ARG DOMAIN=localhost
+
 RUN set -ex; \
     sed -i \
         -e "s|localhost|${DOMAIN}|g" \
         -e "s|lastmod>.*</lastmod|lastmod>${BUILD_DATE}</lastmod|g" \
         /var/www/html/robots.txt \
-        /var/www/html/sitemap.xml
-
-ARG VCS_REF=unknown
-ARG BUILD_DATE=unknown
-ARG VERSION=1.1.0
+        /var/www/html/sitemap.xml \
+    ; \
+    echo "${TAG} ${VCS_REF} ${BUILD_DATE}" > '/var/www/html/.docker-app-version'
 
 # Container labels (http://label-schema.org/)
 # Container annotations (https://github.com/opencontainers/image-spec)
