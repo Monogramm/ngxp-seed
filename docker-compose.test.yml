@@ -56,10 +56,10 @@ services:
       - app_db
       - app_mailer
     volumes:
-      - ${APP_HOME}/backend/logs:${APP_HOME}/logs
-      - ${APP_HOME}/backend/keys:${APP_HOME}/keys
-      - ${APP_HOME}/backend/config:${APP_HOME}/config
-      - ${APP_HOME}/backend/data:${APP_HOME}/data
+      - ${APP_HOME}/backend/logs:/srv/app/logs
+      - ${APP_HOME}/backend/keys:/srv/app/keys
+      - ${APP_HOME}/backend/config:/srv/app/config
+      - ${APP_HOME}/backend/data:/srv/app/data
       # If you want, you can sync time & timezone with host
       #- /etc/localtime:/etc/localtime:ro
       #- /etc/timezone:/etc/timezone:ro
