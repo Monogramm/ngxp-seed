@@ -48,7 +48,7 @@ services:
       retries: 3
       #start_period: 40s
     ports:
-      - "8080:${APP_SERVER_PORT}"
+      - "8081:${APP_SERVER_PORT}"
     networks:
       - app_internal_network
       - app_external_network
