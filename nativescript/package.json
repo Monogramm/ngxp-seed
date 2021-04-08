@@ -81,7 +81,7 @@
     "typescript": "~3.4.5",
     "uglifyjs-webpack-plugin": "~1.2.4",
     "webpack": "~3.2.0",
-    "webpack-bundle-analyzer": "^2.8.2",
+    "webpack-bundle-analyzer": ">=3.3.2",
     "webpack-sources": "^1.0.2"
   }
 }
