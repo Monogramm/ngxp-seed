@@ -110,11 +110,31 @@ function compose {
 }
 
 function compose_config {
-    init_compose "$@"
+    init_compose
 
     docker-compose \
         -f docker-compose.test.yml \
         config
+}
+
+function pgsql_client() {
+    local CONTAINER=$1
+    local DATABASE=$2
+    local USER=$3
+
+    docker-compose \
+        -f docker-compose.test.yml \
+        exec "$CONTAINER" psql -h localhost -p 5432 \
+        -d "$DATABASE" -U "$USER" -w -A "${@:4}"
+}
+
+function compose_sql() {
+    init_compose
+
+    pgsql_client app_db \
+        "${APP_DB_NAME}" \
+        "${APP_DB_USER}" \
+        "$@"
 }
 
 function compose_build {
@@ -163,6 +183,7 @@ Commands:
     run                          Run locally
     prepare-release              Prepare release locally
     compose-config               Docker-compose: init env var and check docker-compose file config
+    compose-sql                  Docker-compose: start postgresql client
     compose-ps                   Docker-compose: list services
     compose-logs                 Docker-compose: follow logs
     compose-build                Docker-compose: build containers
@@ -175,6 +196,9 @@ Commands:
     "
 }
 
+if [ -f .env ]; then
+    . .env
+fi
 
 case $1 in
     keys)
@@ -191,6 +215,9 @@ case $1 in
         ;;
     compose-config)
         compose_config "${@:2}"
+        ;;
+    compose-sql)
+        compose_sql "${@:2}"
         ;;
     compose-build)
         compose_build "${@:2}"
