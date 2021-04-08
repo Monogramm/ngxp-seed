@@ -33,28 +33,17 @@ language: shell
 
 before_install:
   - env | sort
-  - export home=$(pwd)
-  - export TAG=travis
-  - export VCS_REF=`git rev-parse --short HEAD`
-  - export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
-  - export IMAGE_NAME="monogramm/docker-ngxp:${TAG}"
+  - export DOCKER_REPO="monogramm/ngxp-seed"
+  - export API_WEB_CLIENT_ID=clientWebId
+  - export API_WEB_CLIENT_SECRET=clientWebSecret
   - docker --version
   - docker-compose --version
+  - docker info
 
 install:
-    # Test containers build
-    - docker-compose build
-    # TODO Migrate android package build into Dockerfile
-    # -  install $NODE_VERSION
-    # - npm cache clean
-    # - npm uninstall -g @angular-cli
-    # - npm install -g -f @angular-cli
-    # - ng --version
-    #- wget -O ./nativescript.tgz "https://s3.amazonaws.com/nativescript-ci/build_result/nativescript.tgz"
-    #- npm install -g nativescript.tgz --ignore-scripts
-    #- tns usage-reporting disable
-    #- tns error-reporting disable
-    #- npm run ngxp-install
+    # Execute CI build hooks
+    # TODO Mount local dir as volume to retrieve build results
+    - ./hooks/run build "${VARIANT}"
 
 before_script:
     - docker images
@@ -63,17 +52,13 @@ before_script:
 #     - android-wait-for-emulator
 
 script:
-    # Test containers run
-    - docker-compose up -d && sleep 90
-    - docker-compose ps
-    - docker-compose logs "app_web"
-    - docker-compose ps "app_web" | grep "Up"
+    # Execute CI test hooks
+    - ./hooks/run test "${VARIANT}"
     # TODO Migrate android package build into Dockerfile
     # - npm run tslint
     # - npm run build.android
     # - npm run test.android --emulator --justlaunch
 
-env:
-    global:
-        - NODE_VERSION=12.0.5
-    # Environments
+env: # Environments
+    - VARIANT=web
+    #- VARIANT=android
