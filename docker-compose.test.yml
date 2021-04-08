@@ -42,7 +42,7 @@ services:
     # [TODO] Enable auto-restart when production-ready
     #restart: always
     healthcheck:
-      test: CMD curl -v --silent http://localhost:${APP_SERVER_PORT}${APP_SERVER_CONTEXT_PATH}/health 2>&1 | grep UP
+      test: CMD curl -v --silent http://localhost:${APP_SERVER_PORT}/${APP_SERVER_CONTEXT_PATH}/health 2>&1 | grep UP
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -66,7 +66,7 @@ services:
     environment:
       # Application configuration
       - APP_SERVER_PORT=${APP_SERVER_PORT}
-      - APP_SERVER_CONTEXT_PATH=${APP_SERVER_CONTEXT_PATH}
+      - APP_SERVER_CONTEXT_PATH=/${APP_SERVER_CONTEXT_PATH}
       - APP_TITLE=${APP_TITLE}
       - APP_DOMAIN_NAME=${APP_DOMAIN_NAME}
       - APP_ADMIN_PASSWORD=${APP_ADMIN_PASSWORD}
