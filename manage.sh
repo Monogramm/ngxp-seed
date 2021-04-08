@@ -183,6 +183,7 @@ Commands:
     run                          Run locally
     prepare-release              Prepare release locally
     compose-config               Docker-compose: init env var and check docker-compose file config
+    compose-exec                 Docker-compose: execute a command on a container
     compose-sql                  Docker-compose: start postgresql client
     compose-ps                   Docker-compose: list services
     compose-logs                 Docker-compose: follow logs
@@ -215,6 +216,9 @@ case $1 in
         ;;
     compose-config)
         compose_config "${@:2}"
+        ;;
+    compose-exec)
+        compose exec "${@:2}"
         ;;
     compose-sql)
         compose_sql "${@:2}"
