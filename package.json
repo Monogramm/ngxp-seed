@@ -65,7 +65,7 @@
     "ng-sidebar": "^9.2.0",
     "rxjs": "^6.5.5",
     "ts-helpers": "~1.1.1",
-    "typescript": "^3.7.5",
+    "typescript": "~3.7.5",
     "validate-password": "^1.0.4",
     "zone.js": "^0.10.3"
   }
