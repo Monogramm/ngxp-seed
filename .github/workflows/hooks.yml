@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      API_WEB_CLIENT_ID: clientWebId
+      API_WEB_CLIENT_SECRET: clientWebSecret
     strategy:
       matrix:
         variant: ['web']
