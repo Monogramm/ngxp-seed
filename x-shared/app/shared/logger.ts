@@ -15,6 +15,12 @@ export class Logger {
         }
     }
 
+    static error(message?: any, ...optionalParams: any[]) {
+        if (Logger.isEnabled) {
+            console.error(new Date().toJSON() + ': ' + message, optionalParams);
+        }
+    }
+
     static dir(message?: any, ...optionalParams: any[]) {
         if (Logger.isEnabled) {
             console.dir(message, optionalParams);
