@@ -16,8 +16,10 @@ COPY . .
 RUN set -ex; \
     node --version; \
     npm --version; \
+    set +e; \
     test -n "${API_CLIENT_ID}" || exit 1; \
-    test -n "${API_CLIENT_SECRET}" || exit 1; \
+    test -n "${API_CLIENT_SECRET}" || exit 2; \
+    set -e; \
     npm run ngxp-install; \
     sed -i \
         -e "s|  locale: '.*',|  locale: '${CLIENT_LOCALE}',|gm" \
