@@ -23,7 +23,7 @@
     "build.prod": "cd web && ng build --prod",
     "build.aot": "cd web && ng build --aot",
     "build.aot.prod": "cd web && ng build --aot --prod",
-    "start": "cd web && ng serve",
+    "start": "cd web && ng serve --host 0.0.0.0",
     "start.prod": "cd web && ng serve --prod",
     "start.aot": "cd web && ng serve --aot",
     "start.aot.prod": "cd web && ng serve --aot --prod",

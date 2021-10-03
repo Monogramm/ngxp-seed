@@ -16,6 +16,7 @@ COPY . .
 RUN set -ex; \
     node --version; \
     npm --version; \
+    ng --version; \
     set +e; \
     test -n "${API_CLIENT_ID}" || exit 1; \
     test -n "${API_CLIENT_SECRET}" || exit 2; \
