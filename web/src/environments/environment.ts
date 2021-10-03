@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   locale: 'en',
   appName: 'NGXP (dev)',
-  backendUrl: 'http://localhost:8080/spring-rest-api-starter/api/',
+  backendUrl: 'http://localhost:8080/api/',
   clientId: 'clientWebIdPassword',
   clientSecret: 'secret'
 };
