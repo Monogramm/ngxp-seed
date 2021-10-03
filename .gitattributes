@@ -13,9 +13,15 @@
 *.sh text eol=lf
 *.yml text eol=lf
 *.xml text eol=lf
-*.java text eol=lf
+*.js text
+*.json text
+*.ts text
+*.css text
+*.scss text
 *.properties text eol=lf
 Dockerfile text eol=lf
+Dockerfile.* text eol=lf
+/hooks/* text eol=lf
 
 # Ensure those won't be messed up with
 *.jpg binary
